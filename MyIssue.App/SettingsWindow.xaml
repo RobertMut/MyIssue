@@ -1,0 +1,54 @@
+﻿<Window x:Class="MyIssue.App.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimpleIssueReporting"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" Height="370" VerticalAlignment="Top">
+            <RadioButton x:Name="smtpRadio" GroupName="ConnectionSelector" IsChecked="False" Checked="SMTPChecked">I am using SMTP</RadioButton>
+            <Label FontSize="10px">Server address:</Label>
+            <TextBox x:Name="server" Margin="5" Width="150" IsEnabled="False"></TextBox>
+            <Label FontSize="10px">Port:</Label>
+            <TextBox x:Name="port" Margin="5" Width="150" IsEnabled="False"></TextBox>
+            <Label FontSize="10px">Login</Label>
+            <TextBox x:Name="login" Margin="5" Width="150" IsEnabled="False"></TextBox>
+            <Label FontSize="10px">Password</Label>
+            <PasswordBox x:Name="password" Margin="5" Width="150" IsEnabled="False"></PasswordBox>
+            <Label FontSize="10px">Mail</Label>
+            <TextBox x:Name="mail" Margin="5" Width="150" IsEnabled="False"></TextBox>
+            <Label FontSize="10px">Recipient:</Label>
+            <TextBox x:Name="recipient" Margin="5" Width="150" IsEnabled="False"></TextBox>
+            <Label FontSize="10px">Encryption:</Label>
+            <RadioButton x:Name="sslRadio" IsEnabled="False">SSL/TSL</RadioButton>
+            
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Height="370" VerticalAlignment="Top">
+            <RadioButton x:Name="serverRadio" GroupName="ConnectionSelector" IsChecked="False" Checked="ServerChecked" >I am using dedicated server</RadioButton>
+            <Label FontSize="10px" Content="Server address:"/>
+            <TextBox x:Name="standServer" Margin="5" Width="150" IsEnabled="False"/>
+            <Label FontSize="10px" Content="Port:"/>
+            <TextBox x:Name="standPort" Width="150" IsEnabled="False"/>
+            <Label FontSize="10px" Content="Passphrase"/>
+            <PasswordBox x:Name="passphrase"  Width="150" IsEnabled="False"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Height="370" VerticalAlignment="Top">
+            <Label>Application password (needed!):</Label>
+            <TextBox x:Name="applicationPass" Width="150" Margin="5" TextChanged="ApplicationPass_Changed"></TextBox>
+            <Label FontSize="12px">Additional information:</Label>
+            <Label FontSize="10px">Company name:</Label>
+            <TextBox x:Name="buisnessName" Text="" Margin="5" Width="150"></TextBox>
+            <TextBlock Width="190px" TextWrapping="Wrap">Make sure that Company name is same for every client!<LineBreak/>
+            That information is used for encryption if was pre-set.</TextBlock>
+            <Button x:Name="templateSelect" Click="templateSelect_Click" Margin="5">Select email template</Button>
+            <TextBox x:Name="templateLink" Width="150" Margin="5"></TextBox>
+            <Button x:Name="imageSelect" Click="imageSelect_Click" Margin="5">Select image</Button>
+            <TextBox x:Name="imageLink" Width="150" Margin="5"></TextBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button x:Name="save" Width="150" Margin="30" Content="Save settings" Click="SaveSettings_Click" IsEnabled="False"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
