@@ -43,9 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationCommands.cs" />
+    <Compile Include="Comm\Net.cs" />
+    <Compile Include="Comm\Parameters.cs" />
+    <Compile Include="Tools\BoolProcessing.cs" />
+    <Compile Include="Tools\StringProcessing.cs" />
+    <Compile Include="ErrorHandler.cs" />
+    <Compile Include="IdentifyClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="serv.cs" />
+    <Compile Include="Comm\Connection.cs" />
+    <Compile Include="Tools\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

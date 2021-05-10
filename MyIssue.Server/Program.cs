@@ -10,7 +10,23 @@ namespace MyIssue.Server
     {
         static void Main(string[] args)
         {
-            new Serv().Listener();
+            //Net net;
+            Net conn = new Connection();
+            IdentifyClient.Clients = 0;
+            Parameters.BufferSize = 1024;
+            Parameters.Timeout = 10000;
+            try
+            {
+                conn.Listen("127.0.0.1", 49153);
+                Console.ReadKey();
+                //communication.ip = "127.0.0.1";
+                //communication.port = 49153;
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
     }
 }
