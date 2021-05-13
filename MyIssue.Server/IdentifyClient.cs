@@ -11,19 +11,27 @@ namespace MyIssue.Server
     class IdentifyClient
     {
         public static int Clients { get; set; }
+        public bool status { get; set; } = false;
         public Task ConnectedTask(Socket sock, CancellationToken ct)
         {
-            Connected(sock, ct);
+            Identify(sock, ct);
             return Task.CompletedTask;
         }
-        private void Connected(Socket sock, CancellationToken ct)
+        private void Identify(Socket sock, CancellationToken ct)
         {
             try
             {
-                AuthenticationCommands ac = new AuthenticationCommands();
+                Commands ac = new Commands();
                 Console.WriteLine("Connected");
-                Clients++;
-                ac.Client(Clients, ref sock, ct);
+                var cli = new ClientIdentifier()
+                {
+                    ConnectedSock = sock,
+                    Id = Clients++,
+                    CommandHistory = new List<string>(),
+                    Status = 0
+                    
+                };
+                ac.Client(cli, ct);
                 ct.ThrowIfCancellationRequested();
             }
             catch (Exception e)

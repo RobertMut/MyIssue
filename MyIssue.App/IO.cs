@@ -60,7 +60,7 @@ namespace MyIssue.App
                             {
                                 switch (xRead.NodeType)
                                 {
-                                    //wyswietla 0;
+                                    //shows 0;
                                     //case XmlNodeType.Element:
                                         //Debug.WriteLine(xRead.Name);
                                         //break;

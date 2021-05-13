@@ -12,8 +12,8 @@ namespace MyIssue.Server
         protected static Socket ListenSocket { get; set; }
 
         public abstract Task Listen(string ipAddres, int port, int bufferSize = 1024);
-        public abstract string Receive(ref Socket sock, CancellationToken ct);
-        public abstract void Write(ref Socket sock, string dataToSend, CancellationToken ct);
+        public abstract string Receive(Socket sock, CancellationToken ct);
+        public abstract void Write(Socket sock, string dataToSend, CancellationToken ct);
 
     }
 }

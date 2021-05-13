@@ -44,7 +44,7 @@ namespace MyIssue.Server
             }
 
         }
-        public override string Receive(ref Socket sock, CancellationToken ct)
+        public override string Receive(Socket sock, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             using (NetworkStream netStream = new NetworkStream(sock))
@@ -62,10 +62,10 @@ namespace MyIssue.Server
                         try
                         {
                             x = netStream.ReadAsync(receiveBuffer, 0, receiveBuffer.Length).Result;
-                            Console.WriteLine("received: {0}", x);
+                            //Console.WriteLine("received: {0}", x);
                             input += t.StringMessage(receiveBuffer, x);
                             int f = input.IndexOf("\r\n<EOF>\r\n");
-                            Console.WriteLine("{0} - {1}", x, input);
+                            //Console.WriteLine("{0} - {1}", x, input);
                             if (x > 0 && !f.Equals(-1)) terminator = true;
                             //ct.ThrowIfCancellationRequested();
                         } catch (Exception e)
@@ -74,14 +74,14 @@ namespace MyIssue.Server
                         }
 
                     }
-                    Console.WriteLine(input);
+                    //Console.WriteLine(input);
                     input = input.Remove(input.Length - 9, 9);
-                    Console.WriteLine(input);
+                    //Console.WriteLine(input);
                     return input;
                 }
                 catch (Exception e)
                 {
-                    Write(ref sock, e.Message, ct);
+                    Write(sock, e.Message, ct);
                     netStream.Close();
                     sock.Close();
                     IdentifyClient.Clients--;
@@ -91,7 +91,7 @@ namespace MyIssue.Server
                 }
             }
         }
-        public override void Write(ref Socket sock, string dataToSend, CancellationToken ct)
+        public override void Write(Socket sock, string dataToSend, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             using (NetworkStream netStream = new NetworkStream(sock))

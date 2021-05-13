@@ -9,91 +9,58 @@ using System.Threading.Tasks;
 
 namespace MyIssue.Server
 {
-    class AuthenticationCommands : IdentifyClient
+    public class Commands : ICommands
     {
-        
-        public void Client(int client, ref Socket sock, CancellationToken ct)
+
+
+        public void Login(string input, ClientIdentifier client, CancellationToken ct)
+        {
+            Net net = new Connection();
+            if (input.Equals("admin"))
+            {
+                net.Write(client.ConnectedSock, "Pass:\r\n", ct);
+                client.CommandHistory.Add(net.Receive(client.ConnectedSock, ct));
+                if (client.CommandHistory[client.CommandHistory.Count - 1].Equals("1234"))
+                {
+                    Console.WriteLine("LOGGED!");
+                    client.Status = 3;
+                    Console.WriteLine(client.Status);
+                }
+                else
+                {
+                    Console.WriteLine("Err");
+                }
+            }
+        }
+        public void Client(ClientIdentifier client, CancellationToken ct) //move
         {
             Net n = new Connection();
-
+            CommandParser parser = new CommandParser();
             ct.ThrowIfCancellationRequested();
-            using (NetworkStream netS = new NetworkStream(sock))
+            using (NetworkStream netS = new NetworkStream(client.ConnectedSock))
             {
                 string response = string.Empty;
-                Console.WriteLine("{0} - {1} - Waiting for HELLO", n.EndPoint, Clients);
+                Console.WriteLine("{0} - {1} - Waiting for Login", n.EndPoint, client.Id);
                 try
                 {
-                    
-                    n.Write(ref sock, "HELLO\r\n", ct);
+
+                    n.Write(client.ConnectedSock, "HELLO\r\n", ct);
                     Console.WriteLine("1");
-                    response = n.Receive(ref sock, ct);
-                    if (!response.StartsWith("HELLO")) throw new Exception(n.EndPoint + " - Expected HELLO. Goodbye.");
-                    Console.WriteLine("2");
-                    n.Write(ref sock, client + ": AUTHENTICATION\r\n", ct);
-                    response = n.Receive(ref sock, ct);
-                    Command(response, ref sock, ct);
+                    parser.Parser(n.Receive(client.ConnectedSock, ct), client, ct);
+
+                    if (!client.CommandHistory[client.CommandHistory.Count - 1].StartsWith("Login"))
+                        throw new Exception(n.EndPoint + " - Expected Login. Goodbye."); //move
                 }
                 catch (Exception e)
                 {
 
                     Console.WriteLine(e.ToString());
                     netS.Close();
-                    sock.Close();
-                    Clients--;
+                    client.ConnectedSock.Close();
+                    IdentifyClient.Clients--;
                 }
             }
         }
-        public void Command(string data, ref Socket sock, CancellationToken ct)
-        {
-            using (NetworkStream netStream = new NetworkStream(sock))
-            {
-                Net n = new Connection();
 
-                string resp = string.Empty;
-                try
-                {
-                    Tools t = new Tools();
-                    
-                    switch (new Regex(@"USER\s\S+").IsMatch(data))
-                    {
-                        case true:
-                            Console.WriteLine("MATCH!");
-                            n.Write(ref sock, "PASS\r\n", ct);
-                            resp = n.Receive(ref sock, ct);
-
-                            Console.WriteLine(resp);
-                            if (t.UserPass(t.ExtractLogin(data), resp).Equals(true))
-                            {
-                                Console.WriteLine("ZALOGOWANO");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Niezalogowano :(");
-                            }
-                            netStream.Flush();
-                            netStream.Close();
-                            Console.WriteLine("Closed connection");
-                            break;
-                        case false:
-                            Console.WriteLine("NOT MATCH :(!");
-                            netStream.Flush();
-                            netStream.Close();
-                            Console.WriteLine("Closed connection");
-                            break;
-
-                    }
-                }
-                catch (Exception e)
-                {
-                    netStream.Close();
-                    sock.Close();
-                    Clients--;
-                    Console.WriteLine(e.ToString());
-                }
-            }
-
-
-
-        }
     }
 }

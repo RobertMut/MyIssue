@@ -15,6 +15,7 @@ namespace MyIssue.Server
             IdentifyClient.Clients = 0;
             Parameters.BufferSize = 1024;
             Parameters.Timeout = 10000;
+
             try
             {
                 conn.Listen("127.0.0.1", 49153);
@@ -24,7 +25,8 @@ namespace MyIssue.Server
 
             } catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.ToString());
+                Console.ReadKey();
             }
 
         }
