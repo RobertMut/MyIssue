@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationCommands.cs" />
+    <Compile Include="Commands.cs" />
     <Compile Include="ClientIdentifier.cs" />
     <Compile Include="CommandParser.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="ICommands.cs" />
     <Compile Include="Comm\Net.cs" />
     <Compile Include="Comm\Parameters.cs" />
     <Compile Include="Tools\BoolProcessing.cs" />

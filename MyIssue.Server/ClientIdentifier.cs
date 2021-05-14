@@ -13,5 +13,6 @@ namespace MyIssue.Server
         public int Id { get; set; }
         public List<string> CommandHistory { get; set; }
         public int Status { get; set; }
+        public bool terminated { get; set; }
     }
 }

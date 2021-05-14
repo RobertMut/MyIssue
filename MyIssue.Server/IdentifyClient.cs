@@ -28,8 +28,8 @@ namespace MyIssue.Server
                     ConnectedSock = sock,
                     Id = Clients++,
                     CommandHistory = new List<string>(),
-                    Status = 0
-                    
+                    Status = 0,
+                    terminated = false
                 };
                 ac.Client(cli, ct);
                 ct.ThrowIfCancellationRequested();
