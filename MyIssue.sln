@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyIssue.App", "MyIssue.App\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyIssue.Server", "MyIssue.Server\MyIssue.Server.csproj", "{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB", "DB\DB.sqlproj", "{113EE7CE-D897-4AA5-9409-02978B24219C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{113EE7CE-D897-4AA5-9409-02978B24219C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{113EE7CE-D897-4AA5-9409-02978B24219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{113EE7CE-D897-4AA5-9409-02978B24219C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{113EE7CE-D897-4AA5-9409-02978B24219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{113EE7CE-D897-4AA5-9409-02978B24219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{113EE7CE-D897-4AA5-9409-02978B24219C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
