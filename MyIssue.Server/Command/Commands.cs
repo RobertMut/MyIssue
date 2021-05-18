@@ -11,19 +11,19 @@ namespace MyIssue.Server
 {
     public class Commands : ICommands
     {
-
+        Comm.ICommunicate comm = new Comm.Communicate();
 
         public void Login(string input, ClientIdentifier client, CancellationToken ct)
         {
-            Net net = new Connection();
             if (input.Equals("admin"))
             {
-                net.Write(client.ConnectedSock, "Pass:\r\n", ct);
-                client.CommandHistory.Add(net.Receive(client.ConnectedSock, ct));
-                if (client.CommandHistory[client.CommandHistory.Count - 1].Equals("1234"))
+                comm.Write(client.ConnectedSock, "Pass:\r\n", ct);
+                string pass =  comm.Receive(client.ConnectedSock, ct);
+                if (pass.Equals("1234"))
                 {
                     Console.WriteLine("LOGGED!");
-                    client.Status = 3;
+                    client.Status = 2;
+                    client.loggedIn = true;
                     Console.WriteLine(client.Status);
                 }
                 else
@@ -34,41 +34,60 @@ namespace MyIssue.Server
         }
         public void History(ClientIdentifier client, CancellationToken ct)
         {
-            Net net = new Connection();
+            
             string commandHistory = string.Join("\r\n", client.CommandHistory.ToArray())+"\r\n";
             if (commandHistory.Length > 1024) commandHistory = commandHistory.Substring(0, 1019)+"\r\n";
-            net.Write(client.ConnectedSock, commandHistory, ct);
+            comm.Write(client.ConnectedSock, commandHistory, ct);
+        }
+        public void CreateTask(ClientIdentifier client, CancellationToken ct)
+        {
+            Database.DBConnector connector = new Database.DBConnector();
+            Database.Queries dbquery = new Database.Queries();
+            if (client.loggedIn)
+            {
+                comm.Write(client.ConnectedSock, "OK\r\n", ct);
+                client.CommandHistory.Add(comm.Receive(client.ConnectedSock, ct));
+                string[] task = client.CommandHistory[client.CommandHistory.Count - 1].Split(new string[] { "\r\n<NEXT>\r\n" }, StringSplitOptions.None);
+                var sqlparams = connector.SqlBuilder(Program.dbParameters);
+                var query = dbquery.InsertNewTask(task, "dbo.TASKS");
+                connector.MakeQuery(sqlparams, query);
+
+            } else
+            {
+                comm.Write(client.ConnectedSock, "Please log in first!\r\n", ct);
+            }
+
         }
         public void Disconnect(ClientIdentifier client, CancellationToken ct)
         {
             client.terminated = true;
-            Console.WriteLine("{0} - {1} - Disconnected by command", IdentifyClient.Clients, client.ConnectedSock.LocalEndPoint);
-            IdentifyClient.Clients--;
+            Console.WriteLine("{0} - {1} - Disconnected by command", ClientCounter.Clients, client.ConnectedSock.LocalEndPoint);
+            ClientCounter.Clients--;
             client.ConnectedSock.Close();
             client.ConnectedSock.Dispose();
         }
         public void Client(ClientIdentifier client, CancellationToken ct) //move
         {
-            Net n = new Connection();
+            
             CommandParser parser = new CommandParser();
             ct.ThrowIfCancellationRequested();
             using (NetworkStream netS = new NetworkStream(client.ConnectedSock))
             {
                 string response = string.Empty;
-                Console.WriteLine("{0} - {1} - Waiting for Login", n.EndPoint, client.Id);
+                Console.WriteLine("{0} - {1} - Waiting for Login", Comm.Parameters.EndPoint, client.Id);
                 try
                 {
 
-                    n.Write(client.ConnectedSock, "HELLO\r\n", ct);
+                    comm.Write(client.ConnectedSock, "HELLO\r\n", ct);
                     Console.WriteLine("1");
                     while (!client.terminated)
                     {
-                        parser.Parser(n.Receive(client.ConnectedSock, ct), client, ct);
+                        parser.Parser(comm.Receive(client.ConnectedSock, ct), client, ct);
                     }
                     
 
                     if (!client.CommandHistory[client.CommandHistory.Count - 1].StartsWith("Login"))
-                        throw new Exception(n.EndPoint + " - Expected Login. Goodbye."); //move
+                        throw new Exception(Comm.Parameters.EndPoint + " - Ex."); //move
                 }
                 catch (Exception e)
                 {
@@ -76,7 +95,7 @@ namespace MyIssue.Server
                     Console.WriteLine(e.ToString());
                     netS.Close();
                     client.ConnectedSock.Close();
-                    IdentifyClient.Clients--;
+                    ClientCounter.Clients--;
                 }
             }
         }

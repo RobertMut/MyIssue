@@ -25,5 +25,9 @@ namespace MyIssue.Server
         {
             return false;
         }
+        public virtual int? NullableInt(string input)
+        {
+            return null;
+        }
     }
 }

@@ -8,17 +8,28 @@ namespace MyIssue.Server
 {
     class Program
     {
+        public static Database.DBParameters dbParameters;
         static void Main(string[] args)
         {
-            //Net net;
-            Net conn = new Connection();
-            IdentifyClient.Clients = 0;
-            Parameters.BufferSize = 1024;
-            Parameters.Timeout = 10000;
-
+            //Conn.Net net;
+            Comm.IListen listen = new Comm.Listen();
+            ClientCounter.Clients = 0;
+            Comm.Parameters.BufferSize = 1024;
+            Comm.Parameters.Timeout = 10000;
+            dbParameters = new Database.DBParameters()
+            {
+                DBAddress = "DESKTOP-F8Q65V7",
+                Username = "server",
+                Password = "1234",
+                Database = "MyIssueDB",
+                TaskTable = "dbo.tasks",
+                UsersTable = "dbo.users",
+                EmployeesTable = "dbo.employees"
+            };
+            
             try
             {
-                conn.Listen("127.0.0.1", 49153);
+                listen.Listener("127.0.0.1", 49153);
                 Console.ReadKey();
                 //communication.ip = "127.0.0.1";
                 //communication.port = 49153;

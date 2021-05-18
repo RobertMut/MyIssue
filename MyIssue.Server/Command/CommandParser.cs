@@ -9,26 +9,24 @@ namespace MyIssue.Server
 	{
         public void Parser(string input, ClientIdentifier client, CancellationToken ct)
 		{
-
-			ICommands comm = new Commands();
+            Comm.ICommunicate comm = new Comm.Communicate();
+            ICommands cmd = new Commands();
 			string[] command = Splitter(input);
 			client.CommandHistory.Add(input);
             
             try
             {
-                MethodInfo info = comm.GetType().GetMethod(command[0]);
-                //Console.WriteLine(info.Name.ToString());
+                MethodInfo info = cmd.GetType().GetMethod(command[0]);
                 if (info is null)
                 {
-                    Net net = new Connection();
-                    net.Write(client.ConnectedSock, "Command not found!\r\n", ct);
+                    comm.Write(client.ConnectedSock, "Command not found!\r\n", ct);
                     
                 } else if (info.GetParameters().Length.Equals(3))
                 {
-                    info.Invoke(comm, new Object[] { command[1], client, ct });
+                    info.Invoke(cmd, new Object[] { command[1], client, ct });
                 } else if (info.GetParameters().Length.Equals(2))
                 {
-                    info.Invoke(comm, new Object[] { client, ct });
+                    info.Invoke(cmd, new Object[] { client, ct });
                 }
                 
             } catch (Exception e)

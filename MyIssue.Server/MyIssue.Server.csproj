@@ -43,19 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands.cs" />
-    <Compile Include="ClientIdentifier.cs" />
-    <Compile Include="CommandParser.cs" />
-    <Compile Include="ICommands.cs" />
+    <Compile Include="ClientProcessing\ClientCounter.cs" />
+    <Compile Include="Command\Commands.cs" />
+    <Compile Include="ClientProcessing\ClientIdentifier.cs" />
+    <Compile Include="Command\CommandParser.cs" />
+    <Compile Include="Comm\Communicate.cs" />
+    <Compile Include="Comm\INetwork.cs" />
+    <Compile Include="Database\DBConnector.cs" />
+    <Compile Include="Database\DBParameters.cs" />
+    <Compile Include="Database\Queries.cs" />
+    <Compile Include="Command\ICommands.cs" />
     <Compile Include="Comm\Net.cs" />
     <Compile Include="Comm\Parameters.cs" />
     <Compile Include="Tools\BoolProcessing.cs" />
     <Compile Include="Tools\StringProcessing.cs" />
-    <Compile Include="ErrorHandler.cs" />
-    <Compile Include="IdentifyClient.cs" />
+    <Compile Include="Handler\ErrorHandler.cs" />
+    <Compile Include="ClientProcessing\IdentifyClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Comm\Connection.cs" />
+    <Compile Include="Comm\Listen.cs" />
     <Compile Include="Tools\Tools.cs" />
   </ItemGroup>
   <ItemGroup>

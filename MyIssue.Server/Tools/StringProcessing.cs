@@ -21,6 +21,11 @@ namespace MyIssue.Server
         {
             return Encoding.UTF8.GetString(input, 0, length).Replace("\u0000", "");
         }
-
+        public override int? NullableInt(string input)
+        {
+            int i;
+            if (int.TryParse(input, out i)) return i;
+            return null;
+        }
     }
 }
