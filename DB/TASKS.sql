@@ -1,11 +1,11 @@
 ﻿CREATE TABLE [dbo].[TASKS]
 (
-	[taskId] NUMERIC(12) NOT NULL, 
+	[taskId] NUMERIC(12) NOT NULL IDENTITY(1,1), 
     [taskType] NUMERIC(3) NOT NULL, 
     [taskTitle] VARCHAR(100) NOT NULL, 
     [taskDesc] VARCHAR(MAX) NULL, 
-    [taskOwner] VARCHAR(10) NOT NULL, 
-    [taskAssignment] VARCHAR(10) NOT NULL, 
+    [taskOwner] VARCHAR(10) NULL, 
+    [taskAssignment] VARCHAR(10) NULL, 
     [taskClient] NUMERIC(5) NULL, 
     [taskStart] DATETIME NULL, 
     [taskEnd] DATETIME NULL, 
