@@ -1,50 +1,18 @@
-﻿using System;
+﻿using MyIssue.Server.Comm;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MyIssue.Server
+namespace MyIssue.Server.Comm
 {
-    class Connection : Net
+    public class Communicate : ICommunicate
     {
-        public override async Task Listen(string ipAddres, int port, int bufferSize = 1024)
-        {
-            //CancellationTokenSource tokenSource;
-            Parameters.ConnBuffer = new byte[Parameters.BufferSize];
-            base.EndPoint = SetEndPoint(ipAddres, port);
-            IdentifyClient client = new IdentifyClient();
-            try
-            {
-                ListenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                ListenSocket.Bind(base.EndPoint);
-                ListenSocket.Listen(100);
-                CancellationTokenSource tokenSource;
-                while (true)
-                {
-                    try
-                    {
-                        Console.WriteLine("Accepting...");
-                        Socket sock = ListenSocket.AcceptAsync().Result;
-                        Console.WriteLine(sock.Connected.ToString());
-                        await client.ConnectedTask(sock, 
-                            (tokenSource = new CancellationTokenSource()).Token);
-
-                    } catch (Exception e)
-                    {
-                        Console.WriteLine(e.ToString());
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                Console.WriteLine("token!");
-            }
-
-        }
-        public override string Receive(Socket sock, CancellationToken ct)
+        public string Receive(Socket sock, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             using (NetworkStream netStream = new NetworkStream(sock))
@@ -68,7 +36,8 @@ namespace MyIssue.Server
                             //Console.WriteLine("{0} - {1}", x, input);
                             if (x > 0 && !f.Equals(-1)) terminator = true;
                             //ct.ThrowIfCancellationRequested();
-                        } catch (Exception e)
+                        }
+                        catch (Exception e)
                         {
                             Console.WriteLine(e.ToString());
                         }
@@ -84,14 +53,14 @@ namespace MyIssue.Server
                     Write(sock, e.Message, ct);
                     netStream.Close();
                     sock.Close();
-                    IdentifyClient.Clients--;
+                    ClientCounter.Clients--;
                     return String.Empty;
 
 
                 }
             }
         }
-        public override void Write(Socket sock, string dataToSend, CancellationToken ct)
+        public void Write(Socket sock, string dataToSend, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             using (NetworkStream netStream = new NetworkStream(sock))
@@ -108,17 +77,12 @@ namespace MyIssue.Server
                     e.ToString();
                     netStream.Close();
                     sock.Close();
-                    IdentifyClient.Clients--;
+                    ClientCounter.Clients--;
                 }
 
 
             }
 
-        }
-        private IPEndPoint SetEndPoint(string ipAddr, int port)
-        {
-            IPAddress ip = IPAddress.Parse(ipAddr);
-            return new IPEndPoint(ip, port);
         }
     }
 }
