@@ -22,7 +22,7 @@ namespace MyIssue.Server.Database
             }
             Console.WriteLine("DONE\r\n");
         }
-        public SqlConnectionStringBuilder SqlBuilder(DBParameters parameters)
+        public SqlConnectionStringBuilder SqlBuilder(DBParametersTemplate parameters)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = parameters.DBAddress;
