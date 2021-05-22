@@ -43,25 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientProcessing\Client.cs" />
     <Compile Include="ClientProcessing\ClientCounter.cs" />
-    <Compile Include="Command\Commands.cs" />
-    <Compile Include="ClientProcessing\ClientIdentifier.cs" />
-    <Compile Include="Command\CommandParser.cs" />
-    <Compile Include="Comm\Communicate.cs" />
-    <Compile Include="Comm\INetwork.cs" />
-    <Compile Include="Database\DBConnector.cs" />
+    <Compile Include="ClientProcessing\ClientBuilder.cs" />
+    <Compile Include="ClientProcessing\IProcessClient.cs" />
+    <Compile Include="ClientProcessing\ProcessClient.cs" />
+    <Compile Include="Commands\Commands.cs" />
+    <Compile Include="ClientProcessing\IClientBuilder.cs" />
+    <Compile Include="Commands\CommandParser.cs" />
+    <Compile Include="Commands\IDBCommands.cs" />
+    <Compile Include="Commands\IUserCommands.cs" />
     <Compile Include="Database\DBParameters.cs" />
+    <Compile Include="Net\Network.cs" />
+    <Compile Include="Net\INetwork.cs" />
+    <Compile Include="Database\DBParameterCoordinator.cs" />
+    <Compile Include="Database\DBParametersBuilder.cs" />
+    <Compile Include="Database\DBConnector.cs" />
+    <Compile Include="Database\DBParametersTemplate.cs" />
+    <Compile Include="Database\IDBParametersBuilder.cs" />
     <Compile Include="Database\Queries.cs" />
-    <Compile Include="Command\ICommands.cs" />
-    <Compile Include="Comm\Net.cs" />
-    <Compile Include="Comm\Parameters.cs" />
+    <Compile Include="Commands\ILogin.cs" />
+    <Compile Include="Net\Parameters.cs" />
     <Compile Include="Tools\BoolProcessing.cs" />
     <Compile Include="Tools\StringProcessing.cs" />
     <Compile Include="Handler\ErrorHandler.cs" />
     <Compile Include="ClientProcessing\IdentifyClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Comm\Listen.cs" />
     <Compile Include="Tools\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
