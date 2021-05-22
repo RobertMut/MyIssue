@@ -8,39 +8,17 @@ using System.Threading.Tasks;
 
 namespace MyIssue.Server
 {
-    class IdentifyClient
+    public class IdentifyClient
     {
-        
-        public Task ConnectedTask(Socket sock, CancellationToken ct)
+        public Client Identify(IClientBuilder _builder, Socket s, int Id, List<string> c, int status, bool t)
         {
-            Identify(sock, ct);
-            return Task.CompletedTask;
+            _builder.SetSocket(s);
+            _builder.SetId(Id);
+            _builder.SetCommandHistory(c);
+            _builder.SetStatus(status);
+            _builder.SetTerminated(t);
+            return _builder.GetClient();
         }
-        private void Identify(Socket sock, CancellationToken ct)
-        {
-            try
-            {
-                Commands ac = new Commands();
-                Console.WriteLine("Connected");
-                var cli = new ClientIdentifier()
-                {
-                    ConnectedSock = sock,
-                    Id = ClientCounter.Clients++,
-                    CommandHistory = new List<string>(),
-                    Status = 0,
-                    terminated = false,
-                    loggedIn = false
-                };
-                ac.Client(cli, ct);
-                ct.ThrowIfCancellationRequested();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                sock.Close();
 
-            }
-
-        }
     }
 }
