@@ -10,6 +10,8 @@ namespace MyIssue.Server
     {
         static void Main(string[] args)
         {
+            IArchiveFile _archiveFile = new ArchiveFile();
+            LogWriter.Init(_archiveFile);
             Database.DBParameterCoordinator dBcoor = new Database.DBParameterCoordinator();
             Net.INetwork _net = new Net.Network();
             Database.IDBParametersBuilder dBParametersBuilder = new Database.DBParametersBuilder();
@@ -17,7 +19,8 @@ namespace MyIssue.Server
             ClientCounter.Clients = 0;
             Net.Parameters.BufferSize = 1024;
             Net.Parameters.Timeout = 10000;
-            dBcoor.Parameters(dBParametersBuilder, "MyIssueDB", "127.0.0.1", "server", "1234", "dbo.TASKS", "dbo.USERS", "dbo.EMPLOYEES");
+            Database.DBParameters.Parameters=dBcoor.Parameters(
+                dBParametersBuilder, "MyIssueDB", "DESKTOP-F8Q65V7", "server", "1234", "dbo.TASKS", "dbo.USERS", "dbo.EMPLOYEES");
 
            
 
@@ -30,9 +33,9 @@ namespace MyIssue.Server
                 //communication.ip = "127.0.0.1";
                 //communication.port = 49153;
 
-            } catch (Exception e)
+            } catch (InvalidOperationException ioe)
             {
-                Console.WriteLine(e.ToString());
+                ExceptionHandler.HandleMyException(ioe);
                 Console.ReadKey();
             }
 

@@ -27,7 +27,6 @@ namespace MyIssue.Server.Net
                 {
                     Console.WriteLine("Accepting...");
                     Socket sock = Parameters.ListenSocket.AcceptAsync().Result;
-                    //Console.WriteLine(sock.Connected.ToString());
                     Task.Run(async () =>
                     {
                         ct = new CancellationTokenSource();
@@ -37,14 +36,13 @@ namespace MyIssue.Server.Net
                     );
                 }
             }
-            catch (Exception e)
+            catch (ArgumentNullException ane)
             {
-                Console.WriteLine(e.ToString());
+                ExceptionHandler.HandleMyException(ane);
                 
-            }
-            finally
+            } catch (SocketException se)
             {
-                ClientCounter.Clients--;
+                ExceptionHandler.HandleMyException(se);
             }
 
         }
@@ -62,7 +60,7 @@ namespace MyIssue.Server.Net
 
                 try
                 {
-                    cts.CancelAfter(60000);
+                    cts.CancelAfter(600000);
                     while (!terminator || !sock.Connected)
                     {
                         ct.ThrowIfCancellationRequested();
@@ -78,7 +76,7 @@ namespace MyIssue.Server.Net
                     netStream.Close();
                     terminator = true;
                     sock.Close();
-                    Console.WriteLine(tce.Message);
+                    ExceptionHandler.HandleMyException(tce);
 
                 }
 
@@ -98,12 +96,11 @@ namespace MyIssue.Server.Net
                     writeBuffer = t.ByteMessage(dataToSend);
                     netStream.WriteAsync(writeBuffer, 0, writeBuffer.Length);
                 }
-                catch (Exception e)
+                catch (ArgumentNullException ane)
                 {
-                    e.ToString();
+                    ExceptionHandler.HandleMyException(ane);
                     netStream.Close();
                     sock.Close();
-                    ClientCounter.Clients--;
                 }
 
 

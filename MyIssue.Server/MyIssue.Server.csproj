@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,7 +55,10 @@
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="Commands\IDBCommands.cs" />
     <Compile Include="Commands\IUserCommands.cs" />
+    <Compile Include="ConsoleOut\ArchiveFile.cs" />
     <Compile Include="Database\DBParameters.cs" />
+    <Compile Include="ConsoleOut\LogWriter.cs" />
+    <Compile Include="ConsoleOut\IArchiveFile.cs" />
     <Compile Include="Net\Network.cs" />
     <Compile Include="Net\INetwork.cs" />
     <Compile Include="Database\DBParameterCoordinator.cs" />
@@ -66,7 +71,7 @@
     <Compile Include="Net\Parameters.cs" />
     <Compile Include="Tools\BoolProcessing.cs" />
     <Compile Include="Tools\StringProcessing.cs" />
-    <Compile Include="Handler\ErrorHandler.cs" />
+    <Compile Include="Handler\ExceptionHandler.cs" />
     <Compile Include="ClientProcessing\IdentifyClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

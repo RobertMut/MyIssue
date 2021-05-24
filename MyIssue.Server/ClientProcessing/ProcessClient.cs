@@ -34,7 +34,7 @@ namespace MyIssue.Server
                 string response = string.Empty;
                 Console.WriteLine("{0} - {1} - Waiting for Login", Parameters.EndPoint, client.Id);
 
-                _net.Write(client.ConnectedSock, "HELLO\r\n", ct);
+                _net.Write(client.ConnectedSock, "LOGIN\r\n", ct);
                 while (!client.Terminated)
                 {
                     ct.ThrowIfCancellationRequested();
