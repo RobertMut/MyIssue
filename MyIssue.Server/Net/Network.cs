@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+using MyIssue.Server.Tools;
 
 namespace MyIssue.Server.Net
 {
     public class Network : INetwork
     {
-        private IProcessClient _processClient;
+        private readonly IProcessClient _processClient;
+        private readonly IStringTools _tools;
+        public Network()
+        {
+            _tools = new StringTools();
+            _processClient = new ProcessClient();
+        }
         public void Listener(string ipAddres, int port)
         {
-            _processClient = new ProcessClient();
+            
             Parameters.ConnBuffer = new byte[Parameters.BufferSize];
             Parameters.EndPoint = SetEndPoint(ipAddres, port);
             try
@@ -53,7 +58,6 @@ namespace MyIssue.Server.Net
             {
                 byte[] receiveBuffer = new byte[Parameters.BufferSize];
                 netStream.ReadTimeout = Parameters.Timeout;
-                Tools t = new StringProcessing();
                 bool terminator = false;
                 string input = string.Empty, workString = string.Empty;
                 int x = 0;
@@ -65,7 +69,7 @@ namespace MyIssue.Server.Net
                     {
                         ct.ThrowIfCancellationRequested();
                         x = await netStream.ReadAsync(receiveBuffer, 0, receiveBuffer.Length, cts.Token);
-                        input += t.StringMessage(receiveBuffer, x);
+                        input += _tools.StringMessage(receiveBuffer, x);
                         int f = input.IndexOf("\r\n<EOF>\r\n");
                         if (x > 0 && !f.Equals(-1)) terminator = true;
                     }
@@ -92,8 +96,7 @@ namespace MyIssue.Server.Net
                 byte[] writeBuffer = new byte[Parameters.BufferSize];
                 try
                 {
-                    Tools t = new StringProcessing();
-                    writeBuffer = t.ByteMessage(dataToSend);
+                    writeBuffer = _tools.ByteMessage(dataToSend);
                     netStream.WriteAsync(writeBuffer, 0, writeBuffer.Length);
                 }
                 catch (ArgumentNullException ane)

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 
-namespace MyIssue.Server
+namespace MyIssue.Server.Commands
 {
     public interface ILogin
     {
