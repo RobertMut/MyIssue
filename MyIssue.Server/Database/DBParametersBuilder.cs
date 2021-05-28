@@ -1,46 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyIssue.Server.Database
+﻿namespace MyIssue.Server.Database
 {
     public class DBParametersBuilder : IDBParametersBuilder
     {
-        DBParametersTemplate dBTemp = new DBParametersTemplate();
-        public void SetDBAddress(string address)
+        protected DBParametersTemplate dBTemp;
+        private DBParametersBuilder()
+        {
+            dBTemp = new DBParametersTemplate();
+        }
+        public IDBParametersBuilder SetDBAddress(string address)
         {
             dBTemp.DBAddress = address;
+            return this;
         }
-        public void SetUsername(string username)
+        public IDBParametersBuilder SetUsername(string username)
         {
             dBTemp.Username = username;
+            return this;
         }
-        public void SetPassword(string pass)
+        public IDBParametersBuilder SetPassword(string pass)
         {
             dBTemp.Password = pass;
+            return this;
         }
-        public void SetDatabase(string databaseName)
+        public IDBParametersBuilder SetDatabase(string databaseName)
         {
             dBTemp.Database = databaseName;
+            return this;
         }
-        public void SetTaskTable(string taskTableName)
+        public IDBParametersBuilder SetTaskTable(string taskTableName)
         {
             dBTemp.TaskTable = taskTableName;
+            return this;
         }
-        public void SetUsersTable(string usersTableName)
+        public IDBParametersBuilder SetUsersTable(string usersTableName)
         {
             dBTemp.UsersTable = usersTableName;
+            return this;
         }
-        public void SetEmployeesTable(string employeesTableName)
+        public IDBParametersBuilder SetEmployeesTable(string employeesTableName)
         {
             dBTemp.EmployeesTable = employeesTableName;
+            return this;
         }
-        public DBParametersTemplate GetParameters()
-        {
-            return dBTemp;
-        }
+        public DBParametersTemplate Build() => dBTemp;
+        public static DBParametersBuilder Create() => new DBParametersBuilder();
 
     }
 }

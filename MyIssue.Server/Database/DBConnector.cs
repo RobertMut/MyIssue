@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MyIssue.Server.Database
 {
-    public class DBConnector
+    public class DBConnector : IDBConnector
     {
-        public void MakeWriteQuery(SqlConnectionStringBuilder builder, SqlCommand command)
+        public void MakeWriteQuery(SqlConnectionStringBuilder sqlConnection, SqlCommand command)
         {
-            using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
+            using (SqlConnection conn = new SqlConnection(sqlConnection.ConnectionString))
             {
                 try
                 {
@@ -36,10 +36,10 @@ namespace MyIssue.Server.Database
             }
 
         }
-        public DataTable MakeReadQuery(SqlConnectionStringBuilder builder, SqlCommand command)
+        public DataTable MakeReadQuery(SqlConnectionStringBuilder sqlConnection, SqlCommand command)
         {
             DataSet data = new DataSet();
-            using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
+            using (SqlConnection conn = new SqlConnection(sqlConnection.ConnectionString))
             {
                 try
                 {
@@ -59,16 +59,6 @@ namespace MyIssue.Server.Database
                 return data.Tables["RESULT"];
             }
         }
-        public SqlConnectionStringBuilder SqlBuilder(DBParametersTemplate parameters)
-        {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
-            {
-                DataSource = parameters.DBAddress,
-                UserID = parameters.Username,
-                Password = parameters.Password,
-                InitialCatalog = parameters.Database
-            };
-            return builder;
-        }
+
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 namespace MyIssue.Server.Database
 {
     public static class DBParameters
     {
         public static DBParametersTemplate Parameters { get; set; }
+        public static SqlConnectionStringBuilder ConnectionString { get; set; }
     }
 }
