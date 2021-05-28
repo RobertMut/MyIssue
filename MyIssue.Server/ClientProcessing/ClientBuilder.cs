@@ -1,38 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyIssue.Server
 {
     public class ClientBuilder : IClientBuilder
     {
-        private readonly Client _client = new Client();
-        public void SetSocket(Socket socket)
+        protected Client client;
+
+        private ClientBuilder()
         {
-            _client.ConnectedSock = socket;
+            client = new Client();
         }
-        public void SetId(int Id)
+        public IClientBuilder SetSocket(Socket socket)
         {
-            _client.Id = Id;
+            client.ConnectedSock = socket;
+            return this;
         }
-        public void SetCommandHistory(List<string> list)
+        public IClientBuilder SetId(int Id)
         {
-            _client.CommandHistory = list;
+            client.Id = Id;
+            return this;
         }
-        public void SetStatus(int status)
+        public IClientBuilder SetCommandHistory(List<string> list)
         {
-            _client.Status = status;
+            client.CommandHistory = list;
+            return this;
         }
-        public void SetTerminated(bool terminated)
+        public IClientBuilder SetStatus(int status)
         {
-            _client.Terminated = terminated;
+            client.Status = status;
+            return this;
         }
-        public Client GetClient()
+        public IClientBuilder SetTerminated(bool terminated)
         {
-            return _client;
+            client.Terminated = terminated;
+            return this;
         }
+        public Client Build() => client;
+        public static ClientBuilder Create() => new ClientBuilder();
     }
 }
