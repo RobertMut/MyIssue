@@ -4,28 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyIssue.Server
+namespace MyIssue.Server.Tools
 {
-    public class StringProcessing : Tools
+    public class StringTools : IStringTools
     {
-        public override byte[] ByteMessage(string input)
+        public byte[] ByteMessage(string input)
         {
             return Encoding.UTF8.GetBytes(input);
         }
-        public override string ExtractLogin(string loginInput)
+        public string ExtractLogin(string loginInput)
         {
-            //Console.WriteLine(loginInput);
             return loginInput.Remove(0, loginInput.IndexOf(' ') + 1);
         }
-        public override string StringMessage(byte[] input, int length)
+        public string StringMessage(byte[] input, int length)
         {
             return Encoding.UTF8.GetString(input, 0, length).Replace("\u0000", "");
         }
-        public override int? NullableInt(string input)
+        public int? NullableInt(string input)
         {
             int i;
             if (int.TryParse(input, out i)) return i;
             return null;
+        }
+        public string[] CommandSplitter(string input, string splitString)
+        {
+            return input.Split(new string[] { splitString }, StringSplitOptions.None);
         }
     }
 }
