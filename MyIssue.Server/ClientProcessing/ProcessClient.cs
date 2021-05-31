@@ -10,11 +10,7 @@ namespace MyIssue.Server
 {
     public class ProcessClient : IProcessClient
     {
-        private INetwork _net;
-        public ProcessClient()
-        {
-            _net = new Network();
-        }
+        private INetwork _net = new Network();
 
         public async Task ConnectedTask(Socket sock, CancellationToken ct)
         {

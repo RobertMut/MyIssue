@@ -10,16 +10,11 @@ namespace MyIssue.Server.Net
 {
     public class Network : INetwork
     {
-        private readonly IProcessClient _processClient;
-        private readonly IStringTools _tools;
-        public Network()
-        {
-            _tools = new StringTools();
-            _processClient = new ProcessClient();
-        }
+        private IProcessClient _processClient;
+        private IStringTools _tools; 
         public void Listener(string ipAddres, int port)
         {
-            
+            _processClient = new ProcessClient();
             Parameters.ConnBuffer = new byte[Parameters.BufferSize];
             Parameters.EndPoint = SetEndPoint(ipAddres, port);
             try
@@ -53,6 +48,7 @@ namespace MyIssue.Server.Net
         }
         public async Task<string> Receive(Socket sock, CancellationToken ct)
         {
+            _tools = new StringTools();
             using (NetworkStream netStream = new NetworkStream(sock))
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
             {
@@ -90,6 +86,7 @@ namespace MyIssue.Server.Net
         }
         public void Write(Socket sock, string dataToSend, CancellationToken ct)
         {
+            _tools = new StringTools();
             ct.ThrowIfCancellationRequested();
             using (NetworkStream netStream = new NetworkStream(sock))
             {
