@@ -1,19 +1,36 @@
 ﻿using System;
 using System.Data.SqlClient;
+using MyIssue.Server.Net;
+using MyIssue.Server.Database;
+using MyIssue.Server.Imap;
+using System.Threading;
+
 namespace MyIssue.Server
 {
     class Program
     {
+
         static void Main(string[] args)
         {
+
             IArchiveFile _archiveFile = new ArchiveFile();
+            INetwork _net = new Network();
+            IImapConnect _imap = new ImapConnect();
             LogWriter.Init(_archiveFile);
-            Net.INetwork _net = new Net.Network();
+            
 
             ClientCounter.Clients = 0;
-            Net.Parameters.BufferSize = 1024;
-            Net.Parameters.Timeout = 10000;
-            Database.DBParameters.Parameters = Database.DBParametersBuilder
+            Parameters.BufferSize = 1024;
+            Parameters.Timeout = 10000;
+            ImapParameters.Parameters = ImapParametersBuilder
+                .Create()
+                    .SetAddress("127.0.0.1")
+                    .SetPort(143)
+                    .SetSocketOptions(MailKit.Security.SecureSocketOptions.Auto)
+                    .SetLogin("root")
+                    .SetPassword("1234")
+                .Build();
+            DBParameters.Parameters = DBParametersBuilder
                 .Create()
                     .SetDBAddress("DESKTOP-F8Q65V7")
                     .SetDatabase("MyIssueDB")
@@ -22,17 +39,19 @@ namespace MyIssue.Server
                     .SetEmployeesTable("dbo.EMPLOYEES")
                     .SetUsersTable("dbo.USERS")
                     .SetTaskTable("dbo.TASKS")
+                    .SetClientsTable("dbo.CLIENTS")
                 .Build();
-            Database.DBParameters.ConnectionString = new SqlConnectionStringBuilder()
+            DBParameters.ConnectionString = new SqlConnectionStringBuilder()
             {
-                DataSource = Database.DBParameters.Parameters.DBAddress,
-                UserID = Database.DBParameters.Parameters.Username,
-                Password = Database.DBParameters.Parameters.Password,
-                InitialCatalog = Database.DBParameters.Parameters.Database
+                DataSource = DBParameters.Parameters.DBAddress,
+                UserID = DBParameters.Parameters.Username,
+                Password = DBParameters.Parameters.Password,
+                InitialCatalog = DBParameters.Parameters.Database
             };
             try
             {
-
+                CancellationToken ct = new CancellationToken();
+                _imap.RunImap(ct);
                 _net.Listener("127.0.0.1", 49153);
                 Console.ReadKey();
                 //communication.ip = "127.0.0.1";
