@@ -42,6 +42,11 @@
             dBTemp.EmployeesTable = employeesTableName;
             return this;
         }
+        public IDBParametersBuilder SetClientsTable(string clientsTableName)
+        {
+            dBTemp.ClientsTable = clientsTableName;
+            return this;
+        }
         public DBParametersTemplate Build() => dBTemp;
         public static DBParametersBuilder Create() => new DBParametersBuilder();
 

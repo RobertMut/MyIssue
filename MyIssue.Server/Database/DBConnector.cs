@@ -19,12 +19,11 @@ namespace MyIssue.Server.Database
                     conn.Open();
                     using (SqlCommand cmd = command)
                     {
-                        Console.WriteLine(cmd.CommandText);
                         cmd.Connection = conn;
                         cmd.ExecuteNonQuery();
                         conn.Close();
                     }
-                    Console.WriteLine("DONE\r\n");
+                    Console.WriteLine("DB - {0} - Data was written to database\r\n", DateTime.Now);
                 }
                 catch (Exception sqle)
                 {
@@ -49,7 +48,7 @@ namespace MyIssue.Server.Database
                     {
                         adapter.Fill(data, "RESULT");
                     }
-                    Console.WriteLine("DONE\r\n");
+                    Console.WriteLine("DB - {0} - Data was read from database\r\n", DateTime.Now);
                 }
                 catch (SqlException sqle)
                 {

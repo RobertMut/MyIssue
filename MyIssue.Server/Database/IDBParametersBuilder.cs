@@ -9,6 +9,7 @@
         IDBParametersBuilder SetTaskTable(string taskTableName);
         IDBParametersBuilder SetUsersTable(string usersTableName);
         IDBParametersBuilder SetEmployeesTable(string employeesTableName);
+        IDBParametersBuilder SetClientsTable(string clientsTableName);
         DBParametersTemplate Build();
     }
 }

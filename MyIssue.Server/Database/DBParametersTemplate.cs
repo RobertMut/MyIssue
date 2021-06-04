@@ -15,5 +15,6 @@ namespace MyIssue.Server.Database
         public string TaskTable { get; set; }
         public string UsersTable { get; set; }
         public string EmployeesTable { get; set; }
+        public string ClientsTable { get; set; }
     }
 }
