@@ -12,23 +12,22 @@ namespace MyIssue.Server.Tools
         {
             return Encoding.UTF8.GetBytes(input);
         }
-        public string ExtractLogin(string loginInput)
-        {
-            return loginInput.Remove(0, loginInput.IndexOf(' ') + 1);
-        }
         public string StringMessage(byte[] input, int length)
         {
             return Encoding.UTF8.GetString(input, 0, length).Replace("\u0000", "");
         }
         public int? NullableInt(string input)
         {
-            int i;
-            if (int.TryParse(input, out i)) return i;
+            if (int.TryParse(input, out int i)) return i;
             return null;
         }
         public string[] CommandSplitter(string input, string splitString)
         {
             return input.Split(new string[] { splitString }, StringSplitOptions.None);
+        }
+        public string[] SplitBrackets(string input, char firstbracket, char secondbracket)
+        {
+            return input.Split(firstbracket, secondbracket);
         }
     }
 }
