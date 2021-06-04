@@ -5,7 +5,7 @@ using MyIssue.Server.Tools;
 
 namespace MyIssue.Server.Database
 {
-    public class Queries : IUserQueries, IAdminQueries
+    public class Queries : IUserQueries, IAdminQueries, IImapQueries
     {
         private readonly IStringTools _t;
         public Queries()
@@ -71,6 +71,25 @@ namespace MyIssue.Server.Database
             return new SqlCommand(
                 string.Format("UPDATE {0} SET {0}.status = \'3\' WHERE {0}.userLogin = {1}", table, name)
                 );
+
+        }
+        public SqlCommand ImapNewTask(string[] values, string table)
+        {
+            string selectQuery = string.Format("SELECT [clientId] FROM {0} WHERE [clientName] = @CLIENT", DBParameters.Parameters.ClientsTable);
+            string insertQuery = string.Format("INSERT INTO {0}(taskTitle, taskDesc, taskCreation, taskClient, taskType, mailId)VALUES(@TITLE, @DESC, @DATE, ({1}), @TYPE, @MAILID)", table, selectQuery);
+            using (SqlCommand cmd = new SqlCommand(insertQuery))
+            {
+                DateTime.TryParse(values[2], out DateTime date);
+                int? client = _t.NullableInt(values[3]);
+                cmd.Parameters.AddWithValue("@TITLE", values[0]);
+                cmd.Parameters.AddWithValue("@DESC", values[1]);
+                cmd.Parameters.AddWithValue("@DATE", Convert.ToDateTime(values[2]));
+                cmd.Parameters.AddWithValue("@CLIENT", values[3]);
+                cmd.Parameters.AddWithValue("@TYPE", Convert.ToInt32(values[4]));
+                cmd.Parameters.AddWithValue("@MAILID", values[5]);
+                Console.WriteLine(cmd.CommandText);
+                return cmd;
+            }
 
         }
     }

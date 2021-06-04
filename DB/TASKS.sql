@@ -10,6 +10,7 @@
     [taskStart] DATETIME NULL, 
     [taskEnd] DATETIME NULL, 
     [taskCreation] DATETIME NOT NULL,
+    [mailId] VARCHAR(100) NULL,
     CONSTRAINT PK_taskId PRIMARY KEY ([taskId]),
     CONSTRAINT FK_taskType_typeId FOREIGN KEY ([taskType])
         REFERENCES TASKTYPES ([typeId])
