@@ -46,10 +46,12 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +90,14 @@
     <Compile Include="Imap\ImapParametersTemplate.cs" />
     <Compile Include="Imap\ImapConnect.cs" />
     <Compile Include="Imap\IImapParse.cs" />
+    <Compile Include="IO\ConfigurationNotFoundException.cs" />
+    <Compile Include="IO\Config.cs" />
+    <Compile Include="IO\ConfigValue.cs" />
+    <Compile Include="IO\IConfigValue.cs" />
+    <Compile Include="IO\IReadConfig.cs" />
+    <Compile Include="IO\IWriteConfig.cs" />
+    <Compile Include="IO\OpenConfiguration.cs" />
+    <Compile Include="IO\WriteConfiguration.cs" />
     <Compile Include="Net\Network.cs" />
     <Compile Include="Net\INetwork.cs" />
     <Compile Include="Database\DBConnector.cs" />
@@ -106,5 +116,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
