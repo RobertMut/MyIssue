@@ -28,11 +28,11 @@ namespace MyIssue.Server
             try
             {
                 CancellationToken ct = new CancellationToken();
-                bool newConfig = _write.WriteEmptyConfig();
+                bool newConfig = _write.WriteEmptyConfig("configuration.xml",Config.emptyConfig);
                 if (newConfig) throw new ConfigurationNotFoundException("Configuration file does not exist");
                 if (!newConfig)
                 {
-                    var config = _read.OpenConfig();
+                    var config = _read.OpenConfig("configuration.xml");
                     _c = new ConfigValue(config);
                     string listen = _c.GetValue("listenAddress");
                     int port = Convert.ToInt32(_c.GetValue("port"));

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MyIssue.Server.IO
 {
-    interface IWriteConfig
+    public interface IWriteConfig
     {
-        bool WriteEmptyConfig();
+        bool WriteEmptyConfig(string path,string configuration);
     }
 }

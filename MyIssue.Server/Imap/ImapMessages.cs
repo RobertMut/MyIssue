@@ -38,7 +38,6 @@ namespace MyIssue.Server.Imap
 
         public async Task ImapListenNewMessagesAsync(CancellationToken ct)
         {
-            Console.WriteLine("IMAP - {0} - Connected", DateTime.Now);
             token = CancellationTokenSource.CreateLinkedTokenSource(ct).Token;
             cancelToken = new CancellationTokenSource();
             await idleClient.Inbox.OpenAsync(FolderAccess.ReadOnly, token);

@@ -9,13 +9,13 @@ namespace MyIssue.Server.IO
 {
     public class OpenConfiguration : IReadConfig
     {
-        public XDocument OpenConfig()
+        public XDocument OpenConfig(string path)
         {
             try
             {
-                if (File.Exists("configuration.xml"))
+                if (File.Exists(path))
                 {
-                    return XDocument.Load("configuration.xml");
+                    return XDocument.Load(path);
 
                 }
                 else

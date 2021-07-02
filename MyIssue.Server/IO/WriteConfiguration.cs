@@ -9,17 +9,17 @@ using MyIssue.Server.Tools;
 
 namespace MyIssue.Server.IO
 {
-    class WriteConfiguration : IWriteConfig
+    public class WriteConfiguration : IWriteConfig
     {
         IStringTools _tools;
-        public bool WriteEmptyConfig()
+        public bool WriteEmptyConfig(string path, string configuration)
         {
-            if (!File.Exists("configuration.xml"))
+            if (!File.Exists(path))
             {
                 Console.WriteLine("IO - {0} - Configuration file does not exists!", DateTime.Now);
                 _tools = new StringTools();
-                byte[] fileContents = _tools.ByteMessage(Config.emptyConfig);
-                using (var fs = File.Create("configuration.xml"))
+                byte[] fileContents = _tools.ByteMessage(configuration);
+                using (var fs = File.Create(path))
                 {
                     fs.Write(fileContents, 0, fileContents.Length);
                 }

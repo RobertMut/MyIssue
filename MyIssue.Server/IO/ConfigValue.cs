@@ -4,7 +4,7 @@ using System;
 
 namespace MyIssue.Server.IO
 {
-    class ConfigValue : IConfigValue
+    public class ConfigValue : IConfigValue
     {
         private readonly XDocument d;
         public ConfigValue(XDocument doc)

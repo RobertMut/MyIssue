@@ -10,6 +10,6 @@ namespace MyIssue.Server.IO
 {
     public interface IReadConfig
     {
-        XDocument OpenConfig();
+        XDocument OpenConfig(string path);
     }
 }

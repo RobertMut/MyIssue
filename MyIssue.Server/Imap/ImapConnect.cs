@@ -29,6 +29,7 @@ namespace MyIssue.Server.Imap
                 _parse = new ImapMessages(idleClient);
                 Console.WriteLine("IMAP - {0} - Connecting to server...", DateTime.Now);
                 ConnectToImap(idleClient, token);
+                Console.WriteLine("IMAP - {0} - Connected", DateTime.Now);
                 var task = _parse.ImapListenNewMessagesAsync(token);
                 task.GetAwaiter().GetResult();
             }
