@@ -8,25 +8,23 @@ using System.Threading.Tasks;
 using MyIssue.Server.Database;
 using MyIssue.Server.Tools;
 using System.Threading;
-using MailKit.Security;
-using System.Net.Sockets;
 using System.IO;
 
 namespace MyIssue.Server.Imap
 {
     public class ImapMessages : IImapParse
     {
-        IImapQueries _queries;
-        IStringTools _tools;
-        IDBConnector _conn;
-        IImapConnect _iconn;
+        private IImapQueries _queries;
+        private IStringTools _tools;
+        private IDBConnector _conn;
+        private IImapConnect _iconn;
 
         private ImapClient idleClient;
         private ImapClient getClient;
-        CancellationToken token;
-        CancellationTokenSource cancelToken;
-        CancellationTokenSource doneSrc;
-        bool freshRun = true;
+        private CancellationToken token;
+        private CancellationTokenSource cancelToken;
+        private CancellationTokenSource doneSrc;
+        private bool freshRun = true;
 
 
         public ImapMessages(ImapClient idleClient)
@@ -128,7 +126,6 @@ namespace MyIssue.Server.Imap
                 {
                     if (freshRun) freshRun = false;
                     _iconn.ConnectToImap(getClient, token);
-                    //imapclient currently busy processing a command in another thread
                     await getClient.Inbox.OpenAsync(FolderAccess.ReadWrite, token);
                     getClient.Inbox.SearchAsync(SearchQuery.NotSeen.And(
                     SearchQuery.SubjectContains("[Issue]"))
@@ -175,8 +172,8 @@ namespace MyIssue.Server.Imap
                 m.Date.DateTime.ToString(),
                 email[1],
                 "1",
-                m.MessageId.ToString()
-            }, DBParameters.Parameters.TaskTable);
+                m.GetHashCode().ToString()
+            }, DBParameters.Parameters.TaskTable) ;
             _conn.MakeWriteQuery(DBParameters.ConnectionString, q);
         }
 

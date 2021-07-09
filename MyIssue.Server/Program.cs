@@ -12,17 +12,13 @@ namespace MyIssue.Server
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-
             IArchiveFile _archiveFile = new ArchiveFile();
             INetwork _net = new Network();
             IImapConnect _imap = new ImapConnect();
             IWriteConfig _write = new WriteConfiguration();
             IReadConfig _read = new OpenConfiguration();
-            IConfigValue _c;
-
             LogWriter.Init(_archiveFile);
             ClientCounter.Clients = 0;
             try
@@ -33,33 +29,32 @@ namespace MyIssue.Server
                 if (!newConfig)
                 {
                     var config = _read.OpenConfig("configuration.xml");
-                    _c = new ConfigValue(config);
-                    string listen = _c.GetValue("listenAddress");
-                    int port = Convert.ToInt32(_c.GetValue("port"));
-                    Parameters.BufferSize = Convert.ToInt32(_c.GetValue("bufferSize"));
-                    Parameters.Timeout = Convert.ToInt32(_c.GetValue("timeout"));
+                    string listen = ConfigValue.GetValue("listenAddress", config);
+                    int port = Convert.ToInt32(ConfigValue.GetValue("port", config));
+                    Parameters.BufferSize = Convert.ToInt32(ConfigValue.GetValue("bufferSize", config));
+                    Parameters.Timeout = Convert.ToInt32(ConfigValue.GetValue("timeout", config));
 
                     ImapParameters.Parameters = ImapParametersBuilder
                         .Create()
-                            .SetAddress(_c.GetValue("i_address"))
-                            .SetPort(Convert.ToInt32(_c.GetValue("i_port")))
+                            .SetAddress(ConfigValue.GetValue("i_address", config))
+                            .SetPort(Convert.ToInt32(ConfigValue.GetValue("i_port", config)))
                             .SetSocketOptions(
                                 (MailKit.Security.SecureSocketOptions)Enum.Parse(
-                                    typeof(MailKit.Security.SecureSocketOptions), _c.GetValue("i_connectionOptions")))
-                            .SetLogin(_c.GetValue("i_login"))
-                            .SetPassword(_c.GetValue("i_password"))
+                                    typeof(MailKit.Security.SecureSocketOptions), ConfigValue.GetValue("i_connectionOptions", config)))
+                            .SetLogin(ConfigValue.GetValue("i_login", config))
+                            .SetPassword(ConfigValue.GetValue("i_password", config))
                         .Build();
 
                     DBParameters.Parameters = DBParametersBuilder
                         .Create()
-                            .SetDBAddress(_c.GetValue("d_address"))
-                            .SetDatabase(_c.GetValue("d_database"))
-                            .SetUsername(_c.GetValue("d_username"))
-                            .SetPassword(_c.GetValue("d_password"))
-                            .SetEmployeesTable(_c.GetValue("d_employeesTable"))
-                            .SetUsersTable(_c.GetValue("d_usersTable"))
-                            .SetTaskTable(_c.GetValue("d_taskTable"))
-                            .SetClientsTable(_c.GetValue("d_clientsTable"))
+                            .SetDBAddress(ConfigValue.GetValue("d_address", config))
+                            .SetDatabase(ConfigValue.GetValue("d_database", config))
+                            .SetUsername(ConfigValue.GetValue("d_username", config))
+                            .SetPassword(ConfigValue.GetValue("d_password", config))
+                            .SetEmployeesTable(ConfigValue.GetValue("d_employeesTable", config))
+                            .SetUsersTable(ConfigValue.GetValue("d_usersTable", config))
+                            .SetTaskTable(ConfigValue.GetValue("d_taskTable", config))
+                            .SetClientsTable(ConfigValue.GetValue("d_clientsTable", config))
                         .Build();
 
                     DBParameters.ConnectionString = new SqlConnectionStringBuilder()
@@ -70,8 +65,8 @@ namespace MyIssue.Server
                         InitialCatalog = DBParameters.Parameters.Database
                     };
 
-                    if (_c.GetValue("enabled").Equals("true")) Task.Run(async () => _net.Listener(listen, port));
-                    if (_c.GetValue("i_enabled").Equals("true")) Task.Run(async () => _imap.RunImap(ct));
+                    if (ConfigValue.GetValue("enabled", config).Equals("true")) Task.Run(async () => _net.Listener(listen, port));
+                    if (ConfigValue.GetValue("i_enabled", config).Equals("true")) Task.Run(async () => _imap.RunImap(ct));
                     Console.ReadKey();
                 }
 

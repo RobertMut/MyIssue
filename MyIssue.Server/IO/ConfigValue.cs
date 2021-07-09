@@ -4,17 +4,10 @@ using System;
 
 namespace MyIssue.Server.IO
 {
-    public class ConfigValue : IConfigValue
+    public static class ConfigValue
     {
-        private readonly XDocument d;
-        public ConfigValue(XDocument doc)
+        public static string GetValue(string node, XDocument d)
         {
-            d = doc;
-        }
-        public string GetValue(string node)
-        {
-            Console.WriteLine(d.Descendants(node).FirstOrDefault().Value);
-            //return d.Descendants(node).Select(s => s.Element(value).Value).FirstOrDefault();
             return d.Descendants(node).FirstOrDefault().Value;
         }
     }
