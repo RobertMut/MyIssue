@@ -339,3 +339,5 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /MyIssue.Server/Database
+/MyIssue.App/IO/IO.cs
+/MyIssue.App/SMTP/SMTPCli.cs

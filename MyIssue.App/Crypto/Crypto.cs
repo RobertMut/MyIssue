@@ -5,9 +5,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MyIssue.App
+namespace MyIssue.App.Cryptography
 {
-    public class Crypto
+    public static class Crypto
     {
         private const string builtInKey = "~<6+EqhtP9,aw6(A\\p";
         public static string AesEncrypt(string text, string key = builtInKey)
@@ -16,7 +16,7 @@ namespace MyIssue.App
             byte[] encrypted;
             using (RijndaelManaged rij = new RijndaelManaged())
             {
-                rij.Key = MD5CryptoServiceProvider.Create().ComputeHash(Encoding.UTF8.GetBytes(key));
+                rij.Key = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(key));
                 rij.IV = iv;
                 using (ICryptoTransform encryptor = rij.CreateEncryptor(rij.Key, rij.IV))
                 using (MemoryStream memStr = new MemoryStream())
@@ -43,7 +43,7 @@ namespace MyIssue.App
             string plaintext;
             using (RijndaelManaged rij = new RijndaelManaged())
             {
-                rij.Key = MD5CryptoServiceProvider.Create().ComputeHash(Encoding.UTF8.GetBytes(key));
+                rij.Key = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(key));
                 rij.IV = iv;
                 using (ICryptoTransform decryptor = rij.CreateDecryptor(rij.Key, rij.IV))
                 using (MemoryStream memStr = new MemoryStream(data))
@@ -57,26 +57,7 @@ namespace MyIssue.App
                 }
             }
         }
-        public void DecryptData()
-        {
-            try
-            {
-                IO.decryptedData.Add(AesDecrypt(IO.encryptedData[0], IO.encryptedData[1]));
-                string key = IO.decryptedData[0];
-                for (int i = 2; i < IO.encryptedData.Count - 5; i++)
-                {
-                    IO.decryptedData.Add(AesDecrypt(IO.encryptedData[i], key));
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error occured while decrypting stored data -> {0}", e.Message);
-            }
-
-
-        }
-        public static string B64E(string rawInput)
+        private static string B64E(string rawInput)
         {
             var textBytes = Encoding.UTF8.GetBytes(rawInput);
             return Convert.ToBase64String(textBytes);

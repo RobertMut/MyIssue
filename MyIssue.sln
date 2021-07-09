@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyIssue.App", "MyIssue.App\MyIssue.App.csproj", "{EC218354-FF84-41E3-8137-582B9E7888FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp", "MyIssue.App\DesktopApp.csproj", "{EC218354-FF84-41E3-8137-582B9E7888FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyIssue.Server", "MyIssue.Server\MyIssue.Server.csproj", "{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "MyIssue.Server\Server.csproj", "{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB", "DB\DB.sqlproj", "{113EE7CE-D897-4AA5-9409-02978B24219C}"
 EndProject

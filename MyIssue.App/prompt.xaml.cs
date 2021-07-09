@@ -1,34 +1,29 @@
 ﻿using System.Windows;
+using MyIssue.App.IO;
 
 namespace MyIssue.App
 {
-
     public partial class Prompt : Window
     {
-        
-        //IO iO = new IO();
+        private readonly IDecryptedValue _decrypt;
         public Prompt()
         {
-                InitializeComponent();
-
+            InitializeComponent();
+            _decrypt = new DecryptedValue(Paths.confFile);
 
         }
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-
-            //shit went wrong!!
-            if (passwordBox.Text.Equals(
-                        Crypto.AesDecrypt(IO.encryptedData[0], IO.encryptedData[1]))) 
+            if (passwordBox.Text.Equals(_decrypt.GetValue("applicationPass")))
             {
-                SettingsWindow settings = new SettingsWindow();
-                settings.Show();
+                new SettingsWindow().Show();
                 info.Content = "Correct password!";
                 this.Close();
-            } else
+            }
+            else
             {
                 info.Content = "Incorrect password!";
             }
-            
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {

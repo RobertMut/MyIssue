@@ -4,6 +4,13 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MyIssue.Server.IO;
+using MyIssue.App.IO;
+using System.IO;
+using MyIssue.App.Personal;
+using MyIssue.App.SMTP;
+using System.Xml.Linq;
+using System.Reflection;
 
 namespace MyIssue.App
 {
@@ -12,126 +19,128 @@ namespace MyIssue.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static List<string> input = new List<string>();
-        public static string path = Environment.ExpandEnvironmentVariables(@"%APPDATA%\SimpleIssueReporting\");
-        public static string confFile = Environment.ExpandEnvironmentVariables(@"%APPDATA%\SimpleIssueReporting\configuration.xml");
-        public static string userFile = Environment.ExpandEnvironmentVariables(@"%APPDATA%\SimpleIssueReporting\userData.xml");
+        private readonly IWriteConfig _write;
+        private readonly IMessageConstructor _message;
+        private readonly IDecryptedValue _dval;
+        private readonly IReadConfig _read;
+        private readonly ISMTPSender _smtp;
+        private readonly string applicationPassword;
+        private readonly XDocument configuration;
+        private bool isCreated = false;
         public MainWindow()
         {
-            //TODO: checker if i created a new config or if config doesnt exist
-            Debug.WriteLine("ConfFlag equals {0}", IO.configurationFlag);
+            if (!File.Exists(Paths.confFile))
+            {
+                MessageBox.Show("Write new configuration and restart application.", "Critical error!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                new SettingsWindow().Show();
+            }
+            else
+            {
+                isCreated = true;
+                _write = new WriteConfiguration();
+                _message = new MessageConstructor();
+                _dval = new DecryptedValue(Paths.confFile);
+                applicationPassword = _dval.GetValue("applicationPass");
+                _read = new OpenConfiguration();
+                configuration = _read.OpenConfig(Paths.confFile);
+                this.DataContext = new View(ConfigValue.GetValue("image", configuration));
+                _smtp = new SMTPSender(applicationPassword);
+                //Image();
+            }
             InitializeComponent();
         }
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             Info.Text = "Sending data....";
-            input.Add(name.Text);
-            input.Add(surname.Text);
-            input.Add(company.Text);
-            input.Add(phoneNumber.Text);
-            input.Add(email.Text);
-            input.Add(desc.Text);
+            if (ConfigValue.GetValue("isSmtp", configuration).Equals("True")) SendEmail();
+            else SendThroughServer();
+
             bool toSaveBox = !(bool)saveData.IsChecked;
             switch (toSaveBox)
             {
                 case true:
-                    MessageBoxResult saveMessage = MessageBox.Show("Do you want to save your information?", "Save Information",
+                    MessageBoxResult saveMessage = MessageBox.Show("Do you want to save your personal details?", "Save details",
                         MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (saveMessage.Equals(MessageBoxResult.Yes)) {
-                        using (IO iO = new IO())
-                        {
-                            iO.FormWriter(toSaveBox, path, userFile);
-                        }
-                        
+                    if (saveMessage.Equals(MessageBoxResult.Yes))
+                    {
+                        var userData = LoadFile.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("DesktopApp.Files.userData.xml"));
+                        if (File.Exists(Paths.userFile)) File.Delete(Paths.userFile);
+                        _write.WriteEmptyConfig(Paths.userFile,
+                            string.Format(userData,
+                            name.Text,
+                            surname.Text,
+                            email.Text,
+                            phoneNumber.Text
+                            ));
                     }
                     break;
             }
-            try
-            {
-                Crypto crypto = new Crypto();
-                crypto.DecryptData();
-
-                ConnectionMethod();
-                Info.Text = "Data Successfully send!";
-            } catch (Exception ex)
-            {
-                Debug.WriteLine("Sending message exception -> {0}", ex);
-                Info.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                Info.Text = "ERROR OCCURED!";
-            }
-
         }
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (IO.configurationFlag.Equals(false))
-            {
-                Prompt prompt = new Prompt();
-                prompt.Show();
-            } else
-            {
-                MessageBox.Show("Something went wrong. Opening configuration menu..", "Critical error!",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                SettingsWindow settings = new SettingsWindow();
-                settings.Show();
-            }
+            new Prompt().Show();
 
         }
-        private void LoadConfig(object sender, RoutedEventArgs e)
+        private void SendEmail()
         {
-            string[] values;
-            using (IO iO = new IO())
-            {
-                IO.encryptedData = iO.ConfigurationReader();
-                values = iO.FormReader();
-            }
-            if (values.Length == 4)
-            {
-                name.Text = values[0];
-                surname.Text = values[1];
-                email.Text = values[2];
-                saveData.IsChecked = Convert.ToBoolean(values[3]);
-
-            }
-            if (IO.configurationFlag.Equals(false)) company.Text = IO.encryptedData[1];
-            if (IO.configurationFlag.Equals(false)) Image();
-
-
+            var details = DetailsBuilder.Create()
+               .SetName(name.Text)
+               .SetSurname(surname.Text)
+               .SetCompany(company.Text)
+               .SetPhone(phoneNumber.Text)
+               .SetEmail(email.Text)
+               .Build();
+            var subject = string.Format(
+                "[Issue][{0}][{1}][{2}][{3}]",
+                ConfigValue.GetValue("companyName", configuration),
+                name.Text,
+                surname.Text,
+                desc.Text.Substring(0, Math.Min(desc.Text.Length / 3, 15))
+            );
+            var recipient = _dval.GetValue("recipientAddress", applicationPassword);
+            var sender = _dval.GetValue("emailAddress", applicationPassword);
+            var msg = _message.BuildMessage(
+                subject,
+                recipient, //recipient
+                sender,
+                details, //details
+                desc.Text //desc
+                );
+            _smtp.SendMessage(msg);
         }
-        private void Image()
+        private void SendThroughServer()
         {
-            if (!IO.encryptedData[11].Equals("Empty"))
-            {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.UriSource = new Uri(IO.encryptedData[12]);
-                img.EndInit();
-                image.Source = img;
-            }
-
+            var cmd = _message.BuildCommand(desc.Text.Substring(0, Math.Min(desc.Text.Length/3, 15)), desc.Text, DateTime.Now, company.Text, 1);
+            new ConsoleClient(
+                _dval.GetValue("serverAddress", applicationPassword),
+                Int32.Parse(_dval.GetValue("port", applicationPassword)),
+                _dval.GetValue("login", applicationPassword),
+                _dval.GetValue("pass", applicationPassword)).Client(cmd);
         }
-        private void ConnectionMethod()
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine(IO.encryptedData.Count - 5);
-            Debug.WriteLine(IO.encryptedData.Count - 4);
-            bool conn = IO.encryptedData[IO.encryptedData.Count - 5] == "True";
-            bool ssl = IO.encryptedData[IO.encryptedData.Count - 4] == "True";
-            using (SMTPCli sMTP = new SMTPCli())
-            using(ServerCli cli = new ServerCli())
-            {
-                if (conn.Equals(true) && ssl.Equals(false))
-                {
 
-                    sMTP.TelnetClient();
-                }
-                else if (conn.Equals(true) && ssl.Equals(true))
-                {
-                    sMTP.SSLClient();
-                } else
-                {
-                    cli.TcpClient();
-                }
+            if (!isCreated)
+            {
+                name.IsEnabled = false;
+                surname.IsEnabled = false;
+                company.IsEnabled = false;
+                phoneNumber.IsEnabled = false;
+                email.IsEnabled = false;
+                desc.IsEnabled = false;
+                sendButton.IsEnabled = false;
             }
-                
-        }
+            else company.Text = ConfigValue.GetValue("companyName", configuration);
+            if (File.Exists(Paths.userFile))
+            {
+                var userFile = _read.OpenConfig(Paths.userFile);
+                name.Text = ConfigValue.GetValue("name", userFile);
+                surname.Text = ConfigValue.GetValue("surname", userFile);
+                email.Text = ConfigValue.GetValue("email", userFile);
+                phoneNumber.Text = ConfigValue.GetValue("phone", userFile);
+            }
         }
     }
+}

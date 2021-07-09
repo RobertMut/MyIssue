@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EC218354-FF84-41E3-8137-582B9E7888FE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MyIssue.App</RootNamespace>
-    <AssemblyName>MyIssue.App</AssemblyName>
+    <RootNamespace>DesktopApp</RootNamespace>
+    <AssemblyName>DesktopApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -56,10 +56,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cli.cs" />
-    <Compile Include="ServerCli.cs" />
+    <Compile Include="View.cs" />
+    <Compile Include="ConsoleCommands.cs" />
+    <Compile Include="IO\Configuration.cs" />
+    <Compile Include="IO\ConfigurationBuilder.cs" />
+    <Compile Include="IO\ConfigValues.cs" />
+    <Compile Include="IO\DecryptedValue.cs" />
+    <Compile Include="IO\IConfigurationBuilder.cs" />
+    <Compile Include="IO\IDecryptedValue.cs" />
+    <Compile Include="IO\LoadFile.cs" />
+    <Compile Include="IO\Paths.cs" />
+    <Compile Include="SMTP\ISMTPSender.cs" />
+    <Compile Include="Message\IMessageConstructor.cs" />
+    <Compile Include="Message\MessageTemplate.cs" />
+    <Compile Include="Personal\DetailsBuilder.cs" />
+    <Compile Include="Personal\IDetailsBuilder.cs" />
+    <Compile Include="Personal\PersonalDetails.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="SettingsWindow.xaml.cs" />
-    <Compile Include="SMTPCli.cs" />
+    <Compile Include="SMTP\SMTPSender.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,13 +83,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Crypto.cs" />
-    <Compile Include="IO.cs" />
+    <Compile Include="Crypto\Crypto.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="prompt.xaml">
+    <Page Include="Prompt.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -84,8 +98,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MessageConstructor.cs" />
-    <Compile Include="prompt.xaml.cs" />
+    <Compile Include="Message\MessageConstructor.cs" />
+    <Compile Include="Prompt.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -111,6 +125,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyIssue.Server\Server.csproj">
+      <Project>{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}</Project>
+      <Name>Server</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Files\userData.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Files\configuration.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Files\configurationServer.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
