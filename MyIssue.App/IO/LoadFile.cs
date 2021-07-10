@@ -5,17 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyIssue.App.IO
+namespace MyIssue.DesktopApp.IO
 {
     public class LoadFile
     {
-        public static string Load(string path)
-        {
-            using(StreamReader sr = new StreamReader(path))
-            {
-                return sr.ReadToEnd();
-            }
-        }
         public static string Load(Stream stream)
         {
             using (StreamReader sr = new StreamReader(stream))

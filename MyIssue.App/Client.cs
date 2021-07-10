@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using MyIssue.Server.Tools;
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     class ConsoleClient
     {

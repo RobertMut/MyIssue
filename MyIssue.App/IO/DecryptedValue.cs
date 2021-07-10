@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using MyIssue.Server.IO;
-using MyIssue.App.Cryptography;
+using MyIssue.DesktopApp.Cryptography;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.IO;
 
-namespace MyIssue.App.IO
+namespace MyIssue.DesktopApp.IO
 {
     public class DecryptedValue : IDecryptedValue
     {

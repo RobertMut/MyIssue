@@ -4,15 +4,16 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using MyIssue.Server.IO;
-using MyIssue.App.IO;
+using MyIssue.DesktopApp.IO;
 using System.IO;
-using MyIssue.App.Personal;
-using MyIssue.App.SMTP;
+using MyIssue.DesktopApp.Personal;
+using MyIssue.DesktopApp.SMTP;
 using System.Xml.Linq;
 using System.Reflection;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.IO;
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

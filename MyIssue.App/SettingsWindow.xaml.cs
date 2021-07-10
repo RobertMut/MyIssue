@@ -1,17 +1,14 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Linq;
-using MyIssue.Server.IO;
-using MyIssue.App.Cryptography;
-using MyIssue.App.IO;
-using System.Collections.ObjectModel;
+using MyIssue.DesktopApp.Cryptography;
+using MyIssue.DesktopApp.IO;
 using System.Reflection;
+using MyIssue.Core.IO;
+using MyIssue.Core.Interfaces; 
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     /// <summary>
     /// Interaction logic for Window1.xaml

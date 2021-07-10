@@ -1,9 +1,9 @@
-﻿using System.Text;
-using MyIssue.App.Personal;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     public class MessageConstructor : IMessageConstructor
     {

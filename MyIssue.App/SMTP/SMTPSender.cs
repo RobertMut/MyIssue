@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net;
-using MyIssue.App.IO;
-using MyIssue.Server.IO;
+using MyIssue.DesktopApp.IO;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.IO;
 
-namespace MyIssue.App.SMTP
+namespace MyIssue.DesktopApp.SMTP
 {
     public class SMTPSender : ISMTPSender
     {

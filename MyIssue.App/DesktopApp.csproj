@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EC218354-FF84-41E3-8137-582B9E7888FE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DesktopApp</RootNamespace>
+    <RootNamespace>MyIssue.DesktopApp</RootNamespace>
     <AssemblyName>DesktopApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -58,20 +58,11 @@
     </ApplicationDefinition>
     <Compile Include="View.cs" />
     <Compile Include="ConsoleCommands.cs" />
-    <Compile Include="IO\Configuration.cs" />
     <Compile Include="IO\ConfigurationBuilder.cs" />
-    <Compile Include="IO\ConfigValues.cs" />
     <Compile Include="IO\DecryptedValue.cs" />
-    <Compile Include="IO\IConfigurationBuilder.cs" />
-    <Compile Include="IO\IDecryptedValue.cs" />
     <Compile Include="IO\LoadFile.cs" />
     <Compile Include="IO\Paths.cs" />
-    <Compile Include="SMTP\ISMTPSender.cs" />
-    <Compile Include="Message\IMessageConstructor.cs" />
-    <Compile Include="Message\MessageTemplate.cs" />
     <Compile Include="Personal\DetailsBuilder.cs" />
-    <Compile Include="Personal\IDetailsBuilder.cs" />
-    <Compile Include="Personal\PersonalDetails.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="SettingsWindow.xaml.cs" />
     <Compile Include="SMTP\SMTPSender.cs" />
@@ -127,6 +118,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{87d859d8-728f-4c12-b87f-ea388102d94f}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyIssue.Server\Server.csproj">
       <Project>{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}</Project>
       <Name>Server</Name>

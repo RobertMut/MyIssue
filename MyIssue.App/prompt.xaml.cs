@@ -1,7 +1,8 @@
 ﻿using System.Windows;
-using MyIssue.App.IO;
+using MyIssue.Core.Interfaces;
+using MyIssue.DesktopApp.IO;
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     public partial class Prompt : Window
     {

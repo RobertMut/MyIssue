@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyIssue.Core.Entities;
+using MyIssue.Core.Interfaces;
 
-namespace MyIssue.App.Personal
+namespace MyIssue.DesktopApp.Personal
 {
     public class DetailsBuilder : IDetailsBuilder
     {

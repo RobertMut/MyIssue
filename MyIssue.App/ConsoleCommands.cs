@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     public class ConsoleCommands
     {

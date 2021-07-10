@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MyIssue.App.Cryptography
+namespace MyIssue.DesktopApp.Cryptography
 {
     public static class Crypto
     {

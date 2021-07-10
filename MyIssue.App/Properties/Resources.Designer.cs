@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DesktopApp.Properties {
+namespace MyIssue.DesktopApp.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DesktopApp.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DesktopApp.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyIssue.DesktopApp.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -91,7 +91,8 @@ namespace DesktopApp.Properties {
         ///  &lt;port&gt;{3}&lt;/port&gt;
         ///  &lt;login&gt;{4}&lt;/login&gt;
         ///  &lt;pass&gt;{5}&lt;/pass&gt;
-        ///  &lt;image&gt;{6}&lt;/image&gt;
+        ///  &lt;isSmtp&gt;{6}&lt;/isSmtp&gt;
+        ///  &lt;image&gt;{7}&lt;/image&gt;
         ///&lt;/configuration&gt;.
         /// </summary>
         internal static string configurationServer_xml {

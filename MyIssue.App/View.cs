@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace MyIssue.App
+namespace MyIssue.DesktopApp
 {
     class View
     {
