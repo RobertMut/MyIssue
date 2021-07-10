@@ -5,7 +5,9 @@ using System.Threading;
 using System.Data.SqlClient;
 using MyIssue.Server.Net;
 using MyIssue.Server.Database;
-using MyIssue.Server.Tools;
+using MyIssue.Core.String;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
 
 namespace MyIssue.Server.Commands
 {

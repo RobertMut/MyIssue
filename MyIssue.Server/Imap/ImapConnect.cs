@@ -11,6 +11,8 @@ using System.Threading;
 using System.Net.Sockets;
 using System.IO;
 using MailKit.Security;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
 
 namespace MyIssue.Server.Imap
 {

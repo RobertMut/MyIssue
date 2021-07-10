@@ -1,4 +1,6 @@
-﻿namespace MyIssue.Server.Database
+﻿using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
+namespace MyIssue.Server.Database
 {
     public class DBParametersBuilder : IDBParametersBuilder
     {

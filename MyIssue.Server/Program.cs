@@ -3,10 +3,13 @@ using System.Data.SqlClient;
 using MyIssue.Server.Net;
 using MyIssue.Server.Database;
 using MyIssue.Server.Imap;
+using MyIssue.Core.IO;
 using MyIssue.Server.IO;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Exceptions;
+using MyIssue.Core.Entities;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace MyIssue.Server
 {

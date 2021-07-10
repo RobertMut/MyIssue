@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using MyIssue.Server.Tools;
+using MyIssue.Core.String;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
 
 namespace MyIssue.Server.Database
 {

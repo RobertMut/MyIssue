@@ -3,8 +3,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-
-using MyIssue.Server.Tools;
+using MyIssue.Core.String;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
 
 namespace MyIssue.Server.Net
 {

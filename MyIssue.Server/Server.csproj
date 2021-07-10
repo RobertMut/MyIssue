@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Server</RootNamespace>
+    <RootNamespace>MyIssue.Server</RootNamespace>
     <AssemblyName>Server</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -75,53 +75,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientProcessing\Client.cs" />
     <Compile Include="ClientProcessing\ClientCounter.cs" />
     <Compile Include="ClientProcessing\ClientBuilder.cs" />
-    <Compile Include="ClientProcessing\IProcessClient.cs" />
     <Compile Include="ClientProcessing\ProcessClient.cs" />
     <Compile Include="Commands\Commands.cs" />
-    <Compile Include="ClientProcessing\IClientBuilder.cs" />
     <Compile Include="Commands\CommandParser.cs" />
-    <Compile Include="Commands\ICommandParser.cs" />
-    <Compile Include="Commands\IDBCommands.cs" />
-    <Compile Include="Commands\IUserCommands.cs" />
     <Compile Include="ConsoleOut\ArchiveFile.cs" />
     <Compile Include="ConsoleOut\LogUser.cs" />
     <Compile Include="Database\DBParametersBuilder.cs" />
-    <Compile Include="Database\IAdminQueries.cs" />
-    <Compile Include="Database\DBParameters.cs" />
     <Compile Include="ConsoleOut\LogWriter.cs" />
-    <Compile Include="ConsoleOut\IArchiveFile.cs" />
-    <Compile Include="Database\IDBConnector.cs" />
-    <Compile Include="Database\IImapQueries.cs" />
-    <Compile Include="Database\IDBParameters.cs" />
-    <Compile Include="Database\IUserQueries.cs" />
-    <Compile Include="Imap\IImapConnect.cs" />
-    <Compile Include="Imap\IImapParametersBuilder.cs" />
     <Compile Include="Imap\ImapMessages.cs" />
-    <Compile Include="Imap\ImapParameters.cs" />
     <Compile Include="Imap\ImapParametersBuilder.cs" />
-    <Compile Include="Imap\ImapParametersTemplate.cs" />
     <Compile Include="Imap\ImapConnect.cs" />
-    <Compile Include="Imap\IImapParse.cs" />
-    <Compile Include="IO\ConfigurationNotFoundException.cs" />
     <Compile Include="IO\Config.cs" />
-    <Compile Include="IO\ConfigValue.cs" />
-    <Compile Include="IO\IReadConfig.cs" />
-    <Compile Include="IO\IWriteConfig.cs" />
-    <Compile Include="IO\OpenConfiguration.cs" />
-    <Compile Include="IO\WriteConfiguration.cs" />
     <Compile Include="Net\Network.cs" />
-    <Compile Include="Net\INetwork.cs" />
     <Compile Include="Database\DBConnector.cs" />
-    <Compile Include="Database\DBParametersTemplate.cs" />
-    <Compile Include="Database\IDBParametersBuilder.cs" />
     <Compile Include="Database\Queries.cs" />
-    <Compile Include="Commands\ILogin.cs" />
-    <Compile Include="Net\Parameters.cs" />
-    <Compile Include="Tools\IStringTools.cs" />
-    <Compile Include="Tools\StringTools.cs" />
     <Compile Include="Handler\ExceptionHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,6 +110,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{87d859d8-728f-4c12-b87f-ea388102d94f}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

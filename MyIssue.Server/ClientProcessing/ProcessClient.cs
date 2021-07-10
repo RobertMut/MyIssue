@@ -2,9 +2,10 @@
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-
+using MyIssue.Core.Entities;
 using MyIssue.Server.Net;
 using MyIssue.Server.Commands;
+using MyIssue.Core.Interfaces;
 
 namespace MyIssue.Server
 {

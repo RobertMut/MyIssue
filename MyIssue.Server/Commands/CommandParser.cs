@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Threading;
 using MyIssue.Server.Net;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
 
 namespace MyIssue.Server.Commands
 {

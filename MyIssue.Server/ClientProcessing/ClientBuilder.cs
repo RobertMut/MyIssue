@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
+using MyIssue.Core.Entities;
+using MyIssue.Core.Interfaces;
 
 namespace MyIssue.Server
 {

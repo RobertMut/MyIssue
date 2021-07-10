@@ -4,11 +4,13 @@ using MailKit.Search;
 using MimeKit;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using MyIssue.Server.Database;
-using MyIssue.Server.Tools;
 using System.Threading;
 using System.IO;
+using System.Threading.Tasks;
+using MyIssue.Server.Database;
+using MyIssue.Core.Interfaces;
+using MyIssue.Core.Entities;
+using MyIssue.Core.String;
 
 namespace MyIssue.Server.Imap
 {
