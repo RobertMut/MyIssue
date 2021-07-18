@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyIssue.Core.Interfaces
+namespace MyIssue.Core.Entities.Builders
 {
-    public interface IDecryptedValue
+    public class QueryConstructorBuilder
     {
-        string GetValue(string value, string key = null);
     }
 }

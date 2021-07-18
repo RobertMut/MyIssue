@@ -6,8 +6,6 @@ namespace MyIssue.Core.Interfaces
 {
     public interface INetwork
     {
-        Task<string> Receive(Socket sock, CancellationToken ct);
-        void Write(Socket sock, string dataToSend, CancellationToken ct);
-        void Listener(string ipAddres, int port);
+        void Listen();
     }
 }
