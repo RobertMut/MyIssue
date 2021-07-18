@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<configuration>
+  <applicationPass>{0}</applicationPass>
+  <companyName>{1}</companyName>
+  <serverAddress>{2}</serverAddress>
+  <port>{3}</port>
+  <login>{4}</login>
+  <pass>{5}</pass>
+  <isSmtp>{6}</isSmtp>
+  <image>{7}</image>
+</configuration>
