@@ -1,0 +1,21 @@
+﻿<Window x:Class="MyIssue.DesktopApp.View.Prompt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Password" Height="180" Width="230">
+
+        <StackPanel HorizontalAlignment="Center">
+            <Label HorizontalAlignment="Center">Please type password!</Label>
+            <TextBox x:Name="passwordBox" Height="20" Width="200" Margin="10"></TextBox>
+            <Grid>
+                <Button Height="20" Width="70" Margin="10" Click="OkButton_Click" HorizontalAlignment="Left">OK</Button>
+                <Button Height="20" Width="70" Margin="10" HorizontalAlignment="Right" Click="CancelButton_Click">Cancel</Button>
+            </Grid>
+            <Label x:Name="info" Height="20" Width="200"></Label>
+        </StackPanel>
+
+
+
+</Window>
