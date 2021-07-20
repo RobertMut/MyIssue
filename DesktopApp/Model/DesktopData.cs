@@ -3,24 +3,20 @@ using System.IO;
 using System.Xml.Linq;
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Infrastructure.Files;
+using MyIssue.Core.Entities;
 using MyIssue.Core.Exceptions;
 
 namespace MyIssue.DesktopApp.Model
 {
     public class DesktopData : IDesktopData
     {
-        private XDocument file;
-        private readonly string applicationPass;
-        public DesktopData()
+        public SettingTextBoxes Load()
         {
-            if (!File.Exists(Paths.confFile)) throw new ConfigurationNotFoundException();
-            file = OpenConfiguration.OpenConfig(Paths.confFile);
-            applicationPass = DecryptedValue.GetValue(file, "applicationPass");
-        }
-        public void Load()
-        {
+            if (!File.Exists(Paths.confFile)) throw new ConfigurationNotFoundException("File does not exist");
+            XDocument file = OpenConfiguration.OpenConfig(Paths.confFile);
+            string applicationPass = DecryptedValue.GetValue(file, "applicationPass");
             if (Convert.ToBoolean(ConfigValue.GetValue("isSmtp", file)))
-                DesktopConfig.Config =
+                return
                     ConfigValuesBuilder
                     .Create()
                         .SetApplicationPass(applicationPass)
@@ -38,7 +34,7 @@ namespace MyIssue.DesktopApp.Model
                         .SetImage(ConfigValue.GetValue("image", file))
                     .Build();
             else
-                DesktopConfig.Config =
+                return
                     ConfigValuesBuilder
                     .Create()
                         .SetApplicationPass(applicationPass)

@@ -1,4 +1,5 @@
-﻿using MyIssue.Core.Entities.Builders;
+﻿using MyIssue.Core.Entities;
+using MyIssue.Core.Entities.Builders;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.Infrastructure.Files;
@@ -7,24 +8,29 @@ namespace MyIssue.DesktopApp.Model
 {
     public class UserData : IUserData
     {
-        private IExceptionMessageBox _exceptionMessage;
-        public void Load()
+        //private IExceptionMessageBox _exceptionMessage;
+        public PersonalDetails Load(string image, string company)
         {
             try
             {
                 var userFile = OpenConfiguration.OpenConfig(Paths.userFile);
-                UserDetails.details = PersonalDetailsBuilder
+                return PersonalDetailsBuilder
                    .Create()
                        .SetName(ConfigValue.GetValue("name", userFile))
                        .SetSurname(ConfigValue.GetValue("surname", userFile))
-                       .SetCompany(DesktopConfig.Config.CompanyName)
+                       .SetCompany(company)
                        .SetPhone(ConfigValue.GetValue("phone", userFile))
                        .SetEmail(ConfigValue.GetValue("email", userFile))
+                       .SetImage(image)
                    .Build();
             }
-            catch (ConfigurationNotFoundException e)
+            catch (ConfigurationNotFoundException)
             {
-                _exceptionMessage.ShowException(e);
+                return PersonalDetailsBuilder
+                    .Create()
+                        .SetCompany(company)
+                        .SetImage(image)
+                    .Build();
             }
 
         }
