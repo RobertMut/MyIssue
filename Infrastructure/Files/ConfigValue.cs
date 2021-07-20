@@ -9,7 +9,15 @@ namespace MyIssue.Infrastructure.Files
     {
         public static string GetValue(string node, XDocument d)
         {
-                return d.Descendants(node).FirstOrDefault()?.Value;
+            try
+            {
+                return d?.Descendants(node).FirstOrDefault()?.Value;
+            } 
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+                
         }
     }
 }

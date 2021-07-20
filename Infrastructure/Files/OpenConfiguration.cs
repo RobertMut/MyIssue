@@ -11,15 +11,8 @@ namespace MyIssue.Infrastructure.Files
         {
             try
             {
-                if (File.Exists(path))
-                {
+                if (!File.Exists(path)) throw new ConfigurationNotFoundException("Configuration file not found.");
                     return XDocument.Load(path);
-
-                }
-                else
-                {
-                    throw new ConfigurationNotFoundException("Configuration file not found.");
-                }
             }
             catch (ConfigurationNotFoundException e)
             {

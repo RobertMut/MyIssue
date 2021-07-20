@@ -63,15 +63,6 @@ namespace MyIssue.DesktopApp.Model
                 rng.GetBytes(bytes);
             return bytes;
         }
-        public static string CalculateMD5(string file)
-        {
-            using (MD5 md5 = MD5.Create())
-            using (FileStream fs = File.OpenRead(file))
-            {
-                byte[] hash = md5.ComputeHash(fs);
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            }
-        }
     }
 }
 
