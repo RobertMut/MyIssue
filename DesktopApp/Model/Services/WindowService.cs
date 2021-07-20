@@ -12,6 +12,7 @@ namespace MyIssue.DesktopApp.Model.Services
     {
         private Window prompt = null;
         private Window settings = null;
+        private Window mainWindow = null;
 
         public WindowService()
         {
@@ -34,6 +35,15 @@ namespace MyIssue.DesktopApp.Model.Services
         public void CloseSettings()
         {
             if (!(settings is null)) settings.Close();
+        }
+        public void ShowMainWindow()
+        {
+            mainWindow = new MainWindow();
+            mainWindow.ShowDialog();
+        }
+        public void CloseMainWindow()
+        {
+            if (!(mainWindow is null)) settings.Close();
         }
     }
 }

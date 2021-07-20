@@ -6,15 +6,23 @@ namespace MyIssue.DesktopApp.ViewModel
 {
     public class ViewModelLocator
     {
-        private static readonly IWindowService windowService = new WindowService();
-        private static readonly MainWindowViewModel mainWindowViewModel
+        private static IWindowService windowService = new WindowService();
+        private static MainWindowViewModel mainWindowViewModel
             = new MainWindowViewModel(windowService);
-
+        private static PromptViewModel promptViewModel
+            = new PromptViewModel(windowService);
         public static MainWindowViewModel MainWindowViewModel
         {
             get
             {
                 return mainWindowViewModel;
+            }
+        }
+        public static PromptViewModel PromptViewModel
+        {
+            get
+            {
+                return promptViewModel;
             }
         }
 

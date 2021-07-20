@@ -6,5 +6,7 @@
         void CloseSettings();
         void ShowPrompt();
         void ShowSettings();
+        void ShowMainWindow();
+        void CloseMainWindow();
     }
 }
