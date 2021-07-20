@@ -1,7 +1,9 @@
-﻿namespace MyIssue.DesktopApp.Model
+﻿using MyIssue.Core.Entities;
+
+namespace MyIssue.DesktopApp.Model
 {
     public interface IDesktopData
     {
-        void Load();
+        SettingTextBoxes Load();
     }
 }

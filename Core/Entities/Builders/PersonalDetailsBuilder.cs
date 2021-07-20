@@ -36,6 +36,11 @@ namespace MyIssue.Core.Entities.Builders
             det.Email = email;
             return this;
         }
+        public IDetailsBuilder SetImage(string image)
+        {
+            det.Image = image;
+            return this;
+        }
         public PersonalDetails Build() => det;
 
         public static PersonalDetailsBuilder Create() => new PersonalDetailsBuilder();

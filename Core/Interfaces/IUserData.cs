@@ -1,7 +1,9 @@
-﻿namespace MyIssue.Core.Interfaces
+﻿using MyIssue.Core.Entities;
+
+namespace MyIssue.Core.Interfaces
 {
     public interface IUserData
     {
-        void Load();
+        PersonalDetails Load(string image, string company);
     }
 }

@@ -64,7 +64,6 @@
     <Compile Include="Exceptions\CommandNotFoundException.cs" />
     <Compile Include="Exceptions\ConfigurationNotFoundException.cs" />
     <Compile Include="Exceptions\ExceptionHandler.cs" />
-    <Compile Include="Exceptions\ExceptionMessageBox.cs" />
     <Compile Include="Exceptions\NotSufficientPermissionsException.cs" />
     <Compile Include="Interfaces\IArchiveFile.cs" />
     <Compile Include="Interfaces\IClientBuilder.cs" />
@@ -76,7 +75,6 @@
     <Compile Include="Interfaces\IDBParametersBuilder.cs" />
     <Compile Include="Interfaces\IDesktopData.cs" />
     <Compile Include="Interfaces\IDetailsBuilder.cs" />
-    <Compile Include="Interfaces\IExceptionMessageBox.cs" />
     <Compile Include="Interfaces\IImageFileDialog.cs" />
     <Compile Include="Interfaces\IImapConnect.cs" />
     <Compile Include="Interfaces\IImapParametersBuilder.cs" />
