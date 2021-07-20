@@ -50,9 +50,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,23 +69,32 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Converters\ImageConverter.cs" />
+    <Compile Include="Model\Converters\InverseBooleanConverter.cs" />
     <Compile Include="Model\DesktopData.cs" />
+    <Compile Include="Model\Exceptions\IDesktopExceptionHandler.cs" />
+    <Compile Include="Model\Services\IWindowService.cs" />
+    <Compile Include="Model\Services\WindowService.cs" />
     <Compile Include="Model\UserData.cs" />
-    <Compile Include="Model\DesktopConfig.cs" />
+    <Compile Include="Model\Utility\CustomCommands.cs" />
+    <Compile Include="Model\Exceptions\DesktopExceptionHandler.cs" />
+    <Compile Include="Model\Utility\Messenger.cs" />
+    <Compile Include="ViewModel\PromptViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\ImageFileDialog.cs" />
-    <Compile Include="ViewModel\LoadUserData.cs" />
     <Compile Include="Model\ConsoleCommands.cs" />
     <Compile Include="Model\DecryptedValue.cs" />
     <Compile Include="Model\Client.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\TextBoxesToConfiguration.cs" />
     <Compile Include="View\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -94,7 +110,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Crypto.cs" />
-    <Compile Include="Model\UserDetails.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

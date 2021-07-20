@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:MyIssue.DesktopApp.ViewModel"
-        xmlns:b="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=viewModel:MainWindowViewModel}"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors" 
+        d:DataContext="{d:DesignInstance Type=viewModel:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MyIssue" Height="590" Width="370">
     <b:Interaction.Triggers>
@@ -27,12 +28,12 @@
                 <TextBox x:Name="company" Padding="5" Margin="5" Text="{Binding Details.Company}" />
                 <TextBox x:Name="phoneNumber" Padding="5" Margin="5" Text="{Binding Details.Phone}" />
                 <TextBox x:Name="email" Padding="5" Margin="5" Text="{Binding Details.Email}" />
-                <TextBox x:Name="desc" Padding="5" Margin="5" Height="100" TextWrapping="Wrap" />
-                <Button x:Name="sendButton" Width="55" Content="Send" HorizontalAlignment="Center" Padding="5" Click="SendButton_Click" Margin="5" FontFamily="Segoe Ui" Background="#33000000" IsEnabled="{Binding IsDoingOtherThings}"/>
-                <TextBlock x:Name="Info" TextWrapping="Wrap" FontStyle="Normal" Foreground="Black" Margin="5" Padding="5" FontSize="15px" TextAlignment="Center" Text="{Binding Description}"></TextBlock>
+                <TextBox x:Name="desc" Padding="5" Margin="5" Height="100" TextWrapping="Wrap" Text="{Binding Description}"/>
+                <Button x:Name="sendButton" Width="55" Content="Send" HorizontalAlignment="Center" Padding="5" Command="{Binding SendCommand}" Margin="5" FontFamily="Segoe Ui" Background="#33000000" IsEnabled="{Binding IsDoingOtherThings}"/>
+                <TextBlock x:Name="Info" TextWrapping="Wrap" FontStyle="Normal" Foreground="Black" Margin="5" Padding="5" FontSize="15px" TextAlignment="Center"></TextBlock>
             </StackPanel>
             <StackPanel>
-                <Button x:Name="settings" Margin="5" Width="35" Click="SettingsButton_Click" Padding="5" HorizontalAlignment="Right" Content="⚙️"></Button>
+                <Button x:Name="settings" Margin="5" Width="35" Command="{Binding EditSettings}" Padding="5" HorizontalAlignment="Right" Content="⚙️"></Button>
                 <CheckBox x:Name="saveData" Margin="5" Padding="5">Don't show save data box</CheckBox>
             </StackPanel>
         </StackPanel>

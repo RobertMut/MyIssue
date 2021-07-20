@@ -38,21 +38,21 @@ namespace MyIssue.DesktopApp.View
         }
 
     
-        private void SendButton_Click(object sender, RoutedEventArgs e)
-        {
+        //private void SendButton_Click(object sender, RoutedEventArgs e)
+        //{
             //Info.Text = "Sending data....";
             //if (DesktopConfig.Config.ConnectionMethod.Equals("True")) SendEmail();
             //else SendThroughServer();
             //if(!(bool)saveData.IsChecked) _box.Box(UserProperties.Name, UserProperties.Surname, UserProperties.Email, UserProperties.Phone);
             //Info.Text = "Data sent";
-        }
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Prompt().Show();
+        //}
+        //private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        //{
+            //new Prompt().Show();
 
-        }
-        private void SendEmail()
-        {
+        //}
+        //private void SendEmail()
+        //{
             //var details = PersonalDetailsBuilder.Create()
             //   .SetName(UserProperties.Name)
             //   .SetSurname(UserProperties.Surname)
@@ -75,9 +75,9 @@ namespace MyIssue.DesktopApp.View
             //    desc.Text
             //    );
             //_smtp.SendMessage(msg);
-        }
-        private void SendThroughServer()
-        {
+        //}
+        //private void SendThroughServer()
+        //{
             //var cmd = _message.BuildCommand(StringStatic.CutString(desc.Text), desc.Text, DateTime.Now, company.Text, 1);
             //new ConsoleClient(
             //    DesktopConfig.Config.ServerAddress,
@@ -85,6 +85,6 @@ namespace MyIssue.DesktopApp.View
             //    DesktopConfig.Config.Login,
             //    DesktopConfig.Config.Pass).Client(cmd);
             
-        }
+        //}
     }
 }
