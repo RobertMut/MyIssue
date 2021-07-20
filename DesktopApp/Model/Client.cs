@@ -5,23 +5,24 @@ using System.Net.Sockets;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
+using MyIssue.DesktopApp.Model.Exceptions;
 
 namespace MyIssue.DesktopApp.Model
 {
     class ConsoleClient
     {
-        private IExceptionMessageBox _exceptionMessage;
+        private IDesktopExceptionHandler _exceptionHandler;
         private Socket client;
         private readonly IPEndPoint endPoint;
         private readonly string login;
         private readonly string pass;
-        public ConsoleClient(string address, int port, string username, string password)
+        public ConsoleClient(string address, int port, string username, string password, IDesktopExceptionHandler exceptionHandler)
         {
             endPoint = new IPEndPoint(IPAddress.Parse(address), port);
             login = username;
             pass = password;
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _exceptionMessage = new ExceptionMessageBox();
+            _exceptionHandler = exceptionHandler;
         }
         public void Client(string command)
         {
@@ -36,7 +37,7 @@ namespace MyIssue.DesktopApp.Model
             }
             catch (Exception e)
             {
-                _exceptionMessage.ShowException(e);
+                _exceptionHandler.HandleExceptions(e);
 
             }
         }
@@ -76,7 +77,7 @@ namespace MyIssue.DesktopApp.Model
             }
             catch (Exception e)
             {
-                _exceptionMessage.ShowException(e);
+                _exceptionHandler.HandleExceptions(e);
             }
         }
         private string ReadIncoming(NetworkStream ns)
