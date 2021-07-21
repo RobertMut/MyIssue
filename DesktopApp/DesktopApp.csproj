@@ -79,9 +79,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Converters\ImageConverter.cs" />
-    <Compile Include="Model\Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Model\Converters\BooleanStringConverter.cs" />
     <Compile Include="Model\DesktopData.cs" />
     <Compile Include="Model\Exceptions\IDesktopExceptionHandler.cs" />
+    <Compile Include="Model\SaveConfiguration.cs" />
+    <Compile Include="Model\SavePersonal.cs" />
+    <Compile Include="Model\Sender\IConsoleClient.cs" />
+    <Compile Include="Model\Sender\ISelector.cs" />
+    <Compile Include="Model\Sender\Selector.cs" />
     <Compile Include="Model\Services\IWindowService.cs" />
     <Compile Include="Model\Services\WindowService.cs" />
     <Compile Include="Model\UserData.cs" />
@@ -89,18 +94,16 @@
     <Compile Include="Model\Exceptions\DesktopExceptionHandler.cs" />
     <Compile Include="Model\Utility\Messenger.cs" />
     <Compile Include="ViewModel\PromptViewModel.cs" />
+    <Compile Include="ViewModel\SettingsWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="ViewModel\ImageFileDialog.cs" />
     <Compile Include="Model\ConsoleCommands.cs" />
-    <Compile Include="Model\DecryptedValue.cs" />
-    <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\Utility\DecryptedValue.cs" />
+    <Compile Include="Model\Sender\Client.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\TextBoxesToConfiguration.cs" />
     <Compile Include="View\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\SaveMessageBox.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,7 +112,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Crypto.cs" />
+    <Compile Include="Model\Utility\Crypto.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -124,7 +127,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\MessageConstructor.cs" />
+    <Compile Include="Model\Utility\MessageConstructor.cs" />
     <Compile Include="View\Prompt.xaml.cs">
       <DependentUpon>Prompt.xaml</DependentUpon>
       <SubType>Code</SubType>

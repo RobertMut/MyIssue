@@ -58,6 +58,7 @@
     <Compile Include="Database\SqlCommands\SqlCmd.cs" />
     <Compile Include="Files\ArchiveFile.cs" />
     <Compile Include="Files\ConfigValue.cs" />
+    <Compile Include="Files\DeleteMultiple.cs" />
     <Compile Include="Files\LoadFile.cs" />
     <Compile Include="Files\LogWriter.cs" />
     <Compile Include="Files\OpenConfiguration.cs" />

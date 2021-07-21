@@ -32,7 +32,6 @@ namespace MyIssue.DesktopApp.Model
                         .SetImage(image)
                     .Build();
             }
-
         }
     }
 }

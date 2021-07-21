@@ -2,11 +2,9 @@
 using System.Net.Mail;
 using System.Net;
 using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Files;
-using System.Xml.Linq;
 using MyIssue.Core.Entities;
 
-namespace MyIssue.DesktopApp.SMTP
+namespace MyIssue.Infrastructure.SMTP
 {
     public class SMTPSender : ISMTPSender
     {
