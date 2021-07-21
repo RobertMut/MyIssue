@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\AggregateClasses.cs" />
+    <Compile Include="Exceptions\InvaidOperationException.cs" />
     <Compile Include="Interfaces\IAggregateClasses.cs" />
     <Compile Include="Constants\ConsoleCommands.cs" />
     <Compile Include="Constants\QueryString.cs" />
@@ -75,11 +76,9 @@
     <Compile Include="Interfaces\IDBParametersBuilder.cs" />
     <Compile Include="Interfaces\IDesktopData.cs" />
     <Compile Include="Interfaces\IDetailsBuilder.cs" />
-    <Compile Include="Interfaces\IImageFileDialog.cs" />
     <Compile Include="Interfaces\IImapConnect.cs" />
     <Compile Include="Interfaces\IImapParametersBuilder.cs" />
     <Compile Include="Interfaces\IImapParse.cs" />
-    <Compile Include="Interfaces\ILogin.cs" />
     <Compile Include="Interfaces\IMessageConstructor.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IProcessClient.cs" />

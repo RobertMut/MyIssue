@@ -3,9 +3,12 @@ using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Model;
 using MyIssue.DesktopApp.Model.Exceptions;
+using MyIssue.DesktopApp.Model.Sender;
 using MyIssue.DesktopApp.Model.Services;
 using MyIssue.DesktopApp.Model.Utility;
+using MyIssue.DesktopApp.ViewModel.Converters;
 using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace MyIssue.DesktopApp.ViewModel
@@ -14,22 +17,27 @@ namespace MyIssue.DesktopApp.ViewModel
     {
         private IDesktopData _data;
         private IUserData _loaduserdata;
+        private IWindowService _windowService;
+        private IDesktopExceptionHandler _exceptionHandler;
+        private ISelector _selector;
+
         private PersonalDetails details;
         private SettingTextBoxes settings;
         private string description;
-        private IWindowService _windowService;
-        private IDesktopExceptionHandler _exceptionHandler;
+        private bool saveDetails;
+
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand SendCommand { get; set; }
         public ICommand EditSettings { get; set; }
         public ICommand UserData { get; set; }
-        public bool IsDoingOtherThings
+        public IValueConverter localImageConverter { get; set; }
+        public bool SaveDetails
         {
-            get { return isDoingOtherThings; }
+            get { return saveDetails; }
             set
             {
-                isDoingOtherThings = value;
-                RaisePropertyChanged("IsDoingOtherThings");
+                saveDetails = value;
+                RaisePropertyChanged("SaveDetails");
             }
         }
         public PersonalDetails Details
@@ -59,16 +67,23 @@ namespace MyIssue.DesktopApp.ViewModel
                 RaisePropertyChanged("Description");
             }
         }
-        private bool isDoingOtherThings;
+
         public MainWindowViewModel(IWindowService service)
         {
             _exceptionHandler = new DesktopExceptionHandler();
             _data = new DesktopData();
             _loaduserdata = new UserData();
             _windowService = service;
-            isDoingOtherThings = false;
-                LoadData();
-                LoadCommands();
+            localImageConverter = new ImageConverter();
+            _selector = new Selector();
+            LoadData();
+            LoadCommands();
+            Messenger.Default.Register<SettingTextBoxes>(this, OnSettingTextBoxesReceived);
+        }
+
+        private void OnSettingTextBoxesReceived(SettingTextBoxes obj)
+        {
+            Settings = obj;
         }
 
         private void LoadCommands()
@@ -88,32 +103,27 @@ namespace MyIssue.DesktopApp.ViewModel
                 Settings = _data.Load();
             } catch (ConfigurationNotFoundException e)
             {
-                IsDoingOtherThings = true;
                 _windowService.ShowSettings();
                 _exceptionHandler.HandleExceptions(e);
             }
         }
         private void EnterSettings(object obj)
         {
-            IsDoingOtherThings = true;
-            Messenger.Default.Send(Settings.ApplicationPass);
+            Messenger.Default.Send<string>(Settings.ApplicationPass);
 
             _windowService.ShowPrompt();
         }
         private bool CanEnterSettings(object obj)
         {
-            if (IsDoingOtherThings) return false;
             return true;
         }
         private void SendMessage(object obj)
         {
-            IsDoingOtherThings = true;
-            Messenger.Default.Send(IsDoingOtherThings);
-            //TODO: SEND MESSAGE
+            _selector.Send(Settings, Details, Description);
+            if (SaveDetails.Equals(true)) SavePersonal.Save(Details);
         }
         private bool CanDoOtherThings(object obj)
         {
-            if (IsDoingOtherThings) return false;
             return true;
         }
         private void LoadUserData(object obj)

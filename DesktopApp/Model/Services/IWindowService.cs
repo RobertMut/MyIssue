@@ -8,5 +8,6 @@
         void ShowSettings();
         void ShowMainWindow();
         void CloseMainWindow();
+        string ShowFileDialog();
     }
 }
