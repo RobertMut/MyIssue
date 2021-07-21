@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
 using MyIssue.Infrastructure.Files;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Model.Utility
 {
     public class DecryptedValue
     {

@@ -22,7 +22,7 @@
     <Grid MaxWidth="500" MinWidth="200">
         <StackPanel Background="Azure" Margin="0,0,0,-31">
             <StackPanel>
-                <Image x:Name="image" Height="100" Stretch="UniformToFill" Margin="5" Source="{Binding Details.Image}"/>
+                <Image x:Name="image" Height="100" Stretch="UniformToFill" Margin="5" Source="{Binding Details.Image, Converter={StaticResource LocalImageConverter}, Mode=OneWay}"/>
                 <TextBox x:Name="name" Padding="5" Margin="5" Text="{Binding Details.Name}" />
                 <TextBox x:Name="surname" Padding="5" Margin="5" Text="{Binding Details.Surname}" />
                 <TextBox x:Name="company" Padding="5" Margin="5" Text="{Binding Details.Company}" />
@@ -34,7 +34,7 @@
             </StackPanel>
             <StackPanel>
                 <Button x:Name="settings" Margin="5" Width="35" Command="{Binding EditSettings}" Padding="5" HorizontalAlignment="Right" Content="⚙️"></Button>
-                <CheckBox x:Name="saveData" Margin="5" Padding="5">Don't show save data box</CheckBox>
+                <CheckBox x:Name="saveData" Margin="5" Padding="5" IsChecked="{Binding SaveDetails}">Do you want to save your personal details?</CheckBox>
             </StackPanel>
         </StackPanel>
     </Grid>

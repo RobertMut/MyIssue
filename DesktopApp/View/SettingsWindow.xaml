@@ -5,44 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:viewModel="clr-namespace:MyIssue.DesktopApp.ViewModel"
-        xmlns:entities="clr-namespace:MyIssue.Core.Entities;assembly=Core"
+        d:DataContext="{d:DesignInstance Type=viewModel:SettingsWindowViewModel}"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         Title="Settings" Height="450" Width="570">
+    <Window.Resources>
+        <viewModel:ViewModelLocator x:Key="viewModelLocator"/>
+    </Window.Resources>
     <Window.DataContext>
-        <entities:SettingTextBoxes/>
+        <Binding Source="{StaticResource viewModelLocator}" Path="SettingsWindowViewModel"/>
     </Window.DataContext>
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Closing">
+            <b:InvokeCommandAction Command="{Binding ClosingCommand}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
     <Grid Margin="0,0,2,0">
         <StackPanel HorizontalAlignment="Left" Height="auto" VerticalAlignment="Center" Margin="20">
-            <RadioButton x:Name="smtpRadio" GroupName="ConnectionSelector" IsChecked="False" Checked="SMTPChecked" Height="50">SMTP</RadioButton>
-            <RadioButton x:Name="serverRadio" GroupName="ConnectionSelector" IsChecked="False" Checked="ServerChecked" Height="50">Standalone server</RadioButton>
-            
-            
+            <CheckBox x:Name="smtpBox" IsChecked="{Binding Settings.ConnectionMethod, Converter={StaticResource LocalBooleanStringConverter}, Mode=OneWayToSource}" Height="50">Are you using SMTP?</CheckBox>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Height="370" VerticalAlignment="Top">
             <Label FontSize="10px">Server address:</Label>
-            <TextBox x:Name="server" Margin="5" Width="150" IsEnabled="False" Text="{Binding ServerAddress}"/>
+            <TextBox x:Name="server" Margin="5" Width="150"  Text="{Binding Settings.ServerAddress}"/>
             <Label FontSize="10px">Port:</Label>
-            <TextBox x:Name="port" Margin="5" Width="150" IsEnabled="False" Text="{Binding Port}"/>
+            <TextBox x:Name="port" Margin="5" Width="150" Text="{Binding Settings.Port}"/>
             <Label FontSize="10px" Content="Login"/>
-            <TextBox x:Name="login" Margin="5" Width="150" IsEnabled="False" Text="{Binding Login}"/>
+            <TextBox x:Name="login" Margin="5" Width="150" Text="{Binding Settings.Login}"/>
             <Label FontSize="10px">Password</Label>
-            <PasswordBox x:Name="password" Margin="5" Width="150" IsEnabled="False"/>
+            <PasswordBox x:Name="password" Margin="5" Width="150"/>
             <Label FontSize="10px" Content="Email"/>
-            <TextBox x:Name="email" Margin="5" Width="150" IsEnabled="False" Text="{Binding EmailAddress}"/>
+            <TextBox x:Name="email" Margin="5" Width="150" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" Text="{Binding Settings.EmailAddress}"/>
             <Label FontSize="10px">Recipient:</Label>
-            <TextBox x:Name="recipient" Margin="5" Width="150" IsEnabled="False" Text="{Binding RecipientAddress}"/>
+            <TextBox x:Name="recipient" Margin="5" Width="150" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" Text="{Binding Settings.RecipientAddress}"/>
             <Label FontSize="10px">Encryption:</Label>
-            <RadioButton x:Name="sslRadio" IsEnabled="False" IsChecked="False">SSL/TSL</RadioButton>
+            <RadioButton x:Name="sslRadio" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" IsChecked="{Binding Settings.SslTsl, Converter={StaticResource LocalBooleanStringConverter}, Mode=OneWayToSource}">SSL/TSL</RadioButton>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Height="370" VerticalAlignment="Top">
             <Label>Application password:</Label>
-            <TextBox x:Name="applicationPass" Width="150" Margin="5" TextChanged="ApplicationPass_Changed" Text="{Binding ApplicationPass}"/>
+            <TextBox x:Name="applicationPass" Width="150" Margin="5" Text="{Binding Settings.ApplicationPass}"/>
             <Label FontSize="10px">Company name:</Label>
-            <TextBox x:Name="companyName" Margin="5" Width="150" Text="{Binding CompanyName}"/>
-            <Button x:Name="imageSelect" Click="ImageSelect_Click" Margin="5" >Select application image</Button>
-            <TextBox x:Name="imageLink" Width="150" Margin="5" Text="{Binding Image}"/>
+            <TextBox x:Name="companyName" Margin="5" Width="150" Text="{Binding Settings.CompanyName}"/>
+            <Button x:Name="imageSelect" Command="{Binding SelectImageCommand}" Margin="5" >Select application image</Button>
+            <TextBox x:Name="imageLink" Width="150" Margin="5" Text="{Binding Settings.Image}"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Button x:Name="save" Width="150" Margin="30" Content="Save settings" Click="SaveSettings_Click" IsEnabled="False"></Button>
+            <Button x:Name="save" Width="150" Margin="30" Content="Save settings" IsEnabled="{Binding IsEnabled}"></Button>
         </StackPanel>
     </Grid>
 </Window>

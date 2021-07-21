@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Model.Utility
 {
     public static class Crypto
     {
