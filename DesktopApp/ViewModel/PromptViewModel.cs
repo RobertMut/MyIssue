@@ -1,79 +1,103 @@
 ﻿using MyIssue.DesktopApp.Model.Services;
 using MyIssue.DesktopApp.Model.Utility;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
+using System;
 using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MyIssue.DesktopApp.ViewModel
 {
-    public class PromptViewModel : INotifyPropertyChanged
+    public class PromptViewModel : BindableBase, INavigationAware
     {
-        private string enteredPassword;
-        private string labelText;
-        private string ApplicationPass { get; set; }
-        public ICommand OpenSettings { get; set; }
-        public ICommand ReturnToMainView { get; set; }
-        private IWindowService _windowService;
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _enteredPassword = string.Empty;
+        private string _labelText;
+        private string applicationPass;
+        public DelegateCommand OpenSettings { get; private set; }
+        public DelegateCommand ReturnToMainView { get; private set; }
+        public DelegateCommand<object> GetPass { get; private set; }
+        private IRegionManager _regionManager;
         public string LabelText
         {
             get
             {
-                return labelText;
+                return _labelText;
             }
             private set
             {
-                labelText = value;
-                RaisePropertyChanged("LabelText");
+                SetProperty(ref _labelText, value);
             }
         }
         public string EnteredPassword
         {
             get
             {
-                return enteredPassword;
+                return _enteredPassword;
             }
-            set
+            private set
             {
-                enteredPassword = value;
-                RaisePropertyChanged("EnteredPassword");
+                SetProperty(ref _enteredPassword, value);
+                OpenSettings.RaiseCanExecuteChanged();
             }
         }
-        public PromptViewModel(IWindowService service)
+        public PromptViewModel(IRegionManager regionManager)
         {
-            _windowService = service;
+            _regionManager = regionManager;
             LoadCommands();
-            Messenger.Default.Register<string>(this, OnPasswordReceived);
-        }
-        public void RaisePropertyChanged(string property)
-        {
-            if (!(PropertyChanged is null)) PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
 
         private void LoadCommands()
         {
-            OpenSettings = new CustomCommands(OpenSettingsButton, CanOpenSettingsButton);
-            ReturnToMainView = new CustomCommands(GoBack, CanGoBack);
+            OpenSettings = new DelegateCommand(OpenSettingsButton, CanOpenSettingsButton);
+            ReturnToMainView = new DelegateCommand(GoBack);
+            GetPass = new DelegateCommand<object>(Pass);
         }
-        private void OnPasswordReceived(string pass)
+        private void Pass(object obj)
         {
-            ApplicationPass = pass;
+            EnteredPassword = ((PasswordBox)obj).Password;
         }
-        private void OpenSettingsButton(object obj)
+        private void OpenSettingsButton()
         {
-            _windowService.ShowSettings();
+            _regionManager.RequestNavigate("ContentRegion", "SettingsView", Callback);
         }
-        private bool CanOpenSettingsButton(object obj)
+        private bool CanOpenSettingsButton()
         {
-            if (ApplicationPass.Equals(enteredPassword)) return true;
+            if(EnteredPassword.Equals(applicationPass)) return true;
             return false;
         }
-        private void GoBack(object obj)
+        private void GoBack()
         {
-            _windowService.ShowMainWindow();
+            _regionManager.RequestNavigate("ContentRegion", "Main", Callback);
         }
-        private bool CanGoBack(object obj)
+        private void Callback(NavigationResult res)
         {
-            return true;
+            if (!(res.Error is null))
+            {
+                SerilogLoggerService.LogException(res.Error);
+            }
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            var appPass = navigationContext.Parameters["apppass"] as string;
+            if (!(appPass is null))
+            {
+                applicationPass = appPass;
+            }
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            var appPass = navigationContext.Parameters["apppass"] as string;
+            if (!(appPass is null)) return (applicationPass is null) && appPass.Equals(appPass);
+            else return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            //
         }
     }
 }
