@@ -2,19 +2,20 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace MyIssue.DesktopApp.ViewModel.Converters
+namespace MyIssue.DesktopApp.Misc.Converters
 {
-    class BooleanStringConverter : IValueConverter
+    public class InverseBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (string)value.ToString();
+            if ((bool)value) return false;
+            return true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool.TryParse((string)value, out bool r);
-            return r;
+            if (!(bool)value) return true;
+            return false;
         }
     }
 }

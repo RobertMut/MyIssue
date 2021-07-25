@@ -6,9 +6,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
-namespace MyIssue.DesktopApp.ViewModel.Converters
+namespace MyIssue.DesktopApp.Misc.Converters
 {
-    class ImageConverter : IValueConverter
+    public class ImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -17,8 +17,10 @@ namespace MyIssue.DesktopApp.ViewModel.Converters
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
-                img.UriSource = new Uri((string)value, UriKind.Relative);
+                img.CacheOption = BitmapCacheOption.OnLoad;
+                img.UriSource = new Uri((string)value);
                 img.EndInit();
+
                 return img;
             } catch(Exception)
             {
