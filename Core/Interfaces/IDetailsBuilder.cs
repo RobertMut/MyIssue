@@ -9,6 +9,7 @@ namespace MyIssue.Core.Interfaces
         IDetailsBuilder SetCompany(string company);
         IDetailsBuilder SetPhone(string phone);
         IDetailsBuilder SetEmail(string email);
+        IDetailsBuilder SetImage(string image);
         PersonalDetails Build();
     }
 }

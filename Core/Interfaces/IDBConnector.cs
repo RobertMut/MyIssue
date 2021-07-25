@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
-namespace MyIssue.Server.Database
+namespace MyIssue.Core.Interfaces
 {
     public interface IDBConnector
     {

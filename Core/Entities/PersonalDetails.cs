@@ -1,11 +1,93 @@
-﻿namespace MyIssue.Core.Entities
+﻿using System.ComponentModel;
+
+namespace MyIssue.Core.Entities
 {
-    public class PersonalDetails
+    public class PersonalDetails : INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Company { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        private string _name;
+        private string _surname;
+        private string _company;
+        private string _phone;
+        private string _email;
+        private string _image;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                RaisePropertyChanged("Name");
+            }
+        }
+        public string Surname
+        {
+            get
+            {
+                return _surname;
+            }
+            set
+            {
+                _surname = value;
+                RaisePropertyChanged("Surname");
+            }
+        }
+        public string Company
+        {
+            get
+            {
+                return _company;
+            }
+            set
+            {
+                _company = value;
+                RaisePropertyChanged("Company");
+            }
+        }
+        public string Phone
+        {
+            get
+            {
+                return _phone;
+            }
+            set
+            {
+                _phone = value;
+                RaisePropertyChanged("Phone");
+            }
+        }
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
+            set
+            {
+                _email = value;
+                RaisePropertyChanged("Email");
+            }
+        }
+        public string Image
+        {
+            get
+            {
+                return _image;
+            }
+            set
+            {
+                _image = value;
+                RaisePropertyChanged("Image");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace MyIssue.Core.Interfaces
         IConfigurationBuilder SetRecipientAddress(string input);
         IConfigurationBuilder SetConnectionMethod(bool input);
         IConfigurationBuilder SetSslTsl(bool input);
-        ConfigValues Build();
+        IConfigurationBuilder SetImage(string input);
+        SettingTextBoxes Build();
     }
 }
