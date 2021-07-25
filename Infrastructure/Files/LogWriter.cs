@@ -7,6 +7,7 @@ using MyIssue.Core.Interfaces;
 
 namespace MyIssue.Infrastructure.Files
 {
+    //TODO serilog
     public static class LogWriter
     {
         private static TextWriter _writer;

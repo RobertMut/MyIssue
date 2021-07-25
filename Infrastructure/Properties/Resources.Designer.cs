@@ -22,7 +22,7 @@ namespace MyIssue.Infrastructure.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MyIssue.Infrastructure.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyIssue.Infrastructure.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace MyIssue.Infrastructure.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -73,7 +73,7 @@ namespace MyIssue.Infrastructure.Properties {
         ///  &lt;image&gt;{7}&lt;/image&gt;
         ///&lt;/configuration&gt;.
         /// </summary>
-        internal static string configurationDekstopServer_xml {
+        public static string configurationDekstopServer_xml {
             get {
                 return ResourceManager.GetString("configurationDekstopServer.xml", resourceCulture);
             }
@@ -95,7 +95,7 @@ namespace MyIssue.Infrastructure.Properties {
         ///  &lt;image&gt;{10}&lt;/image&gt;
         ///&lt;/configuration&gt;.
         /// </summary>
-        internal static string configurationDesktopSmtp_xml {
+        public static string configurationDesktopSmtp_xml {
             get {
                 return ResourceManager.GetString("configurationDesktopSmtp.xml", resourceCulture);
             }
@@ -119,7 +119,7 @@ namespace MyIssue.Infrastructure.Properties {
         ///    &lt;d_password&gt;password&lt;/d_password&gt;
         ///    &lt;d_employeesTable&gt;dbo.E [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string configurationServer_xml {
+        public static string configurationServer_xml {
             get {
                 return ResourceManager.GetString("configurationServer.xml", resourceCulture);
             }
@@ -134,7 +134,7 @@ namespace MyIssue.Infrastructure.Properties {
         ///  &lt;phone&gt;{3}&lt;/phone&gt;
         ///&lt;/userData&gt;.
         /// </summary>
-        internal static string userData_xml {
+        public static string userData_xml {
             get {
                 return ResourceManager.GetString("userData.xml", resourceCulture);
             }

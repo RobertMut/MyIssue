@@ -19,7 +19,7 @@ namespace MyIssue.Core.String
         }
         public static string CutString(string input)
         {
-            return input.Substring(0, Math.Min(input.Length / 3, 15));
+            return input.Length <= 15 ? input : input.Substring(0, 15);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace MyIssue.Server
             catch (ConfigurationNotFoundException confex)
             {
                 ExceptionHandler.HandleMyException(confex);
-                string emptyConfig = LoadFile.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("Infrastructure.Resources.configurationServer.xml"));
+                string emptyConfig = LoadFile.Load(Assembly.Load("Infrastructure").GetManifestResourceStream("MyIssue.Infrastructure.Resources.configurationServer.xml"));
                 WriteConfiguration.WriteEmptyConfig("configuration.xml", emptyConfig);
                 Console.WriteLine("IO - {0} - Please fill configuration file!", DateTime.Now);
                 Console.ReadKey();

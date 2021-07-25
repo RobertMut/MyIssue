@@ -51,7 +51,6 @@
     <Compile Include="Interfaces\ISqlCommandInputBuilder.cs" />
     <Compile Include="Entities\Builders\PersonalDetailsBuilder.cs" />
     <Compile Include="Entities\Builders\ImapParametersBuilder.cs" />
-    <Compile Include="Entities\Builders\QueryConstructorBuilder.cs" />
     <Compile Include="Entities\Builders\SqlCommandInputBuilder.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\SqlCommandInput.cs" />

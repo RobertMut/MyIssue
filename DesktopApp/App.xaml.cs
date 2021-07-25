@@ -1,42 +1,63 @@
-﻿using MyIssue.DesktopApp.Model.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MyIssue.DesktopApp.Model;
+using MyIssue.DesktopApp.Model.Services;
+using MyIssue.DesktopApp.Views;
+using MyIssue.DesktopApp.ViewModel;
+using MyIssue.Infrastructure.Files;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
+using Prism.Unity;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
 
 namespace MyIssue.DesktopApp
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Interaction logic for App.xaml 
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        private IDesktopExceptionHandler exceptionHandler;
         public App()
         {
-            exceptionHandler = new DesktopExceptionHandler();
-        }
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            AppDomain.CurrentDomain.UnhandledException +=
-                new UnhandledExceptionEventHandler(DomainUnhandledExceptionHandler);
-            Current.DispatcherUnhandledException +=
-                new DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
-            base.OnStartup(e);
-        }
+            if (!Directory.Exists(Paths.path)) Directory.CreateDirectory(Paths.path);
+            ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
+            ViewModelLocationProvider.Register<Main, MainViewModel>();
+            ViewModelLocationProvider.Register<Prompt, PromptViewModel>();
+            ViewModelLocationProvider.Register<SettingsView, SettingsViewViewModel>();
 
-        private void DomainUnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
-        {
-            exceptionHandler.HandleExceptions(new Exception("Domain Unhadled exception")); //TODO
         }
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            var regionManag = Container.Resolve<IRegionManager>();
+            regionManag.RegisterViewWithRegion("ContentRegion", typeof(Main));
+            regionManag.RegisterViewWithRegion("ContentRegion", typeof(Prompt));
+            regionManag.RegisterViewWithRegion("ContentRegion", typeof(SettingsView));
+        }
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<MainWindow>();
+        }
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<Main>("Main");
+            containerRegistry.RegisterForNavigation<Prompt>("Prompt");
+            containerRegistry.RegisterForNavigation<SettingsView>("SettingsView");
 
+        }
         void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            exceptionHandler.HandleExceptions(e.Exception);
+            SerilogLoggerService.LogException(e.Exception);
+            e.Handled = true;
+        }
+        protected override void InitializeShell(Window shell)
+        {
+            base.InitializeShell(shell);
+            Application.Current.MainWindow.Show();
         }
     }
 }

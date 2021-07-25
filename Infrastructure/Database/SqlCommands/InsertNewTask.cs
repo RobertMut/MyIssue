@@ -9,7 +9,7 @@ namespace MyIssue.Infrastructure.Database.SqlCommands
     {
         public override SqlCommand SqlCommand(SqlCommandInput input)
         {
-            string insertQuery = string.Format(QueryString.insertTask, input.Table);
+            string insertQuery = string.Format(QueryString.insertTask, input.Table, DBParameters.Parameters.ClientsTable);
             using (SqlCommand cmd = new SqlCommand(insertQuery))
             {
                 DateTime.TryParse(input.Command[2], out DateTime date);
