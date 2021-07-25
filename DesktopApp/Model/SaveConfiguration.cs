@@ -2,24 +2,21 @@
 using MyIssue.DesktopApp.Model.Utility;
 using MyIssue.Infrastructure.Files;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MyIssue.DesktopApp.Model
 {
-    class SaveConfiguration
+    class SaveConfiguration : ISaveConfiguration
     {
-        public void Save(SettingTextBoxes settings, bool smtp)
+        public void Save(SettingTextBoxes settings)
         {
             if (File.Exists(Paths.confFile)) File.Delete(Paths.confFile);
             string newImage = Paths.path + "image" + Path.GetExtension(settings.Image);
-            if (smtp)
+            if (bool.Parse(settings.ConnectionMethod))
             {
-                Stream emailConf = Assembly.GetExecutingAssembly().GetManifestResourceStream("DesktopApp.Files.configuration.xml");
+                Stream emailConf = Assembly.Load("Infrastructure").GetManifestResourceStream("MyIssue.Infrastructure.Resources.configurationDesktopSmtp.xml");
                 WriteConfiguration.WriteEmptyConfig(Paths.confFile,
                     string.Format(LoadFile.Load(emailConf),
                     Crypto.AesEncrypt(settings.ApplicationPass),
@@ -38,7 +35,7 @@ namespace MyIssue.DesktopApp.Model
 
             else
             {
-                Stream serverConf = Assembly.GetExecutingAssembly().GetManifestResourceStream("DesktopApp.Files.configurationServer.xml");
+                Stream serverConf = Assembly.Load("Infrastructure").GetManifestResourceStream("MyIssue.Infrastructure.Resources.configurationDekstopServer.xml");
                 WriteConfiguration.WriteEmptyConfig(Paths.confFile,
                     string.Format(LoadFile.Load(serverConf),
                     Crypto.AesEncrypt(settings.ApplicationPass),

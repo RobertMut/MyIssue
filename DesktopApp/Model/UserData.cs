@@ -2,7 +2,10 @@
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
+using MyIssue.DesktopApp.Model.Services;
 using MyIssue.Infrastructure.Files;
+using System;
+using System.Windows;
 
 namespace MyIssue.DesktopApp.Model
 {
@@ -11,6 +14,7 @@ namespace MyIssue.DesktopApp.Model
         //private IExceptionMessageBox _exceptionMessage;
         public PersonalDetails Load(string image, string company)
         {
+
             try
             {
                 var userFile = OpenConfiguration.OpenConfig(Paths.userFile);
@@ -31,6 +35,10 @@ namespace MyIssue.DesktopApp.Model
                         .SetCompany(company)
                         .SetImage(image)
                     .Build();
+            } catch (NullReferenceException e)
+            {
+                SerilogLoggerService.LogException(e);
+                return (PersonalDetails)DependencyProperty.UnsetValue;
             }
         }
     }

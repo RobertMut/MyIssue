@@ -11,6 +11,7 @@ namespace MyIssue.DesktopApp.Model.Utility
     {
         public MailMessage BuildMessage(string subject, string recipient, string sender, PersonalDetails details, string description)
         {
+            var newsubj = string.Format("[Issue][{0}][{1}][{2}][{3}]", details.Company, details.Name, details.Surname, subject);
             var formatted = string.Format("{0}\r\n{1}\r\n{2}\r\n{3}\r\n{4}\r\n{5}",
                     details.Name,
                     details.Surname,
@@ -19,12 +20,7 @@ namespace MyIssue.DesktopApp.Model.Utility
                     details.Email,
                     description
                     );
-            return new MailMessage(new MailAddress(sender), new MailAddress(recipient))
-            {
-                Subject = subject,
-                Body = formatted,
-                IsBodyHtml = false,
-            };
+            return new MailMessage(sender, recipient, newsubj, formatted);
         }
         public IEnumerable<string> BuildTaskCommands(SettingTextBoxes settings, string description)
         {
