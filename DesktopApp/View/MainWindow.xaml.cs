@@ -1,7 +1,6 @@
-﻿using Prism.Ioc;
-using Prism.Regions;
-using System.Windows;
-namespace MyIssue.DesktopApp.Views
+﻿using System.Windows;
+
+namespace MyIssue.DesktopApp.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

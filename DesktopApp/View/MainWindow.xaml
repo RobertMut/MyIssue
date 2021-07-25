@@ -1,0 +1,41 @@
+﻿<Window x:Class="MyIssue.DesktopApp.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:MyIssue.DesktopApp.ViewModel"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors" 
+        d:DataContext="{d:DesignInstance Type=viewModel:MainWindowViewModel}"
+        mc:Ignorable="d"
+        Title="MyIssue" Height="590" Width="370">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding UserData}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Window.Resources>
+        <viewModel:ViewModelLocator x:Key="viewModelLocator"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Source="{StaticResource viewModelLocator}" Path="MainWindowViewModel"/>
+    </Window.DataContext>
+    <Grid MaxWidth="500" MinWidth="200">
+        <StackPanel Background="Azure" Margin="0,0,0,-31">
+            <StackPanel>
+                <Image x:Name="image" Height="100" Stretch="UniformToFill" Margin="5" Source="{Binding Details.Image, Converter={StaticResource LocalImageConverter}, Mode=OneWay}"/>
+                <TextBox x:Name="name" Padding="5" Margin="5" Text="{Binding Details.Name}" />
+                <TextBox x:Name="surname" Padding="5" Margin="5" Text="{Binding Details.Surname}" />
+                <TextBox x:Name="company" Padding="5" Margin="5" Text="{Binding Details.Company}" />
+                <TextBox x:Name="phoneNumber" Padding="5" Margin="5" Text="{Binding Details.Phone}" />
+                <TextBox x:Name="email" Padding="5" Margin="5" Text="{Binding Details.Email}" />
+                <TextBox x:Name="desc" Padding="5" Margin="5" Height="100" TextWrapping="Wrap" Text="{Binding Description}"/>
+                <Button x:Name="sendButton" Width="55" Content="Send" HorizontalAlignment="Center" Padding="5" Command="{Binding SendCommand}" Margin="5" FontFamily="Segoe Ui" Background="#33000000" IsEnabled="{Binding IsDoingOtherThings}"/>
+                <TextBlock x:Name="Info" TextWrapping="Wrap" FontStyle="Normal" Foreground="Black" Margin="5" Padding="5" FontSize="15px" TextAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <Button x:Name="settings" Margin="5" Width="35" Command="{Binding EditSettings}" Padding="5" HorizontalAlignment="Right" Content="⚙️"></Button>
+                <CheckBox x:Name="saveData" Margin="5" Padding="5" IsChecked="{Binding SaveDetails}">Do you want to save your personal details?</CheckBox>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
