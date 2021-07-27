@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,6 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\AggregateClasses.cs" />
+    <Compile Include="Entities\Database\CLIENT.cs" />
+    <Compile Include="Entities\Database\C__RefactorLog.cs" />
+    <Compile Include="Entities\Database\EMPLOYEE.cs" />
+    <Compile Include="Entities\Database\MyIssueDatabase.cs" />
+    <Compile Include="Entities\Database\POSITION.cs" />
+    <Compile Include="Entities\Database\TASK.cs" />
+    <Compile Include="Entities\Database\TASKTYPE.cs" />
+    <Compile Include="Entities\Database\USER.cs" />
     <Compile Include="Exceptions\InvaidOperationException.cs" />
     <Compile Include="Interfaces\IAggregateClasses.cs" />
     <Compile Include="Constants\ConsoleCommands.cs" />
@@ -48,10 +59,8 @@
     <Compile Include="Entities\Builders\ClientBuilder.cs" />
     <Compile Include="Entities\Builders\ConfigValuesBuilder.cs" />
     <Compile Include="Entities\Builders\DBParametersBuilder.cs" />
-    <Compile Include="Interfaces\ISqlCommandInputBuilder.cs" />
     <Compile Include="Entities\Builders\PersonalDetailsBuilder.cs" />
     <Compile Include="Entities\Builders\ImapParametersBuilder.cs" />
-    <Compile Include="Entities\Builders\SqlCommandInputBuilder.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\SqlCommandInput.cs" />
     <Compile Include="Entities\SettingTextBoxes.cs" />
@@ -67,27 +76,32 @@
     <Compile Include="Exceptions\NotSufficientPermissionsException.cs" />
     <Compile Include="Interfaces\IArchiveFile.cs" />
     <Compile Include="Interfaces\IClientBuilder.cs" />
+    <Compile Include="Interfaces\IClientRepository.cs" />
     <Compile Include="Interfaces\ICommandParser.cs" />
     <Compile Include="Interfaces\IConfigurationBuilder.cs" />
+    <Compile Include="Interfaces\IConsoleClient.cs" />
     <Compile Include="Interfaces\IDBCommands.cs" />
-    <Compile Include="Interfaces\IDBConnector.cs" />
     <Compile Include="Interfaces\IDBParameters.cs" />
     <Compile Include="Interfaces\IDBParametersBuilder.cs" />
     <Compile Include="Interfaces\IDesktopData.cs" />
     <Compile Include="Interfaces\IDetailsBuilder.cs" />
+    <Compile Include="Interfaces\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\IImapConnect.cs" />
     <Compile Include="Interfaces\IImapParametersBuilder.cs" />
     <Compile Include="Interfaces\IImapParse.cs" />
     <Compile Include="Interfaces\IMessageConstructor.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IProcessClient.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISaveConfiguration.cs" />
     <Compile Include="Interfaces\ISaveMessageBox.cs" />
+    <Compile Include="Interfaces\ISelector.cs" />
     <Compile Include="Interfaces\ISMTPSender.cs" />
-    <Compile Include="Interfaces\ISqlCommandParser.cs" />
     <Compile Include="Interfaces\IStringTools.cs" />
-    <Compile Include="Interfaces\ITextBoxesToConfiguration.cs" />
-    <Compile Include="Interfaces\IUserCommands.cs" />
+    <Compile Include="Interfaces\ITaskRepository.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserData.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="String\StringStatic.cs" />
     <Compile Include="String\StringTools.cs" />
   </ItemGroup>
@@ -95,17 +109,24 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit, Version=2.12.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailKit.2.12.0\lib\net47\MailKit.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="MimeKit, Version=2.12.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
-      <HintPath>..\packages\MimeKit.2.12.0\lib\net47\MimeKit.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.13.0\lib\net47\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.13.0\lib\net47\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
@@ -115,4 +136,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

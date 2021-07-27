@@ -1,6 +1,8 @@
 ﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Entities.Builders;
+using MyIssue.Core.Entities.Database;
+using MyIssue.Core.Exceptions;
 using MyIssue.Server.Net;
+using System;
 using System.Threading;
 
 namespace MyIssue.Server.Commands
@@ -13,12 +15,17 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand("CreateTask", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "CREATING TASK\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            var query = _sqlCommandParser.SqlCmdParser("InsertNewTask", SqlCommandInputBuilder
-           .Create()
-               .SetCommandFromArray(client.CommandHistory)
-               .SetTable(DBParameters.Parameters.TaskTable)
-           .Build());
-            _connector.MakeWriteQuery(cString, query);
+            try
+            {
+                var input = SplitToCommand.Get(client.CommandHistory);
+                var clientId = unitOfWork.Client.GetClientByName(input[3]);
+                unitOfWork.Task.InsertTask(input, clientId);
+                unitOfWork.Complete();
+            } catch (Exception e)
+            {
+                ExceptionHandler.HandleMyException(e);
+            }
+
         }
     }
 }

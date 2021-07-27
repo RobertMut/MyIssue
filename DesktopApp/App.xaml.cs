@@ -1,18 +1,14 @@
-﻿using MyIssue.DesktopApp.Model;
-using MyIssue.DesktopApp.Model.Services;
+﻿using MyIssue.DesktopApp.Misc.Services;
 using MyIssue.DesktopApp.Views;
 using MyIssue.DesktopApp.ViewModel;
 using MyIssue.Infrastructure.Files;
 using Prism.Ioc;
-using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 
 namespace MyIssue.DesktopApp
 {

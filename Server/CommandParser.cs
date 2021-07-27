@@ -5,6 +5,8 @@ using MyIssue.Server.Commands;
 using MyIssue.Core.Aggregates;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
+using System.Reflection;
+using System.Linq;
 
 namespace MyIssue.Server
 {
@@ -14,9 +16,9 @@ namespace MyIssue.Server
         private Cmd cmd;
         public CommandParser()
         {
-            _aggregate = new AggregateClasses();
-            _aggregate.SetTypes(_aggregate.GetAllClassTypes("Server", "MyIssue.Server.Commands"));
-            
+            _aggregate = new AggregateClasses((from t in Assembly.GetExecutingAssembly().GetTypes()
+                                              where t.IsClass && t.Namespace == "MyIssue.Server.Commands"
+                                              select t).ToList());
         }
         public void Parser(string input, Client client, CancellationToken ct)
         {

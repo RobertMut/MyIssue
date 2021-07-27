@@ -10,11 +10,7 @@ namespace MyIssue.Core.Aggregates
     {
         private List<Type> types;
         public AggregateClasses() => types = new List<Type>();
-        public IEnumerable<Type> GetAllClassTypes(string assembly, string nspace) { 
-        return (from t in Assembly.Load(assembly).GetTypes()
-                where t.IsClass && t.Namespace == nspace
-                select t).ToList();
-        } 
+        public AggregateClasses(IEnumerable<Type> typeEnumerable) => types = typeEnumerable.ToList();
         public Type GetClassByName(string name) => types.Find(t => t.Name.Equals(name));
 
         public void Insert(Type t) => types.Add(t);
@@ -24,6 +20,6 @@ namespace MyIssue.Core.Aggregates
                                                  where i.Name == name
                                                  select types.IndexOf(i)).FirstOrDefault();
         public List<Type> GetAggregatedClasses() => types;
-        public void SetTypes(IEnumerable<Type> typeEnumerable) => types = typeEnumerable.ToList();
+       
     }
 }

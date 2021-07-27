@@ -14,15 +14,8 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand("AddEmployee", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "ADD EMPLOYEE\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-
-                
-            var sqlCommand = SqlCommandInputBuilder
-               .Create()
-                   .SetCommandFromArray(client.CommandHistory)
-                   .SetTable(DBParameters.Parameters.EmployeesTable)
-               .Build();
-            var employeequery = _sqlCommandParser.SqlCmdParser(this.GetType().Name, sqlCommand);
-            _connector.MakeWriteQuery(cString, employeequery);
+            unitOfWork.Employee.AddNewEmployee(SplitToCommand.Get(client.CommandHistory));
+            unitOfWork.Complete();
 
         }
     }

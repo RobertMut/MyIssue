@@ -1,12 +1,8 @@
-﻿using MyIssue.DesktopApp.Model.Services;
-using MyIssue.DesktopApp.Model.Utility;
+﻿using MyIssue.DesktopApp.Misc.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MyIssue.DesktopApp.ViewModel
 {

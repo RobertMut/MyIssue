@@ -110,21 +110,17 @@
     <Compile Include="Misc\Converters\ImageConverter.cs" />
     <Compile Include="Misc\Converters\BooleanStringConverter.cs" />
     <Compile Include="Misc\Converters\InverseBooleanConverter.cs" />
-    <Compile Include="Model\DesktopData.cs" />
-    <Compile Include="Model\ISaveConfiguration.cs" />
-    <Compile Include="Model\Services\SerilogLoggerService.cs" />
-    <Compile Include="Model\SaveConfiguration.cs" />
-    <Compile Include="Model\SavePersonal.cs" />
-    <Compile Include="Model\Sender\IConsoleClient.cs" />
-    <Compile Include="Model\Sender\ISelector.cs" />
-    <Compile Include="Model\Sender\Selector.cs" />
-    <Compile Include="Model\UserData.cs" />
+    <Compile Include="Misc\DesktopData.cs" />
+    <Compile Include="Misc\Services\SerilogLoggerService.cs" />
+    <Compile Include="Misc\SaveConfiguration.cs" />
+    <Compile Include="Misc\SavePersonal.cs" />
+    <Compile Include="Misc\Sender\Selector.cs" />
+    <Compile Include="Misc\UserData.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PromptViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewViewModel.cs" />
-    <Compile Include="Model\ConsoleCommands.cs" />
-    <Compile Include="Model\Utility\DecryptedValue.cs" />
-    <Compile Include="Model\Sender\Client.cs" />
+    <Compile Include="Misc\Utility\DecryptedValue.cs" />
+    <Compile Include="Misc\Sender\Client.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
@@ -143,7 +139,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Utility\Crypto.cs" />
+    <Compile Include="Misc\Utility\Crypto.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -162,7 +158,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Utility\MessageConstructor.cs" />
+    <Compile Include="Misc\Utility\MessageConstructor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
