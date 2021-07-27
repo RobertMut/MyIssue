@@ -11,6 +11,5 @@ namespace MyIssue.Core.Interfaces
         void Insert(Type t);
         void Remove(int index);
         void RemoveByName(string name);
-        void SetTypes(IEnumerable<Type> typeEnumerable);
     }
 }

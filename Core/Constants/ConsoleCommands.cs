@@ -1,5 +1,4 @@
-﻿
-namespace MyIssue.Core.Constants
+﻿namespace MyIssue.Core.Constants
 {
     public class ConsoleCommands
     {
