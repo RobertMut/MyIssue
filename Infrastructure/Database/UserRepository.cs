@@ -1,10 +1,7 @@
 ﻿using MyIssue.Core.Entities.Database;
 using MyIssue.Core.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyIssue.Infrastructure.Database.Models
 {
@@ -16,8 +13,9 @@ namespace MyIssue.Infrastructure.Database.Models
         }
         public Decimal? TypeLogin(string[] input)
         {
-            var q = _context.USERS.First((l) => input[0].Equals(l.userLogin) && input[1].Equals(l.password));
-            return q.type;
+            string login = input[0];
+            string pass = input[1];
+            return _context.USERS.Where(inp => inp.userLogin == login && inp.password == pass).Select(s => s.type).FirstOrDefault();
         }
         public void AddUser(string[] input)
         {

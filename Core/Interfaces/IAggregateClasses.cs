@@ -5,7 +5,6 @@ namespace MyIssue.Core.Interfaces
 {
     public interface IAggregateClasses
     {
-        IEnumerable<Type> GetAllClassTypes(string assembly, string nspace);
         Type GetClassByName(string name);
         List<Type> GetAggregatedClasses();
         void Insert(Type t);

@@ -4,6 +4,7 @@ using System.Threading;
 using MyIssue.Server.Net;
 using System.Data;
 using MyIssue.Core.Entities.Builders;
+using MyIssue.Core.Exceptions;
 
 namespace MyIssue.Server.Commands
 {
@@ -15,13 +16,20 @@ namespace MyIssue.Server.Commands
             NetWrite.Write(client.ConnectedSock, "LOGGING IN\r\n", ct);
             LogUser.TypedCommand("Login", "User try to", client);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            var query = unitOfWork.User.TypeLogin(SplitToCommand.Get(client.CommandHistory));
-            if (!(query is null))
+            try
             {
-                LogUser.TypedCommand("Login", "", client);
-                client.Status = Convert.ToInt32(query);
-                NetWrite.Write(client.ConnectedSock, "LOGGED!\r\n", ct);
+                var query = unitOfWork.User.TypeLogin(SplitToCommand.Get(client.CommandHistory));
+                if (!(query is null))
+                {
+                    LogUser.TypedCommand("Login", "", client);
+                    client.Status = Convert.ToInt32(query);
+                    NetWrite.Write(client.ConnectedSock, "LOGGED!\r\n", ct);
+                }
+            } catch (Exception e)
+            {
+                ExceptionHandler.HandleMyException(e);
             }
+
             
         }
     }

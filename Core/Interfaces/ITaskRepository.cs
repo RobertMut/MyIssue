@@ -4,6 +4,6 @@ namespace MyIssue.Core.Interfaces
 {
     public interface ITaskRepository : IRepository<TASK>
     {
-        void InsertTask(string[] input);
+        void InsertTask(string[] input, decimal? client);
     }
 }

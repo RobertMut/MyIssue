@@ -17,7 +17,9 @@ namespace MyIssue.Infrastructure.Database
         }
         public Decimal? GetClientByName(string name)
         {
-            return _context?.CLIENTS.FirstOrDefault((n) => name.Equals(n.clientName))?.clientId;
+            var clientids = _context?.CLIENTS.Where(n => name.Equals(n.clientName))?.Select(c => c.clientId).ToArray();
+            if (clientids.Length.Equals(0)) return null;
+            return clientids[0];
         }
     }
 }

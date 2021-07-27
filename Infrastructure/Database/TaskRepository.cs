@@ -1,6 +1,8 @@
 ﻿using MyIssue.Core.Entities.Database;
 using MyIssue.Core.Interfaces;
 using System;
+using System.Linq;
+using System.Threading;
 
 namespace MyIssue.Infrastructure.Database
 {
@@ -10,17 +12,16 @@ namespace MyIssue.Infrastructure.Database
         {
 
         }
-        public void InsertTask(string[] input)
+        public void InsertTask(string[] input, decimal? client)
         {
-            _context.TASKS.Add(new TASK
+            var task = new TASK
             {
                 taskTitle = input[0],
                 taskDesc = input[1],
-                taskStart = Convert.ToDateTime(input[2]),
-                taskClient = Decimal.Parse(input[3]),
-                taskType = Decimal.Parse(input[4]),
-                mailId = input.Length.Equals(6) ? input[6] : DBNull.Value.ToString()
-            });
+                taskCreation = DateTime.Parse(input[2]),
+                taskClient = client,
+                taskType = Decimal.Parse(input[4])
+            };
         }
     }
 }
