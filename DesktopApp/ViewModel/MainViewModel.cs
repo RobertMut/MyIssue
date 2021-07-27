@@ -1,9 +1,9 @@
 ﻿using MyIssue.Core.Entities;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
-using MyIssue.DesktopApp.Model;
-using MyIssue.DesktopApp.Model.Sender;
-using MyIssue.DesktopApp.Model.Services;
+using MyIssue.DesktopApp.Misc;
+using MyIssue.DesktopApp.Misc.Services;
+using MyIssue.DesktopApp.Misc.Sender;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;

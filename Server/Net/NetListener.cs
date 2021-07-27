@@ -34,7 +34,6 @@ namespace MyIssue.Server.Net
                     {
                         ct = new CancellationTokenSource();
                         _processClient.ConnectedTask(sock, ct.Token);
-
                     }
                     );
                 }
@@ -47,7 +46,6 @@ namespace MyIssue.Server.Net
             {
                 ExceptionHandler.HandleMyException(se);
             }
-
         }
         private IPEndPoint SetEndPoint(string ipAddr, int port)
         {

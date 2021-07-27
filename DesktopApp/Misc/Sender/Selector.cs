@@ -1,14 +1,14 @@
 ﻿using MyIssue.Core.Entities;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
-using MyIssue.DesktopApp.Model.Services;
-using MyIssue.DesktopApp.Model.Utility;
+using MyIssue.DesktopApp.Misc.Services;
+using MyIssue.DesktopApp.Misc.Utility;
 using MyIssue.Infrastructure.SMTP;
 using System;
 
-namespace MyIssue.DesktopApp.Model.Sender
+namespace MyIssue.DesktopApp.Misc.Sender
 {
-    class Selector : ISelector
+    public class Selector : ISelector
     {
         private IMessageConstructor _message;
         private ISMTPSender _sender;

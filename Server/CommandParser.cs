@@ -14,8 +14,7 @@ namespace MyIssue.Server
         private Cmd cmd;
         public CommandParser()
         {
-            _aggregate = new AggregateClasses();
-            _aggregate.SetTypes(_aggregate.GetAllClassTypes("Server", "MyIssue.Server.Commands"));
+            _aggregate = new AggregateClasses(_aggregate.GetAllClassTypes("Server", "MyIssue.Server.Commands"));
             
         }
         public void Parser(string input, Client client, CancellationToken ct)

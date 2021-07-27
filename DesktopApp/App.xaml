@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/" 
         xmlns:converter="clr-namespace:MyIssue.DesktopApp.Misc.Converters"
-        xmlns:model="clr-namespace:MyIssue.DesktopApp.Model"     
+        xmlns:model="clr-namespace:MyIssue.DesktopApp.Misc"     
         mc:Ignorable="d"
         >
     <Application.Resources>

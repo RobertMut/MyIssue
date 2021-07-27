@@ -15,12 +15,8 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand("AddUser", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "ADD USER\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            var query = _sqlCommandParser.SqlCmdParser(this.GetType().Name, SqlCommandInputBuilder
-            .Create()
-                .SetCommandFromArray(client.CommandHistory)
-                .SetTable(DBParameters.Parameters.UsersTable)
-            .Build());
-            _connector.MakeWriteQuery(cString, query);
+            unitOfWork.User.AddUser(SplitToCommand.Get(client.CommandHistory));
+            unitOfWork.User.SaveChanges();
 
         }
     }

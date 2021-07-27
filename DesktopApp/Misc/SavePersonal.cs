@@ -3,7 +3,7 @@ using MyIssue.Infrastructure.Files;
 using System.IO;
 using System.Reflection;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Misc
 {
     public class SavePersonal
     {

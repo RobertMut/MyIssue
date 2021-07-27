@@ -1,14 +1,13 @@
 ﻿using Microsoft.Win32;
 using MyIssue.Core.Entities;
-using MyIssue.DesktopApp.Model;
-using MyIssue.DesktopApp.Model.Services;
+using MyIssue.DesktopApp.Misc;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Windows;
-using System.Linq;
-using System;
 using System.Windows.Controls;
+using MyIssue.Core.Interfaces;
+using MyIssue.DesktopApp.Misc.Services;
 
 namespace MyIssue.DesktopApp.ViewModel
 {

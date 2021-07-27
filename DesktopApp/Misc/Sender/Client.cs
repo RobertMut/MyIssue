@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using MyIssue.Core.Entities;
+using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
-using MyIssue.DesktopApp.Model.Services;
+using MyIssue.DesktopApp.Misc.Services;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Misc.Sender
 {
     class ConsoleClient : IConsoleClient
     {

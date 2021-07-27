@@ -2,9 +2,9 @@
 using Serilog;
 using System;
 
-namespace MyIssue.DesktopApp.Model.Services
+namespace MyIssue.DesktopApp.Misc.Services
 {
-    public class SerilogLoggerService
+    public class SerilogLoggerService //TODO: MOVE TO ANOTHER PROJECT
     {
         const string template = "App ran into exception\r\n{Exception}";
         public static ILogger logger = new LoggerConfiguration()

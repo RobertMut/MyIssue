@@ -2,12 +2,12 @@
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
-using MyIssue.DesktopApp.Model.Services;
+using MyIssue.DesktopApp.Misc.Services;
 using MyIssue.Infrastructure.Files;
 using System;
 using System.Windows;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Misc
 {
     public class UserData : IUserData
     {

@@ -1,12 +1,11 @@
 ﻿using MyIssue.Core.Entities;
-using MyIssue.DesktopApp.Model.Utility;
+using MyIssue.Core.Interfaces;
+using MyIssue.DesktopApp.Misc.Utility;
 using MyIssue.Infrastructure.Files;
-using System;
 using System.IO;
 using System.Reflection;
-using System.Windows;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Misc
 {
     class SaveConfiguration : ISaveConfiguration
     {

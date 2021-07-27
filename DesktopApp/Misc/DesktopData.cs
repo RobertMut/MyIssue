@@ -5,9 +5,10 @@ using MyIssue.Core.Entities.Builders;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Core.Entities;
 using MyIssue.Core.Exceptions;
-using MyIssue.DesktopApp.Model.Utility;
+using MyIssue.Core.Interfaces;
+using MyIssue.DesktopApp.Misc.Utility;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.DesktopApp.Misc
 {
     public class DesktopData : IDesktopData
     {
