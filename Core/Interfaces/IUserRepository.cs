@@ -1,6 +1,7 @@
-﻿using System;
+﻿using MyIssue.Core.Entities.Database;
+using System;
 
-namespace MyIssue.Infrastructure.Database.Models
+namespace MyIssue.Core.Interfaces
 {
     public interface IUserRepository : IRepository<USER>
     {

@@ -1,6 +1,6 @@
-﻿using MyIssue.Infrastructure.Database.Models;
+﻿using MyIssue.Core.Entities.Database;
 
-namespace MyIssue.Infrastructure.Database
+namespace MyIssue.Core.Interfaces
 {
     public interface ITaskRepository : IRepository<TASK>
     {

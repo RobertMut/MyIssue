@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyIssue.Core.Entities.Database;
+using MyIssue.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

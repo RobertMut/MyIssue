@@ -1,9 +1,6 @@
-﻿using MyIssue.Infrastructure.Database.Models;
+﻿using MyIssue.Core.Entities.Database;
+using MyIssue.Core.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyIssue.Infrastructure.Database
 {
@@ -24,7 +21,6 @@ namespace MyIssue.Infrastructure.Database
                 taskType = Decimal.Parse(input[4]),
                 mailId = input.Length.Equals(6) ? input[6] : DBNull.Value.ToString()
             });
-            _context.SaveChanges();
         }
     }
 }

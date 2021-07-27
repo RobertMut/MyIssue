@@ -1,6 +1,6 @@
 ﻿using MyIssue.Core.Entities;
 
-namespace MyIssue.DesktopApp.Model
+namespace MyIssue.Core.Interfaces
 {
     public interface IDesktopData
     {

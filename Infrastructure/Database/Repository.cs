@@ -1,10 +1,9 @@
-﻿using MyIssue.Infrastructure.Database.Models;
+﻿using MyIssue.Core.Entities.Database;
+using MyIssue.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyIssue.Infrastructure.Database
 {

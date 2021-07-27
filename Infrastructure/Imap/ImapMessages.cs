@@ -14,15 +14,16 @@ using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Smtp;
 using MyIssue.Infrastructure.Database;
 using MyIssue.Core.Entities.Builders;
+using MyIssue.Infrastructure.Database.Models;
+using MyIssue.Core.Entities.Database;
 
 namespace MyIssue.Infrastructure.Imap
 {
     public class ImapMessages : IImapParse
     {
         private IStringTools _tools;
-        private IDBConnector _conn;
         private IImapConnect _iconn;
-        private readonly ISqlCommandParser _sqlCommandParser;
+        private readonly IUnitOfWork _unitOfWork;
 
         private ImapClient idleClient;
         private ImapClient getClient;
@@ -37,7 +38,9 @@ namespace MyIssue.Infrastructure.Imap
             _iconn = new ImapConnect();
             this.idleClient = idleClient;
             cancelToken = new CancellationTokenSource();
-            _sqlCommandParser = new SqlCommandParser();
+            _unitOfWork = new UnitOfWork(
+            new MyIssueDatabase(
+                DBParameters.ConnectionString.ToString()));
         }
 
         public async Task ImapListenNewMessagesAsync(CancellationToken ct)
@@ -162,17 +165,28 @@ namespace MyIssue.Infrastructure.Imap
         public void WriteToDatabase(MimeMessage m)
         {
             _tools = new StringTools();
-            _conn = new DBConnector();
 
             string[] email = _tools.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
-
-
-            var query = _sqlCommandParser.SqlCmdParser("InsertNewTask", SqlCommandInputBuilder
-           .Create()
-               .SetCommandFromImap(m.Subject, m.TextBody, m.GetHashCode(), m.Date.DateTime)
-               .SetTable(DBParameters.Parameters.TaskTable)
-           .Build());
-            _conn.MakeWriteQuery(DBParameters.ConnectionString, query);
+            /*string[] input = new string[]{
+                email[4],
+                string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody),
+                m.Date.DateTime.ToString(),
+                email[1],
+                "1",
+                m.GetHashCode().ToString()
+            };*/
+            var client = _unitOfWork.Client.GetClientByName(email[1]);
+            _unitOfWork.Task.Add(new TASK
+            {
+                taskTitle = email[4],
+                taskDesc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody),
+                taskCreation = m.Date.DateTime,
+                taskClient = client,
+                taskType = 1,
+                mailId = m.GetHashCode().ToString()
+            });
+            _unitOfWork.Task.SaveChanges();
+            Console.WriteLine("IMAP - {0} - Data was written to database", DateTime.Now);
         }
 
     }

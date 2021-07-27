@@ -1,4 +1,4 @@
-﻿namespace MyIssue.Infrastructure.Database
+﻿namespace MyIssue.Core.Interfaces
 {
     public interface IEmployeeRepository
     {
