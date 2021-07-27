@@ -7,9 +7,10 @@ namespace MyIssue.Infrastructure.Database.Models
 {
     public partial class MyIssueDatabase : DbContext
     {
-        public MyIssueDatabase()
-            : base("name=MyIssueDatabase")
+        public MyIssueDatabase(string connectionString)
+            : base(connectionString)
         {
+
         }
 
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
