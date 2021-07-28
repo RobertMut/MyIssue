@@ -86,7 +86,7 @@ namespace MyIssue.DesktopApp.ViewModel
         private void LoadCommands()
         {
             EditSettings = new DelegateCommand(EnterSettings, CanEnterSettings);
-            SendCommand = new DelegateCommand(SendMessage, CanDoOtherThings);
+            SendCommand = new DelegateCommand(SendMessage, CanSendCommand);
             UserData = new DelegateCommand(LoadUserData, CanDoOtherThings);
 
         }
@@ -119,6 +119,11 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         private bool CanDoOtherThings()
         {
+            return true;
+        }
+        private bool CanSendCommand()
+        {
+            if (Settings is null || Description is null) return false;
             return true;
         }
         private void Callback(NavigationResult res)
