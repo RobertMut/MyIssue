@@ -13,8 +13,13 @@ namespace MyIssue.DesktopApp.Misc.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return bool.Parse(value.ToString());
-            
+            try
+            {
+                return bool.Parse(value.ToString());
+            } catch (NullReferenceException)
+            {
+                return false;
+            }
         }
     }
 }
