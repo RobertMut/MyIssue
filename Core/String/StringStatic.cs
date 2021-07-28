@@ -7,19 +7,47 @@ namespace MyIssue.Core.String
     {
         public static byte[] ByteMessage(string input)
         {
-            return Encoding.UTF8.GetBytes(input);
+            try
+            {
+                return Encoding.UTF8.GetBytes(input);
+            } catch (ArgumentNullException)
+            {
+                return new byte[0];
+            }
+
         }
         public static string StringMessage(byte[] input, int length)
         {
-            return Encoding.UTF8.GetString(input, 0, length).Replace("\u0000", "");
+            try
+            {
+                return Encoding.UTF8.GetString(input, 0, length).Replace("\u0000", "");
+            } catch (ArgumentNullException)
+            {
+                return string.Empty;
+            }
+
         }
         public static string[] CommandSplitter(string input, string splitString)
         {
-            return input.Split(new string[] { splitString }, StringSplitOptions.None);
+            try
+            {
+                return input.Split(new string[] { splitString }, StringSplitOptions.None);
+            } catch (NullReferenceException)
+            {
+                return new string[0];
+            }
+
         }
         public static string CutString(string input)
         {
-            return input.Length <= 15 ? input : input.Substring(0, 15);
+            try
+            {
+                return input.Length <= 15 ? input : input.Substring(0, 15);
+            } catch (NullReferenceException)
+            {
+                return string.Empty;
+            }
+
         }
     }
 }
