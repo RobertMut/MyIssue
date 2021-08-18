@@ -5,9 +5,10 @@ using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
-    public class NotFound : Cmd
+    public class NotFound : Command
     {
-        public override void Command(Client client, CancellationToken ct)
+        public static string Name { get { return "NotFound"; } }
+        public override void Invoke(Client client, CancellationToken ct)
         {
             NetWrite.Write(client.ConnectedSock, "Command not found!\r\n", ct);
         }

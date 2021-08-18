@@ -3,13 +3,15 @@ using MyIssue.Core.Entities.Database;
 using MyIssue.Core.Exceptions;
 using MyIssue.Server.Net;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
-    public class CreateTask : Cmd
+    public class CreateTask : Command
     {
-        public override void Command(Client client, CancellationToken ct)
+        public static string Name { get { return "CreateTask"; } }
+        public override void Invoke(Client client, CancellationToken ct)
         {
             if (client.Status.Equals(0)) throw new NotSufficientPermissionsException();
             LogUser.TypedCommand("CreateTask", "Executed", client);
@@ -18,9 +20,16 @@ namespace MyIssue.Server.Commands
             try
             {
                 var input = SplitToCommand.Get(client.CommandHistory);
-                var clientId = unitOfWork.Client.GetClientByName(input[3]);
-                unitOfWork.Task.InsertTask(input, clientId);
-                unitOfWork.Complete();
+                var clientId = unit.ClientRepository.Get(s => s.ClientName == input[3]).Select(c => c.ClientId).FirstOrDefault();
+                unit.TaskRepository.Add(new Infrastructure.Database.Models.Task
+                {
+                    TaskTitle = input[0],
+                    TaskDesc = input[1],
+                    TaskCreation = DateTime.Parse(input[2]),
+                    TaskClient = clientId,
+                    TaskType = decimal.Parse(input[4])
+                });
+                unit.Complete();
             } catch (Exception e)
             {
                 ExceptionHandler.HandleMyException(e);

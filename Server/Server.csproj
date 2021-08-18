@@ -90,7 +90,7 @@
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\AddUser.cs" />
     <Compile Include="Commands\AddEmployee.cs" />
-    <Compile Include="Commands\Cmd.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="Commands\CreateTask.cs" />
     <Compile Include="Commands\History.cs" />
@@ -99,7 +99,7 @@
     <Compile Include="Commands\NotSufficient.cs" />
     <Compile Include="Commands\WhoAmI.cs" />
     <Compile Include="SplitToCommand.cs" />
-    <Compile Include="Initializer.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="LogUser.cs" />
     <Compile Include="Net\NetRead.cs" />
     <Compile Include="Net\NetListener.cs" />

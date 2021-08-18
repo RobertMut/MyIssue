@@ -13,7 +13,7 @@ namespace MyIssue.Server
     public class CommandParser
     {
         private IAggregateClasses _aggregate;
-        private Cmd cmd;
+        private Command cmd;
         public CommandParser()
         {
             _aggregate = new AggregateClasses((from t in Assembly.GetExecutingAssembly().GetTypes()
@@ -25,20 +25,23 @@ namespace MyIssue.Server
             try
             {
                 client.CommandHistory.Add(input);
-                var type = _aggregate.GetClassByName(input);
+                var type = (from c in _aggregate.GetAggregatedClasses()
+                            where c.GetProperty("Name", BindingFlags.Static).GetValue(null, null) == input
+                            select c).FirstOrDefault();
                 if (type is null) throw new CommandNotFoundException();
-                cmd = (Cmd)Activator.CreateInstance(type);
-                cmd.Command(client, ct);
+                cmd = (Command)Activator.CreateInstance(type);
+                cmd.Invoke(client, ct);
             } 
             catch (CommandNotFoundException)
             {
+                
                 cmd = new NotFound();
-                cmd.Command(client, ct);
+                cmd.Invoke(client, ct);
             } 
             catch (NotSufficientPermissionsException)
             {
                 cmd = new NotSufficient();
-                cmd.Command(client, ct);
+                cmd.Invoke(client, ct);
             }
         }
 

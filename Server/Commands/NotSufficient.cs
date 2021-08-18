@@ -4,9 +4,10 @@ using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
-    class NotSufficient : Cmd
+    class NotSufficient : Command
     {
-        public override void Command(Client client, CancellationToken ct)
+        public static string Name { get { return "NotSufficient"; } }
+        public override void Invoke(Client client, CancellationToken ct)
         {
             LogUser.TypedCommand(client.CommandHistory[client.CommandHistory.Count - 1], "Tried to execute", client);
             NetWrite.Write(client.ConnectedSock, "INSUFFICIENT PERMISSIONS!\r\n", ct);

@@ -4,9 +4,10 @@ using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
-    class History : Cmd
+    class History : Command
     {
-        public override void Command(Client client, CancellationToken ct)
+        public static string Name { get { return "History"; } }
+        public override void Invoke(Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("History", "Executed", client);
             string commandHistory = string.Join("\r\n", client.CommandHistory.ToArray()) + "\r\n";

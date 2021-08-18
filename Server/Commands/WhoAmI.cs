@@ -4,9 +4,10 @@ using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
-    class WhoAmI : Cmd
+    class WhoAmI : Command
     {
-        public override void Command(Client client, CancellationToken ct)
+        public static string Name { get { return "WhoAmI"; } }
+        public override void Invoke(Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("WhoAmI", "Executed", client);
             string whoAreYou = string.Format("ID: {0}\r\nStatus: {1}\r\nLast Command: {2}\r\nAddress: {3}\r\n",

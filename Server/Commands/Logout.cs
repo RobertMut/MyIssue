@@ -3,9 +3,10 @@ using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
-    class Logout : Cmd
+    class Logout : Command
     {
-        public override void Command(Client client, CancellationToken ct)
+        public static string Name { get { return "Logout"; } }
+        public override void Invoke(Client client, CancellationToken ct)
         {
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
             {
