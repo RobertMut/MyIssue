@@ -13,10 +13,6 @@
     <d_database>DATABASE</d_database>
     <d_username>username</d_username>
     <d_password>password</d_password>
-    <d_employeesTable>dbo.EMPLOYEES</d_employeesTable>
-    <d_usersTable>dbo.USERS</d_usersTable>
-    <d_taskTable>dbo.TASKS</d_taskTable>
-    <d_clientsTable>dbo.CLIENTS</d_clientsTable>
   </databaseSettings>
   <serverSettings>
     <enabled>true</enabled>

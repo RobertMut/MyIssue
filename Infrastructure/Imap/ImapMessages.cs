@@ -13,17 +13,15 @@ using MyIssue.Core.String;
 using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Smtp;
 using MyIssue.Infrastructure.Database;
-using MyIssue.Core.Entities.Builders;
-using MyIssue.Infrastructure.Database.Models;
-using MyIssue.Core.Entities.Database;
+
 
 namespace MyIssue.Infrastructure.Imap
 {
-    public class ImapMessages : IImapParse
+    public class ImapMessages : IImapParse 
     {
         private IStringTools _tools;
         private IImapConnect _iconn;
-        private readonly IUnitOfWork _unitOfWork;
+        private UnitOfWork unit;
 
         private ImapClient idleClient;
         private ImapClient getClient;
@@ -38,10 +36,8 @@ namespace MyIssue.Infrastructure.Imap
             _iconn = new ImapConnect();
             this.idleClient = idleClient;
             cancelToken = new CancellationTokenSource();
-            _unitOfWork = new UnitOfWork(
-            new MyIssueDatabase(
-                DBParameters.ConnectionString.ToString()));
-        }
+            unit = new UnitOfWork(new Database.Models.MyIssueContext(DBParameters.ConnectionString.ToString()));
+           }
 
         public async Task ImapListenNewMessagesAsync(CancellationToken ct)
         {
@@ -99,7 +95,7 @@ namespace MyIssue.Infrastructure.Imap
                     }
                     else
                     {
-                        await Task.Delay(new TimeSpan(0, 1, 0), cancelToken.Token);
+                        await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 1, 0), cancelToken.Token);
                         await idleClient.NoOpAsync(cancelToken.Token);
                     }
                     break;
@@ -167,25 +163,17 @@ namespace MyIssue.Infrastructure.Imap
             _tools = new StringTools();
 
             string[] email = _tools.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            /*string[] input = new string[]{
-                email[4],
-                string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody),
-                m.Date.DateTime.ToString(),
-                email[1],
-                "1",
-                m.GetHashCode().ToString()
-            };*/
-            var client = _unitOfWork.Client.GetClientByName(email[1]);
-            _unitOfWork.Task.Add(new TASK
+           
+             unit.TaskRepository.Add(new Database.Models.Task
             {
-                taskTitle = email[4],
-                taskDesc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody),
-                taskCreation = m.Date.DateTime,
-                taskClient = client,
-                taskType = 1,
-                mailId = m.GetHashCode().ToString()
+                TaskTitle = email[4],
+                TaskDesc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody),
+                TaskCreation = m.Date.DateTime,
+                TaskClient = decimal.Parse(email[1]),
+                TaskType = 1,
+                MailId = m.GetHashCode().ToString()
             });
-            _unitOfWork.Task.SaveChanges();
+            unit.Complete();
             Console.WriteLine("IMAP - {0} - Data was written to database", DateTime.Now);
         }
 
