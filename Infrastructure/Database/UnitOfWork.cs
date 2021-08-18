@@ -1,31 +1,70 @@
-﻿using MyIssue.Core.Entities.Database;
-using MyIssue.Core.Interfaces;
+﻿using MyIssue.Core.Interfaces;
 using MyIssue.Infrastructure.Database.Models;
 
 namespace MyIssue.Infrastructure.Database
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly MyIssueDatabase _context;
-        public ITaskRepository Task { get; private set; }
-        public IUserRepository User { get; private set; }
-        public IEmployeeRepository Employee { get; private set; }
-        public IClientRepository Client { get; private set; }
-        public UnitOfWork(MyIssueDatabase context)
+        private readonly MyIssueContext context;
+        private Repository<User> userRepository;
+        private Repository<Task> taskRepository;
+        private Repository<Client> clientRepository;
+        private Repository<Employee> employeeRepository;
+        public UnitOfWork(MyIssueContext context)
         {
-            _context = context;
-            Task = new TaskRepository(_context);
-            User = new UserRepository(_context);
-            Employee = new EmployeeRepository(_context);
-            Client = new ClientRepository(_context);
+            this.context = context;
+        }
+        public Repository<User> UserRepository
+        {
+            get
+            {
+                if(userRepository is null)
+                {
+                    userRepository = new Repository<User>(context);
+                }
+                return userRepository;
+            }
+        }
+        public Repository<Task> TaskRepository
+        {
+            get
+            {
+                if (taskRepository is null)
+                {
+                    taskRepository = new Repository<Task>(context);
+                }
+                return taskRepository;
+            }
+        }
+        public Repository<Employee> EmployeeRepository
+        {
+            get
+            {
+                if (employeeRepository is null)
+                {
+                    employeeRepository = new Repository<Employee>(context);
+                }
+                return employeeRepository;
+            }
+        }
+        public Repository<Client> ClientRepository
+        {
+            get
+            {
+                if (clientRepository is null)
+                {
+                    clientRepository = new Repository<Client>(context);
+                }
+                return clientRepository;
+            }
         }
         public int Complete()
         {
-            return _context.SaveChanges();
+            return context.SaveChanges();
         }
         public void Dispose()
         {
-            _context.Dispose();
+            context.Dispose();
         }
     }
 }

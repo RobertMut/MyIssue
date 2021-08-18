@@ -1,5 +1,5 @@
-﻿using MyIssue.Core.Entities.Database;
-using MyIssue.Core.Interfaces;
+﻿using MyIssue.Core.Interfaces;
+using MyIssue.Infrastructure.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,10 @@ using System.Linq.Expressions;
 
 namespace MyIssue.Infrastructure.Database
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
-        protected MyIssueDatabase _context;
-        public Repository(MyIssueDatabase context)
+        protected MyIssueContext _context;
+        public Repository(MyIssueContext context)
         {
             _context = context;
         }
