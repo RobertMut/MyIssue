@@ -1,5 +1,6 @@
 ﻿using MailKit.Security;
 using MyIssue.Core.Interfaces;
+using System;
 
 namespace MyIssue.Core.Entities.Builders
 {
@@ -20,9 +21,9 @@ namespace MyIssue.Core.Entities.Builders
             template.Port = port;
             return this;
         }
-        public IImapParametersBuilder SetSocketOptions(SecureSocketOptions socketOptions)
+        public IImapParametersBuilder SetSocketOptions(string socketOptions)
         {
-            template.SocketOptions = socketOptions;
+            template.SocketOptions = (SecureSocketOptions)Enum.Parse(typeof(SecureSocketOptions), socketOptions);
             return this;
         }
         public IImapParametersBuilder SetLogin(string login)

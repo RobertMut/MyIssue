@@ -30,26 +30,6 @@ namespace MyIssue.Core.Entities.Builders
             dBTemp.Database = databaseName;
             return this;
         }
-        public IDBParametersBuilder SetTaskTable(string taskTableName)
-        {
-            dBTemp.TaskTable = taskTableName;
-            return this;
-        }
-        public IDBParametersBuilder SetUsersTable(string usersTableName)
-        {
-            dBTemp.UsersTable = usersTableName;
-            return this;
-        }
-        public IDBParametersBuilder SetEmployeesTable(string employeesTableName)
-        {
-            dBTemp.EmployeesTable = employeesTableName;
-            return this;
-        }
-        public IDBParametersBuilder SetClientsTable(string clientsTableName)
-        {
-            dBTemp.ClientsTable = clientsTableName;
-            return this;
-        }
         public DBParametersTemplate Build() => dBTemp;
         public static DBParametersBuilder Create() => new DBParametersBuilder();
 
