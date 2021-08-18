@@ -10,7 +10,7 @@
         Height="480" Width="590" >
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Initialized">
-            <b:InvokeCommandAction Command="{Binding LoadMainCommand}"/>
+            <b:InvokeCommandAction Command="{Binding LoadLogoCommand}"/>
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <ContentControl prism:RegionManager.RegionName="ContentRegion"/>

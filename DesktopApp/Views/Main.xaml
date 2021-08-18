@@ -14,21 +14,149 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid Background="White">
-        <StackPanel VerticalAlignment="Top" Height="142" Margin="30,20,30,0">
+        <Grid.Resources>
+            <VisualBrush x:Key="nameHint" AlignmentX="Left" AlignmentY="Top" Stretch="None">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="0" Y="0"/>
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid HorizontalAlignment="Left">
+                        <Label Content="Your name" Margin="0,0,0,0" FontStyle="Normal" Foreground="Gray" FontSize="10"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="surnameHint" AlignmentX="Left" AlignmentY="Top" Stretch="None">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="0" Y="0"/>
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid HorizontalAlignment="Left">
+                        <Label Content="Your surname" Margin="0,0,0,0" FontStyle="Normal" Foreground="Gray" FontSize="10"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="companyHint" AlignmentX="Left" AlignmentY="Top" Stretch="None">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="0" Y="0"/>
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid HorizontalAlignment="Left">
+                        <Label Content="Your company" Margin="0,0,0,0" FontStyle="Normal" Foreground="Gray" FontSize="10"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="phoneHint" AlignmentX="Left" AlignmentY="Top" Stretch="None">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="0" Y="0"/>
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid HorizontalAlignment="Left">
+                        <Label Content="Your phone number" Margin="0,0,0,0" FontStyle="Normal" Foreground="Gray" FontSize="10"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="emailHint" AlignmentX="Left" AlignmentY="Top" Stretch="None">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="0" Y="0"/>
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid HorizontalAlignment="Left">
+                        <Label Content="Your email address" Margin="0,0,0,0" FontStyle="Normal" Foreground="Gray" FontSize="10"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="descHint" AlignmentX="Left" AlignmentY="Top" Stretch="None">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="0" Y="0"/>
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid HorizontalAlignment="Left">
+                        <Label Content="Issue description" Margin="0,0,0,0" FontStyle="Normal" Foreground="Gray" FontSize="10"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Grid.Resources>
+        <StackPanel VerticalAlignment="Top" Height="122" Margin="30,20,30,0">
             <Image x:Name="image" Height="125" Stretch="UniformToFill" Margin="0" Source="{Binding Settings.Image, Converter={StaticResource ImageConverter}, Mode=OneWay}"/>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Left" Width="300" Margin="0,162,0,50">
-            <TextBox x:Name="name" Padding="5" Margin="5" Text="{Binding Details.Name}" />
-            <TextBox x:Name="surname" Padding="5" Margin="5" Text="{Binding Details.Surname}" />
-            <TextBox x:Name="company" Padding="5" Margin="5" Text="{Binding Details.Company}" />
-            <TextBox x:Name="phoneNumber" Padding="5" Margin="5" Text="{Binding Details.Phone}" />
-            <TextBox x:Name="email" Padding="5" Margin="5" Text="{Binding Details.Email}" />
+        <StackPanel HorizontalAlignment="Left" Width="300" Margin="0,140,0,50">
+            <TextBox x:Name="name" Padding="5" Margin="5" Text="{Binding Details.Name}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource ResourceKey=nameHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox x:Name="surname" Padding="5" Margin="5" Text="{Binding Details.Surname}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource ResourceKey=surnameHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox x:Name="company" Padding="5" Margin="5" Text="{Binding Details.Company}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource ResourceKey=companyHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox x:Name="phoneNumber" Padding="5" Margin="5" Text="{Binding Details.Phone}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource ResourceKey=phoneHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox x:Name="email" Padding="5" Margin="5" Text="{Binding Details.Email}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource ResourceKey=emailHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
 
             <Button x:Name="sendButton" Width="85" Content="Send" Padding="5" Command="{Binding SendCommand}" Margin="15,5,5,5" FontFamily="Segoe Ui" Background="#33000000" HorizontalAlignment="Center" Height="30"/>
             <TextBlock x:Name="Info" TextWrapping="Wrap" FontStyle="Normal" Foreground="Black" Margin="5" Padding="5" FontSize="15px" TextAlignment="Center"></TextBlock>
         </StackPanel>
-        <StackPanel x:Name="DescStackPanel" HorizontalAlignment="Right" Width="250" Margin="0,165,0,50" Height="235">
-            <TextBox x:Name="desc" Padding="5" Margin="5" Height="{Binding ElementName=DescStackPanel, Path=Height}" TextWrapping="Wrap" Text="{Binding Description}"/>
+        <StackPanel HorizontalAlignment="Right" Width="250" Margin="0,140,0,80" Height="235">
+            <TextBox x:Name="desc" Padding="5" Margin="5" Height="230" TextWrapping="Wrap" Text="{Binding Description}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource ResourceKey=descHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
         </StackPanel>
             <StackPanel VerticalAlignment="Bottom" Height="40">
              <Button x:Name="settings" Margin="0,0,15,0" Width="35" Command="{Binding EditSettings}" Padding="5" Content="⚙️" HorizontalAlignment="Right"/>

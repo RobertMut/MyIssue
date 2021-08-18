@@ -21,18 +21,20 @@ namespace MyIssue.DesktopApp
         {
             if (!Directory.Exists(Paths.path)) Directory.CreateDirectory(Paths.path);
             ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
+            ViewModelLocationProvider.Register<Logo, LogoViewModel>();
             ViewModelLocationProvider.Register<Main, MainViewModel>();
             ViewModelLocationProvider.Register<Prompt, PromptViewModel>();
-            ViewModelLocationProvider.Register<SettingsView, SettingsViewViewModel>();
-
+            ViewModelLocationProvider.Register<Settings, SettingsViewModel>();
         }
         protected override void OnInitialized()
         {
             base.OnInitialized();
             var regionManag = Container.Resolve<IRegionManager>();
+            regionManag.RegisterViewWithRegion("ContentRegion", typeof(Logo));
             regionManag.RegisterViewWithRegion("ContentRegion", typeof(Main));
             regionManag.RegisterViewWithRegion("ContentRegion", typeof(Prompt));
-            regionManag.RegisterViewWithRegion("ContentRegion", typeof(SettingsView));
+            regionManag.RegisterViewWithRegion("ContentRegion", typeof(Settings));
+
         }
         protected override Window CreateShell()
         {
@@ -40,10 +42,10 @@ namespace MyIssue.DesktopApp
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<Logo>("Logo");
             containerRegistry.RegisterForNavigation<Main>("Main");
             containerRegistry.RegisterForNavigation<Prompt>("Prompt");
-            containerRegistry.RegisterForNavigation<SettingsView>("SettingsView");
-
+            containerRegistry.RegisterForNavigation<Settings>("SettingsView");
         }
         void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {

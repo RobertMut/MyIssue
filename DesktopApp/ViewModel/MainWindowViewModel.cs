@@ -8,7 +8,7 @@ namespace MyIssue.DesktopApp.ViewModel
     public class MainWindowViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
-        public DelegateCommand LoadMainCommand { get; private set; }
+        public DelegateCommand LoadLogoCommand { get; private set; }
         public MainWindowViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
@@ -16,12 +16,12 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         private void LoadCommands()
         {
-            LoadMainCommand = new DelegateCommand(LoadMain);
+            LoadLogoCommand = new DelegateCommand(LoadLogo);
         }
 
-        private void LoadMain()
+        private void LoadLogo()
         {
-            _regionManager.RequestNavigate("ContentRegion", "Main", Callback);
+            _regionManager.RequestNavigate("ContentRegion", "Logo", Callback);
         }
         private void Callback(NavigationResult res)
         {

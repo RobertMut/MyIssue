@@ -11,7 +11,7 @@ using MyIssue.DesktopApp.Misc.Services;
 
 namespace MyIssue.DesktopApp.ViewModel
 {
-    public class SettingsViewViewModel : BindableBase
+    public class SettingsViewModel : BindableBase
     {
         private SettingTextBoxes _settings;
         private IRegionManager _regionManager;
@@ -30,7 +30,7 @@ namespace MyIssue.DesktopApp.ViewModel
         public DelegateCommand ReturnToMain { get; private set; }
         public DelegateCommand<object> GetAppPass { get; set; }
         public DelegateCommand<object> GetPass { get; set; }
-        public SettingsViewViewModel(IRegionManager regionManager)
+        public SettingsViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
             LoadCommands();
@@ -64,7 +64,22 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         private bool CanSaveSettings()
         {
-            return true;
+            if (!string.IsNullOrEmpty(Settings.ApplicationPass) &&
+               !string.IsNullOrEmpty(Settings.CompanyName) &&
+               !string.IsNullOrEmpty(Settings.ConnectionMethod) &&
+               !string.IsNullOrEmpty(Settings.EmailAddress) &&
+               !string.IsNullOrEmpty(Settings.Login) &&
+               !string.IsNullOrEmpty(Settings.Pass) &&
+               !string.IsNullOrEmpty(Settings.Port)
+               //!string.IsNullOrEmpty(Settings.RecipientAddress) &&
+               //!string.IsNullOrEmpty(Settings.SslTsl)
+               ) 
+                return true;
+            else
+            {
+                MessageBox.Show("Fill empty fields");
+                return false;
+            }
         }
         private void SelectImage()
         {
@@ -77,7 +92,13 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         private void Return()
         {
-            _regionManager.RequestNavigate("ContentRegion", "Main", Callback);
+            if (!(Settings is null))
+            {
+                var parameters = new NavigationParameters();
+                parameters.Add("Settings", Settings);
+                _regionManager.RequestNavigate("ContentRegion", "Main", Callback, parameters);
+            }
+            
         }
         private bool CanReturn()
         {
