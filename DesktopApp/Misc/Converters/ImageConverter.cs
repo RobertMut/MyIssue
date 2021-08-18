@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using MyIssue.Core.Exceptions;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -12,7 +11,7 @@ namespace MyIssue.DesktopApp.Misc.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType != typeof(ImageSource)) throw new InvaidOperationException("Target type must be System.Windows.Media.ImageSource.");
+            if (targetType != typeof(ImageSource)) throw new InvalidOperationException("Target type must be System.Windows.Media.ImageSource.");
             try
             {
                 BitmapImage img = new BitmapImage();

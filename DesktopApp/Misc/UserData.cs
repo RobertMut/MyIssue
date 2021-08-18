@@ -20,11 +20,11 @@ namespace MyIssue.DesktopApp.Misc
                 var userFile = OpenConfiguration.OpenConfig(Paths.userFile);
                 return PersonalDetailsBuilder
                    .Create()
-                       .SetName(ConfigValue.GetValue("name", userFile))
-                       .SetSurname(ConfigValue.GetValue("surname", userFile))
+                       .SetName(ConfigValue.GetValue<string>("name", userFile))
+                       .SetSurname(ConfigValue.GetValue<string>("surname", userFile))
                        .SetCompany(company)
-                       .SetPhone(ConfigValue.GetValue("phone", userFile))
-                       .SetEmail(ConfigValue.GetValue("email", userFile))
+                       .SetPhone(ConfigValue.GetValue<string>("phone", userFile))
+                       .SetEmail(ConfigValue.GetValue<string>("email", userFile))
                        .SetImage(image)
                    .Build();
             }

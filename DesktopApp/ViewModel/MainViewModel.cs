@@ -23,19 +23,10 @@ namespace MyIssue.DesktopApp.ViewModel
         private SettingTextBoxes _settings;
         private string _description;
         private bool _saveDetails;
-        private bool canExecute = true;
         public DelegateCommand SendCommand { get; private set; }
         public DelegateCommand EditSettings { get; private set; }
         public DelegateCommand UserData { get; private set; }
 
-        public bool CanExecute
-        {
-            get { return canExecute; }
-            set
-            {
-                SetProperty(ref canExecute, value);
-            }
-        }
         public bool SaveDetails
         {
             get { return _saveDetails; }
@@ -79,7 +70,6 @@ namespace MyIssue.DesktopApp.ViewModel
             _selector = new Selector();
             Settings = new SettingTextBoxes();
             Details = new PersonalDetails();
-            LoadData();
             LoadUserData();
         }
 
@@ -90,16 +80,12 @@ namespace MyIssue.DesktopApp.ViewModel
             UserData = new DelegateCommand(LoadUserData, CanDoOtherThings);
 
         }
-        private void LoadData()
+        private void OnNavigatedTo(NavigationContext navigationContext)
         {
-            try
+            var settings = navigationContext.Parameters["Settings"] as SettingTextBoxes;
+            if (!(settings is null))
             {
-                Settings = _data.Load();
-            } catch (ConfigurationNotFoundException e)
-            {
-                canExecute = false;
-                _regionManager.RequestNavigate("ContentRegion", "SettingsView", Callback);
-                SerilogLoggerService.LogException(e);
+                Settings = settings;
             }
         }
         private void EnterSettings()
@@ -114,7 +100,7 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         private void SendMessage()
         {
-            _selector.Send(Settings, Details, Description); //TODO: check if null
+            _selector.Send(Settings, Details, Description); 
             if (SaveDetails.Equals(true)) SavePersonal.Save(Details);
         }
         private bool CanDoOtherThings()
@@ -137,10 +123,10 @@ namespace MyIssue.DesktopApp.ViewModel
         {
             try
             {
-                if (canExecute)
                 Details = _loaduserdata.Load(Settings.Image, Settings.CompanyName);
             } catch (NullReferenceException e)
             {
+                Details = null;
                 SerilogLoggerService.LogException(e);
             }
 

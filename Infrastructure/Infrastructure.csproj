@@ -50,12 +50,18 @@
     <EmbeddedResource Include="Resources\configurationServer.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\ClientRepository.cs" />
-    <Compile Include="Database\EmployeeRepository.cs" />
-    <Compile Include="Database\TaskRepository.cs" />
-    <Compile Include="Database\UnitOfWork.cs" />
-    <Compile Include="Database\UserRepository.cs" />
+    <Compile Include="Database\DatabaseBootstrapper.cs" />
+    <Compile Include="Database\Models\Client.cs" />
+    <Compile Include="Database\Models\ClientEmployee.cs" />
+    <Compile Include="Database\Models\Employee.cs" />
+    <Compile Include="Database\Models\MyIssueContext.cs" />
+    <Compile Include="Database\Models\Position.cs" />
+    <Compile Include="Database\Models\Task.cs" />
+    <Compile Include="Database\Models\TaskType.cs" />
+    <Compile Include="Database\Models\User.cs" />
+    <Compile Include="Database\Models\UserType.cs" />
     <Compile Include="Database\Repository.cs" />
+    <Compile Include="Database\UnitOfWork.cs" />
     <Compile Include="Files\ArchiveFile.cs" />
     <Compile Include="Files\ConfigValue.cs" />
     <Compile Include="Files\DeleteMultiple.cs" />
@@ -72,12 +78,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Smtp\SMTPSender.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{87d859d8-728f-4c12-b87f-ea388102d94f}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
@@ -124,6 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{87d859d8-728f-4c12-b87f-ea388102d94f}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

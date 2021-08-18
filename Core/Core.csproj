@@ -52,7 +52,6 @@
     <Compile Include="Entities\Database\TASK.cs" />
     <Compile Include="Entities\Database\TASKTYPE.cs" />
     <Compile Include="Entities\Database\USER.cs" />
-    <Compile Include="Exceptions\InvaidOperationException.cs" />
     <Compile Include="Interfaces\IAggregateClasses.cs" />
     <Compile Include="Constants\ConsoleCommands.cs" />
     <Compile Include="Constants\QueryString.cs" />
@@ -76,16 +75,13 @@
     <Compile Include="Exceptions\NotSufficientPermissionsException.cs" />
     <Compile Include="Interfaces\IArchiveFile.cs" />
     <Compile Include="Interfaces\IClientBuilder.cs" />
-    <Compile Include="Interfaces\IClientRepository.cs" />
     <Compile Include="Interfaces\ICommandParser.cs" />
     <Compile Include="Interfaces\IConfigurationBuilder.cs" />
     <Compile Include="Interfaces\IConsoleClient.cs" />
-    <Compile Include="Interfaces\IDBCommands.cs" />
-    <Compile Include="Interfaces\IDBParameters.cs" />
+    <Compile Include="Interfaces\IDatabaseBootstrapper.cs" />
     <Compile Include="Interfaces\IDBParametersBuilder.cs" />
     <Compile Include="Interfaces\IDesktopData.cs" />
     <Compile Include="Interfaces\IDetailsBuilder.cs" />
-    <Compile Include="Interfaces\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\IImapConnect.cs" />
     <Compile Include="Interfaces\IImapParametersBuilder.cs" />
     <Compile Include="Interfaces\IImapParse.cs" />
@@ -98,10 +94,8 @@
     <Compile Include="Interfaces\ISelector.cs" />
     <Compile Include="Interfaces\ISMTPSender.cs" />
     <Compile Include="Interfaces\IStringTools.cs" />
-    <Compile Include="Interfaces\ITaskRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserData.cs" />
-    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="String\StringStatic.cs" />
     <Compile Include="String\StringTools.cs" />
   </ItemGroup>

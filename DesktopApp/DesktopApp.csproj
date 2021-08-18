@@ -116,21 +116,29 @@
     <Compile Include="Misc\SavePersonal.cs" />
     <Compile Include="Misc\Sender\Selector.cs" />
     <Compile Include="Misc\UserData.cs" />
+    <Compile Include="ViewModel\LogoViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PromptViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="Misc\Utility\DecryptedValue.cs" />
     <Compile Include="Misc\Sender\Client.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="Views\Logo.xaml.cs">
+      <DependentUpon>Logo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Prompt.xaml.cs">
       <DependentUpon>Prompt.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Logo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -152,7 +160,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
+    <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
