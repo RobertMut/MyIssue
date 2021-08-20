@@ -77,7 +77,7 @@
             </VisualBrush>
         </Grid.Resources>
         <StackPanel VerticalAlignment="Top" Height="122" Margin="30,20,30,0">
-            <Image x:Name="image" Height="125" Stretch="UniformToFill" Margin="0" Source="{Binding Settings.Image, Converter={StaticResource ImageConverter}, Mode=OneWay}"/>
+            <Image x:Name="image" Height="125" Stretch="UniformToFill" Margin="0" Source="{Binding Settings.Image, Converter={StaticResource ImageConverter}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" Width="300" Margin="0,140,0,50">
             <TextBox x:Name="name" Padding="5" Margin="5" Text="{Binding Details.Name}">

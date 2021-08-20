@@ -10,21 +10,21 @@
              x:Name="root">
     <Grid Background="White">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding ElementName=root, Path=Width}" Height="80" Margin="0">
-            <Button Height="30" Width="30" Margin="20,20,0,0" Content="⏎" FontSize="20" Command="{Binding ReturnToMain}" HorizontalAlignment="Left"></Button>
+            <Button Height="30" Width="30" Margin="20,20,0,0" Content="⏎" FontSize="20" Command="{Binding ReturnToMain}" HorizontalAlignment="Left"/>
             <Label Width="450px" Height="80px" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-40,0,0">
                 <Label.Content>
                     <TextBlock Text="Below Form is used to determine connection between client and server. You can choose between sending mail via smtp or direct connection with server." TextWrapping="Wrap"/>
                 </Label.Content>
             </Label>
-            <CheckBox x:Name="smtpBox" Height="50" HorizontalAlignment="Left" IsChecked="{Binding Settings.ConnectionMethod, Converter={StaticResource BooleanStringConverter}, Mode=OneWayToSource}" Margin="20,-30,0,0" Content="Are you using SMTP?"/>
+            <CheckBox x:Name="smtpBox" Height="50" HorizontalAlignment="Left" IsChecked="{Binding Settings.ConnectionMethod, Converter={StaticResource BooleanStringConverter},Mode=TwoWay}" Margin="20,-30,0,0" Content="Are you using SMTP?"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" Height="370" VerticalAlignment="Top" Width="285" Margin="0,80,0,0">
             <Label Margin="15,0,0,0" Content="Server address:"/>
-            <TextBox x:Name="server" Margin="5" Width="250"  Text="{Binding Settings.ServerAddress}"/>
+            <TextBox x:Name="server" Margin="5" Width="250"  Text="{Binding Settings.ServerAddress,Mode=TwoWay}"/>
             <Label Margin="15,0,0,0" Content="Port:"/>
-            <TextBox x:Name="port" Margin="5" Width="250" Text="{Binding Settings.Port}"/>
+            <TextBox x:Name="port" Margin="5" Width="250" Text="{Binding Settings.Port,Mode=TwoWay}"/>
             <Label Margin="15,0,0,0" Content="Login:"/>
-            <TextBox x:Name="login" Margin="5" Width="250" Text="{Binding Settings.Login}"/>
+            <TextBox x:Name="login" Margin="5" Width="250" Text="{Binding Settings.Login,Mode=TwoWay}"/>
             <Label Margin="15,0,0,0" Content="Password:"/>
             <PasswordBox x:Name="password" Margin="5" Width="250">
                 <b:Interaction.Triggers>
@@ -34,13 +34,12 @@
                 </b:Interaction.Triggers>
             </PasswordBox>
             <Label Margin="15,0,0,0" Content="Email:"/>
-            <TextBox x:Name="email" Margin="5" Width="250" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" Text="{Binding Settings.EmailAddress}"/>
-            
+            <TextBox x:Name="email" Margin="5" Width="250" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" Text="{Binding Settings.EmailAddress,Mode=TwoWay}"/>
+
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Height="370" Width="285" VerticalAlignment="Top" Margin="0,80,0,0">
             <Label Margin="15,0,0,0" Content="Recipient:"/>
-            <TextBox x:Name="recipient" Margin="5" Width="250" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" Text="{Binding Settings.RecipientAddress}"/>
-
+            <TextBox x:Name="recipient" Margin="5" Width="250" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" Text="{Binding Settings.RecipientAddress,Mode=TwoWay}"/>
             <Label Margin="15,0,0,0" Content="Application password:"/>
             <PasswordBox x:Name="applicationPass" Width="250" Margin="5">
                 <b:Interaction.Triggers>
@@ -50,12 +49,13 @@
                 </b:Interaction.Triggers>
             </PasswordBox>
             <Label Margin="15,0,0,0" Content="Company name:"/>
-            <TextBox x:Name="companyName" Margin="5" Width="250" Text="{Binding Settings.CompanyName}"/>
+            <TextBox x:Name="companyName" Margin="5" Width="250" Text="{Binding Settings.CompanyName,Mode=TwoWay}"/>
             <Button x:Name="imageSelect" Margin="5" Width="250" Command="{Binding SelectImageCommand}" Content="Select application image"></Button>
             <Label Margin="15,0,0,0" Content="Your image path:"/>
             <TextBox x:Name="imageLink" Width="250" Margin="5" Text="{Binding Settings.Image, Mode=TwoWay}"/>
             <Label Margin="15,0,0,0" Content="Encryption:"/>
-            <CheckBox Margin="20,0,0,0" x:Name="sslRadio" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" IsChecked="{Binding Settings.SslTsl, Converter={StaticResource BooleanStringConverter}, Mode=TwoWay}">SSL/TSL</CheckBox>
+            <CheckBox Margin="20,0,0,0" x:Name="sslRadio" IsEnabled="{Binding ElementName=smtpBox, Path=IsChecked}" IsChecked="{Binding Settings.SslTsl, Converter={StaticResource BooleanStringConverter}, Mode=TwoWay}"
+                      Content="Ssl/Tsl"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button x:Name="save" Width="150" Margin="30" Content="Save settings" Command="{Binding SaveCommand}"></Button>

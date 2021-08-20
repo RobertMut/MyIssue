@@ -8,13 +8,12 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Windows;
 
 namespace MyIssue.DesktopApp.ViewModel
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : BindableBase, INavigationAware
     {
-
-        private IDesktopData _data;
         private IUserData _loaduserdata;
         private ISelector _selector;
         private IRegionManager _regionManager;
@@ -45,10 +44,12 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         public SettingTextBoxes Settings
         {
-            get { return _settings; }
+            get 
+            {
+                return _settings; 
+            }
             set
             {
-                _settings = value;
                 SetProperty(ref _settings, value);
             }
         }
@@ -65,7 +66,6 @@ namespace MyIssue.DesktopApp.ViewModel
         {
             _regionManager = regionManager;
             LoadCommands();
-            _data = new DesktopData();
             _loaduserdata = new UserData();
             _selector = new Selector();
             Settings = new SettingTextBoxes();
@@ -77,16 +77,8 @@ namespace MyIssue.DesktopApp.ViewModel
         {
             EditSettings = new DelegateCommand(EnterSettings, CanEnterSettings);
             SendCommand = new DelegateCommand(SendMessage, CanSendCommand);
-            UserData = new DelegateCommand(LoadUserData, CanDoOtherThings);
+            UserData = new DelegateCommand(LoadUserData);
 
-        }
-        private void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            var settings = navigationContext.Parameters["Settings"] as SettingTextBoxes;
-            if (!(settings is null))
-            {
-                Settings = settings;
-            }
         }
         private void EnterSettings()
         {
@@ -102,10 +94,6 @@ namespace MyIssue.DesktopApp.ViewModel
         {
             _selector.Send(Settings, Details, Description); 
             if (SaveDetails.Equals(true)) SavePersonal.Save(Details);
-        }
-        private bool CanDoOtherThings()
-        {
-            return true;
         }
         private bool CanSendCommand()
         {
@@ -130,6 +118,26 @@ namespace MyIssue.DesktopApp.ViewModel
                 SerilogLoggerService.LogException(e);
             }
 
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            var settings = navigationContext.Parameters["Settings"] as SettingTextBoxes;
+            if (!(settings is null))
+            {
+                Settings = settings;
+            }
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            var settings = navigationContext.Parameters["Settings"] as SettingTextBoxes;
+            if (!(settings is null)) return (Settings is null) && settings.Equals(Settings);
+            else return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
         }
     }
 }

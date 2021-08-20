@@ -8,14 +8,19 @@ using System.Windows;
 using System.Windows.Controls;
 using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc.Services;
+using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyIssue.DesktopApp.ViewModel
 {
-    public class SettingsViewModel : BindableBase
+    public class SettingsViewModel : BindableBase, INavigationAware
     {
         private SettingTextBoxes _settings;
         private IRegionManager _regionManager;
         private ISaveConfiguration _save;
+
         public SettingTextBoxes Settings
         {
             get { return _settings; }
@@ -24,7 +29,6 @@ namespace MyIssue.DesktopApp.ViewModel
                 SetProperty(ref _settings, value);
             }
         }
-
         public DelegateCommand SaveCommand { get; private set; }
         public DelegateCommand SelectImageCommand { get; private set; }
         public DelegateCommand ReturnToMain { get; private set; }
@@ -35,15 +39,15 @@ namespace MyIssue.DesktopApp.ViewModel
             _regionManager = regionManager;
             LoadCommands();
             _settings = new SettingTextBoxes();
-            _settings.ConnectionMethod = false.ToString();
-            _settings.SslTsl = false.ToString();
+            Settings.ConnectionMethod = false.ToString();
+            Settings.SslTsl = false.ToString();
             _save = new SaveConfiguration();
         }
         private void LoadCommands()
         {
-            SaveCommand = new DelegateCommand(SaveSettings, CanSaveSettings); //TODO: check if any value is null/empty
-            SelectImageCommand = new DelegateCommand(SelectImage, CanSelectImage);
-            ReturnToMain = new DelegateCommand(Return, CanReturn);
+            SaveCommand = new DelegateCommand(SaveSettings);
+            SelectImageCommand = new DelegateCommand(SelectImage);
+            ReturnToMain = new DelegateCommand(Return);
             GetAppPass = new DelegateCommand<object>(AppPass);
             GetPass = new DelegateCommand<object>(Pass);
         }
@@ -60,35 +64,46 @@ namespace MyIssue.DesktopApp.ViewModel
 
         private void SaveSettings()
         {
-            _save.Save(Settings); 
-        }
-        private bool CanSaveSettings()
-        {
-            if (!string.IsNullOrEmpty(Settings.ApplicationPass) &&
-               !string.IsNullOrEmpty(Settings.CompanyName) &&
-               !string.IsNullOrEmpty(Settings.ConnectionMethod) &&
-               !string.IsNullOrEmpty(Settings.EmailAddress) &&
-               !string.IsNullOrEmpty(Settings.Login) &&
-               !string.IsNullOrEmpty(Settings.Pass) &&
-               !string.IsNullOrEmpty(Settings.Port)
-               //!string.IsNullOrEmpty(Settings.RecipientAddress) &&
-               //!string.IsNullOrEmpty(Settings.SslTsl)
-               ) 
-                return true;
-            else
+            List<string> textboxes = new List<string>() {
+                    Settings.ApplicationPass,
+                    Settings.CompanyName,
+                    Settings.Login,
+                    Settings.Pass,
+                    Settings.Port,
+                    Settings.ServerAddress,
+                    Settings.EmailAddress,
+                    Settings.RecipientAddress,
+                    Settings.SslTsl
+                    };
+            switch (Settings.ConnectionMethod)
             {
-                MessageBox.Show("Fill empty fields");
-                return false;
+                case "True":
+
+                    if (textboxes.Any(t => string.IsNullOrEmpty(t)))
+                        ShowMessageBox();
+                    else
+                        _save.Save(Settings);
+                    break;
+                case "False":
+                    if (textboxes.Take(6).Any(t => string.IsNullOrEmpty(t)))
+                        ShowMessageBox();
+                    else
+                        _save.Save(Settings);
+                    break;
+                default:
+                    ShowMessageBox();
+                    break;
             }
+        }
+        private void ShowMessageBox()
+        {
+            MessageBox.Show("Fill empty fields", "Form not filled", MessageBoxButton.OK, MessageBoxImage.Error);
+
         }
         private void SelectImage()
         {
             OpenFileDialog dialog = new OpenFileDialog();
             Settings.Image = dialog.ShowDialog() == true ? dialog.FileName : DependencyProperty.UnsetValue.ToString();
-        }
-        private bool CanSelectImage()
-        {
-            return true;
         }
         private void Return()
         {
@@ -98,11 +113,9 @@ namespace MyIssue.DesktopApp.ViewModel
                 parameters.Add("Settings", Settings);
                 _regionManager.RequestNavigate("ContentRegion", "Main", Callback, parameters);
             }
-            
-        }
-        private bool CanReturn()
-        {
-            return true;
+            else
+                _regionManager.RequestNavigate("ContentRegion", "Main", Callback, null);
+
         }
         private void Callback(NavigationResult res)
         {
@@ -112,6 +125,25 @@ namespace MyIssue.DesktopApp.ViewModel
             }
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            var settings = navigationContext.Parameters["Settings"] as SettingTextBoxes;
+            if (!(settings is null))
+            {
+                Settings = settings;
+            }
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            var settings = navigationContext.Parameters["Settings"] as SettingTextBoxes;
+            if (!(settings is null)) return (Settings is null) && settings.Equals(Settings);
+            else return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
     }
 
 }
