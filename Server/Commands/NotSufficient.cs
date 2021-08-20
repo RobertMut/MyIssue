@@ -6,7 +6,7 @@ namespace MyIssue.Server.Commands
 {
     class NotSufficient : Command
     {
-        public static string Name { get { return "NotSufficient"; } }
+        public static string Name = "NotSufficient";
         public override void Invoke(Client client, CancellationToken ct)
         {
             LogUser.TypedCommand(client.CommandHistory[client.CommandHistory.Count - 1], "Tried to execute", client);

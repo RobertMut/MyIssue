@@ -6,7 +6,7 @@ namespace MyIssue.Server.Commands
 {
     class AddEmployee : Command
     {
-        public static string Name { get { return "AddEmployee"; } }
+        public static string Name = "AddEmployee";
         public override void Invoke(Core.Entities.Client client, CancellationToken ct)
         {
 

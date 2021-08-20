@@ -6,7 +6,7 @@ namespace MyIssue.Server.Commands
 {
     class WhoAmI : Command
     {
-        public static string Name { get { return "WhoAmI"; } }
+        public static string Name = "WhoAmI";
         public override void Invoke(Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("WhoAmI", "Executed", client);

@@ -26,8 +26,8 @@ namespace MyIssue.Server
             {
                 client.CommandHistory.Add(input);
                 var type = (from c in _aggregate.GetAggregatedClasses()
-                            where c.GetProperty("Name", BindingFlags.Static).GetValue(null, null) == input
-                            select c).FirstOrDefault();
+                            where (string)c.GetField("Name").GetValue(null) == input
+                            select c)?.FirstOrDefault();
                 if (type is null) throw new CommandNotFoundException();
                 cmd = (Command)Activator.CreateInstance(type);
                 cmd.Invoke(client, ct);

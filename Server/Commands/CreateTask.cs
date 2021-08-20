@@ -1,6 +1,5 @@
 ﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Entities.Database;
-using MyIssue.Core.Exceptions;
+using MyIssue.Infrastructure.Files;
 using MyIssue.Server.Net;
 using System;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace MyIssue.Server.Commands
 {
     public class CreateTask : Command
     {
-        public static string Name { get { return "CreateTask"; } }
+        public static string Name = "CreateTask";
         public override void Invoke(Client client, CancellationToken ct)
         {
             if (client.Status.Equals(0)) throw new NotSufficientPermissionsException();
@@ -32,7 +31,7 @@ namespace MyIssue.Server.Commands
                 unit.Complete();
             } catch (Exception e)
             {
-                ExceptionHandler.HandleMyException(e);
+                SerilogLogger.ServerLogException(e);
             }
 
         }

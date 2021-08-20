@@ -7,7 +7,7 @@ namespace MyIssue.Server.Commands
 {
     public class NotFound : Command
     {
-        public static string Name { get { return "NotFound"; } }
+        public static string Name = "NotFound";
         public override void Invoke(Client client, CancellationToken ct)
         {
             NetWrite.Write(client.ConnectedSock, "Command not found!\r\n", ct);

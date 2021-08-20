@@ -8,7 +8,7 @@ namespace MyIssue.Server.Commands
 {
     public class AddUser : Command
     {
-        public static string Name { get { return "AddUser"; } }
+        public static string Name = "AddUser";
         public override void Invoke(Core.Entities.Client client, CancellationToken ct)
         {
 

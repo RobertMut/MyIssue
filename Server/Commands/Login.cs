@@ -6,12 +6,13 @@ using System.Data;
 using System.Linq;
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Core.Exceptions;
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Commands
 {
     public class Login : Command
     {
-        public static string Name { get { return "Login"; } }
+        public static string Name = "Login";
         public override void Invoke(Client client, CancellationToken ct)
         {
 
@@ -30,7 +31,7 @@ namespace MyIssue.Server.Commands
                 }
             } catch (Exception e)
             {
-                ExceptionHandler.HandleMyException(e);
+                SerilogLogger.ServerLogException(e);
             }
 
             

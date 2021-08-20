@@ -6,7 +6,7 @@ namespace MyIssue.Server.Commands
 {
     class History : Command
     {
-        public static string Name { get { return "History"; } }
+        public static string Name = "History";
         public override void Invoke(Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("History", "Executed", client);

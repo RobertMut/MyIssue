@@ -13,7 +13,6 @@ namespace MyIssue.Server.Commands
         {
             unit = new UnitOfWork(new MyIssueContext(DBParameters.ConnectionString.ToString()));
         }
-        //public abstract string Name { get; }
 
         public abstract void Invoke(Client client, CancellationToken ct);
     }
