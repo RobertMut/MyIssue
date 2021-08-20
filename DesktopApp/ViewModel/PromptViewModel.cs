@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MyIssue.DesktopApp.ViewModel
@@ -46,7 +47,7 @@ namespace MyIssue.DesktopApp.ViewModel
 
         private void LoadCommands()
         {
-            OpenSettings = new DelegateCommand(OpenSettingsButton, CanOpenSettingsButton);
+            OpenSettings = new DelegateCommand(OpenSettingsButton);
             ReturnToMainView = new DelegateCommand(GoBack);
             GetPass = new DelegateCommand<object>(Pass);
         }
@@ -56,12 +57,10 @@ namespace MyIssue.DesktopApp.ViewModel
         }
         private void OpenSettingsButton()
         {
-            _regionManager.RequestNavigate("ContentRegion", "SettingsView", Callback);
-        }
-        private bool CanOpenSettingsButton()
-        {
-            if(EnteredPassword.Equals(applicationPass)) return true;
-            return false;
+            if (EnteredPassword.Equals(applicationPass))
+                _regionManager.RequestNavigate("ContentRegion", "SettingsView", Callback);
+            else
+                MessageBox.Show("Entered password is invalid", "Wrong password", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         private void GoBack()
         {

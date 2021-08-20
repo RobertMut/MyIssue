@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace MyIssue.Core.Entities
 {
@@ -24,7 +25,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _applicationPass = value;
-                RaisePropertyChanged("ApplicationPass");
+                NotifyPropertyChanged("ApplicationPass");
             }
         }
         public string CompanyName
@@ -36,7 +37,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _companyName = value;
-                RaisePropertyChanged("CompanyName");
+                NotifyPropertyChanged("CompanyName");
             }
         }
         public string ServerAddress
@@ -48,7 +49,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _serverAddress = value;
-                RaisePropertyChanged("ServerAddress");
+                NotifyPropertyChanged("ServerAddress");
             }
         }
         public string Port
@@ -60,7 +61,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _port = value;
-                RaisePropertyChanged("Port");
+                NotifyPropertyChanged("Port");
             }
         }
         public string Login
@@ -72,7 +73,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _login = value;
-                RaisePropertyChanged("Login");
+                NotifyPropertyChanged("Login");
             }
         }
         public string Pass
@@ -84,7 +85,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _pass = value;
-                RaisePropertyChanged("Pass");
+                NotifyPropertyChanged("Pass");
             }
         }
         public string EmailAddress
@@ -96,7 +97,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _emailAddress = value;
-                RaisePropertyChanged("EmailAddress");
+                NotifyPropertyChanged("EmaiilAddress");
             }
         }
         public string RecipientAddress
@@ -108,7 +109,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _recipientAddress = value;
-                RaisePropertyChanged("RecipientAddress");
+                NotifyPropertyChanged("RecipientAddress");
             }
         }
         public string ConnectionMethod
@@ -120,7 +121,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _connectionMethod = value;
-                RaisePropertyChanged("ConnectionMethod");
+                NotifyPropertyChanged("ConnectionMethod");
             }
         }
         public string SslTsl
@@ -132,7 +133,7 @@ namespace MyIssue.Core.Entities
             set
             {
                 _sslTsl = value;
-                RaisePropertyChanged("SslTsl");
+                NotifyPropertyChanged("SslTsl");
             }
         }
         public string Image
@@ -144,15 +145,14 @@ namespace MyIssue.Core.Entities
             set
             {
                 _image = value;
-                RaisePropertyChanged("Image");
+                NotifyPropertyChanged("Image");
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName)
+        private void NotifyPropertyChanged(string propertyName = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

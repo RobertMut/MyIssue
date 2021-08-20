@@ -20,6 +20,7 @@ namespace MyIssue.DesktopApp.ViewModel
     {
         private IRegionManager _regionManager;
         private IDesktopData _data;
+        private bool showedMessageBox = false;
         private SettingTextBoxes Settings { get; set; }
         private bool canEnterMain = false;
         public DelegateCommand GoToMain { get; private set; }
@@ -29,7 +30,7 @@ namespace MyIssue.DesktopApp.ViewModel
             _data = new DesktopData();
             _regionManager = regionManager;
             LoadData();
-            GoToMain = new DelegateCommand(Change, () => true);
+            GoToMain = new DelegateCommand(Change);
 
         }
 
@@ -48,11 +49,11 @@ namespace MyIssue.DesktopApp.ViewModel
             }
         }
 
-        public void Change()
+        private void Change()
         {
             if (!File.Exists(Paths.confFile) || !canEnterMain)
             {
-                MessageBox.Show("Configuration files does not exist\n Now you will be taken to settings");
+                ShowMessageBox();   
                 _regionManager.RequestNavigate("ContentRegion", "SettingsView", Callback);
             } else
             {
@@ -61,6 +62,12 @@ namespace MyIssue.DesktopApp.ViewModel
                 _regionManager.RequestNavigate("ContentRegion", "Main", Callback, parameters);
             }
             
+        }
+        private void ShowMessageBox()
+        {
+            if (!showedMessageBox)
+            MessageBox.Show("Configuration files does not exist\n Now you will be taken to settings", "Configuration not found", MessageBoxButton.OK, MessageBoxImage.Error);
+            showedMessageBox = true;
         }
         private void Callback(NavigationResult res)
         {
