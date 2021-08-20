@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using MyIssue.Core.Entities;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
-using MyIssue.DesktopApp.Misc.Services;
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.DesktopApp.Misc.Sender
 {
@@ -35,7 +35,7 @@ namespace MyIssue.DesktopApp.Misc.Sender
             }
             catch (Exception e)
             {
-                SerilogLoggerService.LogException(e);
+                SerilogLogger.ClientLogException(e);
             }
         }
         private void SendData()
@@ -58,7 +58,7 @@ namespace MyIssue.DesktopApp.Misc.Sender
             }
             catch (Exception e)
             {
-                SerilogLoggerService.LogException(e);
+                SerilogLogger.ClientLogException(e);
             }
         }
         private string ReadIncoming(NetworkStream ns)

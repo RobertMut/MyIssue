@@ -1,8 +1,8 @@
 ﻿using MyIssue.Core.Entities;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
-using MyIssue.DesktopApp.Misc.Services;
 using MyIssue.DesktopApp.Misc.Utility;
+using MyIssue.Infrastructure.Files;
 using MyIssue.Infrastructure.SMTP;
 using System;
 
@@ -37,7 +37,7 @@ namespace MyIssue.DesktopApp.Misc.Sender
                 }
                 catch (Exception e)
                 {
-                    SerilogLoggerService.LogException(e);
+                    SerilogLogger.ClientLogException(e);
                 }
 
             }

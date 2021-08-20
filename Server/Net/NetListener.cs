@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.Entities;
 using MyIssue.Core.Exceptions;
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Net
 {
@@ -40,11 +41,11 @@ namespace MyIssue.Server.Net
             }
             catch (ArgumentNullException ane)
             {
-                ExceptionHandler.HandleMyException(ane);
+                SerilogLogger.ServerLogException(ane);
                 
             } catch (SocketException se)
             {
-                ExceptionHandler.HandleMyException(se);
+                SerilogLogger.ServerLogException(se);
             }
         }
         private IPEndPoint SetEndPoint(string ipAddr, int port)

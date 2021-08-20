@@ -71,7 +71,6 @@
     <Compile Include="Entities\PersonalDetails.cs" />
     <Compile Include="Exceptions\CommandNotFoundException.cs" />
     <Compile Include="Exceptions\ConfigurationNotFoundException.cs" />
-    <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Exceptions\NotSufficientPermissionsException.cs" />
     <Compile Include="Interfaces\IArchiveFile.cs" />
     <Compile Include="Interfaces\IClientBuilder.cs" />

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Linq;
 using MyIssue.Core.Exceptions;
 
@@ -16,7 +15,7 @@ namespace MyIssue.Infrastructure.Files
             }
             catch (ConfigurationNotFoundException e)
             {
-                ExceptionHandler.HandleMyException(e);
+                SerilogLogger.ServerLogException(e);
                 return null;
             }
 

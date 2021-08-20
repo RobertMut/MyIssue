@@ -25,16 +25,12 @@ namespace MyIssue.Infrastructure.Files
                 try
                 {
                     _writer.WriteLine(value);
-                    using (StreamWriter w = File.AppendText("log.txt"))
-                    {
-                        w.WriteLine(value);
-                        w.Close();
-                    }
+                    SerilogLogger.Log(value);
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.ToString()); ;
-                    ExceptionHandler.HandleMyException(e);
+                    SerilogLogger.ServerLogException(e);
                 }
             }
 

@@ -43,7 +43,7 @@ namespace MyIssue.Server
             }
             catch (ConfigurationNotFoundException confex)
             {
-                ExceptionHandler.HandleMyException(confex);
+                SerilogLogger.ServerLogException(confex);
                 string emptyConfig = LoadFile.Load(Assembly.Load("Infrastructure").GetManifestResourceStream("MyIssue.Infrastructure.Resources.configurationServer.xml"));
                 WriteConfiguration.WriteEmptyConfig("configuration.xml", emptyConfig);
                 Console.WriteLine("IO - {0} - Please fill configuration file!", DateTime.Now);
@@ -51,16 +51,16 @@ namespace MyIssue.Server
             }
             catch (InvalidOperationException ioe)
             {
-                ExceptionHandler.HandleMyException(ioe);
+                SerilogLogger.ServerLogException(ioe);
                 Console.ReadKey();
             } catch (NullReferenceException nre)
             {
-                ExceptionHandler.HandleMyException(nre);
+                SerilogLogger.ServerLogException(nre);
                 Console.WriteLine("IO - {0} - Detected empty value. Please fill configuration file", DateTime.Now);
                 Console.ReadKey();
             } catch (SqlException sql)
             {
-                ExceptionHandler.HandleMyException(sql);
+                SerilogLogger.ServerLogException(sql);
                 Console.WriteLine("DB - {0} - SqlException. Check database user permissions", DateTime.Now);
                 Console.ReadKey();
             }

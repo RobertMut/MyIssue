@@ -13,7 +13,7 @@ using MyIssue.Core.String;
 using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Smtp;
 using MyIssue.Infrastructure.Database;
-
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Infrastructure.Imap
 {
@@ -52,7 +52,7 @@ namespace MyIssue.Infrastructure.Imap
             }
             catch (ServiceNotConnectedException snce)
             {
-                ExceptionHandler.HandleMyException(snce);
+                SerilogLogger.ServerLogException(snce);
                 idleClient.Connect(ImapParameters.Parameters.Address, ImapParameters.Parameters.Port, ImapParameters.Parameters.SocketOptions);
                 idleClient.Authenticate(ImapParameters.Parameters.Login, ImapParameters.Parameters.Password);
             }
@@ -102,12 +102,12 @@ namespace MyIssue.Infrastructure.Imap
                 }
                 catch (ImapProtocolException iex)
                 {
-                    ExceptionHandler.HandleMyException(iex);
+                    SerilogLogger.ServerLogException(iex);
                 }
                 catch (IOException ioe)
                 {
                     await _iconn.ReconnectAsync(idleClient);
-                    ExceptionHandler.HandleMyException(ioe);
+                    SerilogLogger.ServerLogException(ioe);
                 }
                 catch (OperationCanceledException)
                 {
@@ -139,14 +139,14 @@ namespace MyIssue.Infrastructure.Imap
                         }
                         catch (Exception ex)
                         {
-                            ExceptionHandler.HandleMyException(ex);
+                            SerilogLogger.ServerLogException(ex);
                         }
                     });
                 }
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleMyException(ex);
+                SerilogLogger.ServerLogException(ex);
                 CancellationTokenSource.CreateLinkedTokenSource(token).Cancel();
 
             }

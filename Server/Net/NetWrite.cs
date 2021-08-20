@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using MyIssue.Core.Exceptions;
 using System;
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Net
 {
@@ -22,7 +23,7 @@ namespace MyIssue.Server.Net
                 }
                 catch (ArgumentNullException ane)
                 {
-                    ExceptionHandler.HandleMyException(ane);
+                    SerilogLogger.ServerLogException(ane);
                     netStream.Close();
                     sock.Close();
                 }

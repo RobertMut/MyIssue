@@ -2,7 +2,6 @@
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
-using MyIssue.DesktopApp.Misc.Services;
 using MyIssue.Infrastructure.Files;
 using System;
 using System.Windows;
@@ -37,7 +36,7 @@ namespace MyIssue.DesktopApp.Misc
                     .Build();
             } catch (NullReferenceException e)
             {
-                SerilogLoggerService.LogException(e);
+                SerilogLogger.ClientLogException(e);
                 return (PersonalDetails)DependencyProperty.UnsetValue;
             }
         }

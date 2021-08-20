@@ -27,7 +27,7 @@ namespace MyIssue.Infrastructure.Files
                 }
                 catch (Exception e)
                 {
-                    ExceptionHandler.HandleMyException(e);
+                    SerilogLogger.ServerLogException(e);
                 }
                 File.Create("log.txt").Dispose();
             }

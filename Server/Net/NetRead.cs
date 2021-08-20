@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Core.Exceptions;
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Net
 {
@@ -37,7 +38,7 @@ namespace MyIssue.Server.Net
                     netStream.Close();
                     terminator = true;
                     sock.Close();
-                    ExceptionHandler.HandleMyException(tce);
+                    SerilogLogger.ServerLogException(tce);
 
                 }
                 return input.Remove(input.Length - 9, 9);
