@@ -1,4 +1,4 @@
-﻿using MyIssue.DesktopApp.Misc.Services;
+﻿using MyIssue.Infrastructure.Files;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -70,7 +70,7 @@ namespace MyIssue.DesktopApp.ViewModel
         {
             if (!(res.Error is null))
             {
-                SerilogLoggerService.LogException(res.Error);
+                SerilogLogger.ClientLogException(res.Error);
             }
         }
 

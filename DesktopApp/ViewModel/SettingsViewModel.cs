@@ -7,11 +7,9 @@ using Prism.Regions;
 using System.Windows;
 using System.Windows.Controls;
 using MyIssue.Core.Interfaces;
-using MyIssue.DesktopApp.Misc.Services;
-using System;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
+using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.DesktopApp.ViewModel
 {
@@ -114,14 +112,14 @@ namespace MyIssue.DesktopApp.ViewModel
                 _regionManager.RequestNavigate("ContentRegion", "Main", Callback, parameters);
             }
             else
-                _regionManager.RequestNavigate("ContentRegion", "Main", Callback, null);
+                ShowMessageBox();
 
         }
         private void Callback(NavigationResult res)
         {
             if (!(res.Error is null))
             {
-                SerilogLoggerService.LogException(res.Error);
+                SerilogLogger.ClientLogException(res.Error);
             }
         }
 

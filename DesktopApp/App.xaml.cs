@@ -1,5 +1,4 @@
-﻿using MyIssue.DesktopApp.Misc.Services;
-using MyIssue.DesktopApp.Views;
+﻿using MyIssue.DesktopApp.Views;
 using MyIssue.DesktopApp.ViewModel;
 using MyIssue.Infrastructure.Files;
 using Prism.Ioc;
@@ -49,7 +48,7 @@ namespace MyIssue.DesktopApp
         }
         void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            SerilogLoggerService.LogException(e.Exception);
+            SerilogLogger.ClientLogException(e.Exception);
             e.Handled = true;
         }
         protected override void InitializeShell(Window shell)

@@ -2,16 +2,10 @@
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc;
-using MyIssue.DesktopApp.Misc.Services;
 using MyIssue.Infrastructure.Files;
 using Prism.Commands;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MyIssue.DesktopApp.ViewModel
@@ -45,7 +39,7 @@ namespace MyIssue.DesktopApp.ViewModel
             {
                 Settings = null;
                 canEnterMain = false;
-                SerilogLoggerService.LogException(e);
+                SerilogLogger.ClientLogException(e);
             }
         }
 
@@ -73,7 +67,7 @@ namespace MyIssue.DesktopApp.ViewModel
         {
             if (!(res.Error is null))
             {
-                SerilogLoggerService.LogException(res.Error);
+                SerilogLogger.ClientLogException(res.Error);
             }
         }
     }

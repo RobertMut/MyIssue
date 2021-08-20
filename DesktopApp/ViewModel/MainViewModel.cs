@@ -1,14 +1,14 @@
 ﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc;
-using MyIssue.DesktopApp.Misc.Services;
 using MyIssue.DesktopApp.Misc.Sender;
+using MyIssue.Infrastructure.Files;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyIssue.DesktopApp.ViewModel
 {
@@ -75,8 +75,8 @@ namespace MyIssue.DesktopApp.ViewModel
 
         private void LoadCommands()
         {
-            EditSettings = new DelegateCommand(EnterSettings, CanEnterSettings);
-            SendCommand = new DelegateCommand(SendMessage, CanSendCommand);
+            EditSettings = new DelegateCommand(EnterSettings);
+            SendCommand = new DelegateCommand(SendMessage);
             UserData = new DelegateCommand(LoadUserData);
 
         }
@@ -86,25 +86,29 @@ namespace MyIssue.DesktopApp.ViewModel
             parameters.Add("apppass", Settings.ApplicationPass);
             _regionManager.RequestNavigate("ContentRegion", "Prompt", Callback, parameters);
         }
-        private bool CanEnterSettings()
-        {
-            return true;
-        }
         private void SendMessage()
         {
-            _selector.Send(Settings, Details, Description); 
+            List<string> details = new List<string>()
+            {
+                Details.Company,
+                Details.Email,
+                Details.Name,
+                Details.Phone,
+                Details.Surname,
+                Description
+            };
+            if (details.Any(det => !string.IsNullOrEmpty(det)))
+            {
+                _selector.Send(Settings, Details, Description);
+            }
             if (SaveDetails.Equals(true)) SavePersonal.Save(Details);
-        }
-        private bool CanSendCommand()
-        {
-            if (Settings is null || Description is null) return false;
-            return true;
+
         }
         private void Callback(NavigationResult res)
         {
             if(!(res.Error is null))
             {
-                SerilogLoggerService.LogException(res.Error);
+                SerilogLogger.ClientLogException(res.Error);
             }
         }
         private void LoadUserData()
@@ -115,7 +119,7 @@ namespace MyIssue.DesktopApp.ViewModel
             } catch (NullReferenceException e)
             {
                 Details = null;
-                SerilogLoggerService.LogException(e);
+                SerilogLogger.ClientLogException(e);
             }
 
         }
