@@ -29,7 +29,7 @@ namespace MyIssue.Server.Net
                 CancellationTokenSource ct;
                 while (true)
                 {
-                    Console.WriteLine("Accepting...");
+                    Console.WriteLine("Server - {0} - Accepting incoming connections..", DateTime.Now);
                     Socket sock = Parameters.ListenSocket.AcceptAsync().Result;
                     Task.Run(async () =>
                     {

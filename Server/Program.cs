@@ -27,10 +27,13 @@ namespace MyIssue.Server
             CancellationToken ct = new CancellationToken();
             try
             {
+                Console.WriteLine("START - {0} - Opening configuration file..", DateTime.Now);
                 var config = OpenConfiguration.OpenConfig("configuration.xml");
                 Bootstrapper.InitializeParameters(config);
+                Console.WriteLine("DB - {0} - Connecting to database..", DateTime.Now);
                 IDatabaseBootstrapper _dbBootstrapper = new DatabaseBootstrapper(DBParameters.ConnectionString.ConnectionString);
                 _dbBootstrapper.Configure();
+                Console.WriteLine("DB - {0} - OK", DateTime.Now);
 
                 string listen = ConfigValue.GetValue<string>("listenAddress", config);
                 int port = ConfigValue.GetValue<int>("port", config);
