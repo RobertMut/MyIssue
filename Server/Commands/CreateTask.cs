@@ -18,19 +18,26 @@ namespace MyIssue.Server.Commands
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             try
             {
-                var input = SplitToCommand.Get(client.CommandHistory);
-                var clientId = unit.ClientRepository.Get(s => s.ClientName == input[3]).Select(c => c.ClientId).FirstOrDefault();
+                string[] input = SplitToCommand.Get(client.CommandHistory);
+                string title = input[0];
+                string desc = input[1];
+                DateTime date = DateTime.Parse(input[2]);
+                string clientName = input[3];
+                decimal type = decimal.Parse(input[4]);
+                var clientId = unit.ClientRepository.Get(s => s.ClientName == clientName).Select(c => c.ClientId).FirstOrDefault();
                 unit.TaskRepository.Add(new Infrastructure.Database.Models.Task
                 {
-                    TaskTitle = input[0],
-                    TaskDesc = input[1],
-                    TaskCreation = DateTime.Parse(input[2]),
+                    TaskTitle = title,
+                    TaskDesc = desc,
+                    TaskCreation = date,
                     TaskClient = clientId,
-                    TaskType = decimal.Parse(input[4])
+                    TaskType = type
                 });
                 unit.Complete();
             } catch (Exception e)
             {
+                NetWrite.Write(client.ConnectedSock, "FAILED TO CREATE TASK\r\n", ct);
+                LogUser.TypedCommand("CreateTask", "Failed to add new task!", client);
                 SerilogLogger.ServerLogException(e);
             }
 

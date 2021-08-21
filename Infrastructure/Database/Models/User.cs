@@ -18,10 +18,9 @@ namespace MyIssue.Infrastructure.Database.Models
         [Required]
         [StringLength(128)]
         public string Password { get; set; }
-
+        [Required]
         public decimal UserType { get; set; }
         public virtual Employee Employee { get; set; }
-        [Required]
         public virtual UserType UserTypes { get; set; }
     }
 }

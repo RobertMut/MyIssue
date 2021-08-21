@@ -21,13 +21,20 @@ namespace MyIssue.Server.Commands
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             try
             {
-                var input = SplitToCommand.Get(client.CommandHistory);
-                var query = unit.UserRepository.Get(log => log.UserLogin == input[0] && log.Password == input[1]).Select(s => s.UserType).FirstOrDefault();
+                string[] input = SplitToCommand.Get(client.CommandHistory);
+                string login = input[0];
+                string pass = input[1];
+                var query = unit.UserRepository.Get(log => log.UserLogin == login && log.Password == pass).Select(s => s.UserType).FirstOrDefault();
                 if (!(query is default(decimal)))
                 {
                     LogUser.TypedCommand("Login", "", client);
                     client.Status = Convert.ToInt32(query);
                     NetWrite.Write(client.ConnectedSock, "LOGGED!\r\n", ct);
+                }
+                else
+                {
+                    LogUser.TypedCommand("Login", "User failed to login", client);
+                    NetWrite.Write(client.ConnectedSock, "INCORRECT!\r\n", ct);
                 }
             } catch (Exception e)
             {

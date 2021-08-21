@@ -1,5 +1,7 @@
 ﻿using MyIssue.Core.Interfaces;
 using MyIssue.Infrastructure.Database.Models;
+using System;
+using System.Linq;
 
 namespace MyIssue.Infrastructure.Database
 {
@@ -16,14 +18,8 @@ namespace MyIssue.Infrastructure.Database
         }
         public void Configure()
         {
-            if (!_context.Database.Exists())
+            if (_context.Database.CreateIfNotExists())
             {
-                _context.Database.Create();
-            }
-            if (_context.Database.CompatibleWithModel(false))
-            {
-                _context.Database.Delete();
-                _context.Database.Create();
                 _context.UserTypes.Add(new UserType()
                 {
                     Name = "Locked"
@@ -49,6 +45,15 @@ namespace MyIssue.Infrastructure.Database
                     TypeName = "Urgent"
                 });
                 _context.SaveChanges();
+                var type = _context.UserTypes.FirstOrDefault(e => e.Name == "Admin").Id;
+                _context.Users.Add(new User()
+                {
+                    UserLogin = "Admin",
+                    Password = "1234",
+                    UserType = type
+                });
+                _context.SaveChanges();
+                Console.WriteLine("DB - {0} - Created database", DateTime.Now);
             }
         }
     }

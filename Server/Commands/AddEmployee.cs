@@ -14,14 +14,19 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand("AddEmployee", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "ADD EMPLOYEE\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            var splitted = SplitToCommand.Get(client.CommandHistory);
+            string[] splitted = SplitToCommand.Get(client.CommandHistory);
+            string name = splitted[0];
+            string surname = splitted[1];
+            string no = splitted[2];
+            decimal position = decimal.Parse(splitted[3]);
+            string login = splitted[4];
             unit.EmployeeRepository.Add(new Employee
             {
-                EmployeeName = splitted[0],
-                EmployeeSurname = splitted[1],
-                EmployeeNo = splitted[2],
-                EmployeePosition = decimal.Parse(splitted[3]),
-                EmployeeLogin = splitted[4],
+                EmployeeName = name,
+                EmployeeSurname = surname,
+                EmployeeNo = no,
+                EmployeePosition = position,
+                EmployeeLogin = login,
             });
             unit.Complete();
 

@@ -16,12 +16,15 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand("AddUser", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "ADD USER\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            var splitted = SplitToCommand.Get(client.CommandHistory);
+            string[] splitted = SplitToCommand.Get(client.CommandHistory);
+            string login = splitted[0];
+            string pass = splitted[1];
+            decimal type = decimal.Parse(splitted[2]);
             unit.UserRepository.Add(new User
             {
-                UserLogin = splitted[0],
-                Password = splitted[1],
-                UserType = decimal.Parse(splitted[2])
+                UserLogin = login,
+                Password = pass,
+                UserType = type
             });
             unit.Complete();
 
