@@ -7,7 +7,6 @@ using System.IO;
 using MailKit.Security;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.Entities;
-using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Imap;
 using MyIssue.Infrastructure.Files;
 

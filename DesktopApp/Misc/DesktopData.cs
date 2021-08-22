@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Linq;
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Infrastructure.Files;

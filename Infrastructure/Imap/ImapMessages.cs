@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.Entities;
 using MyIssue.Core.String;
-using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Smtp;
 using MyIssue.Infrastructure.Database;
 using MyIssue.Infrastructure.Files;
@@ -19,7 +18,6 @@ namespace MyIssue.Infrastructure.Imap
 {
     public class ImapMessages : IImapParse 
     {
-        private IStringTools _tools;
         private IImapConnect _iconn;
         private UnitOfWork unit;
 
@@ -160,9 +158,8 @@ namespace MyIssue.Infrastructure.Imap
 
         public void WriteToDatabase(MimeMessage m)
         {
-            _tools = new StringTools();
 
-            string[] email = _tools.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            string[] email = StringStatic.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
             string title = email[4];
             string desc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody);
             string client = email[1];

@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Interfaces;
-using System;
+﻿using System;
 using System.IO;
 using MyIssue.Core.String;
 

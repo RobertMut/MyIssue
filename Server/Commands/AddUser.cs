@@ -1,6 +1,4 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Entities.Builders;
-using MyIssue.Infrastructure.Database.Models;
+﻿using MyIssue.Infrastructure.Database.Models;
 using MyIssue.Server.Net;
 using System.Threading;
 

@@ -2,7 +2,6 @@
 using MyIssue.Core.String;
 using System.Net.Sockets;
 using System.Threading;
-using MyIssue.Core.Exceptions;
 using System;
 using MyIssue.Infrastructure.Files;
 

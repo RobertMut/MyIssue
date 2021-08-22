@@ -1,6 +1,5 @@
 ﻿using MyIssue.Core.Entities;
 using MyIssue.Server.Net;
-using System;
 using System.Threading;
 
 namespace MyIssue.Server.Commands

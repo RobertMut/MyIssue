@@ -54,7 +54,6 @@
     <Compile Include="Entities\Database\USER.cs" />
     <Compile Include="Interfaces\IAggregateClasses.cs" />
     <Compile Include="Constants\ConsoleCommands.cs" />
-    <Compile Include="Constants\QueryString.cs" />
     <Compile Include="Entities\Builders\ClientBuilder.cs" />
     <Compile Include="Entities\Builders\ConfigValuesBuilder.cs" />
     <Compile Include="Entities\Builders\DBParametersBuilder.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="Exceptions\NotSufficientPermissionsException.cs" />
     <Compile Include="Interfaces\IArchiveFile.cs" />
     <Compile Include="Interfaces\IClientBuilder.cs" />
-    <Compile Include="Interfaces\ICommandParser.cs" />
     <Compile Include="Interfaces\IConfigurationBuilder.cs" />
     <Compile Include="Interfaces\IConsoleClient.cs" />
     <Compile Include="Interfaces\IDatabaseBootstrapper.cs" />
@@ -89,14 +87,11 @@
     <Compile Include="Interfaces\IProcessClient.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISaveConfiguration.cs" />
-    <Compile Include="Interfaces\ISaveMessageBox.cs" />
     <Compile Include="Interfaces\ISelector.cs" />
     <Compile Include="Interfaces\ISMTPSender.cs" />
-    <Compile Include="Interfaces\IStringTools.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserData.cs" />
     <Compile Include="String\StringStatic.cs" />
-    <Compile Include="String\StringTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">

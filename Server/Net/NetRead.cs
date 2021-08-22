@@ -3,7 +3,6 @@ using MyIssue.Core.String;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Net

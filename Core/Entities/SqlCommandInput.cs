@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.String;
-namespace MyIssue.Core.Entities
+﻿namespace MyIssue.Core.Entities
 {
     public class SqlCommandInput
     {

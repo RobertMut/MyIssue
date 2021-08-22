@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace MyIssue.Infrastructure.Files
 {

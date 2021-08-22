@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.Entities;
-using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Net

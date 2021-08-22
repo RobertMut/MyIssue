@@ -1,5 +1,4 @@
 ﻿using System;
-using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using System.IO;
 using System.Linq;

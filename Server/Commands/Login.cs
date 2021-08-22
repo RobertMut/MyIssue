@@ -4,8 +4,6 @@ using System.Threading;
 using MyIssue.Server.Net;
 using System.Data;
 using System.Linq;
-using MyIssue.Core.Entities.Builders;
-using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Server.Commands

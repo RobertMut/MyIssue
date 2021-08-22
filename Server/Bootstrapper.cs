@@ -2,10 +2,8 @@
 using MyIssue.Core.Entities.Builders;
 using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
-using System;
 using System.Data.SqlClient;
 using System.IO;
-using MyIssue.Infrastructure.Database.Models;
 using System.Xml.Linq;
 
 namespace MyIssue.Server

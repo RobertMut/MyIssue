@@ -38,6 +38,10 @@ namespace MyIssue.Core.String
             }
 
         }
+        public static string[] SplitBrackets(string input, char firstbracket, char secondbracket)
+        {
+            return input.Split(firstbracket, secondbracket);
+        }
         public static string CutString(string input)
         {
             try

@@ -2,12 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 
 namespace MyIssue.Infrastructure.Files
 {
-    //TODO serilog
     public static class LogWriter
     {
         private static TextWriter _writer;
