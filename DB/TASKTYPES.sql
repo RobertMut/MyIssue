@@ -1,6 +1,0 @@
-﻿CREATE TABLE [dbo].[TASKTYPES]
-(
-	[typeId] NUMERIC(3) NOT NULL IDENTITY(1,1), 
-    [typeName] VARCHAR(50) NOT NULL,
-	CONSTRAINT PK_typeId PRIMARY KEY ([typeId])
-)
