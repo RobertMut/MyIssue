@@ -163,13 +163,18 @@ namespace MyIssue.Infrastructure.Imap
             _tools = new StringTools();
 
             string[] email = _tools.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
-           
+            string title = email[4];
+            string desc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody);
+            string client = email[1];
+            decimal clientId = unit.ClientRepository.Get(c => c.ClientName == client).FirstOrDefault().ClientId;
+
+
              unit.TaskRepository.Add(new Database.Models.Task
             {
-                TaskTitle = email[4],
-                TaskDesc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody),
+                TaskTitle = title,
+                TaskDesc = desc,
                 TaskCreation = m.Date.DateTime,
-                TaskClient = decimal.Parse(email[1]),
+                TaskClient = clientId,
                 TaskType = 1,
                 MailId = m.GetHashCode().ToString()
             });

@@ -7,13 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp", "DesktopApp\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB", "DB\DB.sqlproj", "{113EE7CE-D897-4AA5-9409-02978B24219C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{87D859D8-728F-4C12-B87F-EA388102D94F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{8443CEDB-B69E-44EE-8952-C9724E99489E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{A26A96AF-F361-4ACF-BEEA-4BDC0A0B160A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{A26A96AF-F361-4ACF-BEEA-4BDC0A0B160A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +27,6 @@ Global
 		{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF076F55-FD2C-4A03-8A7A-4AB0DA293EA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{113EE7CE-D897-4AA5-9409-02978B24219C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{113EE7CE-D897-4AA5-9409-02978B24219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{113EE7CE-D897-4AA5-9409-02978B24219C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{113EE7CE-D897-4AA5-9409-02978B24219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{113EE7CE-D897-4AA5-9409-02978B24219C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{113EE7CE-D897-4AA5-9409-02978B24219C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{87D859D8-728F-4C12-B87F-EA388102D94F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87D859D8-728F-4C12-B87F-EA388102D94F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D859D8-728F-4C12-B87F-EA388102D94F}.Release|Any CPU.ActiveCfg = Release|Any CPU
