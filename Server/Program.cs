@@ -5,11 +5,12 @@ using MyIssue.Server.Net;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Infrastructure.Smtp;
 using System.Reflection;
 using System.Data.SqlClient;
 using MyIssue.Core.Entities;
 using MyIssue.Infrastructure.Database;
+using MyIssue.Infrastructure.Imap;
+using DBParameters = MyIssue.Infrastructure.Entities.DBParameters;
 
 namespace MyIssue.Server
 {

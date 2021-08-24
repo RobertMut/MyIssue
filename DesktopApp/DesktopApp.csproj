@@ -98,6 +98,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities\Builders\ConfigValuesBuilder.cs" />
+    <Compile Include="Entities\Builders\IConfigurationBuilder.cs" />
+    <Compile Include="Entities\Builders\IDetailsBuilder.cs" />
+    <Compile Include="Entities\Builders\PersonalDetailsBuilder.cs" />
+    <Compile Include="Entities\PersonalDetails.cs" />
+    <Compile Include="Entities\SettingTextBoxes.cs" />
     <Compile Include="Misc\Converters\ImageConverter.cs" />
     <Compile Include="Misc\Converters\BooleanStringConverter.cs" />
     <Compile Include="Misc\Converters\InverseBooleanConverter.cs" />

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
-using MyIssue.Core.Entities;
 using MyIssue.Server.Commands;
 using MyIssue.Core.Aggregates;
 using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using System.Reflection;
 using System.Linq;
+using MyIssue.Server.Entities;
 
 namespace MyIssue.Server
 {
@@ -20,7 +20,7 @@ namespace MyIssue.Server
                                               where t.IsClass && t.Namespace == "MyIssue.Server.Commands"
                                               select t).ToList());
         }
-        public void Parser(string input, Client client, CancellationToken ct)
+        public void Parser(string input, Entities.Client client, CancellationToken ct)
         {
             try
             {

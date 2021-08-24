@@ -1,7 +1,4 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
-
-namespace MyIssue.Core.Entities.Builders
+﻿namespace MyIssue.DesktopApp.Entities.Builders
 {
     public class ConfigValuesBuilder : IConfigurationBuilder
     {

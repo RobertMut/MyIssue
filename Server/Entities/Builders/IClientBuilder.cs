@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
-using MyIssue.Core.Entities;
 
-namespace MyIssue.Core.Interfaces
+namespace MyIssue.Server.Entities.Builders
 {
     public interface IClientBuilder
     {

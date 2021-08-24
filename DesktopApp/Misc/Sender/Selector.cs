@@ -1,10 +1,10 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Interfaces;
+﻿using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
 using MyIssue.DesktopApp.Misc.Utility;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Infrastructure.SMTP;
 using System;
+using MyIssue.DesktopApp.Entities;
+using MyIssue.Infrastructure.Smtp;
 
 namespace MyIssue.DesktopApp.Misc.Sender
 {

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace MyIssue.Core.Entities
+namespace MyIssue.Server.Entities
 {
     public static class Parameters
     {

@@ -1,16 +1,15 @@
 ﻿using System;
+using System.IO;
+using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using MailKit.Net.Imap;
-using System.Threading;
-using System.Net.Sockets;
-using System.IO;
 using MailKit.Security;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
-using MyIssue.Infrastructure.Imap;
+using MyIssue.Infrastructure.Entities;
 using MyIssue.Infrastructure.Files;
 
-namespace MyIssue.Infrastructure.Smtp
+namespace MyIssue.Infrastructure.Imap
 {
     public class ImapConnect : IImapConnect
     {

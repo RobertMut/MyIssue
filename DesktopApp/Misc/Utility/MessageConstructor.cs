@@ -1,10 +1,10 @@
 ﻿using System.Net.Mail;
 using System;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
 using System.Collections.Generic;
 using MyIssue.Core.String;
 using MyIssue.Core.Constants;
+using MyIssue.DesktopApp.Entities;
 
 namespace MyIssue.DesktopApp.Misc.Utility
 {

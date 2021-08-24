@@ -5,6 +5,13 @@ using MyIssue.Infrastructure.Files;
 using System.Data.SqlClient;
 using System.IO;
 using System.Xml.Linq;
+using MyIssue.Infrastructure.Entities.Builders;
+using MyIssue.Server.Client;
+using MyIssue.Server.Entities.Builders;
+using DBParameters = MyIssue.Infrastructure.Entities.DBParameters;
+using DBParametersBuilder = MyIssue.Infrastructure.Entities.Builders.DBParametersBuilder;
+using ImapParameters = MyIssue.Infrastructure.Entities.ImapParameters;
+using Parameters = MyIssue.Server.Entities.Parameters;
 
 namespace MyIssue.Server
 {

@@ -1,7 +1,6 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Database.Models;
+﻿using API.Database.Models;
 
-namespace MyIssue.Infrastructure.Database
+namespace API.Database
 {
     public class UnitOfWork : IUnitOfWork
     {

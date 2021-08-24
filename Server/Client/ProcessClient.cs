@@ -2,12 +2,11 @@
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using MyIssue.Core.Entities;
-using MyIssue.Server.Net;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities.Builders;
+using MyIssue.Server.Entities.Builders;
+using MyIssue.Server.Net;
 
-namespace MyIssue.Server
+namespace MyIssue.Server.Client
 {
     public class ProcessClient : IProcessClient
     {
@@ -24,7 +23,7 @@ namespace MyIssue.Server
             LogUser.TypedCommand("connected", "New client", client);
             Client(client, ct);
         }
-        private void Client(Client client, CancellationToken ct)
+        private void Client(Entities.Client client, CancellationToken ct)
         {
             CommandParser parser = new CommandParser();
             using (NetworkStream netS = new NetworkStream(client.ConnectedSock))

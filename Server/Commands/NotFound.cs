@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Server.Net;
+﻿using MyIssue.Server.Net;
 using System.Threading;
 
 namespace MyIssue.Server.Commands
@@ -7,7 +6,7 @@ namespace MyIssue.Server.Commands
     public class NotFound : Command
     {
         public static string Name = "NotFound";
-        public override void Invoke(Client client, CancellationToken ct)
+        public override void Invoke(Entities.Client client, CancellationToken ct)
         {
             NetWrite.Write(client.ConnectedSock, "Command not found!\r\n", ct);
         }

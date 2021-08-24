@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Net.Mail;
 using System.Net;
-using MyIssue.Core.Interfaces;
+using System.Net.Mail;
 using MyIssue.Core.Entities;
+using MyIssue.Core.Interfaces;
 
-namespace MyIssue.Infrastructure.SMTP
+namespace MyIssue.Infrastructure.Smtp
 {
     public class SMTPSender : ISMTPSender
     {

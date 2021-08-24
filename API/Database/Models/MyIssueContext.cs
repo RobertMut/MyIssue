@@ -1,6 +1,6 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace MyIssue.Infrastructure.Database.Models
+namespace API.Database.Models
 {
     public class MyIssueContext : DbContext
     {

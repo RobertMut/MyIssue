@@ -5,13 +5,14 @@ using MyIssue.Server.Net;
 using System.Data;
 using System.Linq;
 using MyIssue.Infrastructure.Files;
+using Client = MyIssue.Server.Entities.Client;
 
 namespace MyIssue.Server.Commands
 {
     public class Login : Command
     {
         public static string Name = "Login";
-        public override void Invoke(Client client, CancellationToken ct)
+        public override void Invoke(Entities.Client client, CancellationToken ct)
         {
 
             NetWrite.Write(client.ConnectedSock, "LOGGING IN\r\n", ct);

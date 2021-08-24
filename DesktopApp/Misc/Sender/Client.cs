@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using MyIssue.Core.Entities;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
+using MyIssue.DesktopApp.Entities;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.DesktopApp.Misc.Sender

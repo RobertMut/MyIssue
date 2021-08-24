@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MyIssue.Core.Entities
+namespace MyIssue.DesktopApp.Entities
 {
     public class PersonalDetails : INotifyPropertyChanged
     {

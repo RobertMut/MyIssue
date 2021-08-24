@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Exceptions;
+﻿using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc;
 using MyIssue.Infrastructure.Files;
@@ -7,6 +6,7 @@ using Prism.Commands;
 using Prism.Regions;
 using System.IO;
 using System.Windows;
+using MyIssue.DesktopApp.Entities;
 
 namespace MyIssue.DesktopApp.ViewModel
 {

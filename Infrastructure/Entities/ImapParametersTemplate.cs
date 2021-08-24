@@ -1,6 +1,6 @@
 ﻿using MailKit.Security;
 
-namespace MyIssue.Core.Entities
+namespace MyIssue.Infrastructure.Entities
 {
     public class ImapParametersTemplate
     {

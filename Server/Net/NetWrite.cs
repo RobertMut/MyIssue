@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System;
 using MyIssue.Infrastructure.Files;
+using Parameters = MyIssue.Server.Entities.Parameters;
 
 namespace MyIssue.Server.Net
 {

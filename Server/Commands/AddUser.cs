@@ -1,13 +1,15 @@
 ﻿using MyIssue.Infrastructure.Database.Models;
 using MyIssue.Server.Net;
 using System.Threading;
+using MyIssue.Core.Exceptions;
+using Client = MyIssue.Server.Entities.Client;
 
 namespace MyIssue.Server.Commands
 {
     public class AddUser : Command
     {
         public static string Name = "AddUser";
-        public override void Invoke(Core.Entities.Client client, CancellationToken ct)
+        public override void Invoke(Entities.Client client, CancellationToken ct)
         {
 
             if (!client.Status.Equals(2)) throw new NotSufficientPermissionsException();

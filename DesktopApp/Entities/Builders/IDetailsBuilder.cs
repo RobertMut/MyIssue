@@ -1,6 +1,4 @@
-﻿using MyIssue.Core.Entities;
-
-namespace MyIssue.Core.Interfaces
+﻿namespace MyIssue.DesktopApp.Entities.Builders
 {
     public interface IDetailsBuilder
     {

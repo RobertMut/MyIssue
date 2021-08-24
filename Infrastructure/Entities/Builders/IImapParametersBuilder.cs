@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Entities;
-namespace MyIssue.Core.Interfaces
+﻿namespace MyIssue.Infrastructure.Entities.Builders
 {
     public interface IImapParametersBuilder
     {

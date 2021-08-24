@@ -1,4 +1,4 @@
-﻿namespace MyIssue.Core.Entities
+﻿namespace MyIssue.Infrastructure.Entities
 {
     public static class ImapParameters
     {

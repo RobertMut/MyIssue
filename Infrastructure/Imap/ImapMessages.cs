@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.Entities;
 using MyIssue.Core.String;
-using MyIssue.Infrastructure.Smtp;
 using MyIssue.Infrastructure.Database;
+using MyIssue.Infrastructure.Entities;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.Infrastructure.Imap

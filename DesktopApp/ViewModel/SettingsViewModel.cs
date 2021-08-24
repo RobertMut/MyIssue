@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using MyIssue.Core.Entities;
 using MyIssue.DesktopApp.Misc;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -9,6 +8,7 @@ using System.Windows.Controls;
 using MyIssue.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using MyIssue.DesktopApp.Entities;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.DesktopApp.ViewModel

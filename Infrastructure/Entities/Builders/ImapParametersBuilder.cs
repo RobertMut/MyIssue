@@ -1,8 +1,7 @@
-﻿using MailKit.Security;
-using MyIssue.Core.Interfaces;
-using System;
+﻿using System;
+using MailKit.Security;
 
-namespace MyIssue.Core.Entities.Builders
+namespace MyIssue.Infrastructure.Entities.Builders
 {
     public class ImapParametersBuilder : IImapParametersBuilder
     {

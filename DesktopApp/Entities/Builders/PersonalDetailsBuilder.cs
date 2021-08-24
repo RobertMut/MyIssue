@@ -1,7 +1,4 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Interfaces;
-
-namespace MyIssue.Core.Entities.Builders
+﻿namespace MyIssue.DesktopApp.Entities.Builders
 {
     public class PersonalDetailsBuilder : IDetailsBuilder
     {

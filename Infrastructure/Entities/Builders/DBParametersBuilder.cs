@@ -1,7 +1,4 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
-
-namespace MyIssue.Core.Entities.Builders
+﻿namespace MyIssue.Infrastructure.Entities.Builders
 {
     public class DBParametersBuilder : IDBParametersBuilder
     {

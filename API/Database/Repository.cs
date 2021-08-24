@@ -1,11 +1,10 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Database.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using API.Database.Models;
 
-namespace MyIssue.Infrastructure.Database
+namespace API.Database
 {
     public class Repository<T> : IRepository<T> where T : class
     {

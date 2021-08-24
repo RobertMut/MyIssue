@@ -1,4 +1,4 @@
-﻿namespace MyIssue.Core.Entities
+﻿namespace MyIssue.Server.Entities
 {
     public class SqlCommandInput
     {

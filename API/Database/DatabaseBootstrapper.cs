@@ -1,11 +1,10 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Database.Models;
-using System;
+﻿using System;
 using System.Linq;
+using API.Database.Models;
 
-namespace MyIssue.Infrastructure.Database
+namespace API.Database
 {
-    public class DatabaseBootstrapper : IDatabaseBootstrapper
+    public class DatabaseBootstrapper
     {
         private MyIssueContext _context;
         public DatabaseBootstrapper(MyIssueContext context)

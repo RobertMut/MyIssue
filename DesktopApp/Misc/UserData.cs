@@ -1,10 +1,10 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Entities.Builders;
-using MyIssue.Core.Exceptions;
+﻿using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using MyIssue.Infrastructure.Files;
 using System;
 using System.Windows;
+using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Entities.Builders;
 
 namespace MyIssue.DesktopApp.Misc
 {
