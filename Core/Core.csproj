@@ -44,14 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\AggregateClasses.cs" />
-    <Compile Include="Entities\Database\CLIENT.cs" />
-    <Compile Include="Entities\Database\C__RefactorLog.cs" />
-    <Compile Include="Entities\Database\EMPLOYEE.cs" />
-    <Compile Include="Entities\Database\MyIssueDatabase.cs" />
-    <Compile Include="Entities\Database\POSITION.cs" />
-    <Compile Include="Entities\Database\TASK.cs" />
-    <Compile Include="Entities\Database\TASKTYPE.cs" />
-    <Compile Include="Entities\Database\USER.cs" />
     <Compile Include="Interfaces\IAggregateClasses.cs" />
     <Compile Include="Constants\ConsoleCommands.cs" />
     <Compile Include="Entities\Builders\ClientBuilder.cs" />

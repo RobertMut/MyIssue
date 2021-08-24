@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\DatabaseBootstrapper.cs" />
+    <None Include="Database\DELETE_DIRECTORY_IN_FUTURE" />
     <Compile Include="Database\Models\Client.cs" />
     <Compile Include="Database\Models\ClientEmployee.cs" />
     <Compile Include="Database\Models\Employee.cs" />
