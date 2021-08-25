@@ -1,12 +1,12 @@
-﻿using API.Database.Models;
+﻿using MyIssue.API.Model;
 
-namespace API.Database
+namespace MyIssue.API.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MyIssueContext context;
         private Repository<User> userRepository;
-        private Repository<Task> taskRepository;
+        private Repository<Model.Task> taskRepository;
         private Repository<Client> clientRepository;
         private Repository<Employee> employeeRepository;
         private Repository<TaskType> taskTypeRepository;
@@ -26,13 +26,13 @@ namespace API.Database
                 return userRepository;
             }
         }
-        public Repository<Task> TaskRepository
+        public Repository<Model.Task> TaskRepository
         {
             get
             {
                 if (taskRepository is null)
                 {
-                    taskRepository = new Repository<Task>(context);
+                    taskRepository = new Repository<Model.Task>(context);
                 }
                 return taskRepository;
             }

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace API.Database
+namespace MyIssue.API.Infrastructure
 {
     public interface IRepository<T> where T : class
     {
-        T Add(T entity);
+        void Add(T entity);
         void Delete(T entity);
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         IEnumerable<T> GetAll();

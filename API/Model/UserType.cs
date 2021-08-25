@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API.Database.Models
+namespace MyIssue.API.Model
 {
     [Table("UserTypes")]
     public class UserType

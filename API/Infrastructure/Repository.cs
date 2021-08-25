@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using API.Database.Models;
 
-namespace API.Database
+namespace MyIssue.API.Infrastructure
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -13,9 +12,9 @@ namespace API.Database
         {
             _context = context;
         }
-        public virtual T Add(T entity)
+        public virtual void Add(T entity)
         {
-            return _context.Set<T>().Add(entity);
+             _context.Set<T>().Add(entity);
         }
         public virtual IEnumerable<T> GetAll()
         {
