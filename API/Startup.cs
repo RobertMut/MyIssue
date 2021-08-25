@@ -1,18 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MyIssue.API.Infrastructure;
+using MyIssue.API.Infrastructure.Migration;
 
-namespace API
+namespace MyIssue.API
 {
     public class Startup
     {
@@ -26,7 +22,8 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<MyIssueContext>(o => o.UseSqlServer(Configuration["ConnectionString"]));
+            services.AddDBMigration<MyIssueContext>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
