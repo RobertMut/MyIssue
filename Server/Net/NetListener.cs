@@ -4,10 +4,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Server.Client;
-using Parameters = MyIssue.Server.Entities.Parameters;
+using Parameters = MyIssue.Server.Model.Parameters;
 
 namespace MyIssue.Server.Net
 {

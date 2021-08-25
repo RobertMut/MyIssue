@@ -8,7 +8,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Model;
 
 namespace MyIssue.DesktopApp.ViewModel
 {

@@ -52,18 +52,10 @@
     <Compile Include="Interfaces\IArchiveFile.cs" />
     <Compile Include="Interfaces\IConsoleClient.cs" />
     <Compile Include="Interfaces\IDatabaseBootstrapper.cs" />
-    <Compile Include="Interfaces\IDesktopData.cs" />
     <Compile Include="Interfaces\IImapConnect.cs" />
     <Compile Include="Interfaces\IImapParse.cs" />
-    <Compile Include="Interfaces\IMessageConstructor.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IProcessClient.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\ISaveConfiguration.cs" />
-    <Compile Include="Interfaces\ISelector.cs" />
-    <Compile Include="Interfaces\ISMTPSender.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Interfaces\IUserData.cs" />
     <Compile Include="String\StringStatic.cs" />
   </ItemGroup>
   <ItemGroup>

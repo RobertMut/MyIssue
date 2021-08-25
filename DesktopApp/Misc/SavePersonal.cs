@@ -1,7 +1,7 @@
 ﻿using MyIssue.Infrastructure.Files;
 using System.IO;
 using System.Reflection;
-using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Model;
 
 namespace MyIssue.DesktopApp.Misc
 {

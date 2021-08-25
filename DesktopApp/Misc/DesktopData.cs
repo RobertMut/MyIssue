@@ -2,10 +2,9 @@
 using System.Xml.Linq;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Core.Exceptions;
-using MyIssue.Core.Interfaces;
-using MyIssue.DesktopApp.Entities;
-using MyIssue.DesktopApp.Entities.Builders;
 using MyIssue.DesktopApp.Misc.Utility;
+using MyIssue.DesktopApp.Model;
+using MyIssue.DesktopApp.Model.Builders;
 
 namespace MyIssue.DesktopApp.Misc
 {

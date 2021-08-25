@@ -6,7 +6,7 @@ using Prism.Commands;
 using Prism.Regions;
 using System.IO;
 using System.Windows;
-using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Model;
 
 namespace MyIssue.DesktopApp.ViewModel
 {

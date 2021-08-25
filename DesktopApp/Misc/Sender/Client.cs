@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using MyIssue.Core.Interfaces;
 using MyIssue.Core.String;
-using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Model;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.DesktopApp.Misc.Sender

@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
-using MyIssue.Server.Entities.Builders;
+using MyIssue.Server.Model.Builders;
 using MyIssue.Server.Net;
 
 namespace MyIssue.Server.Client
@@ -23,7 +23,7 @@ namespace MyIssue.Server.Client
             LogUser.TypedCommand("connected", "New client", client);
             Client(client, ct);
         }
-        private void Client(Entities.Client client, CancellationToken ct)
+        private void Client(Model.Client client, CancellationToken ct)
         {
             CommandParser parser = new CommandParser();
             using (NetworkStream netS = new NetworkStream(client.ConnectedSock))

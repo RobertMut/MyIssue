@@ -1,18 +1,16 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Infrastructure.Files;
+﻿using MyIssue.Infrastructure.Files;
 using MyIssue.Server.Net;
 using System;
 using System.Linq;
 using System.Threading;
 using MyIssue.Core.Exceptions;
-using Client = MyIssue.Server.Entities.Client;
 
 namespace MyIssue.Server.Commands
 {
     public class CreateTask : Command
     {
         public static string Name = "CreateTask";
-        public override void Invoke(Entities.Client client, CancellationToken ct)
+        public override void Invoke(Model.Client client, CancellationToken ct)
         {
             if (client.Status.Equals(0)) throw new NotSufficientPermissionsException();
             LogUser.TypedCommand("CreateTask", "Executed", client);

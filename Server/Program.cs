@@ -7,10 +7,9 @@ using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
 using System.Reflection;
 using System.Data.SqlClient;
-using MyIssue.Core.Entities;
 using MyIssue.Infrastructure.Database;
 using MyIssue.Infrastructure.Imap;
-using DBParameters = MyIssue.Infrastructure.Entities.DBParameters;
+using DBParameters = MyIssue.Infrastructure.Model.DBParameters;
 
 namespace MyIssue.Server
 {

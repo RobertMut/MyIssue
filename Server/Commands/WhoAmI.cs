@@ -1,14 +1,12 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Server.Net;
+﻿using MyIssue.Server.Net;
 using System.Threading;
-using Client = MyIssue.Server.Entities.Client;
 
 namespace MyIssue.Server.Commands
 {
     class WhoAmI : Command
     {
         public static string Name = "WhoAmI";
-        public override void Invoke(Entities.Client client, CancellationToken ct)
+        public override void Invoke(Model.Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("WhoAmI", "Executed", client);
             string whoAreYou = string.Format("ID: {0}\r\nStatus: {1}\r\nLast Command: {2}\r\nAddress: {3}\r\n",

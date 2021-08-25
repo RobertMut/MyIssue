@@ -1,17 +1,14 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Entities.Builders;
-using MyIssue.Core.Exceptions;
+﻿using MyIssue.Core.Exceptions;
 using MyIssue.Infrastructure.Files;
 using System.Data.SqlClient;
 using System.IO;
 using System.Xml.Linq;
-using MyIssue.Infrastructure.Entities.Builders;
+using MyIssue.Infrastructure.Model.Builders;
 using MyIssue.Server.Client;
-using MyIssue.Server.Entities.Builders;
-using DBParameters = MyIssue.Infrastructure.Entities.DBParameters;
-using DBParametersBuilder = MyIssue.Infrastructure.Entities.Builders.DBParametersBuilder;
-using ImapParameters = MyIssue.Infrastructure.Entities.ImapParameters;
-using Parameters = MyIssue.Server.Entities.Parameters;
+using DBParameters = MyIssue.Infrastructure.Model.DBParameters;
+using DBParametersBuilder = MyIssue.Infrastructure.Model.Builders.DBParametersBuilder;
+using ImapParameters = MyIssue.Infrastructure.Model.ImapParameters;
+using Parameters = MyIssue.Server.Model.Parameters;
 
 namespace MyIssue.Server
 {

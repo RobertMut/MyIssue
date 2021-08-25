@@ -3,8 +3,8 @@ using MyIssue.Core.Interfaces;
 using MyIssue.Infrastructure.Files;
 using System;
 using System.Windows;
-using MyIssue.DesktopApp.Entities;
-using MyIssue.DesktopApp.Entities.Builders;
+using MyIssue.DesktopApp.Model;
+using MyIssue.DesktopApp.Model.Builders;
 
 namespace MyIssue.DesktopApp.Misc
 {

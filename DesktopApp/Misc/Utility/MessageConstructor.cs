@@ -4,7 +4,7 @@ using MyIssue.Core.Interfaces;
 using System.Collections.Generic;
 using MyIssue.Core.String;
 using MyIssue.Core.Constants;
-using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Model;
 
 namespace MyIssue.DesktopApp.Misc.Utility
 {

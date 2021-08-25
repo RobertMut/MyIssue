@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using MyIssue.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using MyIssue.DesktopApp.Entities;
+using MyIssue.DesktopApp.Model;
 using MyIssue.Infrastructure.Files;
 
 namespace MyIssue.DesktopApp.ViewModel

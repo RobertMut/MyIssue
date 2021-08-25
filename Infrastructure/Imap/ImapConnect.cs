@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using MailKit.Net.Imap;
 using MailKit.Security;
 using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Entities;
 using MyIssue.Infrastructure.Files;
+using MyIssue.Infrastructure.Model;
 
 namespace MyIssue.Infrastructure.Imap
 {
