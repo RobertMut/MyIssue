@@ -1,9 +1,8 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Database.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using MyIssue.Infrastructure.Database.Models;
 
 namespace MyIssue.Infrastructure.Database
 {
@@ -14,9 +13,9 @@ namespace MyIssue.Infrastructure.Database
         {
             _context = context;
         }
-        public virtual T Add(T entity)
+        public virtual void Add(T entity)
         {
-            return _context.Set<T>().Add(entity);
+             _context.Set<T>().Add(entity);
         }
         public virtual IEnumerable<T> GetAll()
         {

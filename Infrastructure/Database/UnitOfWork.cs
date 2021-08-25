@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Database.Models;
+﻿using MyIssue.Infrastructure.Database.Models;
 
 namespace MyIssue.Infrastructure.Database
 {

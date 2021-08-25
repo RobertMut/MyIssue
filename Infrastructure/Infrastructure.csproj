@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Database\DatabaseBootstrapper.cs" />
     <None Include="Database\DELETE_DIRECTORY_IN_FUTURE" />
+    <Compile Include="Database\IRepository.cs" />
+    <Compile Include="Database\IUnitOfWork.cs" />
     <Compile Include="Database\Models\Client.cs" />
     <Compile Include="Database\Models\ClientEmployee.cs" />
     <Compile Include="Database\Models\Employee.cs" />
@@ -63,14 +65,14 @@
     <Compile Include="Database\Models\UserType.cs" />
     <Compile Include="Database\Repository.cs" />
     <Compile Include="Database\UnitOfWork.cs" />
-    <Compile Include="Entities\Builders\DBParametersBuilder.cs" />
-    <Compile Include="Entities\Builders\IDBParametersBuilder.cs" />
-    <Compile Include="Entities\Builders\IImapParametersBuilder.cs" />
-    <Compile Include="Entities\Builders\ImapParametersBuilder.cs" />
-    <Compile Include="Entities\DBParameters.cs" />
-    <Compile Include="Entities\DBParametersTemplate.cs" />
-    <Compile Include="Entities\ImapParameters.cs" />
-    <Compile Include="Entities\ImapParametersTemplate.cs" />
+    <Compile Include="Model\Builders\DBParametersBuilder.cs" />
+    <Compile Include="Model\Builders\IDBParametersBuilder.cs" />
+    <Compile Include="Model\Builders\IImapParametersBuilder.cs" />
+    <Compile Include="Model\Builders\ImapParametersBuilder.cs" />
+    <Compile Include="Model\DBParameters.cs" />
+    <Compile Include="Model\DBParametersTemplate.cs" />
+    <Compile Include="Model\ImapParameters.cs" />
+    <Compile Include="Model\ImapParametersTemplate.cs" />
     <Compile Include="Files\ArchiveFile.cs" />
     <Compile Include="Files\ConfigValue.cs" />
     <Compile Include="Files\DeleteMultiple.cs" />
@@ -82,11 +84,13 @@
     <Compile Include="Files\WriteConfiguration.cs" />
     <Compile Include="Imap\ImapConnect.cs" />
     <Compile Include="Imap\ImapMessages.cs" />
+    <Compile Include="Model\SettingTextBoxes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Smtp\ISMTPSender.cs" />
     <Compile Include="Smtp\SMTPSender.cs" />
   </ItemGroup>
   <ItemGroup>
