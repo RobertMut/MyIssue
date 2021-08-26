@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyIssue.API.Converters;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
+using MyIssue.API.Model.Return;
 using Task = MyIssue.API.Model.Task;
 
 namespace MyIssue.API.Controllers
@@ -16,22 +18,30 @@ namespace MyIssue.API.Controllers
     public class TasksController : ControllerBase
     {
         private readonly MyIssueContext _context;
-
+        private readonly TaskConverter converter;
         public TasksController(MyIssueContext context)
         {
             _context = context;
+            converter = new TaskConverter(context);
         }
 
         // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Task>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<TaskReturn>>> GetTasks()
         {
-            return await _context.Tasks.ToListAsync();
+            var tasks = await _context.Tasks.ToListAsync();
+            List<TaskReturn> tr = new List<TaskReturn>();
+            foreach (var task in tasks)
+            {
+                tr.Add(converter.Convert(task));
+            }
+
+            return tr;
         }
 
         // GET: api/Tasks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Task>> GetTask(decimal id)
+        public async Task<ActionResult<TaskReturn>> GetTask(decimal id)
         {
             var task = await _context.Tasks.FindAsync(id);
 
@@ -40,20 +50,23 @@ namespace MyIssue.API.Controllers
                 return NotFound();
             }
 
-            return task;
+            return converter.Convert(task);
         }
 
         // PUT: api/Tasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(decimal id, Task task)
+        public async Task<IActionResult> PutTask(decimal id, TaskReturn task)
         {
-            if (id != task.TaskId)
+            var converted = converter.ConvertBack(task);
+            if (id != converted.TaskId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(task).State = EntityState.Modified;
+            
+
+            _context.Entry<Model.Task>(converted).State = EntityState.Modified;
 
             try
             {
@@ -77,12 +90,13 @@ namespace MyIssue.API.Controllers
         // POST: api/Tasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Task>> PostTask(Task task)
+        public async Task<ActionResult<Task>> PostTask(TaskReturn task)
         {
-            _context.Tasks.Add(task);
+            var converted = converter.ConvertBack(task);
+            _context.Tasks.Add(converted);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTask", new { id = task.TaskId }, task);
+            return CreatedAtAction("GetTask", new { id = converted.TaskId }, converted);
         }
 
         // DELETE: api/Tasks/5

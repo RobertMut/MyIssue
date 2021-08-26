@@ -31,6 +31,10 @@ namespace MyIssue.API.Infrastructure
                 .HasOne<Position>(e => e.Positions)
                 .WithMany(e => e.Employees)
                 .HasForeignKey(fk => fk.EmployeePosition);
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.EmployeeLogins)
+                .WithOne()
+                .HasForeignKey<Employee>(e => e.EmployeeLogin);
 
             modelBuilder.Entity<Position>().Property(p => p.PositionId).HasPrecision(3, 0);
             modelBuilder.Entity<UserType>().Property(ut => ut.Id).HasPrecision(3, 0);
@@ -38,6 +42,8 @@ namespace MyIssue.API.Infrastructure
             modelBuilder.Entity<ClientEmployee>().Property(id => id.EmployeeId).HasPrecision(10, 0);
             modelBuilder.Entity<Client>().Property(id => id.ClientId).HasPrecision(6, 0);
 
+            modelBuilder.ApplyConfiguration(new UserTypeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TaskEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
         }
