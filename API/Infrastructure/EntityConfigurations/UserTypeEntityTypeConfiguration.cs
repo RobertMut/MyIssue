@@ -10,14 +10,17 @@ namespace MyIssue.API.Infrastructure.EntityConfigurations
         {
             builder.HasData(new UserType()
             {
+                Id = 1,
                 Name = "Locked"
             });
             builder.HasData(new UserType()
             {
+                Id = 2,
                 Name = "User"
             });
             builder.HasData(new UserType()
             {
+                Id = 3,
                 Name = "Admin"
             });
         }

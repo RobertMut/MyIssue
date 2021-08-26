@@ -29,10 +29,12 @@ namespace MyIssue.API.Infrastructure.EntityConfigurations
                 .HasColumnType("datetime2");
             builder
                 .Property(t => t.TaskEnd)
-                .HasColumnType("datetime2");
+                .HasColumnType("datetime2")
+                .IsRequired(false);
             builder
                 .Property(t => t.TaskStart)
-                .HasColumnType("datetime2");
+                .HasColumnType("datetime2")
+                .IsRequired(false);
             builder.Property(id => id.TaskId).HasPrecision(10, 0);
         }
     }

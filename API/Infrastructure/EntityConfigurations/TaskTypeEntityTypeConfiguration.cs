@@ -10,14 +10,17 @@ namespace MyIssue.API.Infrastructure.EntityConfigurations
         {
             builder.HasData(new TaskType()
             {
+                TypeId = 1,
                 TypeName = "Low priority"
             });
             builder.HasData(new TaskType()
             {
+                TypeId = 2,
                 TypeName = "Normal"
             });
             builder.HasData(new TaskType()
             {
+                TypeId = 3,
                 TypeName = "Urgent"
             });
         }
