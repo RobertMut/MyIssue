@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MyIssue.API.Model
 {
@@ -17,6 +18,7 @@ namespace MyIssue.API.Model
         [StringLength(80)]
         public string Surname { get; set; }
         public decimal Client { get; set; }
+        [JsonIgnore]
         public virtual Client Clients { get; set; }
     }
 }

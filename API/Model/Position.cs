@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MyIssue.API.Model
 {
@@ -15,7 +16,7 @@ namespace MyIssue.API.Model
         [Required]
         [StringLength(50)]
         public string PositionName { get; set; }
-
+        [JsonIgnore]
         public ICollection<Employee> Employees { get; set; }
     }
 }

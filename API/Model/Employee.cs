@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MyIssue.API.Model
 {
@@ -23,8 +24,11 @@ namespace MyIssue.API.Model
         public string EmployeeNo { get; set; }
         [Required]
         public decimal EmployeePosition { get; set; }
+        [JsonIgnore]
         public virtual User EmployeeLogins { get; set; }
+        [JsonIgnore]
         public virtual Position Positions { get; set; }
+        [JsonIgnore]
         public ICollection<Task> Tasks { get; set; }
     }
 }
