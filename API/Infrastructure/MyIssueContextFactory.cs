@@ -16,7 +16,7 @@ namespace MyIssue.API.Infrastructure
                 .Build();
             var optionsBuilder = new DbContextOptionsBuilder<MyIssueContext>();
             optionsBuilder.UseSqlServer(config["ConnectionString"],
-                sqlServerOptionsAction: o => o.MigrationsAssembly(nameof(MyIssueContext)));
+                sqlServerOptionsAction: o => o.MigrationsAssembly(typeof(MyIssueContext).Assembly.FullName));
             return new MyIssueContext(optionsBuilder.Options);
         }
     }
