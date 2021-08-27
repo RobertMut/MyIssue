@@ -1,0 +1,22 @@
+.container {
+  width: 500px;
+  margin: 0 auto;
+}
+.text {
+  white-space: nowrap;
+  width: 1%;
+}
+.input {
+  width: 99%;
+}
+table {
+  table-layout: fixed;
+}
+thead, th, td {
+  text-align: center;
+  margin-top: 5%;
+}
+input {
+  width: 100%;
+  margin-left: 4%;
+}
