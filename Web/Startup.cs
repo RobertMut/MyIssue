@@ -1,10 +1,13 @@
+using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.OpenIdConnect;
 
 namespace Web
 {
@@ -21,6 +24,17 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession(opt =>
+            {
+                opt.Cookie.Name = "MyIssue.Session";
+                opt.Cookie.SameSite = SameSiteMode.None;
+            });
+            services.AddAuthentication(opt =>
+                {
+                    opt.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(setup => setup.ExpireTimeSpan = TimeSpan.FromHours(3))
+                .AddOpen
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
