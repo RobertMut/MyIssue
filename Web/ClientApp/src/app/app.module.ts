@@ -5,37 +5,34 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { LoginComponent } from './login/login.component';
-import { NavMenuLoggedComponent } from './nav-menu-logged/nav-menu-logged.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from "./notlogged/login/login.component";
+import { LogoutComponent } from "./logged/logout/logout.component";
+import { HomeComponent } from "./logged/home/home.component";
+import { NavMenuComponent } from "./notlogged/nav-menu/nav-menu.component";
+import { NavMenuLoggedComponent } from "./logged/nav-menu-logged/nav-menu-logged.component";
 
-const routes: Routes = [
-  { path: 'home', component: HomeComponent}
-  ]
+
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     LoginComponent,
-    CounterComponent,
+    LogoutComponent,
     HomeComponent,
-    NavMenuLoggedComponent
-
+    NavMenuComponent,
+    NavMenuLoggedComponent,
+    CounterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    
-    RouterModule.forRoot([
-      { path: 'home', component: HomeComponent },
-      { path: 'counter', component: CounterComponent },
-      { path: '', component: LoginComponent, pathMatch: 'full' }
-    ])
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router, NavigationStart } from '@angular/router';
+import { AuthService } from "../../../helpers/AuthService";
 
 @Component({
   selector: 'app-login',
@@ -9,12 +9,20 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private helpers: AuthService) { }
+  ngOnInit() {
+    console.warn("navigation to home");
+    if (this.helpers.isAuthenticated()) {
+      
+      this.router.navigate(['home']);
+    }
+  }
   pass: string;
   login: string;
   onButton() {
     if (this.pass == "1234" && this.login == "admin") {
-      this.router.navigate(['/home']);
+      this.helpers.login('admin');
+      this.router.navigate(['home']);
     }
   }
 }

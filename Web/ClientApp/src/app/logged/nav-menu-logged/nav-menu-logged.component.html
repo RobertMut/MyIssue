@@ -14,11 +14,11 @@
       <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
            [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
+          <li class="nav-item nav-link text-dark" [routerLinkActive]="['link-active']">
+            Admin
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            Admin
+            <a class="nav-link text-dark" [routerLink]="['../logout']">Logout</a>
           </li>
         </ul>
       </div>
