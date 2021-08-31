@@ -10,19 +10,13 @@ import { AuthService } from "../../../helpers/AuthService";
 export class LoginComponent {
 
   constructor(private router: Router, private helpers: AuthService) { }
-  ngOnInit() {
-    console.warn("navigation to home");
-    if (this.helpers.isAuthenticated()) {
-      
-      this.router.navigate(['home']);
-    }
-  }
+
   pass: string;
   login: string;
   onButton() {
     if (this.pass == "1234" && this.login == "admin") {
       this.helpers.login('admin');
-      this.router.navigate(['home']);
+      this.router.navigate(['../nav-menu-logged/home']);
     }
   }
 }

@@ -22,12 +22,12 @@
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
+            >Counter</a
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/login']"
-              >Login</a
+            >Login</a
             >
           </li>
         </ul>
@@ -35,3 +35,6 @@
     </div>
   </nav>
 </header>
+<body>
+<router-outlet></router-outlet>
+</body>

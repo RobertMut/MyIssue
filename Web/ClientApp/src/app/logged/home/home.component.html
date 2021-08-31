@@ -1,15 +1,42 @@
-<app-nav-menu-logged></app-nav-menu-logged>
 <h1>Hello, admin!</h1>
 
-<div class="active-tasks">
-  <p>Your active tasks:</p>
-  <table>
-    <tr>
-      <td>TaskTitle</td>
-      <td>TaskDesc</td>
-    </tr>
+<div class="task-div add-a-little-space-below">
+  <table class="task-navigation-table">
+    <thead>
+    Your active tasks:
+    </thead>
+    <tbody >
+      <tr>
+        <td>TaskId</td>
+        <td>TaskType</td>
+        <td>TaskTitle</td>
+        <td>TaskDesc</td>
+        <td>TaskClient</td>
+        <td>TaskAssignedTo</td>
+        <td>TaskOwner</td>
+        <td>TaskStart</td>
+        <td>TaskCreationDate</td>
+      </tr>
+    </tbody>
   </table>
 </div>
-<div class="free-to-take-tasks">
-  <p>Free to take tasks:</p>
+<div class="task-div">
+  <table class="task-navigation-table">
+    <thead>
+    Free to take tasks:
+    </thead>
+    <tbody>
+      <tr>
+        <td>TaskId</td>
+        <td>TaskType</td>
+        <td>TaskTitle</td>
+        <td>TaskDesc</td>
+        <td>TaskClient</td>
+        <td>TaskAssignedTo</td>
+        <td>TaskOwner</td>
+        <td>TaskEnded</td>
+        <td>TaskCreationDate</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

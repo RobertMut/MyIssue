@@ -10,16 +10,20 @@ import { LoginComponent } from "./notlogged/login/login.component";
 
 const routes: Routes = [
   {
-    path: "home", component: HomeComponent, children:[
+    path: 'nav-menu-logged', component: NavMenuLoggedComponent, children: [
+      { path: '', component: HomeComponent },
       { path: "logout", component: LogoutComponent }
+    ]},
+  {
+    path: 'nav-menu', component: NavMenuComponent, children: [
+      { path: 'login', component: LoginComponent }
       ]
   },
-  { path: 'login', component: LoginComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'nav-menu', pathMatch: 'full' },
   ];
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forRoot(routes)],
+  imports: [CommonModule, RouterModule.forRoot(routes), RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

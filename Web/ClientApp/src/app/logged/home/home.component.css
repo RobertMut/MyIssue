@@ -1,3 +1,22 @@
 h1 {
   text-align: center;
 }
+.task-div {
+  width: 100%;
+}
+.task-navigation-table {
+  margin: 0 auto;
+  width: 85%;
+}
+.task-navigation-table tbody {
+  border: 1px solid darkgrey;
+}
+.task-navigation-table tbody tr {
+  border-bottom: 1px solid lightgray;
+}
+.task-navigation-table thead {
+  margin-bottom: 5%;
+}
+.add-a-little-space-below {
+  padding-bottom: 3%;
+}
