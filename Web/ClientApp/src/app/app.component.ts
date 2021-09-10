@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { PageListenerService } from "../helpers/PageListenerService";
-import { AuthService } from "../helpers/AuthService";
+import { PageListenerService } from "../services/PageListenerService";
+import { AuthService } from "../services/AuthService";
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -14,7 +14,8 @@ export class AppComponent {
     if (localStorage.getItem('login') == null &&
       localStorage.getItem('isLogged') == null &&
       localStorage.getItem('loginDate') == null)
-    this.helper.setEmptyStorage();
+      console.warn('test');
+      //this.helper.setEmptyStorage();
   }
   ngOnInit() {
     this.router.events

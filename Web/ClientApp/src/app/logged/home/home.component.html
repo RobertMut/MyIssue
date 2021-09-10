@@ -6,16 +6,17 @@
     Your active tasks:
     </thead>
     <tbody >
-      <tr>
-        <td>TaskId</td>
-        <td>TaskType</td>
-        <td>TaskTitle</td>
-        <td>TaskDesc</td>
-        <td>TaskClient</td>
-        <td>TaskAssignedTo</td>
-        <td>TaskOwner</td>
-        <td>TaskStart</td>
-        <td>TaskCreationDate</td>
+      <tr *ngFor="let task of tasks">
+        <td>{{task.id}}</td>
+        <td>{{task.type}}</td>
+        <td>{{task.title}}</td>
+        <td>{{task.description}}</td>
+        <td>{{task.client}}</td>
+        <td>{{task.assignment}}</td>
+        <td>{{task.owner}}</td>
+        <td>{{task.start}}</td>
+        <td>{{task.end}}</td>
+        <td>{{task.creation}}</td>
       </tr>
     </tbody>
   </table>

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { AuthService } from "../../../helpers/AuthService";
+import { AuthService } from "../../../services/AuthService";
 
 @Component({
   selector: 'app-login',
@@ -14,8 +14,9 @@ export class LoginComponent {
   pass: string;
   login: string;
   onButton() {
+    //var resp = this.http
     if (this.pass == "1234" && this.login == "admin") {
-      this.helpers.login('admin');
+      //this.helpers.login('admin');
       this.router.navigate(['../nav-menu-logged/home']);
     }
   }
