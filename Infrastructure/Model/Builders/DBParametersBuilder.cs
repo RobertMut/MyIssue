@@ -1,34 +1,19 @@
 ﻿namespace MyIssue.Infrastructure.Model.Builders
 {
-    public class DBParametersBuilder : IDBParametersBuilder
+    public class ApiParametersBuilder : IApiParametersBuilder
     {
-        protected DBParametersTemplate dBTemp;
-        private DBParametersBuilder()
+        protected ApiParametersTemplate dBTemp;
+        private ApiParametersBuilder()
         {
-            dBTemp = new DBParametersTemplate();
+            dBTemp = new ApiParametersTemplate();
         }
-        public IDBParametersBuilder SetDBAddress(string address)
+        public IApiParametersBuilder SetApiAddress(string address)
         {
-            dBTemp.DBAddress = address;
+            dBTemp.ApiAddress = address;
             return this;
         }
-        public IDBParametersBuilder SetUsername(string username)
-        {
-            dBTemp.Username = username;
-            return this;
-        }
-        public IDBParametersBuilder SetPassword(string pass)
-        {
-            dBTemp.Password = pass;
-            return this;
-        }
-        public IDBParametersBuilder SetDatabase(string databaseName)
-        {
-            dBTemp.Database = databaseName;
-            return this;
-        }
-        public DBParametersTemplate Build() => dBTemp;
-        public static DBParametersBuilder Create() => new DBParametersBuilder();
+        public ApiParametersTemplate Build() => dBTemp;
+        public static ApiParametersBuilder Create() => new ApiParametersBuilder();
 
     }
 }

@@ -12,15 +12,9 @@ namespace MyIssue.DesktopApp.Misc.Utility
     {
         public MailMessage BuildMessage(string subject, string recipient, string sender, PersonalDetails details, string description)
         {
-            var newsubj = string.Format("[Issue][{0}][{1}][{2}][{3}]", details.Company, details.Name, details.Surname, subject);
-            var formatted = string.Format("{0}\r\n{1}\r\n{2}\r\n{3}\r\n{4}\r\n{5}",
-                    details.Name,
-                    details.Surname,
-                    details.Company,
-                    details.Phone,
-                    details.Email,
-                    description
-                    );
+            var newsubj = $"[Issue][{details.Company}][{details.Name}][{details.Surname}][{subject}]";
+            var formatted =
+                $"{details.Name}\r\n{details.Surname}\r\n{details.Company}\r\n{details.Phone}\r\n{details.Email}\r\n{description}";
             return new MailMessage(sender, recipient, newsubj, formatted);
         }
         public IEnumerable<string> BuildTaskCommands(SettingTextBoxes settings, string description)

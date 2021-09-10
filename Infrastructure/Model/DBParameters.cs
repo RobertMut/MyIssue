@@ -2,9 +2,9 @@
 
 namespace MyIssue.Infrastructure.Model
 {
-    public static class DBParameters
+    public static class ApiParameters
     {
-        public static DBParametersTemplate Parameters { get; set; }
-        public static SqlConnectionStringBuilder ConnectionString { get; set; }
+        public static ApiParametersTemplate Parameters { get; set; }
+        //public static SqlConnectionStringBuilder ConnectionString { get; set; }
     }
 }
