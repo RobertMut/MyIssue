@@ -52,6 +52,27 @@ namespace MyIssue.API.Controllers
 
             return converter.Convert(task);
         }
+         [HttpGet("last/{number}")]
+        public async Task<ActionResult<IEnumerable<TaskReturn>>> GetLastTask(decimal number)
+        {
+            var lastTask = await _context.Tasks.Where(d => d.TaskEnd == null).OrderBy(t => t.TaskId).LastAsync();
+            decimal lastId = lastTask.TaskId;
+            List<Task> tasks = new List<Task>();
+            for(decimal i = lastId-number; i <= lastId; ++i)
+            {
+                Task t = await _context.Tasks.FindAsync(i);
+                if (t is not null) tasks.Add(t);
+            }
+
+            if (tasks.Count.Equals(0))
+            {
+                return NotFound();
+            }
+
+            List<TaskReturn> returnList = new List<TaskReturn>();
+            tasks.ForEach(t => returnList.Add(converter.Convert(t)));
+            return returnList;
+        }
 
         // PUT: api/Tasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

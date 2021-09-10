@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model.Return;
@@ -19,37 +21,48 @@ namespace MyIssue.API.Converters
 
         public TaskReturn Convert(Task task)
         {
+            if (task is null)
+            {
+                return new TaskReturn();
+            }
+
+            var type = _context.TaskTypes.FirstOrDefaultAsync(tt => tt.TypeId == task.TaskType).Result.TypeName;
+            var client = _context.Clients.FirstOrDefaultAsync(c => c.ClientId == task.TaskClient).Result.ClientName;
             return new TaskReturn
             {
                 TaskId = task.TaskId,
                 TaskTitle = task.TaskTitle,
                 TaskDescription = task.TaskDesc,
-                TaskClient = _context.Clients.FirstOrDefaultAsync(c => c.ClientId.Equals(task.TaskId))
-                    .Result
-                    .ClientName,
+                TaskClient = client,
                 TaskAssignment = task.TaskAssignment,
                 TaskOwner = task.TaskOwner,
-                TaskType = _context.TaskTypes.FirstOrDefaultAsync(tt => tt.TypeId.Equals(task.TaskType))
-                    .Result
-                    .TypeName,
+                TaskType = type,
                 TaskStart = task.TaskStart,
                 TaskEnd = task.TaskEnd,
                 TaskCreationDate = task.TaskCreation,
                 CreatedByMail = task.MailId
             };
+
         }
 
         public Task ConvertBack(TaskReturn taskReturn)
         {
+            if (taskReturn is null)
+            {
+                return new Task();
+            }
+            decimal type = _context.TaskTypes.FirstOrDefaultAsync(tt => tt.TypeName.Equals(taskReturn.TaskType)).GetAwaiter().GetResult().TypeId;
+            decimal client = _context.Clients.FirstOrDefaultAsync(c => c.ClientName.Equals(taskReturn.TaskClient))
+                .GetAwaiter().GetResult().ClientId;
             return new Task
             {
                 TaskId = taskReturn.TaskId,
                 TaskTitle = taskReturn.TaskTitle,
                 TaskDesc = taskReturn.TaskDescription,
-                TaskClient = _context.Clients.FirstOrDefaultAsync(c => c.ClientName.Equals(taskReturn.TaskClient)).Result.ClientId,
+                TaskClient = client,
                 TaskOwner = taskReturn.TaskOwner,
                 TaskAssignment = taskReturn.TaskAssignment,
-                TaskType = _context.TaskTypes.FirstOrDefaultAsync(tt => tt.TypeName.Equals(taskReturn.TaskType)).Result.TypeId,
+                TaskType = type,
                 TaskStart = taskReturn.TaskStart,
                 TaskEnd = taskReturn.TaskStart,
                 TaskCreation = taskReturn.TaskCreationDate,

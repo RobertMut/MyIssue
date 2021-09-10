@@ -41,6 +41,18 @@ namespace MyIssue.API.Controllers
 
             return client;
         }
+        //GET: api/Clients/{Name}
+        [HttpGet("{name}")]
+        public async Task<ActionResult<Client>> GetClient(string name)
+        {
+            var client = await _context.Clients.FirstOrDefaultAsync(c => c.ClientName.Equals(name));
+            if (client is null)
+            {
+                return NotFound();
+            }
+
+            return client;
+        }
 
         // PUT: api/Clients/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
