@@ -1,5 +1,4 @@
 using System;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,16 +6,19 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.OpenIdConnect;
+using MyIssue.Infrastructure.Server;
+using MyIssue.Web.Services;
 
-namespace Web
+namespace MyIssue.Web
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            StaticConfiguration = configuration;
         }
+        public static IConfiguration StaticConfiguration { get; set; }
 
         public IConfiguration Configuration { get; }
 
@@ -29,12 +31,20 @@ namespace Web
                 opt.Cookie.Name = "MyIssue.Session";
                 opt.Cookie.SameSite = SameSiteMode.None;
             });
-            services.AddAuthentication(opt =>
-                {
-                    opt.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie(setup => setup.ExpireTimeSpan = TimeSpan.FromHours(3))
-                .AddOpen
+            Console.WriteLine(Configuration.GetValue<string>("ServerConnection:ServerIp"));
+            Console.WriteLine(Configuration.GetValue<int>("ServerConnection:Port"));
+           // var builder = new ConfigurationBuilder()
+           //     .AddJsonFile("appsettings.json");
+           // IConfiguration config = builder.Build();
+            //services.AddScoped<IConfiguration>(_ => config);
+            services.AddScoped<IServerConnector, ServerConnector>(_=> new ServerConnector(Configuration.GetValue<string>("ServerConnection:ServerIp"), Configuration.GetValue<int>("ServerConnection:Port")));
+            services.AddScoped<ITaskService, TaskService>();
+            
+            //services.AddSingleton<ServerConnector>(p =>
+                //;
+            
+            //services.AddIdentity<>()
+                
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
