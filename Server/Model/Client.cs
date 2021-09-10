@@ -6,7 +6,7 @@ namespace MyIssue.Server.Model
     public class Client
     {
         public Socket ConnectedSock { get; set; }
-        public int Id { get; set; }
+        public string Login { get; set; }
         public List<string> CommandHistory { get; set; }
         public int Status { get; set; }
         public bool Terminated { get; set; }

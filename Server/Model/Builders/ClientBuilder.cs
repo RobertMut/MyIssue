@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 
 namespace MyIssue.Server.Model.Builders
@@ -16,9 +17,9 @@ namespace MyIssue.Server.Model.Builders
             client.ConnectedSock = socket;
             return this;
         }
-        public IClientBuilder SetId(int Id)
+        public IClientBuilder SetId(int id)
         {
-            client.Id = Id;
+            client.Login = Convert.ToString(id);
             return this;
         }
         public IClientBuilder SetCommandHistory(List<string> list)

@@ -2,7 +2,10 @@
 using System.Threading;
 using MyIssue.Server.Net;
 using System.Linq;
+using System.Net.Http;
 using MyIssue.Infrastructure.Files;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Server.Commands
 {
@@ -18,14 +21,18 @@ namespace MyIssue.Server.Commands
             try
             {
                 string[] input = SplitToCommand.Get(client.CommandHistory);
-                string login = input[0];
-                string pass = input[1];
-                var query = unit.UserRepository.Get(log => log.UserLogin == login && log.Password == pass).Select(s => s.UserType).FirstOrDefault();
-                if (!(query is default(decimal)))
+                Console.WriteLine(input[0]);
+                Console.WriteLine(input[1]);
+                HttpResponseMessage httpresponse = httpclient.GetAsync("api/Users/" + input[0]).GetAwaiter().GetResult();
+                string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                Console.WriteLine(response);
+                var data = (JObject) JsonConvert.DeserializeObject(response);
+                if (input[1].Equals(data["password"]))
                 {
                     LogUser.TypedCommand("Login", "", client);
-                    client.Status = Convert.ToInt32(query);
-                    NetWrite.Write(client.ConnectedSock, "LOGGED!\r\n", ct);
+                    client.Status = Convert.ToInt32(data["userType"]);
+                    client.Login = data["userLogin"].ToString();
+                    NetWrite.Write(client.ConnectedSock, "LOGGED "+Guid.NewGuid(), ct); //move guid to api
                 }
                 else
                 {

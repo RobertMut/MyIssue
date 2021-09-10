@@ -17,7 +17,7 @@ namespace MyIssue.Server.Client
                     .SetSocket(sock)
                     .SetId(ClientCounter.Clients)
                     .SetCommandHistory(new List<string>())
-                    .SetStatus(0)
+                    .SetStatus(1)
                     .SetTerminated(false)
                 .Build();
             LogUser.TypedCommand("connected", "New client", client);
@@ -28,7 +28,6 @@ namespace MyIssue.Server.Client
             CommandParser parser = new CommandParser();
             using (NetworkStream netS = new NetworkStream(client.ConnectedSock))
             {
-                string response = string.Empty;
 
                 NetWrite.Write(client.ConnectedSock, "LOGIN\r\n", ct);
                 while (!client.Terminated)

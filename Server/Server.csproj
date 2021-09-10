@@ -54,6 +54,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -66,6 +69,19 @@
     </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WinHttpHandler, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.WinHttpHandler.5.0.0\lib\net461\System.Net.Http.WinHttpHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -78,6 +94,9 @@
   <ItemGroup>
     <Compile Include="Client\ClientCounter.cs" />
     <Compile Include="Client\ProcessClient.cs" />
+    <Compile Include="Commands\GetSomeTasks.cs" />
+    <Compile Include="Commands\GetLastTask.cs" />
+    <Compile Include="Commands\GetTask.cs" />
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\AddUser.cs" />
     <Compile Include="Commands\AddEmployee.cs" />
@@ -94,8 +113,11 @@
     <Compile Include="Model\Builders\IClientBuilder.cs" />
     <Compile Include="Model\Builders\IDBParametersBuilder.cs" />
     <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\SqlCommandInput.cs" />
+    <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="SplitToCommand.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="LogUser.cs" />

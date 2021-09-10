@@ -3,10 +3,9 @@ using MyIssue.Infrastructure.Files;
 using System.Data.SqlClient;
 using System.IO;
 using System.Xml.Linq;
+using MyIssue.Infrastructure.Model;
 using MyIssue.Infrastructure.Model.Builders;
 using MyIssue.Server.Client;
-using DBParameters = MyIssue.Infrastructure.Model.DBParameters;
-using DBParametersBuilder = MyIssue.Infrastructure.Model.Builders.DBParametersBuilder;
 using ImapParameters = MyIssue.Infrastructure.Model.ImapParameters;
 using Parameters = MyIssue.Server.Model.Parameters;
 
@@ -28,23 +27,24 @@ namespace MyIssue.Server
                     .SetLogin(ConfigValue.GetValue<string>("i_login", config))
                     .SetPassword(ConfigValue.GetValue<string>("i_password", config))
                 .Build();
-            DBParameters.Parameters = DBParametersBuilder
+            ApiParameters.Parameters = ApiParametersBuilder
                 .Create()
-                    .SetDBAddress(ConfigValue.GetValue<string>("d_address", config))
-                    .SetDatabase(ConfigValue.GetValue<string>("d_database", config))
-                    .SetUsername(ConfigValue.GetValue<string>("d_username", config))
-                    .SetPassword(ConfigValue.GetValue<string>("d_password", config))
+                    .SetApiAddress(ConfigValue.GetValue<string>("api_address", config))
+                    //.SetDatabase(ConfigValue.GetValue<string>("d_database", config))
+                    //.SetUsername(ConfigValue.GetValue<string>("d_username", config))
+                    //.SetPassword(ConfigValue.GetValue<string>("d_password", config))
                 .Build();
 
-            DBParameters.ConnectionString = new SqlConnectionStringBuilder()
-            {
-                DataSource = DBParameters.Parameters.DBAddress,
-                UserID = DBParameters.Parameters.Username,
-                Password = DBParameters.Parameters.Password,
-                InitialCatalog = DBParameters.Parameters.Database
-            };
+            // ApiParameters.ConnectionString = new SqlConnectionStringBuilder()
+            // {
+            //     DataSource = ApiParameters.Parameters.ApiAddress,
+            //     UserID = ApiParameters.Parameters.Username,
+            //     Password = ApiParameters.Parameters.Password,
+            //     InitialCatalog = ApiParameters.Parameters.Database
+            // };
             
             ClientCounter.Clients = 0;
         }
+
     }
 }

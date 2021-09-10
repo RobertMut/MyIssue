@@ -4,32 +4,17 @@ namespace MyIssue.Server.Model.Builders
 {
     public class DBParametersBuilder : IDBParametersBuilder
     {
-        protected DBParametersTemplate dBTemp;
+        protected ApiParametersTemplate dBTemp;
         private DBParametersBuilder()
         {
-            dBTemp = new DBParametersTemplate();
+            dBTemp = new ApiParametersTemplate();
         }
         public IDBParametersBuilder SetDBAddress(string address)
         {
-            dBTemp.DBAddress = address;
+            dBTemp.ApiAddress = address;
             return this;
         }
-        public IDBParametersBuilder SetUsername(string username)
-        {
-            dBTemp.Username = username;
-            return this;
-        }
-        public IDBParametersBuilder SetPassword(string pass)
-        {
-            dBTemp.Password = pass;
-            return this;
-        }
-        public IDBParametersBuilder SetDatabase(string databaseName)
-        {
-            dBTemp.Database = databaseName;
-            return this;
-        }
-        public DBParametersTemplate Build() => dBTemp;
+        public ApiParametersTemplate Build() => dBTemp;
         public static DBParametersBuilder Create() => new DBParametersBuilder();
 
     }
