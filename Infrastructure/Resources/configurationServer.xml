@@ -10,6 +10,9 @@
   </imapSettings>
   <apiSettings>
     <api_address>DESKTOP</api_address>
+    <secret>USED TO SIGN AND VERIFY JWT TOKEN</secret>
+    <issuer>issuer</issuer>
+    <audience>audience</audience>
   </apiSettings>
   <serverSettings>
     <enabled>true</enabled>

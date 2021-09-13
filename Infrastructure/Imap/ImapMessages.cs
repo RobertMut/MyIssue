@@ -6,20 +6,23 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
+using MyIssue.Core.Model;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Database;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Infrastructure.Model;
+using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Infrastructure.Imap
 {
     public class ImapMessages : IImapParse 
     {
         private IImapConnect _iconn;
-        private UnitOfWork unit;
-
+        //private UnitOfWork unit;
+        private IHttpService _httpService;
         private ImapClient idleClient;
         private ImapClient getClient;
         private CancellationToken token;
@@ -33,7 +36,7 @@ namespace MyIssue.Infrastructure.Imap
             _iconn = new ImapConnect();
             this.idleClient = idleClient;
             cancelToken = new CancellationTokenSource();
-            unit = new UnitOfWork(new Database.Models.MyIssueContext(DBParameters.ConnectionString.ToString()));
+            //unit = new UnitOfWork(new Database.Models.MyIssueContext(ApiParameters.ConnectionString.ToString()));
            }
 
         public async Task ImapListenNewMessagesAsync(CancellationToken ct)
@@ -159,22 +162,34 @@ namespace MyIssue.Infrastructure.Imap
         {
 
             string[] email = StringStatic.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            string title = email[4];
-            string desc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody);
-            string client = email[1];
-            decimal clientId = unit.ClientRepository.Get(c => c.ClientName == client).FirstOrDefault().ClientId;
+            string desc =
+                $"{email[2]} {email[3]}\n{(string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody)}";
+            string client = _httpService.Get("api/Clients/" + email[1]).GetAwaiter().GetResult();
+            JObject obj = JObject.Parse(client);
 
-
-             unit.TaskRepository.Add(new Database.Models.Task
+            _httpService.Post("api/Tasks", new TaskReturn
             {
-                TaskTitle = title,
-                TaskDesc = desc,
-                TaskCreation = m.Date.DateTime,
-                TaskClient = clientId,
-                TaskType = 1,
-                MailId = m.GetHashCode().ToString()
+                TaskTitle = email[4],
+                TaskDescription = desc,
+                TaskClient = obj["ClientName"].ToString(),
+                TaskAssignment = null,
+                TaskOwner = null,
+                TaskType = "Normal",
+                TaskStart = null,
+                TaskEnd = null,
+                TaskCreationDate = default,
+                CreatedByMail = m.GetHashCode().ToString()
             });
-            unit.Complete();
+            // unit.TaskRepository.Add(new Database.Models.Task
+            // {
+            //     TaskTitle = email[4],
+            //     TaskDesc = desc,
+            //     TaskCreation = m.Date.DateTime,
+            //     TaskClient = Decimal.Parse(obj["ClientId"].ToString()),
+            //     TaskType = 1,
+            //     MailId = m.GetHashCode().ToString()
+            // });
+            // unit.Complete();
             Console.WriteLine("IMAP - {0} - Data was written to database", DateTime.Now);
         }
 
