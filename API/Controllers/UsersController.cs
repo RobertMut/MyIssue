@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
+using MyIssue.API.Model.Request;
+using MyIssue.API.Services;
 
 namespace MyIssue.API.Controllers
 {
@@ -15,21 +18,23 @@ namespace MyIssue.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly MyIssueContext _context;
+        private IUserService _userService;
 
-        public UsersController(MyIssueContext context)
+        public UsersController(MyIssueContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // GET: api/Users
-        [HttpGet]
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
-        [HttpGet("{login}")]
+        [HttpGet("Get/{login}")]
         public async Task<ActionResult<User>> GetUser(string login)
         {
             var user = await _context.Users.FindAsync(login);
@@ -41,10 +46,39 @@ namespace MyIssue.API.Controllers
 
             return user;
         }
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(AuthRequest model)
+        {
+            var response = _userService.AuthenticateUser(model);
+            if (response is null)
+                return BadRequest(new {message = "Username or password in incorrect"});
+            return Ok(response);
+        }
+        [AllowAnonymous]
+        [HttpPost("tokenauthenticate")]
+        public IActionResult AuthenticateToken(AuthTokenRequest model)
+        {
+            bool verified = _userService.VerifyToken(model.Token);
+            string username = string.Empty;
+            if (verified && _userService.GetClaim(model.Token, "username").Equals(model.Username))
+            {
+                return Ok("CORRECT");
+            }
 
+            return BadRequest("WRONG");
+        }
+        
+        // [Authorize]
+        // [HttpGet]
+        // public IActionResult GetAll()
+        // {
+        //     var users = _userService.GetAll();
+        //     return Ok(users);
+        // }
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("Put/{id}")]
         public async Task<IActionResult> PutUser(string id, User user)
         {
             if (id != user.UserLogin)
@@ -75,7 +109,7 @@ namespace MyIssue.API.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);
@@ -99,7 +133,7 @@ namespace MyIssue.API.Controllers
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _context.Users.FindAsync(id);

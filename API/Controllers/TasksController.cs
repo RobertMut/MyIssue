@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace MyIssue.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TasksController : ControllerBase
     {
         private readonly MyIssueContext _context;
@@ -52,16 +54,29 @@ namespace MyIssue.API.Controllers
 
             return converter.Convert(task);
         }
-         [HttpGet("last/{number}")]
-        public async Task<ActionResult<IEnumerable<TaskReturn>>> GetLastTask(decimal number)
+        
+        [HttpGet("filter/{all}/{isClosed}/{howMany}/{id?}")]
+        public async Task<ActionResult<IEnumerable<TaskReturn>>> GetLastTask(bool all, bool isClosed, int howMany, decimal? id)
         {
-            var lastTask = await _context.Tasks.Where(d => d.TaskEnd == null).OrderBy(t => t.TaskId).LastAsync();
-            decimal lastId = lastTask.TaskId;
             List<Task> tasks = new List<Task>();
-            for(decimal i = lastId-number; i <= lastId; ++i)
+            if (all)
             {
-                Task t = await _context.Tasks.FindAsync(i);
-                if (t is not null) tasks.Add(t);
+                tasks = await _context.Tasks.ToListAsync();
+            }
+            else
+            {
+                tasks = await _context.Tasks.Where(d => d.TaskEnd.HasValue == isClosed).ToListAsync();
+
+            }
+
+            if (howMany is not 0)
+            {
+                tasks = tasks.TakeLast(howMany).ToList();
+            }
+
+            if (id is not null)
+            {
+                tasks = tasks.Where(i => i.TaskId == id.GetValueOrDefault(0)).ToList();
             }
 
             if (tasks.Count.Equals(0))
@@ -85,7 +100,7 @@ namespace MyIssue.API.Controllers
                 return BadRequest();
             }
 
-            
+
 
             _context.Entry<Model.Task>(converted).State = EntityState.Modified;
 

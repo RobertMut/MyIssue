@@ -12,6 +12,7 @@ namespace MyIssue.API.Infrastructure.EntityConfigurations
                 .HasOne(u => u.UserTypes)
                 .WithMany(ut => ut.Users)
                 .HasForeignKey(fk => fk.UserType);
+
             builder.HasData(new User()
             {
                 UserLogin = "Admin",
