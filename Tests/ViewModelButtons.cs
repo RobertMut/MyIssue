@@ -1,11 +1,5 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Mocks;
-using Microsoft.QualityTools.Testing.Fakes;
 
 namespace Tests
 {

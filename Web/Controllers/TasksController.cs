@@ -20,18 +20,25 @@ namespace MyIssue.Web.Controllers
             _service = service;
         }
 
-        [HttpGet("all")]
-        public IEnumerable<Task> Get()
+        [HttpGet("someClosed/{howMany}")]
+        public async Task<IEnumerable<Task>> GetSomeClosed(int howMany)
         {
-            
-            return _service.GetTasks().GetAwaiter().GetResult();
+            return await _service.GetTasks(true, false, howMany, null);
         }
-
-        [HttpGet("{numberOfTasks}")]
-        public IEnumerable<Task> GetLast(int numberOfTasks)
+        [HttpGet("{id}")]
+        public async Task<IEnumerable<Task>> GetClosedById(int id)
         {
-            return _service.GetLastTasks(numberOfTasks).GetAwaiter().GetResult();
-
+            return _service.GetTasks(false, true, 0, id).GetAwaiter().GetResult();
+        }
+        [HttpGet("someOpen/{howMany}")]
+        public async Task<IEnumerable<Task>> GetSomeOpen(int howMany, int? id)
+        {
+            return _service.GetTasks(false, false, howMany, null).GetAwaiter().GetResult();
+        }
+        [HttpGet]
+        public async Task<IEnumerable<Task>> Get()
+        {
+            return _service.GetTasks(false, true, 0, null).GetAwaiter().GetResult();
         }
     }
 }

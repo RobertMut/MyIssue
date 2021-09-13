@@ -33,27 +33,22 @@ namespace MyIssue.Web.Services
             //_remoteServiceBaseUrl = $"{_settings.Value.Url}/c/api/v1/task/";
         }
 
-        public async Task<IEnumerable<Task>> GetTasks()
+
+        public async Task<IEnumerable<Task>> GetTasks(bool isClosed, bool all, int howMany, int? id)
         {
-            List<byte[]> cmds = new List<byte[]>().Concat(User.Login(_config.GetValue<string>("ServerConnection:Login"), _config.GetValue<string>("ServerConnection:Pass")))
-                .Concat(Core.Commands.Task.GetTask().Concat(User.Logout())).ToList();
+            IEnumerable<byte[]> cmds = new List<byte[]>()
+                .Concat(User.Login(_config.GetValue<string>("ServerConnection:Login"), _config.GetValue<string>("ServerConnection:Pass")))
+                .Append(StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n"))
+                .Append(StringStatic.ByteMessage($"{howMany}"));
 
-            string response = _server.SendData(cmds);
-
-            var task = JsonSerializer.Deserialize<List<Task>>(response, new JsonSerializerOptions
+            if (id is not null)
             {
-                PropertyNameCaseInsensitive = true
-            });
-            return task;
+                cmds = cmds.Append(StringStatic.ByteMessage("\r\n<NEXT>\r\n")).Append(StringStatic.ByteMessage($"{id}"));
+            }
 
-        }
-
-        public async Task<IEnumerable<Task>> GetLastTasks(int howMany)
-        {
-            List<byte[]> cmds = new List<byte[]>().Concat(User.Login(_config.GetValue<string>("ServerConnection:Login"), _config.GetValue<string>("ServerConnection:Pass")))
-                .Concat(Core.Commands.Task.GetLastTask(howMany).Concat(User.Logout())).ToList();
+            cmds.Append(StringStatic.ByteMessage("\r\n<EOF>\r\n"));
+            cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
-
             var task = JsonSerializer.Deserialize<List<Task>>(response, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true

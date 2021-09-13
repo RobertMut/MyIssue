@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MyIssue.API.Model.Return
+namespace MyIssue.Web.Model
 {
-    public class TaskReturn
+    public class Task
     {
         public decimal TaskId { get; set; }
         public string TaskTitle { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 
 namespace MyIssue.Infrastructure.Database.Models
 {
@@ -15,6 +16,10 @@ namespace MyIssue.Infrastructure.Database.Models
         public DbSet<User> Users { get; set; }
         public MyIssueContext(string myIssueContext) : base(myIssueContext)
         {
+            /*if (string.IsNullOrEmpty(myIssueContext))
+            {
+                throw new ArgumentNullException("Please fill configuration file!");
+            }*/
         }
         #region Required
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

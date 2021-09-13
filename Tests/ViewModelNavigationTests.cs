@@ -1,15 +1,5 @@
-﻿using Moq;
-using MyIssue.DesktopApp.ViewModel;
-using MyIssue.DesktopApp.Views;
-using NUnit.Framework;
-using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using Tests.Mocks;
-using Unity;
 
 namespace Tests
 {
@@ -24,11 +14,11 @@ namespace Tests
         [Test]
         public void MainWindowViewNavigate()
         {
-            Assert.IsNotNull(mock.MainWindowViewModel.LoadMainCommand);
-            Assert.IsTrue(mock.MainWindowViewModel.LoadMainCommand.CanExecute());
+            Assert.IsNotNull(mock.MainWindowViewModel.LoadLogoCommand);
+            Assert.IsTrue(mock.MainWindowViewModel.LoadLogoCommand.CanExecute());
             Assert.DoesNotThrow(() =>
             {
-                mock.MainWindowViewModel.LoadMainCommand.Execute();
+                mock.MainWindowViewModel.LoadLogoCommand.Execute();
             });
 
         }

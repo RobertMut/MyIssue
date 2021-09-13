@@ -6,7 +6,6 @@ namespace MyIssue.Web.Services
 {
     public interface ITaskService
     {
-        Task<IEnumerable<Task>> GetTasks();
-        Task<IEnumerable<Task>> GetLastTasks(int howMany);
+        Task<IEnumerable<Task>> GetTasks(bool isClosed, bool all, int howMany, int? id);
     }
-}
+}   

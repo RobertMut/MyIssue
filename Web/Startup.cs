@@ -16,9 +16,9 @@ namespace MyIssue.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            StaticConfiguration = configuration;
+            //StaticConfiguration = configuration;
         }
-        public static IConfiguration StaticConfiguration { get; set; }
+        //public static IConfiguration StaticConfiguration { get; set; }
 
         public IConfiguration Configuration { get; }
 

@@ -1,37 +1,45 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Formats.Asn1;
-using System.Linq;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace Web.Controllers
+namespace MyIssue.Web.Controllers
 {
-    public class AuthController : Controller
+    [Route("[controller]")]
+    public class AuthController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Login(string login, string pass)
+
+        public AuthController()
         {
-            if (!(login == "Admin" && pass == "1234"))
-                return BadRequest();
-            var claimsIdentity = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Name, login)
-            }, "Cookies");
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            await Request.HttpContext.SignInAsync("Cookies", claimsPrincipal);
-            return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Logout()
+
+        public async Task<IActionResult> LogIn(string url)
         {
-            await HttpContext.SignOutAsync();
-            return NoContent();
+            var user = User as ClaimsPrincipal;
+            var token = await HttpContext.GetTokenAsync("access_token");
+            _logger.LogInformation("{@User} logged in", user);
+            if (token is not null)
+            {
+                ViewData["access_token"] = token;
+            }
+
+            return RedirectToAction(nameof(TasksController.Index), "Tasks");
+        }
+        public Task
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+
+            var url = Url.Action(nameof(TasksController.), "Tasks");
+            return new SignInResult(OpenIdConnectDefaults.AuthenticationScheme,
+                new AuthenticationProperties({RedirectUri = url}));
         }
     }
 }
