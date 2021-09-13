@@ -44,8 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\AggregateClasses.cs" />
-    <Compile Include="Commands\Task.cs" />
-    <Compile Include="Commands\Employee.cs" />
     <Compile Include="Commands\User.cs" />
     <Compile Include="Constants\EmployeeConstants.cs" />
     <Compile Include="Constants\TaskConstants.cs" />
