@@ -10,6 +10,7 @@ namespace MyIssue.Server.Model.Builders
         IClientBuilder SetCommandHistory(List<string> list);
         IClientBuilder SetStatus(int status);
         IClientBuilder SetTerminated(bool terminated);
+        IClientBuilder SetToken(string token);
         Client Build();
     }
 }

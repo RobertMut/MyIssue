@@ -1,40 +1,33 @@
 ﻿using System;
-using System.Threading;
-using MyIssue.Server.Net;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
-using System.Text;
+using System.Threading;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Server.Model;
+using MyIssue.Server.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Server.Commands
 {
-    public class Login : Command
+
+    public class TokenLogin : Command
     {
-        public static string Name = "Login";
+        public static string Name = "TokenLogin";
+
         public override void Invoke(Model.Client client, CancellationToken ct)
         {
 
-            NetWrite.Write(client.ConnectedSock, "LOGGING IN\r\n", ct);
-            LogUser.TypedCommand("Login", "User try to", client);
+            NetWrite.Write(client.ConnectedSock, "TOKEN LOGGING IN\r\n", ct);
+            LogUser.TypedCommand("TokenLogin", "User try to", client);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             try
             {
                 string[] input = SplitToCommand.Get(client.CommandHistory);
                 Console.WriteLine(input[0]);
                 Console.WriteLine(input[1]);
-                StringContent content = new StringContent(
-                    JsonConvert.SerializeObject(new Auth
-                    {
-                        Username = input[0],
-                        Password = input[1]
-                    }), Encoding.UTF8, "application/json"
-                    );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync(new Uri("api/Users/authenticate"), content).GetAwaiter().GetResult();
+                    httpclient.GetAsync("api/Users/" + input[0]).GetAwaiter().GetResult();
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 Console.WriteLine(response);
                 var data = (JObject) JsonConvert.DeserializeObject(response);

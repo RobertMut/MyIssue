@@ -9,8 +9,8 @@ namespace MyIssue.Server.Commands
         public override void Invoke(Model.Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("WhoAmI", "Executed", client);
-            string whoAreYou = string.Format("ID: {0}\r\nStatus: {1}\r\nLast Command: {2}\r\nAddress: {3}\r\n",
-                client.Id, client.Status, client.CommandHistory[client.CommandHistory.Count - 1], client.ConnectedSock.RemoteEndPoint);
+            string whoAreYou =
+                $"ID: {client.Login}\r\nStatus: {client.Status}\r\nLast Command: {client.CommandHistory[client.CommandHistory.Count - 1]}\r\nAddress: {client.ConnectedSock.RemoteEndPoint}\r\n";
             NetWrite.Write(client.ConnectedSock, whoAreYou, ct);
         }
     }

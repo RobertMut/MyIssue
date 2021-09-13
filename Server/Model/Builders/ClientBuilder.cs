@@ -37,6 +37,12 @@ namespace MyIssue.Server.Model.Builders
             client.Terminated = terminated;
             return this;
         }
+
+        public IClientBuilder SetToken(string token)
+        {
+            client.Token = token;
+            return this;
+        }
         public Client Build() => client;
         public static ClientBuilder Create() => new ClientBuilder();
     }
