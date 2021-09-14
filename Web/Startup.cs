@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +7,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyIssue.Core.Commands;
 using MyIssue.Infrastructure.Server;
+using MyIssue.Web.Helpers;
 using MyIssue.Web.Services;
 
 namespace MyIssue.Web
@@ -31,20 +34,10 @@ namespace MyIssue.Web
                 opt.Cookie.Name = "MyIssue.Session";
                 opt.Cookie.SameSite = SameSiteMode.None;
             });
-            Console.WriteLine(Configuration.GetValue<string>("ServerConnection:ServerIp"));
-            Console.WriteLine(Configuration.GetValue<int>("ServerConnection:Port"));
-           // var builder = new ConfigurationBuilder()
-           //     .AddJsonFile("appsettings.json");
-           // IConfiguration config = builder.Build();
-            //services.AddScoped<IConfiguration>(_ => config);
             services.AddScoped<IServerConnector, ServerConnector>(_=> new ServerConnector(Configuration.GetValue<string>("ServerConnection:ServerIp"), Configuration.GetValue<int>("ServerConnection:Port")));
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITaskService, TaskService>();
-            
-            //services.AddSingleton<ServerConnector>(p =>
-                //;
-            
-            //services.AddIdentity<>()
-                
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -74,7 +67,7 @@ namespace MyIssue.Web
             }
 
             app.UseRouting();
-
+            app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -7,39 +7,48 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyIssue.Web.Model;
+using MyIssue.Web.Services;
+using Task = System.Threading.Tasks.Task;
 
 namespace MyIssue.Web.Controllers
 {
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly IUserService _userService;
 
-        public AuthController()
+        public AuthController(IUserService userService)
         {
+            _userService = userService;
         }
-
-
-        public async Task<IActionResult> LogIn(string url)
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(AuthRequest model)
         {
-            var user = User as ClaimsPrincipal;
-            var token = await HttpContext.GetTokenAsync("access_token");
-            _logger.LogInformation("{@User} logged in", user);
-            if (token is not null)
-            {
-                ViewData["access_token"] = token;
-            }
+           string response = await _userService.GenerateToken(model.Login, model.Password);
+           if (response is null)
+           {
+               return BadRequest();
+           }
 
-            return RedirectToAction(nameof(TasksController.Index), "Tasks");
+           return Ok(response);
         }
-        public Task
-        public async Task<IActionResult> LogOut()
+        [AllowAnonymous]
+        [HttpPost("tokenlogin")]
+        public async Task<IActionResult> TokenLogin(TokenAuth model)
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-
-            var url = Url.Action(nameof(TasksController.), "Tasks");
-            return new SignInResult(OpenIdConnectDefaults.AuthenticationScheme,
-                new AuthenticationProperties({RedirectUri = url}));
+            bool isValid = await _userService.ValidateToken(model.Login, model.Token);
+            if (isValid) return Ok(true);
+            return BadRequest(false);
+        }
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> LogOut(Token model)
+        {
+            string token = await _userService.RevokeToken(model.TokenString);
+            if (token.Equals("Bad request")) return BadRequest();
+            return Ok(token);
         }
     }
 }

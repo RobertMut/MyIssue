@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using MyIssue.Core.Commands;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
-using MyIssue.Web.Infrastructure.API;
 using Task = MyIssue.Web.Model.Task;
 
 namespace MyIssue.Web.Services
@@ -23,7 +17,7 @@ namespace MyIssue.Web.Services
         private readonly IConfiguration _config;
        // private readonly ILogger<TaskService> _logger;
 
-        private readonly string _remoteServiceBaseUrl;
+        //private readonly string _remoteServiceBaseUrl;
 
         public TaskService(IServerConnector server, IConfiguration configuration)
         {
