@@ -9,12 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
 using MyIssue.API.Model.Request;
+using MyIssue.API.Model.Return;
 using MyIssue.API.Services;
 
 namespace MyIssue.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly MyIssueContext _context;
@@ -44,7 +46,7 @@ namespace MyIssue.API.Controllers
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -63,10 +65,20 @@ namespace MyIssue.API.Controllers
             string username = string.Empty;
             if (verified && _userService.GetClaim(model.Token, "username").Equals(model.Username))
             {
-                return Ok("CORRECT");
+                var user = _context.Users.First(u => u.UserLogin.Equals(username));
+                return Ok(new Authenticate(user, model.Token));
             }
 
             return BadRequest("WRONG");
+        }
+
+        [AllowAnonymous]
+        [HttpPost("logout")]
+        public IActionResult Logout(Token token)
+        {
+            string response = _userService.RevokeToken(token.TokenString);
+            if (response is not null) return Ok(response);
+            return BadRequest();
         }
         
         // [Authorize]

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyIssue.API.Extensions;
-using MyIssue.API.Helpers;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Services;
 

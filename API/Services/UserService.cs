@@ -29,7 +29,7 @@ namespace MyIssue.API.Services
             var user = _context.Users.SingleOrDefault(
                 x => x.UserLogin == model.Username && x.Password == model.Password);
             if (user is null) return null;
-            string token = GenerateJwtToken(user);
+            string token = GenerateJwtToken(user, DateTime.Now.AddDays(1));
             return new Authenticate(user, token);
         }
 
@@ -59,12 +59,33 @@ namespace MyIssue.API.Services
             return true;
         }
 
+        public string RevokeToken(string token)
+        {
+            try
+            {
+                string username = GetClaim(token, "username");
+                var user = _context.Users.FirstOrDefault(user => user.UserLogin.Equals(username));
+                if (user is not null) return GenerateJwtToken(user, DateTime.Now.AddMinutes(-1));
+            }
+            catch (NullReferenceException)
+            { }
+
+            return null;
+        }
         public string GetClaim(string token, string claimType)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var securityToken = handler.ReadToken(token) as JwtSecurityToken;
-            var stringClaim = securityToken.Claims.First(claim => claim.Type == claimType).Value;
-            return stringClaim;
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var securityToken = handler.ReadToken(token) as JwtSecurityToken;
+                var stringClaim = securityToken.Claims.First(claim => claim.Type == claimType).Value;
+                return stringClaim;
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
+
         }
 
         public IEnumerable<User> GetAll()
@@ -76,7 +97,7 @@ namespace MyIssue.API.Services
         {
             return _context.Users.FirstOrDefault(x => x.UserLogin.Equals(login));
         }
-        private string GenerateJwtToken(User user)
+        private string GenerateJwtToken(User user, DateTime howLong)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["Token:Secret"]);
@@ -87,7 +108,7 @@ namespace MyIssue.API.Services
             {
                 Audience = _configuration["Token:Audience"],
                 Issuer = _configuration["Token:Issuer"],
-                Expires = DateTime.Now.AddDays(1),
+                Expires = howLong,
                 SigningCredentials =
                     new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Subject = claims

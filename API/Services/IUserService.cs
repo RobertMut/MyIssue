@@ -12,5 +12,6 @@ namespace MyIssue.API.Services
         string GetClaim(string token, string claimType);
         IEnumerable<User> GetAll();
         User GetByLogin(string login);
+        string RevokeToken(string token);
     }
 }
