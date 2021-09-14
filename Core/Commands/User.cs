@@ -14,12 +14,29 @@ namespace MyIssue.Core.Commands
         {
             return new List<byte[]>()
             {
-                StringStatic.ByteMessage(UserLogin.command),
+                StringStatic.ByteMessage(UserLogin.login),
                 StringStatic.ByteMessage(string.Format(UserLogin.loginParameters, login, pass))
 
             };
         }
+        public static IEnumerable<byte[]> TokenLogin(string login, string token)
+        {
+            return new List<byte[]>()
+            {
+                StringStatic.ByteMessage(UserLogin.tokenLogin),
+                StringStatic.ByteMessage(string.Format(UserLogin.loginParameters, login, token))
 
+            };
+        }
+
+        public static IEnumerable<byte[]> RevokeLogout(string token)
+        {
+            return new List<byte[]>()
+            {
+                StringStatic.ByteMessage(UserLogin.revokeLogout),
+                StringStatic.ByteMessage($"{token}\r\n<EOF>\r\n")
+            };
+        }
         public static IEnumerable<byte[]> Logout()
         {
             return new List<byte[]>()
