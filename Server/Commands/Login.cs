@@ -38,7 +38,7 @@ namespace MyIssue.Server.Commands
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 Console.WriteLine(response);
                 var data = (JObject) JsonConvert.DeserializeObject(response);
-                if (data["message"].Contains("incorrect")) throw new InvalidCredentialException("INCORRECT!\r\n");
+                if (!(data["message"] is null)) throw new InvalidCredentialException("INCORRECT\r\n");
 
                 LogUser.TypedCommand("login", "", client);
                 client.Status = Convert.ToInt32(data["type"]);

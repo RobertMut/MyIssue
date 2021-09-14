@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
+using System.Text;
 using System.Threading;
 using MyIssue.Infrastructure.Files;
+using MyIssue.Server.Model;
 using MyIssue.Server.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -26,17 +28,24 @@ namespace MyIssue.Server.Commands
                 string[] input = SplitToCommand.Get(client.CommandHistory);
                 Console.WriteLine(input[0]);
                 Console.WriteLine(input[1]);
+                StringContent content = new StringContent(
+                    JsonConvert.SerializeObject(new AuthToken
+                    {
+                        Username = input[0],
+                        Token = input[1]
+                    }), Encoding.UTF8, "application/json"
+                );
                 HttpResponseMessage httpresponse =
-                    httpclient.GetAsync("api/Users/" + input[0]).GetAwaiter().GetResult();
+                    httpclient.PostAsync(new Uri("api/Users/tokenauthenticate"), content).GetAwaiter().GetResult();
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 Console.WriteLine(response);
                 var data = (JObject) JsonConvert.DeserializeObject(response);
-                if (data["message"].Contains("incorrect")) throw new InvalidCredentialException("INCORRECT!\r\n");
+                if (data["message"].Contains("incorrect")) throw new InvalidCredentialException("INCORRECT\r\n");
 
-                LogUser.TypedCommand("login", "", client);
+                LogUser.TypedCommand("TokenLogin", "", client);
                 client.Status = Convert.ToInt32(data["type"]);
                 client.Login = data["login"].ToString();
-                NetWrite.Write(client.ConnectedSock, data["token"].ToString(), ct);
+                NetWrite.Write(client.ConnectedSock, "CORRECT", ct);
 
             }
             catch (InvalidCredentialException e)

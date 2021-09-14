@@ -107,8 +107,10 @@
     <Compile Include="Commands\Logout.cs" />
     <Compile Include="Commands\NotFound.cs" />
     <Compile Include="Commands\NotSufficient.cs" />
+    <Compile Include="Commands\RevokeLogout.cs" />
     <Compile Include="Commands\TokenLogin.cs" />
     <Compile Include="Commands\WhoAmI.cs" />
+    <Compile Include="Model\AuthToken.cs" />
     <Compile Include="Model\Builders\ClientBuilder.cs" />
     <Compile Include="Model\Builders\DBParametersBuilder.cs" />
     <Compile Include="Model\Builders\IClientBuilder.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Model\SqlCommandInput.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\Auth.cs" />
+    <Compile Include="Model\Token.cs" />
     <Compile Include="SplitToCommand.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="LogUser.cs" />
