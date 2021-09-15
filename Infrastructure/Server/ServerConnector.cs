@@ -33,8 +33,8 @@ namespace MyIssue.Infrastructure.Server
                     {
                         Console.WriteLine(StringStatic.StringMessage(bytes, bytes.Length));
                         ns.Write(bytes, 0, bytes.Length);
-                        response = ReadIncoming(ns);
-                        Console.WriteLine(response);
+                        string workstring = ReadIncoming(ns);
+                        if (!string.IsNullOrEmpty(workstring)) response = workstring;
                     }
                 }
 

@@ -34,16 +34,15 @@ namespace MyIssue.Server.Commands
                     }), Encoding.UTF8, "application/json"
                     );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync(new Uri("api/Users/authenticate"), content).GetAwaiter().GetResult();
+                    httpclient.PostAsync("api/Users/authenticate", content).Result;
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                Console.WriteLine(response);
                 var data = (JObject) JsonConvert.DeserializeObject(response);
                 if (!(data["message"] is null)) throw new InvalidCredentialException("INCORRECT\r\n");
 
                 LogUser.TypedCommand("login", "", client);
-                client.Status = Convert.ToInt32(data["type"]);
-                client.Login = data["login"].ToString();
-                NetWrite.Write(client.ConnectedSock, data["token"].ToString(), ct);
+                client.Status = Convert.ToInt32(data.SelectToken("type"));
+                client.Login = data.SelectToken("login").ToString();
+                NetWrite.Write(client.ConnectedSock, response, ct);
 
             }
             catch (InvalidCredentialException e)

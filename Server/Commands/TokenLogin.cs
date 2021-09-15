@@ -38,13 +38,12 @@ namespace MyIssue.Server.Commands
                 HttpResponseMessage httpresponse =
                     httpclient.PostAsync(new Uri("api/Users/tokenauthenticate"), content).GetAwaiter().GetResult();
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                Console.WriteLine(response);
+                if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
                 var data = (JObject) JsonConvert.DeserializeObject(response);
-                if (data["message"].Contains("incorrect")) throw new InvalidCredentialException("INCORRECT\r\n");
 
                 LogUser.TypedCommand("TokenLogin", "", client);
-                client.Status = Convert.ToInt32(data["type"]);
-                client.Login = data["login"].ToString();
+                client.Status = Convert.ToInt32(data.SelectToken("type"));
+                client.Login = data.SelectToken("login").ToString();
                 NetWrite.Write(client.ConnectedSock, "CORRECT", ct);
 
             }

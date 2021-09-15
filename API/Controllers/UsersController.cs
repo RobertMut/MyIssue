@@ -50,17 +50,20 @@ namespace MyIssue.API.Controllers
         }
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthRequest model)
+        public IActionResult Authenticate([FromBody]AuthRequest model)
         {
+            Console.WriteLine(nameof(this.Authenticate));
             var response = _userService.AuthenticateUser(model);
             if (response is null)
                 return BadRequest(new {message = "Username or password in incorrect"});
+            Console.WriteLine(response);
             return Ok(response);
         }
         [AllowAnonymous]
         [HttpPost("tokenauthenticate")]
-        public IActionResult AuthenticateToken(AuthTokenRequest model)
+        public IActionResult AuthenticateToken([FromBody]AuthTokenRequest model)
         {
+            Console.WriteLine(nameof(this.AuthenticateToken));
             bool verified = _userService.VerifyToken(model.Token);
             string username = string.Empty;
             if (verified && _userService.GetClaim(model.Token, "username").Equals(model.Username))
@@ -69,13 +72,14 @@ namespace MyIssue.API.Controllers
                 return Ok(new Authenticate(user, model.Token));
             }
 
-            return BadRequest("WRONG");
+            return BadRequest(new { message = "Token is invalid" });
         }
 
         [AllowAnonymous]
         [HttpPost("logout")]
-        public IActionResult Logout(Token token)
+        public IActionResult Logout([FromBody]Token token)
         {
+            Console.WriteLine(nameof(this.Logout));
             string response = _userService.RevokeToken(token.TokenString);
             if (response is not null) return Ok(response);
             return BadRequest();
