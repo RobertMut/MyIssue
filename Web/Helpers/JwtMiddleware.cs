@@ -34,11 +34,11 @@ namespace MyIssue.Web.Helpers
         {
             try
             {
-                string username = service.GetClaim(token, "username").Result;
+                string username = TokenHelper.GetClaim(token, "username").Result;
                 bool isValid = service.ValidateToken(username, token).Result;
                 if (isValid)
                 {
-                    context.Items["User"] = new StringContent(service.GetClaim(token, "token").Result
+                    context.Items["User"] = new StringContent(TokenHelper.GetClaim(token, "token").Result
                     ,Encoding.UTF8, "application/json");
                 }
 

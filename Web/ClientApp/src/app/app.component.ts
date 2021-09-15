@@ -10,17 +10,13 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   title = 'MyIssue Web';
-  constructor(public router: Router, public helper: AuthService) {
-    if (localStorage.getItem('login') == null &&
-      localStorage.getItem('isLogged') == null &&
-      localStorage.getItem('loginDate') == null)
-      console.warn('test');
-      //this.helper.setEmptyStorage();
+  constructor(public router: Router, public auth: AuthService) {
+
   }
   ngOnInit() {
     this.router.events
       .subscribe((e) => {
-          if ((e instanceof NavigationEnd && !this.helper.isAuthenticated())) {
+          if ((e instanceof NavigationEnd && !this.auth.tokenlogin())) {
             this.router.navigate(['login']);
           } 
         }

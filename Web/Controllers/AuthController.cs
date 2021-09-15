@@ -24,29 +24,35 @@ namespace MyIssue.Web.Controllers
         }
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login(AuthRequest model)
+        public async Task<IActionResult> Login([FromBody]AuthRequest model)
         {
-           string response = await _userService.GenerateToken(model.Login, model.Password);
-           if (response is null)
-           {
-               return BadRequest();
-           }
-
-           return Ok(response);
+            string response = _userService.GenerateToken(model.Login, model.Password).Result;
+            if (response is null)
+            {
+                return BadRequest();
+            }
+            return Ok(response);
         }
         [AllowAnonymous]
         [HttpPost("tokenlogin")]
-        public async Task<IActionResult> TokenLogin(TokenAuth model)
+        public async Task<IActionResult> TokenLogin([FromBody]TokenAuth model)
         {
-            bool isValid = await _userService.ValidateToken(model.Login, model.Token);
-            if (isValid) return Ok(true);
-            return BadRequest(false);
+            bool isValid = _userService.ValidateToken(model.Login, model.Token).Result;
+            Console.WriteLine(isValid);
+            if (isValid) return Ok(new
+            {
+                result = true
+            });
+            return BadRequest(new
+            {
+                result = false
+            });
         }
         [Authorize]
         [HttpPost("logout")]
-        public async Task<IActionResult> LogOut(Token model)
+        public async Task<IActionResult> LogOut([FromBody]Token model)
         {
-            string token = await _userService.RevokeToken(model.TokenString);
+            string token = _userService.RevokeToken(model.TokenString).Result;
             if (token.Equals("Bad request")) return BadRequest();
             return Ok(token);
         }

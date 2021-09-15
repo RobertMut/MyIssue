@@ -27,16 +27,11 @@ namespace MyIssue.Web.Services
                 .Concat(Core.Commands.User.Logout());
             string response = _server.SendData(cmds);
             if (response is null || response.Contains("INCORRECT")) return null;
+            Console.WriteLine(response);
             return response;
         }
 
-        public async Task<string> GetClaim(string token, string claimType)
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var securityToken = handler.ReadToken(token) as JwtSecurityToken;
-            var stringClaim = securityToken.Claims.First(claim => claim.Type == claimType).Value;
-            return stringClaim;
-        }
+
 
         public async Task<bool> ValidateToken(string login, string token)
         {

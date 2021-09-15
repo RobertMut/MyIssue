@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using MyIssue.Web.Model;
 using MyIssue.Web.Services;
 using Task = MyIssue.Web.Model.Task;
 
@@ -25,22 +26,30 @@ namespace MyIssue.Web.Controllers
         [HttpGet("someClosed/{howMany}")]
         public async Task<IEnumerable<Task>> GetSomeClosed(int howMany)
         {
-            return await _service.GetTasks(true, false, howMany, null);
+            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var auth = new TokenAuth(token);
+            return await _service.GetTasks(true, false, howMany, null,auth);
         }
         [HttpGet("{id}")]
         public async Task<IEnumerable<Task>> GetClosedById(int id)
         {
-            return _service.GetTasks(false, true, 0, id).GetAwaiter().GetResult();
+            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var auth = new TokenAuth(token);
+            return await _service.GetTasks(false, true, 0, id, auth);
         }
         [HttpGet("someOpen/{howMany}")]
         public async Task<IEnumerable<Task>> GetSomeOpen(int howMany, int? id)
         {
-            return _service.GetTasks(false, false, howMany, null).GetAwaiter().GetResult();
+            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var auth = new TokenAuth(token);
+            return await _service.GetTasks(false, false, howMany, null, auth);
         }
         [HttpGet]
         public async Task<IEnumerable<Task>> Get()
         {
-            return _service.GetTasks(false, true, 0, null).GetAwaiter().GetResult();
+            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var auth = new TokenAuth(token);
+            return  await _service.GetTasks(false, true, 0, null, auth);
         }
     }
 }

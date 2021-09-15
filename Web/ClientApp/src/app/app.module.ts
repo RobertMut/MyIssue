@@ -12,7 +12,7 @@ import { LogoutComponent } from "./logged/logout/logout.component";
 import { HomeComponent } from "./logged/home/home.component";
 import { NavMenuComponent } from "./notlogged/nav-menu/nav-menu.component";
 import { NavMenuLoggedComponent } from "./logged/nav-menu-logged/nav-menu-logged.component";
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { NavMenuLoggedComponent } from "./logged/nav-menu-logged/nav-menu-logged
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

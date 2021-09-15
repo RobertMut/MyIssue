@@ -1,11 +1,19 @@
 <h1>Hello, admin!</h1>
 
 <div class="task-div add-a-little-space-below">
+  <select name="howManyAssigned" class="selection">
+    <option value="10">5</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="50">50</option>
+  </select>
   <table class="task-navigation-table">
     <thead>
-    Your active tasks:
+      Your active tasks:
     </thead>
-    <tbody >
+    <tbody>
       <tr *ngFor="let task of tasks">
         <td>{{task.id}}</td>
         <td>{{task.type}}</td>
@@ -21,10 +29,18 @@
     </tbody>
   </table>
 </div>
+<select name="howManyActive" class="selection">
+  <option value="10">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+  <option value="20">20</option>
+  <option value="30">30</option>
+  <option value="50">50</option>
+</select>
 <div class="task-div">
   <table class="task-navigation-table">
     <thead>
-    Free to take tasks:
+      Free to take tasks:
     </thead>
     <tbody>
       <tr>

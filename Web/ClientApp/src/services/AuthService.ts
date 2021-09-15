@@ -1,10 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpHeaderResponse } from '@angular/common/http';
-interface sessionStorage {
-  login: string;
-  type: string;
-  token: string;
-}
+//import { Authenticate } from '../models/authenticate.model';
+
+const headers: HttpHeaders = new HttpHeaders
+  ({
+    'Content-Type': 'application/json',
+    'Accept': '*/*'
+  });
+
 @Injectable()
 export class AuthService {
   baseUrl: string;
@@ -14,52 +17,79 @@ export class AuthService {
   }
 
   public logout() {
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     let data = {
       "TokenString": token
     };
     let header = this.headers();
-    let value = this.http.post(this.baseUrl + "Auth/logout",
-      data,
+    this.http.post(this.baseUrl + "Auth/logout",
+      JSON.stringify(data),
       {
-        headers: header
+        headers: header,
+        responseType: 'text'
+      }).subscribe(Response => {
+      var obj = JSON.parse(Response);
+        localStorage.setItem("type", "");
+        localStorage.setItem("token", Response.toString());
       });
-    sessionStorage.setItem("login", "");
-    sessionStorage.setItem("type", "");
-    sessionStorage.setItem("token", value.toString());
+
   }
   public headers(): HttpHeaders {
     let headers = new HttpHeaders();
     headers.append('Accept', '*/*');
     headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', 'User ' + sessionStorage.getItem("token"));
+    headers.append('Authorization', 'User ' + localStorage.getItem("token"));
     return headers;
   }
 
   public tokenlogin(): boolean {
     let data = {
-      "Login": sessionStorage.getItem("login"),
-      "Token": sessionStorage.getItem("token")
+      "Login": localStorage.getItem("login"),
+      "Token": localStorage.getItem("token")
     }
-    let value = this.http.post(this.baseUrl + "Auth/tokenlogin", data);
-    return (value.toString() == 'true');
+    let bool: boolean
+    this.http.post(this.baseUrl + "Auth/tokenlogin", JSON.stringify(data),
+      {
+        headers: headers,
+        responseType: 'text'
+      }).subscribe(Response => {
+      var obj = JSON.parse(Response);
+        if (obj.result == 'true') bool = true;
+        else bool = false;
+      }, Error => {
+        console.error(Error);
+        bool = false;
+      });
+    return bool;
   }
 
   public login(login: string, pass: string): boolean {
     let data = {
       "Login": login,
       "Password": pass
-    };
-    let value = this.http.post(this.baseUrl + "Auth/login", data);
-    let json: sessionStorage = JSON.parse(value.toString());
-    if (!(json == null)) {
-      sessionStorage.setItem("login", json.login);
-      sessionStorage.setItem("type", json.type);
-      sessionStorage.setItem("token", json.token);
-      return true;
-    } else {
-      return false;
     }
+    let bool: boolean;
+    console.warn(data);
+    console.warn(JSON.stringify(data));
+    console.warn(this.baseUrl + "Auth/login");
+    this.http.post(this.baseUrl + "Auth/login", JSON.stringify(data),
+      {
+        headers: headers,
+        responseType: 'text'
+      }).subscribe(Response => {
+        if (!(Response == null)) {
+          var obj = JSON.parse(Response);
+          localStorage.setItem("login", obj.login);
+          localStorage.setItem("token", obj.token);
+          localStorage.setItem("type", obj.type.toString());
+          bool = true;
 
+        } else bool = false;
+      },
+        Error => {
+          console.error(Error);
+          bool = false;
+        });
+    return bool;
   }
 }

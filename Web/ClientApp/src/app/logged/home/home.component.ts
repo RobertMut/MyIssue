@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService as AuthHelper } from "../../../services/AuthService";
+import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
 
@@ -13,7 +13,7 @@ import { ITask } from "../../../models/task.model";
 export class HomeComponent {
   public tasks: ITask[];
 
-  constructor(private helpers: AuthHelper,
+  constructor(private auth: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private task: TaskService) {
@@ -26,7 +26,7 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    if (!this.helpers.isAuthenticated()) {
+    if (!this.auth.tokenlogin()) {
       this.router.navigate(['./logout'], {relativeTo: this.activatedRoute});
     }
 

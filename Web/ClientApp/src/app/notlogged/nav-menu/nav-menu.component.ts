@@ -8,11 +8,11 @@ import { AuthService } from "../../../services/AuthService";
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  constructor(private router: Router, private helpers: AuthService, private activeroute: ActivatedRoute) { }
+  constructor(private router: Router, private auth: AuthService, private activeroute: ActivatedRoute) { }
 
   ngOnInit() {
     console.warn("navigation to home");
-    if (this.helpers.isAuthenticated()) {
+    if (this.auth.tokenlogin()) {
       this.router.navigate(['../nav-menu-logged']);
     } else {
       this.router.navigate(['login'], { relativeTo: this.activeroute });

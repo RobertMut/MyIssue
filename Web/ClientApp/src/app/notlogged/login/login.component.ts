@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
+import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from "../../../services/AuthService";
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +10,23 @@ import { AuthService } from "../../../services/AuthService";
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private helpers: AuthService) { }
-
-  pass: string;
-  login: string;
-  onButton() {
-    //var resp = this.http
-    if (this.pass == "1234" && this.login == "admin") {
-      //this.helpers.login('admin');
-      this.router.navigate(['../nav-menu-logged/home']);
+  constructor(private router: Router,
+    private auth: AuthService,
+    private form: FormBuilder,
+    private active: ActivatedRoute) {
+  }
+  ngOnInit() {
+    if (this.auth.tokenlogin() == true) {
+      this.router.navigate(['../nav-menu-logged/home'], { relativeTo: this.active });
+    }
+  }
+  public loginForm = this.form.group({
+    login: '',
+    pass: ''
+  })
+  onButton(): void {
+    if (this.auth.login(this.loginForm.get(['login']).value, this.loginForm.get(['pass']).value) == true) {
+      this.router.navigate(['../nav-menu-logged/home'], {relativeTo: this.active});
     }
   }
 }

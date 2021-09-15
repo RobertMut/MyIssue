@@ -3,10 +3,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using MyIssue.Core.Commands;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
+using MyIssue.Web.Model;
 using Task = MyIssue.Web.Model.Task;
+using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
 {
@@ -28,10 +29,10 @@ namespace MyIssue.Web.Services
         }
 
 
-        public async Task<IEnumerable<Task>> GetTasks(bool isClosed, bool all, int howMany, int? id)
+        public async Task<IEnumerable<Task>> GetTasks(bool isClosed, bool all, int howMany, int? id, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
-                .Concat(User.Login(_config.GetValue<string>("ServerConnection:Login"), _config.GetValue<string>("ServerConnection:Pass")))
+                .Concat(User.TokenLogin(model.Login, model.Token))
                 .Append(StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n"))
                 .Append(StringStatic.ByteMessage($"{howMany}"));
 

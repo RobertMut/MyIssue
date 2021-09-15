@@ -20,3 +20,6 @@ h1 {
 .add-a-little-space-below {
   padding-bottom: 3%;
 }
+.task-div .selection {
+  float: right;
+}
