@@ -65,8 +65,8 @@ namespace MyIssue.API.Controllers
         {
             Console.WriteLine(nameof(this.AuthenticateToken));
             bool verified = _userService.VerifyToken(model.Token);
-            string username = string.Empty;
-            if (verified && _userService.GetClaim(model.Token, "username").Equals(model.Username))
+            string username = _userService.GetClaim(model.Token, "username");
+            if (verified && username.Equals(model.Username))
             {
                 var user = _context.Users.First(u => u.UserLogin.Equals(username));
                 return Ok(new Authenticate(user, model.Token));

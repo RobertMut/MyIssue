@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpHeaderResponse } from '@angular/common/http';
-//import { Authenticate } from '../models/authenticate.model';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { map, catchError } from "rxjs/operators";
+import { Observable } from 'rxjs';
 
 const headers: HttpHeaders = new HttpHeaders
   ({
@@ -11,6 +12,7 @@ const headers: HttpHeaders = new HttpHeaders
 @Injectable()
 export class AuthService {
   baseUrl: string;
+  private isValidToken: boolean;
   constructor(private http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -21,17 +23,19 @@ export class AuthService {
     let data = {
       "TokenString": token
     };
-    let header = this.headers();
     this.http.post(this.baseUrl + "Auth/logout",
       JSON.stringify(data),
       {
-        headers: header,
+        headers: headers,
         responseType: 'text'
-      }).subscribe(Response => {
-      var obj = JSON.parse(Response);
+      }).pipe(
+      map(response => {
+        var obj = JSON.parse(response.toString());
         localStorage.setItem("type", "");
-        localStorage.setItem("token", Response.toString());
-      });
+        localStorage.setItem("token", obj.toString());
+
+      })
+    );
 
   }
   public headers(): HttpHeaders {
@@ -42,54 +46,56 @@ export class AuthService {
     return headers;
   }
 
-  public tokenlogin(): boolean {
+  public tokenlogin(): Observable<boolean> {
+
     let data = {
       "Login": localStorage.getItem("login"),
       "Token": localStorage.getItem("token")
     }
-    let bool: boolean
-    this.http.post(this.baseUrl + "Auth/tokenlogin", JSON.stringify(data),
+    let object = JSON.stringify(data);
+    return this.http.post(this.baseUrl + "Auth/tokenlogin",
+      object,
       {
         headers: headers,
-        responseType: 'text'
-      }).subscribe(Response => {
-      var obj = JSON.parse(Response);
-        if (obj.result == 'true') bool = true;
-        else bool = false;
-      }, Error => {
-        console.error(Error);
-        bool = false;
-      });
-    return bool;
+        responseType: 'text' as 'text'
+      }).pipe(
+        map(response => {
+          try {
+            return JSON.parse(response.toString()).result == "true";
+          } catch (e) {
+            return false;
+          }
+
+        })
+      );
   }
 
-  public login(login: string, pass: string): boolean {
+  public login(login: string, pass: string): Observable<boolean> {
     let data = {
       "Login": login,
       "Password": pass
     }
-    let bool: boolean;
     console.warn(data);
     console.warn(JSON.stringify(data));
     console.warn(this.baseUrl + "Auth/login");
-    this.http.post(this.baseUrl + "Auth/login", JSON.stringify(data),
+    return this.http.post(this.baseUrl + "Auth/login",
+      JSON.stringify(data),
       {
         headers: headers,
-        responseType: 'text'
-      }).subscribe(Response => {
-        if (!(Response == null)) {
-          var obj = JSON.parse(Response);
-          localStorage.setItem("login", obj.login);
-          localStorage.setItem("token", obj.token);
-          localStorage.setItem("type", obj.type.toString());
-          bool = true;
+        responseType: 'text' as 'text'
+      }).pipe(
+        map(response => {
+          try {
+            let obj = JSON.parse(response.toString());
+            localStorage.setItem("login", obj.login);
+            localStorage.setItem("token", obj.token);
+            localStorage.setItem("type", obj.type.toString());
+            return true;
+          } catch (e) {
+            return false;
+          }
 
-        } else bool = false;
-      },
-        Error => {
-          console.error(Error);
-          bool = false;
-        });
-    return bool;
+        })
+      );
   }
 }

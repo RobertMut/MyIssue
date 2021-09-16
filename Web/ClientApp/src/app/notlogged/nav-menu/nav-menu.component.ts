@@ -13,9 +13,11 @@ export class NavMenuComponent {
   ngOnInit() {
     console.warn("navigation to home");
     if (this.auth.tokenlogin()) {
+      console.warn("TOKEN CORRECT");
       this.router.navigate(['../nav-menu-logged']);
     } else {
-      this.router.navigate(['login'], { relativeTo: this.activeroute });
+      console.warn("TOKEN NOT CORRECT");
+      this.router.navigate(['./login'], { relativeTo: this.activeroute });
     }
   }
   isExpanded = false;

@@ -36,7 +36,7 @@ namespace MyIssue.Server.Commands
                     }), Encoding.UTF8, "application/json"
                 );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync(new Uri("api/Users/tokenauthenticate"), content).GetAwaiter().GetResult();
+                    httpclient.PostAsync("api/Users/tokenauthenticate", content).GetAwaiter().GetResult();
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
                 var data = (JObject) JsonConvert.DeserializeObject(response);
