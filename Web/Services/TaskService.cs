@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
+using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using Task = MyIssue.Web.Model.Task;
 using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
 {
+    [CustomAuthorize]
     public class TaskService : ITaskService
     {
         private readonly IServerConnector _server;

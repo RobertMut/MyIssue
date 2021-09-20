@@ -2,11 +2,13 @@ import { Component, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from "../../../services/AuthService";
 import { FormBuilder } from '@angular/forms';
+import { TaskService } from "../../../services/TaskService";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [TaskService]
 })
 export class LoginComponent {
 
@@ -20,8 +22,13 @@ export class LoginComponent {
     pass: ''
   })
   onButton(): void {
-    if (this.auth.login(this.loginForm.get(['login']).value, this.loginForm.get(['pass']).value)) {
-      this.router.navigate(['../nav-menu-logged/home'], {relativeTo: this.active});
-    }
+    this.auth.login(this.loginForm.get(['login']).value, this.loginForm.get(['pass']).value)
+      .subscribe((value: boolean) => {
+        if (value == true) {
+          this.router.navigate(['./../../nav-menu-logged']);
+        } else {
+         console.error("INCORRECT"); 
+        }
+      })
   }
 }

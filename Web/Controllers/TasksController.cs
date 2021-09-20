@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;
 using Task = MyIssue.Web.Model.Task;
@@ -14,7 +15,7 @@ namespace MyIssue.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+    [CustomAuthorize]
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _service;

@@ -12,38 +12,35 @@ const headers: HttpHeaders = new HttpHeaders
 @Injectable()
 export class AuthService {
   baseUrl: string;
-  private isValidToken: boolean;
   constructor(private http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  public logout() {
+  public logout(): void{
     let token = localStorage.getItem("token");
     let data = {
       "TokenString": token
     };
+    console.warn("logout..");
     this.http.post(this.baseUrl + "Auth/logout",
       JSON.stringify(data),
       {
         headers: headers,
-        responseType: 'text'
-      }).pipe(
-      map(response => {
-        var obj = JSON.parse(response.toString());
-        localStorage.setItem("type", "");
-        localStorage.setItem("token", obj.toString());
-
-      })
-    );
+        responseType: 'text' as 'text'
+      }).subscribe(response => {
+      localStorage.setItem("type", "");
+      localStorage.setItem("token", response);
+    });
+    
 
   }
   public headers(): HttpHeaders {
-    let headers = new HttpHeaders();
-    headers.append('Accept', '*/*');
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', 'User ' + localStorage.getItem("token"));
-    return headers;
+    return new HttpHeaders({
+      'Accept': '*/*',
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('login') + ' ' + localStorage.getItem("token")
+    });
   }
 
   public tokenlogin(): Observable<boolean> {
@@ -61,7 +58,8 @@ export class AuthService {
       }).pipe(
         map(response => {
           try {
-            return JSON.parse(response.toString()).result == "true";
+            let json = JSON.parse(response.toString()).result
+            return (/true/i).test(json);
           } catch (e) {
             return false;
           }

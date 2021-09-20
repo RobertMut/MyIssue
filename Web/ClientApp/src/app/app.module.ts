@@ -13,8 +13,7 @@ import { HomeComponent } from "./logged/home/home.component";
 import { NavMenuComponent } from "./notlogged/nav-menu/nav-menu.component";
 import { NavMenuLoggedComponent } from "./logged/nav-menu-logged/nav-menu-logged.component";
 import { ReactiveFormsModule } from '@angular/forms';
-
-@NgModule({
+import { TaskService } from "../services/TaskService";@NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
@@ -31,7 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

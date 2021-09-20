@@ -44,6 +44,7 @@ namespace MyIssue.Web.Services
         }
         public async Task<string> RevokeToken(string token)
         {
+            Console.WriteLine(nameof(this.RevokeToken));
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(Core.Commands.User.RevokeLogout(token));
             string response = _server.SendData(cmds);

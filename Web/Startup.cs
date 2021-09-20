@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,8 +67,9 @@ namespace MyIssue.Web
                 app.UseSpaStaticFiles();
             }
 
+            app.UseAuthentication();
             app.UseRouting();
-            app.UseMiddleware<JwtMiddleware>();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
