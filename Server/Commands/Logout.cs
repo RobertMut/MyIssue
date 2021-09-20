@@ -13,6 +13,7 @@ namespace MyIssue.Server.Commands
                 client.Terminated = true;
                 client.ConnectedSock.Close();
                 client.ConnectedSock.Dispose();
+                httpclient.Dispose();
                 cts.Cancel();
             }
 

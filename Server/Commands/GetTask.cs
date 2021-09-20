@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,10 +24,17 @@ namespace MyIssue.Server.Commands
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             string[] input = SplitToCommand.Get(client.CommandHistory);
             if (input.Length is 3) input[3] = string.Empty;
-            HttpResponseMessage httpresponse = httpclient.GetAsync($"api/Tasks/filter/{input[0]}/{input[1]}/{input[2]}/{input[3]}").GetAwaiter().GetResult();
-            string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            Console.WriteLine(response);
-            NetWrite.Write(client.ConnectedSock,response,ct);
+            using (var request = new HttpRequestMessage(HttpMethod.Get,
+                httpclient.BaseAddress + $"api/Tasks/filter/{input[0]}/{input[1]}/{input[2]}/{input[3]}"))
+            {
+                Console.WriteLine("URI "+request.RequestUri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+                HttpResponseMessage httpresponse = httpclient.SendAsync(request).GetAwaiter().GetResult();
+                string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                Console.WriteLine(response);
+                NetWrite.Write(client.ConnectedSock, response, ct);
+            }
+
             // unit.UserRepository.Add(new User
             // {
             //     UserLogin = login,

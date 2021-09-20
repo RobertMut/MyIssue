@@ -36,8 +36,11 @@ namespace MyIssue.Infrastructure.Server
                         string workstring = ReadIncoming(ns);
                         if (!string.IsNullOrEmpty(workstring)) response = workstring;
                     }
+                    ns.Close();
                 }
-
+                client.Shutdown(SocketShutdown.Both);
+                client.Disconnect(true);
+                client.Dispose();
                 return response;
             }
             catch (IndexOutOfRangeException)

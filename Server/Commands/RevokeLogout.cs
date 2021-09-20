@@ -35,7 +35,7 @@ namespace MyIssue.Server.Commands
                     }), Encoding.UTF8, "application/json"
                     );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync(new Uri("api/Users/logout"), content).GetAwaiter().GetResult();
+                    httpclient.PostAsync("api/Users/logout", content).GetAwaiter().GetResult();
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 if(response.Contains("Bad Request")) NetWrite.Write(client.ConnectedSock, "Bad request", ct);
                 else

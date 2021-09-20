@@ -42,6 +42,7 @@ namespace MyIssue.Server.Commands
                 LogUser.TypedCommand("login", "", client);
                 client.Status = Convert.ToInt32(data.SelectToken("type"));
                 client.Login = data.SelectToken("login").ToString();
+                client.Token = data.SelectToken("token").ToString();
                 NetWrite.Write(client.ConnectedSock, response, ct);
 
             }
