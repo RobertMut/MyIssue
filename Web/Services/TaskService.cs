@@ -1,55 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 using Task = MyIssue.Web.Model.Task;
 using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
 {
-    [CustomAuthorize]
     public class TaskService : ITaskService
     {
         private readonly IServerConnector _server;
 
-        private readonly IConfiguration _config;
-       // private readonly ILogger<TaskService> _logger;
-
-        //private readonly string _remoteServiceBaseUrl;
-
-        public TaskService(IServerConnector server, IConfiguration configuration)
+        public TaskService(IServerConnector server)
         {
             _server = server;
-            _config = configuration;
-            //_logger = logger;
-            //_remoteServiceBaseUrl = $"{_settings.Value.Url}/c/api/v1/task/";
         }
 
 
-        public async Task<IEnumerable<Task>> GetTasks(bool isClosed, bool all, int howMany, int? id, TokenAuth model)
+        public async Task<TaskRoot> GetTasks(bool isClosed, bool all, string whoseTasks, int howMany, int? id, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
-                .Append(StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n"))
-                .Append(StringStatic.ByteMessage($"{howMany}"));
+                .Append(StringStatic.ByteMessage("GetTask\r\n<EOF>\r\n"));
 
             if (id is not null)
             {
-                cmds = cmds.Append(StringStatic.ByteMessage("\r\n<NEXT>\r\n")).Append(StringStatic.ByteMessage($"{id}"));
+                cmds = cmds.Append(
+                    StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n{whoseTasks}\r\n<NEXT>\r\n{howMany}\r\n<NEXT>\r\n{id}\r\n<EOF>\r\n"));
             }
-
-            cmds.Append(StringStatic.ByteMessage("\r\n<EOF>\r\n"));
+            else
+            {
+                cmds = cmds.Append(
+                    StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n{whoseTasks}\r\n<NEXT>\r\n{howMany}\r\n<EOF>\r\n"));
+            }
             cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
-            var task = JsonSerializer.Deserialize<List<Task>>(response, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            Console.WriteLine($"RESPONSE: {response}");
+            Console.WriteLine("deserialization");
+            var task = JsonConvert.DeserializeObject<TaskRoot>(response);
             return task;
         }
     }

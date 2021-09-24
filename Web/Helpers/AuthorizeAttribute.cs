@@ -30,12 +30,14 @@ namespace MyIssue.Web.Helpers
                 {
                     Console.WriteLine(keyValuePair.Key + " " + keyValuePair.Value);
                 }
-                string[] auth = StringStatic.CommandSplitter(
-                    headers.First(c => c.Key.Equals("Authorization")).Value, " "
-                );
+
+                headers.TryGetValue("Authorization", out var authHeader);
+                Console.WriteLine(authHeader);
+                string[] auth = StringStatic.CommandSplitter(authHeader, " ");
                 if (auth.Length.Equals(0)) throw new AuthenticationException("Authentication Error");
-                Console.WriteLine($"Validating {auth[0]}...");
+                Console.WriteLine($"Validating {auth[0]}...{auth[1]}");
                 bool isValid = service.ValidateToken(auth[0], auth[1]).Result;
+                Console.WriteLine(isValid);
                 if (!isValid) throw new AuthenticationException("Authentication error");
             }
             catch (AuthenticationException ae)

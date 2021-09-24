@@ -1,5 +1,6 @@
 h1 {
   text-align: center;
+  font-size: 30px;
 }
 .task-div {
   width: 100%;
@@ -7,6 +8,7 @@ h1 {
 .task-navigation-table {
   margin: 0 auto;
   width: 85%;
+  clear: both;
 }
 .task-navigation-table tbody {
   border: 1px solid darkgrey;
@@ -20,6 +22,16 @@ h1 {
 .add-a-little-space-below {
   padding-bottom: 3%;
 }
-.task-div .selection {
+.selection {
   float: right;
+  margin-right: 7.5%;
+  width: 5%;
+}
+p {
+  margin-left: 7.5%;
+  font-size: 16px;
+}
+.task-row:hover {
+  background-color: cornflowerblue;
+  cursor: pointer;
 }

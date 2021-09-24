@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { CounterComponent } from './counter/counter.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from "./notlogged/login/login.component";
 import { LogoutComponent } from "./logged/logout/logout.component";
@@ -13,7 +12,9 @@ import { HomeComponent } from "./logged/home/home.component";
 import { NavMenuComponent } from "./notlogged/nav-menu/nav-menu.component";
 import { NavMenuLoggedComponent } from "./logged/nav-menu-logged/nav-menu-logged.component";
 import { ReactiveFormsModule } from '@angular/forms';
-import { TaskService } from "../services/TaskService";@NgModule({
+import { TaskViewComponent } from './logged/task-view/task-view.component';
+
+@NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
@@ -21,7 +22,7 @@ import { TaskService } from "../services/TaskService";@NgModule({
     HomeComponent,
     NavMenuComponent,
     NavMenuLoggedComponent,
-    CounterComponent
+    TaskViewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,7 +31,6 @@ import { TaskService } from "../services/TaskService";@NgModule({
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

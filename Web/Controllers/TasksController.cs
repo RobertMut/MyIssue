@@ -15,7 +15,7 @@ namespace MyIssue.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [CustomAuthorize]
+    //[CustomAuthorize]
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _service;
@@ -24,33 +24,34 @@ namespace MyIssue.Web.Controllers
             _service = service;
         }
 
-        [HttpGet("someClosed/{howMany}")]
-        public async Task<IEnumerable<Task>> GetSomeClosed(int howMany)
+        [HttpGet("someClosed/{whoseTasks}/{howMany}")]
+        public async Task<TaskRoot> GetSomeClosed(int howMany, string whoseTasks)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(true, false, howMany, null,auth);
+            return await _service.GetTasks(true, false, whoseTasks, howMany, null, auth);
         }
         [HttpGet("{id}")]
-        public async Task<IEnumerable<Task>> GetClosedById(int id)
+        public async Task<TaskRoot> GetById(int id)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(false, true, 0, id, auth);
+            return await _service.GetTasks(false, true, "anybody", 0, id, auth);
         }
-        [HttpGet("someOpen/{howMany}")]
-        public async Task<IEnumerable<Task>> GetSomeOpen(int howMany, int? id)
+        [HttpGet("someOpen/{whoseTasks}/{howMany}")]
+        public async Task<TaskRoot> GetSomeOpen(int howMany, string whoseTasks)
         {
+
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(false, false, howMany, null, auth);
+            return await _service.GetTasks(false, false, whoseTasks, howMany, null, auth);
         }
-        [HttpGet]
-        public async Task<IEnumerable<Task>> Get()
+        [HttpGet("user/{whoseTasks}")]
+        public async Task<TaskRoot> GetByUser(string whoseTasks)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return  await _service.GetTasks(false, true, 0, null, auth);
+            return await _service.GetTasks(false, true, whoseTasks, 0, null, auth);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace MyIssue.Web.Services
 {
     public interface ITaskService
     {
-        Task<IEnumerable<Task>> GetTasks(bool isClosed, bool all, int howMany, int? id, TokenAuth model);
+        Task<TaskRoot> GetTasks(bool isClosed, bool all, string whoseTasks, int howMany, int? id, TokenAuth model);
     }
 }   

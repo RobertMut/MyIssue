@@ -30,8 +30,10 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\classes\User.ts" />
-    <None Remove="ClientApp\src\models\task.model.ts" />
+    <None Remove="ClientApp\src\models\task.ts" />
+    <None Remove="ClientApp\src\models\username.ts" />
     <None Remove="ClientApp\src\services\TaskService.ts" />
+    <None Remove="ClientApp\src\services\UserService.ts" />
     <None Remove="Services\HttpInterceptorService.ts" />
   </ItemGroup>
 
@@ -42,9 +44,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\classes\User.ts" />
-    <TypeScriptCompile Include="ClientApp\src\models\task.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\username.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\task.ts" />
+    <TypeScriptCompile Include="ClientApp\src\services\UserService.ts" />
     <TypeScriptCompile Include="ClientApp\src\services\TaskService.ts" />
-    <TypeScriptCompile Include="ClientApp\src\services\HttpInterceptorService.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

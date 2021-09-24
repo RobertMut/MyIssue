@@ -1,7 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { map, catchError } from "rxjs/operators";
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { map } from "rxjs/operators";
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 const headers: HttpHeaders = new HttpHeaders
   ({
@@ -76,6 +77,7 @@ export class AuthService {
     console.warn(data);
     console.warn(JSON.stringify(data));
     console.warn(this.baseUrl + "Auth/login");
+    localStorage.clear();
     return this.http.post(this.baseUrl + "Auth/login",
       JSON.stringify(data),
       {
@@ -95,5 +97,13 @@ export class AuthService {
 
         })
       );
+  }
+
+  public CheckUnauthorized(exception: any) {
+    const httpEx = exception as HttpErrorResponse;
+    if (httpEx.status == 401 || httpEx.status == 403) {
+      this.logout();
+      //this.router.navigate(['nav-menu']);
+    }
   }
 }

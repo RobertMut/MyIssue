@@ -6,13 +6,15 @@ import { NavMenuComponent } from "./notlogged/nav-menu/nav-menu.component";
 import { NavMenuLoggedComponent } from "./logged/nav-menu-logged/nav-menu-logged.component";
 import { HomeComponent } from "./logged/home/home.component";
 import { LoginComponent } from "./notlogged/login/login.component";
+import { TaskViewComponent } from "./logged/task-view/task-view.component";
 
 
 const routes: Routes = [
   {
     path: 'nav-menu-logged', component: NavMenuLoggedComponent, children: [
       { path: '', component: HomeComponent },
-      { path: "logout", component: LogoutComponent }
+      { path: 'logout', component: LogoutComponent },
+      { path: 'task-view/:id', component: TaskViewComponent }
     ]},
   {
     path: 'nav-menu', component: NavMenuComponent, children: [

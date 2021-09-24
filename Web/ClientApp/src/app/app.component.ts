@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PageListenerService } from "../services/PageListenerService";
 import { AuthService } from "../services/AuthService";
 import { Router, NavigationEnd } from '@angular/router';
 

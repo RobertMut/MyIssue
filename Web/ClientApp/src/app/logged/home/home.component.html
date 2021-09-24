@@ -1,8 +1,9 @@
 <h1>Hello, {{login}}</h1>
 
 <div class="task-div add-a-little-space-below">
-  <select name="howManyAssigned" class="selection">
-    <option value="10">5</option>
+  <p>Your active tasks:</p>
+  <select name="howManyAssigned" class="selection" (change)="selectActiveChangeHandler($event)" [(ngModel)]='selectionActive'>
+    <option value="5">5</option>
     <option value="10">10</option>
     <option value="15">15</option>
     <option value="20">20</option>
@@ -11,26 +12,37 @@
   </select>
   <table class="task-navigation-table">
     <thead>
-      Your active tasks:
+    <tr>
+      <th>Id</th>
+      <th>Type</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Client</th>
+      <th>Assignment</th>
+      <th>Owner</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Creation</th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let task of tasks">
-        <td>{{task.id}}</td>
-        <td>{{task.type}}</td>
-        <td>{{task.title}}</td>
-        <td>{{task.description}}</td>
-        <td>{{task.client}}</td>
-        <td>{{task.assignment}}</td>
-        <td>{{task.owner}}</td>
-        <td>{{task.start}}</td>
-        <td>{{task.end}}</td>
-        <td>{{task.creation}}</td>
-      </tr>
+    <tr *ngFor="let task of activetasks.tasks" (click)="selectTask(task)" class="task-row">
+      <td>{{task.taskId}}</td>
+      <td>{{task.taskType}}</td>
+      <td>{{task.taskTitle}}</td>
+      <td>{{task.taskDescription}}</td>
+      <td>{{task.taskClient}}</td>
+      <td>{{task.taskAssignment}}</td>
+      <td>{{task.taskOwner}}</td>
+      <td>{{task.taskStart}}</td>
+      <td>{{task.taskEnd}}</td>
+      <td>{{task.taskCreationDate}}</td>
+    </tr>
     </tbody>
   </table>
 </div>
-<select name="howManyActive" class="selection">
-  <option value="10">5</option>
+<select name="howManyActive" class="selection" (change)="selectFreeChangeHandler($event)" [(ngModel)]='selectionFree'>
+  <option value="5">5</option>
   <option value="10">10</option>
   <option value="15">15</option>
   <option value="20">20</option>
@@ -38,21 +50,34 @@
   <option value="50">50</option>
 </select>
 <div class="task-div">
+  <p>Free to take tasks:</p>
   <table class="task-navigation-table">
     <thead>
-      Free to take tasks:
+      <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Client</th>
+        <th>Assignment</th>
+        <th>Owner</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Creation</th>
+      </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>TaskId</td>
-        <td>TaskType</td>
-        <td>TaskTitle</td>
-        <td>TaskDesc</td>
-        <td>TaskClient</td>
-        <td>TaskAssignedTo</td>
-        <td>TaskOwner</td>
-        <td>TaskEnded</td>
-        <td>TaskCreationDate</td>
+      <tr *ngFor="let task of freetasks.tasks" (click)="selectTask(task)" class="task-row">
+        <td>{{task.taskId}}</td>
+        <td>{{task.taskType}}</td>
+        <td>{{task.taskTitle}}</td>
+        <td>{{task.taskDescription}}</td>
+        <td>{{task.taskClient}}</td>
+        <td>{{task.taskAssignment}}</td>
+        <td>{{task.taskOwner}}</td>
+        <td>{{task.taskStart}}</td>
+        <td>{{task.taskEnd}}</td>
+        <td>{{task.taskCreationDate}}</td>
       </tr>
     </tbody>
   </table>

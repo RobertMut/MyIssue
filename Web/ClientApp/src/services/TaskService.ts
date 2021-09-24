@@ -1,11 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { AuthService } from './AuthService';
-
-
-import { ITask } from "../models/task.model";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -15,13 +10,18 @@ export class TaskService {
   private baseUrl: string;
 
   constructor(private httpclient: HttpClient,
-    private auth: AuthService,
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  public getLastTasks(howMany: number): Observable<ITask[]> {
+  public getLastTasks(howMany: number, whose: string, headers: HttpHeaders): Observable<string> {
     return this.httpclient
-      .get<ITask[]>(this.baseUrl + 'Tasks/someOpen/' + howMany, { headers: this.auth.headers() });
+      .get(this.baseUrl + 'Tasks/someOpen/' + whose + '/' + howMany, { headers: headers, responseType: 'text' });
+  }
+
+  public getTaskById(id: number, headers: HttpHeaders): Observable<string> {
+    return this.httpclient
+      .get(this.baseUrl + 'Tasks/' + id, { headers: headers, responseType: 'text' });
   }
 }
+
