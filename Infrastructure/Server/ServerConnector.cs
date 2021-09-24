@@ -10,13 +10,11 @@ namespace MyIssue.Infrastructure.Server
 {
     public class ServerConnector : IServerConnector
     {
-        private Socket client;
         private readonly IPEndPoint endPoint;
-
         public ServerConnector(string serverAddress, int port)
         {
             endPoint = new IPEndPoint(IPAddress.Parse(serverAddress), port);
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
         }
 
         public string SendData(IEnumerable<byte[]> commandsToSend)
@@ -25,22 +23,25 @@ namespace MyIssue.Infrastructure.Server
             try
             {
                 if (commandsToSend.Count() is 0) throw new IndexOutOfRangeException();
-                client.Connect(endPoint);
-                using (NetworkStream ns = new NetworkStream(client))
+                using (Socket cli = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
-                    Console.WriteLine(ReadIncoming(ns));
-                    foreach (var bytes in commandsToSend)
+                    cli.Connect(endPoint);
+                    using (NetworkStream ns = new NetworkStream(cli))
                     {
-                        Console.WriteLine(StringStatic.StringMessage(bytes, bytes.Length));
-                        ns.Write(bytes, 0, bytes.Length);
-                        string workstring = ReadIncoming(ns);
-                        if (!string.IsNullOrEmpty(workstring)) response = workstring;
+                        Console.WriteLine(ReadIncoming(ns));
+                        foreach (var bytes in commandsToSend)
+                        {
+                            Console.WriteLine(StringStatic.StringMessage(bytes, bytes.Length));
+                            ns.Write(bytes, 0, bytes.Length);
+                            string workstring = ReadIncoming(ns);
+                            Console.WriteLine(workstring);
+                            if (!string.IsNullOrEmpty(workstring)) response = workstring;
+                        }
+                        ns.Close();
                     }
-                    ns.Close();
+                    cli.Shutdown(SocketShutdown.Both);
+                    cli.Disconnect(true);
                 }
-                client.Shutdown(SocketShutdown.Both);
-                client.Disconnect(true);
-                client.Dispose();
                 return response;
             }
             catch (IndexOutOfRangeException)

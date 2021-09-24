@@ -28,6 +28,8 @@ namespace MyIssue.API.Model
         public DateTime TaskCreation { get; set; }
         [StringLength(100)]
         public string MailId { get; set; }
+        public string EmployeeDescription { get; set; }
+
         [JsonIgnore]
         public virtual Client Clients { get; set; }
         [JsonIgnore]

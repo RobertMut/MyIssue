@@ -40,7 +40,8 @@ namespace MyIssue.API.Converters
                 TaskStart = task.TaskStart,
                 TaskEnd = task.TaskEnd,
                 TaskCreationDate = task.TaskCreation,
-                CreatedByMail = task.MailId
+                CreatedByMail = task.MailId,
+                EmployeeDescription = task.EmployeeDescription
             };
 
         }
@@ -66,7 +67,8 @@ namespace MyIssue.API.Converters
                 TaskStart = taskReturn.TaskStart,
                 TaskEnd = taskReturn.TaskStart,
                 TaskCreation = taskReturn.TaskCreationDate,
-                MailId = taskReturn.CreatedByMail is null ? DBNull.Value.ToString() : taskReturn.CreatedByMail
+                MailId = taskReturn.CreatedByMail is null ? DBNull.Value.ToString() : taskReturn.CreatedByMail,
+                EmployeeDescription = taskReturn.EmployeeDescription
             };
         }
     }

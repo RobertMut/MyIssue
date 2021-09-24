@@ -18,31 +18,25 @@ namespace MyIssue.Server.Commands
         public override void Invoke(Model.Client client, CancellationToken ct)
         {
 
-            if (!client.Status.Equals(1)) throw new NotSufficientPermissionsException();
+            if (client.Status.Equals(1)) throw new NotSufficientPermissionsException();
             LogUser.TypedCommand("Get", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "GET\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             string[] input = SplitToCommand.Get(client.CommandHistory);
-            if (input.Length is 3) input[3] = string.Empty;
+            if (input.Length.Equals(4)) input = input.Append("").ToArray();
             using (var request = new HttpRequestMessage(HttpMethod.Get,
-                httpclient.BaseAddress + $"api/Tasks/filter/{input[0]}/{input[1]}/{input[2]}/{input[3]}"))
-            {
-                Console.WriteLine("URI "+request.RequestUri);
+                httpclient.BaseAddress + $"api/Tasks/filter/all={input[0]}&closed={input[1]}&whose={input[2]}&howmany={input[3]}/{input[4]}")) {
+                Console.WriteLine(request.RequestUri.AbsoluteUri);
+                Console.WriteLine(request.RequestUri.AbsolutePath);
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                request.Headers.Connection.Add("keep-alive");
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
-                HttpResponseMessage httpresponse = httpclient.SendAsync(request).GetAwaiter().GetResult();
-                string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                Console.WriteLine(response);
+                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+                string response = httpResponse.Content.ReadAsStringAsync().Result;
                 NetWrite.Write(client.ConnectedSock, response, ct);
             }
-
-            // unit.UserRepository.Add(new User
-            // {
-            //     UserLogin = login,
-            //     Password = pass,
-            //     UserType = type
-            // });
-            // unit.Complete();
-
         }
     }
 }

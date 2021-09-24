@@ -11,6 +11,8 @@ using MyIssue.API.Model;
 using MyIssue.API.Model.Request;
 using MyIssue.API.Model.Return;
 using MyIssue.API.Services;
+using Newtonsoft.Json;
+using Task = System.Threading.Tasks.Task;
 
 namespace MyIssue.API.Controllers
 {
@@ -29,15 +31,15 @@ namespace MyIssue.API.Controllers
         }
 
         // GET: api/Users
-        [HttpGet("Get")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        [HttpGet("GetFull")]
+        public async Task<ActionResult<IEnumerable<User>>> GetFullUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
-        [HttpGet("Get/{login}")]
-        public async Task<ActionResult<User>> GetUser(string login)
+        [HttpGet("GetFull/{login}")]
+        public async Task<ActionResult<User>> GetFullUser(string login)
         {
             var user = await _context.Users.FindAsync(login);
 
@@ -47,6 +49,38 @@ namespace MyIssue.API.Controllers
             }
 
             return Ok(user);
+        }
+        [HttpGet]
+        public async Task<ActionResult<UsernameReturnRoot>> GetUsers()
+        {
+            List<UsernameReturn> usernames = new List<UsernameReturn>();
+            var users = await _context.Users.ToListAsync();
+            users.ForEach(u => usernames.Add(new UsernameReturn
+            {
+                Username = u.UserLogin
+            }));
+            return Ok(JsonConvert.SerializeObject(new UsernameReturnRoot()
+            {
+                Users = usernames
+            }));
+        }
+
+        // GET: api/Users/{login}
+        [HttpGet("{login}")]
+        public async Task<ActionResult<User>> GetUser(string login)
+        {
+            List<UsernameReturn> usernames = new List<UsernameReturn>();
+            var users = await _context.Users.ToListAsync();
+            users.ForEach(u => usernames.Add(new UsernameReturn
+            {
+                Username = u.UserLogin
+            }));
+            var user = usernames.Where(u => u.Username == login);
+            if (user.Count().Equals(0)) return NotFound();
+            return Ok(JsonConvert.SerializeObject(new UsernameReturnRoot()
+            {
+                Users = user.ToList()
+            }));
         }
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -85,13 +119,13 @@ namespace MyIssue.API.Controllers
             return BadRequest();
         }
         
-        // [Authorize]
-        // [HttpGet]
-        // public IActionResult GetAll()
-        // {
-        //     var users = _userService.GetAll();
-        //     return Ok(users);
-        // }
+        [Authorize]
+        [HttpPost("checktoken")]
+        public IActionResult CheckToken([FromBody] Token token)
+        {
+            var users = _userService.GetAll();
+            return Ok(users);
+        }
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Put/{id}")]

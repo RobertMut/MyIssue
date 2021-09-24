@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ using MyIssue.API.Converters;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
 using MyIssue.API.Model.Return;
+using Newtonsoft.Json;
 using Task = MyIssue.API.Model.Task;
 
 namespace MyIssue.API.Controllers
@@ -55,10 +57,11 @@ namespace MyIssue.API.Controllers
             return converter.Convert(task);
         }
         
-        [HttpGet("filter/{all}/{isClosed}/{howMany}/{id?}")]
-        public async Task<ActionResult<IEnumerable<TaskReturn>>> GetLastTask(bool all, bool isClosed, int howMany, decimal? id)
+        [HttpGet("filter/all={all}&closed={isClosed}&whose={whose}&howmany={howMany}/{id?}")]
+        public async Task<IActionResult> GetLastTask(bool all, bool isClosed,string whose, int howMany, decimal? id)
         {
-            List<Task> tasks = new List<Task>();
+
+            List<Task> tasks;
             if (all)
             {
                 tasks = await _context.Tasks.ToListAsync();
@@ -68,7 +71,12 @@ namespace MyIssue.API.Controllers
                 tasks = await _context.Tasks.Where(d => d.TaskEnd.HasValue == isClosed).ToListAsync();
 
             }
-
+            Console.WriteLine(whose);
+            if (!whose.ToLower().Equals("anybody"))
+            {
+                tasks = tasks.Where(user => user.TaskOwner is not null)
+                    .Where(user => user.TaskOwner.ToLower().Equals(whose.ToLower())).ToList();
+            }
             if (howMany is not 0)
             {
                 tasks = tasks.TakeLast(howMany).ToList();
@@ -76,17 +84,23 @@ namespace MyIssue.API.Controllers
 
             if (id is not null)
             {
-                tasks = tasks.Where(i => i.TaskId == id.GetValueOrDefault(0)).ToList();
+                tasks = new List<Task>() {tasks.FirstOrDefault(i => i.TaskId == id.GetValueOrDefault(0))};
             }
 
-            if (tasks.Count.Equals(0))
+            if (tasks.Count().Equals(0))
             {
                 return NotFound();
             }
 
-            List<TaskReturn> returnList = new List<TaskReturn>();
-            tasks.ForEach(t => returnList.Add(converter.Convert(t)));
-            return returnList;
+            List<TaskReturn> returnTasks = new List<TaskReturn>();
+            tasks.ToList().ForEach(t =>
+            {
+                returnTasks.Add(converter.Convert(t));
+            });
+            return Ok(JsonConvert.SerializeObject(new TaskReturnRoot()
+            {
+                Tasks = returnTasks
+            }));
         }
 
         // PUT: api/Tasks/5

@@ -43,6 +43,7 @@ namespace MyIssue.API.Services
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = true,
                     ValidateAudience = true,
+                    ValidateLifetime = true,
                     ValidIssuer = _configuration.GetValue<string>("Token:Issuer"),
                     ValidAudience = _configuration.GetValue<string>("Token:Audience"),
                     IssuerSigningKey = new SymmetricSecurityKey(
@@ -51,8 +52,9 @@ namespace MyIssue.API.Services
                         ))
                 }, out SecurityToken validated);
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine($"{e.Message}\r\n{e.StackTrace}");
                 return false;
             }
 
