@@ -97,6 +97,7 @@
     <Compile Include="Commands\GetSomeTasks.cs" />
     <Compile Include="Commands\GetLastTask.cs" />
     <Compile Include="Commands\GetTask.cs" />
+    <Compile Include="Commands\GetUser.cs" />
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\AddUser.cs" />
     <Compile Include="Commands\AddEmployee.cs" />

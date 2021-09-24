@@ -37,16 +37,13 @@ namespace MyIssue.Server.Commands
                     }), Encoding.UTF8, "application/json"
                 );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync("api/Users/tokenauthenticate", content).GetAwaiter().GetResult();
-                string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    httpclient.PostAsync("api/Users/tokenauthenticate", content).Result;
+                string response = httpresponse.Content.ReadAsStringAsync().Result;
                 Console.WriteLine("CHECK IF CONTAIN INVALID");
                 if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
-                Console.WriteLine("DESERIALIZE");
                 var data = (JObject) JsonConvert.DeserializeObject(response);
-                string token = data.SelectToken("token").ToString();
                 LogUser.TypedCommand("TokenLogin", "", client);
-                if (!TestToken(token)) throw new InvalidCredentialException("TOKEN INVALID");
-                    client.Status = Convert.ToInt32(data.SelectToken("type"));
+                client.Status = Convert.ToInt32(data.SelectToken("type"));
                 client.Login = data.SelectToken("login").ToString();
                 client.Token = data.SelectToken("token").ToString();
                 NetWrite.Write(client.ConnectedSock, "CORRECT", ct);
@@ -64,20 +61,6 @@ namespace MyIssue.Server.Commands
                 SerilogLogger.ServerLogException(nullReference);
                 LogUser.TypedCommand("Login", "Exception occured!", client);
                 NetWrite.Write(client.ConnectedSock, nullReference.Message, ct);
-            }
-        }
-
-        private bool TestToken(string token)
-        {
-            using (var request = new HttpRequestMessage(HttpMethod.Get,
-                httpclient.BaseAddress + $"api/Tasks/filter/true/false/0/"))
-            {
-                Console.WriteLine("URI " + request.RequestUri);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage httpresponse = httpclient.SendAsync(request).GetAwaiter().GetResult();
-                string response = httpresponse.StatusCode.ToString();
-                if (response.Contains("OK")) return true;
-                return false;
             }
         }
     }

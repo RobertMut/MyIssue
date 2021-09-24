@@ -35,7 +35,7 @@ namespace MyIssue.Server.Commands
                     );
                 HttpResponseMessage httpresponse =
                     httpclient.PostAsync("api/Users/authenticate", content).Result;
-                string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                string response = httpresponse.Content.ReadAsStringAsync().Result;
                 var data = (JObject) JsonConvert.DeserializeObject(response);
                 if (!(data["message"] is null)) throw new InvalidCredentialException("INCORRECT\r\n");
 
