@@ -25,7 +25,6 @@ namespace MyIssue.API.Converters
             {
                 return new TaskReturn();
             }
-
             var type = _context.TaskTypes.FirstOrDefaultAsync(tt => tt.TypeId == task.TaskType).Result.TypeName;
             var client = _context.Clients.FirstOrDefaultAsync(c => c.ClientId == task.TaskClient).Result.ClientName;
             return new TaskReturn
@@ -61,8 +60,8 @@ namespace MyIssue.API.Converters
                 TaskTitle = taskReturn.TaskTitle,
                 TaskDesc = taskReturn.TaskDescription,
                 TaskClient = client,
-                TaskOwner = taskReturn.TaskOwner,
-                TaskAssignment = taskReturn.TaskAssignment,
+                TaskOwner = taskReturn.TaskOwner == "null" ? null : taskReturn.TaskOwner,
+                TaskAssignment = taskReturn.TaskAssignment == "null" ? null : taskReturn.TaskAssignment,
                 TaskType = type,
                 TaskStart = taskReturn.TaskStart,
                 TaskEnd = taskReturn.TaskStart,

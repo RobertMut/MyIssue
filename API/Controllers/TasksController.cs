@@ -68,10 +68,9 @@ namespace MyIssue.API.Controllers
             }
             else
             {
-                tasks = await _context.Tasks.Where(d => d.TaskEnd.HasValue == isClosed).ToListAsync();
+                tasks = await _context.Tasks.Where(d => (d.TaskEnd == null).Equals(!isClosed)).ToListAsync();
 
             }
-            Console.WriteLine(whose);
             if (!whose.ToLower().Equals("anybody"))
             {
                 tasks = tasks.Where(user => user.TaskOwner is not null)
@@ -106,10 +105,10 @@ namespace MyIssue.API.Controllers
         // PUT: api/Tasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(decimal id, TaskReturn task)
+        public async Task<IActionResult> PutTask(decimal id, [FromBody]TaskReturn task)
         {
             var converted = converter.ConvertBack(task);
-            if (id != converted.TaskId)
+            if (Convert.ToInt32(id) != Convert.ToInt32(converted.TaskId))
             {
                 return BadRequest();
             }

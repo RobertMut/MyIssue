@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
 using MyIssue.API.Model.Return;
+using Newtonsoft.Json;
 
 namespace MyIssue.API.Controllers
 {
@@ -23,16 +24,16 @@ namespace MyIssue.API.Controllers
         }
 
         // GET: api/Employees
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        [HttpGet("GetFull/")]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetFullEmployees()
         {
 
             return await _context.Employees.ToListAsync();
         }
 
         // GET: api/Employees/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(string id)
+        [HttpGet("GetFull/{id}")]
+        public async Task<ActionResult<Employee>> GetFullEmployee(string id)
         {
             var employee = await _context.Employees.FindAsync(id);
 
@@ -42,6 +43,41 @@ namespace MyIssue.API.Controllers
             }
 
             return employee;
+        }
+        [HttpGet]
+        public async Task<ActionResult<UsernameReturnRoot>> GetEmployees()
+        {
+            List<EmployeeBasic> employeeList = new List<EmployeeBasic>();
+            var employees = await _context.Employees.ToListAsync();
+            employees.ForEach(e => employeeList.Add(new EmployeeBasic
+            {
+                Login = e.EmployeeLogin,
+                Name = e.EmployeeName,
+                Position = _context.Positions.FirstOrDefault(p => p.PositionId==e.EmployeePosition).PositionName
+            }));
+            return Ok(JsonConvert.SerializeObject(new EmployeeBasicRoot()
+            {
+                Employees = employeeList
+            }));
+        }
+
+        // GET: api/Users/{login}
+        [HttpGet("{login}")]
+        public async Task<ActionResult<User>> GetEmployee(string login)
+        {
+            List<EmployeeBasic> employeeList = new List<EmployeeBasic>();
+            var employees = await _context.Employees.FirstOrDefaultAsync(l => l.EmployeeLogin == login);
+            if (employees == null) return NotFound();
+            var employee = new EmployeeBasic
+            {
+                Login = employees.EmployeeLogin,
+                Name = employees.EmployeeName,
+                Position = _context.Positions.FirstOrDefault(p => p.PositionId == employees.EmployeePosition).PositionName
+            };
+            return Ok(JsonConvert.SerializeObject(new EmployeeBasicRoot()
+            {
+                Employees = new List<EmployeeBasic>(){employee}
+            }));
         }
 
         // PUT: api/Employees/5
