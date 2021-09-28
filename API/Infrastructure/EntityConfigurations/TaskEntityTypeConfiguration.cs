@@ -13,13 +13,15 @@ namespace MyIssue.API.Infrastructure.EntityConfigurations
                 .WithMany(c => c.Tasks)
                 .HasForeignKey(fk => fk.TaskClient);
             builder
-                .HasOne(t => t.Employees)
-                .WithMany(e => e.Tasks)
-                .HasForeignKey(fk => fk.TaskOwner);
+                .HasOne(t => t.EmployeesOwnership)
+                .WithMany()
+                .HasForeignKey(fk => fk.TaskOwner)
+                .IsRequired(false);
             builder
-                .HasOne(t => t.Employees)
-                .WithMany(e => e.Tasks)
-                .HasForeignKey(fk => fk.TaskAssignment);
+                .HasOne(t => t.EmployeesAssignment)
+                .WithMany()
+                .HasForeignKey(fk => fk.TaskAssignment)
+                .IsRequired(false);
             builder
                 .HasOne(t => t.TaskTypes)
                 .WithMany(tt => tt.Tasks)
