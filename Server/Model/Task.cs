@@ -15,5 +15,6 @@ namespace MyIssue.Server.Model
         public DateTime? TaskEnd { get; set; }
         public DateTime TaskCreationDate { get; set; }
         public string CreatedByMail { get; set; }
+        public string EmployeeDescription { get; set; }
     }
 }
