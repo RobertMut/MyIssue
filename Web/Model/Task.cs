@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace MyIssue.Web.Model
 {
+    public class TaskRoot
+    {
+        public List<Task> Tasks { get; set; }
+    }
     public class Task
     {
         [JsonProperty("TaskId")]
@@ -27,9 +33,11 @@ namespace MyIssue.Web.Model
         public string TaskType { get; set; }
 
         [JsonProperty("TaskStart")]
-        public DateTime? TaskStart { get; set; }
+        [DefaultValue(true)]
+        public DateTime? TaskStart { get; set; } 
 
         [JsonProperty("TaskEnd")]
+        [DefaultValue(true)]
         public DateTime? TaskEnd { get; set; }
 
         [JsonProperty("TaskCreationDate")]

@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +39,7 @@ namespace MyIssue.Web
             });
             services.AddScoped<IServerConnector, ServerConnector>(_=> new ServerConnector(Configuration.GetValue<string>("ServerConnection:ServerIp"), Configuration.GetValue<int>("ServerConnection:Port")));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmployeesService, EmployeesService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IUsersService, UsersService>();
 

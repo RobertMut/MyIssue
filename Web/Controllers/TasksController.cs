@@ -53,5 +53,15 @@ namespace MyIssue.Web.Controllers
             var auth = new TokenAuth(token);
             return await _service.GetTasks(false, true, whoseTasks, 0, null, auth);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTask([FromBody] Task task)
+        {
+            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var auth = new TokenAuth(token);
+            bool result = await _service.PutTask(task, auth);
+            if (!result) return BadRequest();
+            return Ok();
+        }
     }
 }
