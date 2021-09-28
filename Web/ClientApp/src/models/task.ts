@@ -1,3 +1,6 @@
+export interface taskroot {
+  tasks: task[];
+}
 export interface task {
   taskId: string,
   taskTitle: string,

@@ -3,8 +3,7 @@ import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
 import { HttpErrorResponse } from '@angular/common/http';
-import { taskroot } from "../../../models/taskroot";
-import { task } from "../../../models/task";
+import { task, taskroot } from "../../../models/task";
 
 @Component({
   selector: 'app-home',
@@ -42,7 +41,7 @@ export class HomeComponent {
         this.auth.CheckUnauthorized(error);
       }
     );
-    task.getLastTasks(this.selectionFree, localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
+    task.getLastTasks(this.selectionFree, localStorage.getItem("login").toString(), this.auth.headers()).subscribe(result => {
         this.activetasks = JSON.parse(result);
       },
       error => {

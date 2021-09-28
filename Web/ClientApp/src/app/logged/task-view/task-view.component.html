@@ -1,38 +1,58 @@
 <div>
-  <form class="form">
+  <form (ngSubmit)="updatetask()" class="form">
     <div class="left-side">
-      <label>{{task.taskId}}</label>
+      <label>ID: {{task.taskId}}</label>
       <label>Client: {{task.taskClient}}</label>
       <label>Type: {{task.taskType}}</label>
 
       <label>Created: {{task.taskCreationDate}}</label>
-      <label>Mail?: {{task.createdByMail}}</label>
+      <label>Mail?: {{createdByMail}}</label>
       <label>Description:</label>
       <label class="description">{{task.taskDescription}}</label>
     </div>
     <div class="right-side">
       <label>Started: {{task.taskStart}}</label>
-      <input type="button" value="Start task" />
-      <label>Ended: {{task.taskEnd}}</label>
-      <input type="button" value="End task" />
+      <div class="dateButtons">
+        <button type="button" name="start" (click)="onStartButton()">Start task</button>
+        <button type="button" name="start" >Select start date</button>
+        <button type="button" name="removestart" (click)="clearDate('removestart')">Remove</button>
+      </div>
+      <!--<input type="button" value="Start task" />
+      <input matInput [ngxMatDatetimepicker]="endpicker" value="{{task.taskEnd}}"/>
+      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+
+  -->
+      <div class="dateButtons">
+        <mat-form-field appearance="fill">
+          <mat-label>Ended: {{task.taskEnd}}</mat-label>
+
+
+          <ngx-mat-datetime-picker #endpicker></ngx-mat-datetime-picker>
+          <mat-datepicker #endpicker></mat-datepicker>
+        </mat-form-field>
+
+        <button type="button" name="endbutton" (click)="onEndButton()">End task</button>
+        <button type="button" name="removeend" (click)="clearDate('removeend')">Remove</button>
+      </div>
+      <!--<<input type="button" value="End task" />-->
       <label>Assigned to: {{task.taskAssignment}}</label>
-      <select name="assign-user" class="buttons" (change)="selectAssignmentHandler($event)">
+      <select name="assign" class="buttons" (change)="selectHandler($event)">
         <option value="null"></option>
-        <option *ngFor="let user of users.users" [ngValue]="user.username">{{user.username}}</option>
+        <option *ngFor="let employee of employees.employees" [ngValue]="employee.login">{{employee.login}}</option>
       </select>
       <label>Owned by: {{task.taskOwner}}</label>
-      <select name="owner-user" class="buttons" (change)="selectOwnerHandler($event)">
-        <option value="null"></option>
-        <option *ngFor="let user of users.users" [ngValue]="user.username">{{user.username}}</option>
+      <select name="ownership" class="buttons" (change)="selectHandler($event)">
+        <option value="null" [ngValue]="null"></option>
+        <option *ngFor="let employee of employees.employees" [ngValue]="employee.login">{{employee.login}}</option>
       </select>
 
     </div>
     <div class="break"></div>
     <div class="center-element">
-      <textarea type="text" class="description" value="{{task.employeeDescription}}"></textarea>
-      <input type="button" class="buttons" value="Update!" />
+      <textarea type="text" class="description" [(ngModel)]="comment" placeholder="Write how do you resolved your task.." >{{task.employeeDescription}}</textarea>
+      <input type="submit" class="buttons" value="Update!"/>
     </div>
-    
+
   </form>
 
 </div>

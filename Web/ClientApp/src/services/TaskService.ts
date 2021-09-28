@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { task, taskroot } from "../models/task";
 
 
 @Injectable({
@@ -22,6 +23,11 @@ export class TaskService {
   public getTaskById(id: number, headers: HttpHeaders): Observable<string> {
     return this.httpclient
       .get(this.baseUrl + 'Tasks/' + id, { headers: headers, responseType: 'text' });
+  }
+  public updateTask(inputtask: task, headers: HttpHeaders) {
+    console.warn("updating task");
+    console.warn(JSON.stringify(inputtask).toString());
+    return this.httpclient.put(this.baseUrl + 'Tasks/' + inputtask.taskId, JSON.stringify(inputtask), { headers: headers });
   }
 }
 
