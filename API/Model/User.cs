@@ -20,7 +20,7 @@ namespace MyIssue.API.Model
         [Required]
         public decimal UserType { get; set; }
         [JsonIgnore]
-        public virtual Employee Employee { get; set; }
+        public EmployeeUser EmployeeUser { get; set; }
         [JsonIgnore]
         public virtual UserType UserTypes { get; set; }
     }

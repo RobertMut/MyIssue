@@ -25,7 +25,7 @@ namespace MyIssue.API.Model
         [Required]
         public decimal EmployeePosition { get; set; }
         [JsonIgnore]
-        public virtual User EmployeeLogins { get; set; }
+        public EmployeeUser EmployeeUser { get; set; }
         [JsonIgnore]
         public virtual Position Positions { get; set; }
         [JsonIgnore]

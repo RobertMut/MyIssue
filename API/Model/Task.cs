@@ -33,7 +33,9 @@ namespace MyIssue.API.Model
         [JsonIgnore]
         public virtual Client Clients { get; set; }
         [JsonIgnore]
-        public virtual Employee Employees { get; set; }
+        public virtual Employee EmployeesAssignment { get; set; }
+        [JsonIgnore]
+        public virtual Employee EmployeesOwnership { get; set; }
         [JsonIgnore]
         public virtual TaskType TaskTypes { get; set; }
     }

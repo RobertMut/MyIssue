@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyIssue.API.Model.Return
 {
+    public class TaskReturnRoot
+    {
+        public List<TaskReturn> Tasks { get; set; }
+    }
     public class TaskReturn
     {
         public decimal TaskId { get; set; }
