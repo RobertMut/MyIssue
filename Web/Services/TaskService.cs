@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
@@ -65,11 +66,27 @@ namespace MyIssue.Web.Services
                 .Append(StringStatic.ByteMessage("PutTask\r\n<EOF>\r\n"))
                 .Append(StringStatic.ByteMessage(commandString))
                 .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
-            Console.WriteLine(commandString);
             string response = _server.SendData(cmds);
-            Console.WriteLine("got response!!!");
             if (response.Equals("NoContent")) return true;
             return false;
+        }
+
+        public async Task<string> CreateTask(Task task, TokenAuth model)
+        {
+            string commandString =
+                $"{task.TaskTitle}\r\n<NEXT>\r\n{task.TaskDescription}\r\n<NEXT>\r\n{task.TaskClient}\r\n<NEXT>\r\n" +
+                $"{task.TaskAssignment ?? "null"}\r\n<NEXT>\r\n{task.TaskOwner ?? "null"}\r\n<NEXT>\r\n{task.TaskType}\r\n<NEXT>\r\n" +
+                $"{task.TaskStart}\r\n<NEXT>\r\n{task.TaskEnd}\r\n<NEXT>\r\n" +
+                $"{task.EmployeeDescription ?? "null"}\r\n<EOF>\r\n";
+            IEnumerable<byte[]> cmds = new List<byte[]>()
+                .Concat(User.TokenLogin(model.Login, model.Token))
+                .Append(StringStatic.ByteMessage("CreateTask\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage(commandString))
+                .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
+            string response = _server.SendData(cmds);
+            Console.WriteLine(response);
+            if (response.Contains("CreatedAtAction")) return response;
+            return "Something went wrong";
         }
     }
 }

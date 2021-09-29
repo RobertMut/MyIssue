@@ -1,21 +1,17 @@
-import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { task, taskroot  } from "../../../models/task";
+import { employeeroot, employee } from "../../../models/employee";
+import { ActivatedRoute } from "@angular/router/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { task, taskroot } from "../../../models/task";
-import { employeeroot } from "../../../models/employee";
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
-
-
 
 @Component({
-  selector: 'app-task-view',
-  templateUrl: './task-view.component.html',
-  styleUrls: ['./task-view.component.css'],
-  providers: [AuthService, EmployeeService]
+  selector: 'app-new-task',
+  templateUrl: './new-task.component.html',
+  styleUrls: ['./new-task.component.css']
 })
-export class TaskViewComponent implements OnInit {
+export class NewTaskComponent implements OnInit {
   public task: task;
   public assignment: string;
   public ownership: string;
@@ -29,22 +25,11 @@ export class TaskViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
-
-    this.taskService.getTaskById(id, this.auth.headers()).subscribe(result => {
-        let taskroot: taskroot = JSON.parse(result);
-        this.task = taskroot.tasks[0];
-        this.checkMail();
-      },
-      error => {
-        console.error(error);
-        this.auth.CheckUnauthorized(error);
-      });
 
     this.employeeservice.getallemployees(this.auth.headers()).subscribe(result => {
-      this.employees = JSON.parse(result);
+        this.employees = JSON.parse(result);
 
-    },
+      },
       error => {
         console.error(error);
         this.auth.CheckUnauthorized(error);
@@ -65,9 +50,9 @@ export class TaskViewComponent implements OnInit {
   onEndButton(): void {
     this.task.taskEnd = new Date().toISOString();
   }
-  updatetask(): void {
-    console.warn(JSON.stringify(this.task).toString());
+  sendtask(): void {
     this.taskService.updateTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));
+      
   }
   private login(event): string {
     if (event.target.value.toString() == "null") return null;

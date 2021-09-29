@@ -35,3 +35,7 @@ p {
   background-color: cornflowerblue;
   cursor: pointer;
 }
+.control {
+  width: 100%;
+  padding: 0 7.5% 0;
+}

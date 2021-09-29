@@ -24,6 +24,10 @@ export class TaskService {
     return this.httpclient
       .get(this.baseUrl + 'Tasks/' + id, { headers: headers, responseType: 'text' });
   }
+  public createTask(task: task, headers: HttpHeaders) {
+    //return this.httpclient
+    //.post(this.baseUrl + 'Tasks')
+  }
   public updateTask(inputtask: task, headers: HttpHeaders) {
     console.warn("updating task");
     console.warn(JSON.stringify(inputtask).toString());

@@ -27,12 +27,13 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
-import { MatRadioModule } from "@angular/material/radio/radio-module";
-import { MatSelectModule } from "@angular/material/select/select-module";
-import { MatCheckboxModule } from "@angular/material/checkbox/checkbox-module";
-import { MatIconModule } from "@angular/material/icon/icon-module";
-import { MatCardModule } from "@angular/material/card/card-module";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCardModule } from "@angular/material/card";
 import { SharedModule } from "../modules/SharedModule";
+import { NewTaskComponent } from './logged/new-task/new-task.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SharedModule } from "../modules/SharedModule";
     HomeComponent,
     NavMenuComponent,
     NavMenuLoggedComponent,
-    TaskViewComponent
+    TaskViewComponent,
+    NewTaskComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,8 +61,8 @@ import { SharedModule } from "../modules/SharedModule";
     MatFormFieldModule,
     MatNativeDateModule,
     NgxMatNativeDateModule,
-    MatRadioModule,
     MatSelectModule,
+    MatRadioModule,
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,

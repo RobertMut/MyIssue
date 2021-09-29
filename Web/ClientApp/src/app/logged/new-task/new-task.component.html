@@ -25,7 +25,7 @@
       </div>
       <mat-form-field appearance="fill" class="datetime-picker">
         <mat-label>Task end date: {{task.taskEnd}}</mat-label>
-        <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.taskEnd"  />
+        <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.taskEnd" />
         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #endpicker></ngx-mat-datetime-picker>
         <mat-datepicker #endpicker></mat-datepicker>
@@ -53,7 +53,7 @@
         <mat-label>Write how do you resolved your task..</mat-label>
         <textarea matInput type="text" class="description" [(ngModel)]="task.employeeDescription">{{task.employeeDescription}}</textarea>
       </mat-form-field>
-      
+
       <button mat-raised-button type="submit" class="buttons">Update!</button>
     </div>
 

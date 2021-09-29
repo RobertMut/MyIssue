@@ -63,5 +63,14 @@ namespace MyIssue.Web.Controllers
             if (!result) return BadRequest();
             return Ok();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> NewTask([FromBody] Task task)
+        {
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
+            string result = await _service.CreateTask(task, auth);
+            if (result.Contains("CreatedAtAction")) return CreatedAtAction("NewTask", result);
+            return BadRequest(result);
+        }
     }
 }
