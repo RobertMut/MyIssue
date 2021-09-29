@@ -67,7 +67,7 @@ namespace MyIssue.API.Converters
                 TaskEnd = taskReturn.TaskStart,
                 TaskCreation = taskReturn.TaskCreationDate,
                 MailId = taskReturn.CreatedByMail is null ? DBNull.Value.ToString() : taskReturn.CreatedByMail,
-                EmployeeDescription = taskReturn.EmployeeDescription
+                EmployeeDescription = taskReturn.EmployeeDescription == "null" ? null : taskReturn.EmployeeDescription
             };
         }
     }

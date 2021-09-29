@@ -95,6 +95,7 @@
     <Compile Include="Client\ClientCounter.cs" />
     <Compile Include="Client\ProcessClient.cs" />
     <Compile Include="Commands\GetEmployee.cs" />
+    <Compile Include="Commands\GetTaskType.cs" />
     <Compile Include="Commands\PutTask.cs" />
     <Compile Include="Commands\GetTask.cs" />
     <Compile Include="Commands\GetUser.cs" />

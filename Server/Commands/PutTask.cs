@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Core.Exceptions;
+using MyIssue.Core.String;
 using MyIssue.Server.Model;
 using MyIssue.Server.Net;
 using Newtonsoft.Json;
@@ -28,10 +29,6 @@ namespace MyIssue.Server.Commands
             using (var request = new HttpRequestMessage(HttpMethod.Put,
                 httpclient.BaseAddress + $"api/Tasks/{input[0]}"))
             {
-                Console.WriteLine("json");
-                Console.WriteLine(input[7]);
-                Console.WriteLine(input[8]);
-                Console.WriteLine(input[9]);
                 var json = JsonConvert.SerializeObject(new Task
                 {
                     TaskId = Convert.ToDecimal(input[0]),
@@ -41,29 +38,23 @@ namespace MyIssue.Server.Commands
                     TaskAssignment = input[4],
                     TaskOwner = input[5],
                     TaskType = input[6],
-                    TaskStart = CheckDate(input[7]),
-                    TaskEnd = CheckDate(input[8]),
+                    TaskStart = StringStatic.CheckDate(input[7]),
+                    TaskEnd = StringStatic.CheckDate(input[8]),
                     TaskCreationDate = Convert.ToDateTime(input[9]),
                     CreatedByMail = input[10],
                     EmployeeDescription = input[11]
                 });
                 request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                Console.WriteLine("set headers");
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
                 request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
                 request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
                 request.Headers.Connection.Add("keep-alive");
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
-                Console.WriteLine("sending async put");
                 HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
                 NetWrite.Write(client.ConnectedSock, httpResponse.StatusCode.ToString(), ct);
             }
         }
 
-        private DateTime? CheckDate(string dateString)
-        {
-            if (string.IsNullOrEmpty(dateString)) return null;
-            return Convert.ToDateTime(dateString);
-        }
+
     }
 }
