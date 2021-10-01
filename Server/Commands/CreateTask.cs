@@ -20,7 +20,7 @@ namespace MyIssue.Server.Commands
         public static string Name = "CreateTask";
         public override void Invoke(Model.Client client, CancellationToken ct)
         {
-            if (!client.Status.Equals(1)) throw new NotSufficientPermissionsException();
+            if (client.Status.Equals(1)) throw new NotSufficientPermissionsException();
             LogUser.TypedCommand("CreateTask", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "CREATING TASK\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
