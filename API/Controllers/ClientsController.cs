@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
+using MyIssue.API.Model.Return;
+using Newtonsoft.Json;
 
 namespace MyIssue.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientsController : ControllerBase
     {
         private readonly MyIssueContext _context;
@@ -22,14 +26,28 @@ namespace MyIssue.API.Controllers
         }
 
         // GET: api/Clients
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Client>>> GetClients()
+        [HttpGet("Full")]
+        public async Task<ActionResult<IEnumerable<Client>>> GetFullClients()
         {
             return await _context.Clients.ToListAsync();
         }
+        [HttpGet]
+        public async Task<ActionResult<ClientNameRoot>> GetClients()
+        {
+            List<ClientNameReturn> clientList = new List<ClientNameReturn>();
+            var clients = await _context.Clients.ToListAsync();
+            clients.ForEach(e => clientList.Add(new ClientNameReturn
+            {
+                CompanyName = e.ClientName
+            }));
+            return Ok(JsonConvert.SerializeObject(new ClientNameRoot()
+            {
+                Clients = clientList
+            }));
+        }
 
         // GET: api/Clients/5
-        [HttpGet("{id}")]
+        [HttpGet("Full/{id}")]
         public async Task<ActionResult<Client>> GetClient(decimal id)
         {
             var client = await _context.Clients.FindAsync(id);
@@ -42,7 +60,7 @@ namespace MyIssue.API.Controllers
             return client;
         }
         //GET: api/Clients/{Name}
-        [HttpGet("{name}")]
+        [HttpGet("Full/{name}")]
         public async Task<ActionResult<Client>> GetClient(string name)
         {
             var client = await _context.Clients.FirstOrDefaultAsync(c => c.ClientName.Equals(name));

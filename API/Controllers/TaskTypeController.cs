@@ -24,13 +24,14 @@ namespace MyIssue.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<TaskTypeReturnRoot>> GetEmployees()
+        public async Task<ActionResult<TaskTypeReturnRoot>> GetTaskTypes()
         {
 
             List<TaskTypeReturn> taskTypeList = new List<TaskTypeReturn>();
             var tasktypes = await _context.TaskTypes.ToListAsync();
-            tasktypes.ForEach(e => taskTypeList.Add(new TaskTypeReturn()
+            tasktypes.ForEach(e => taskTypeList.Add(new TaskTypeReturn
             {
+                TaskType = e.TypeName
             }));
             return Ok(JsonConvert.SerializeObject(new TaskTypeReturnRoot()
             {

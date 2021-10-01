@@ -68,7 +68,7 @@ namespace MyIssue.API.Controllers
             }
             else
             {
-                tasks = await _context.Tasks.Where(d => (d.TaskEnd == null).Equals(!isClosed)).ToListAsync();
+                tasks = await _context.Tasks.Where(d => (d.TaskEnd == null || d.TaskEnd > DateTime.Now).Equals(!isClosed)).ToListAsync();
 
             }
             if (!whose.ToLower().Equals("anybody"))
@@ -168,5 +168,13 @@ namespace MyIssue.API.Controllers
         {
             return _context.Tasks.Any(e => e.TaskId == id);
         }
+
+        #region Pagination
+
+
+        #endregion
+
+
+
     }
 }
