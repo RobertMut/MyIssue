@@ -10,6 +10,10 @@ using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
 {
+        public interface IEmployeesService
+    {
+        Task<EmployeeBasicRoot> GetEmployees(string? username, TokenAuth model);
+    }
     public class EmployeesService : IEmployeesService
     {
         private readonly IServerConnector _server;

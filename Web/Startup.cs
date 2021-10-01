@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyIssue.Core.Commands;
+using MyIssue.Infrastructure.Database.Models;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Services;
@@ -39,6 +40,8 @@ namespace MyIssue.Web
             });
             services.AddScoped<IServerConnector, ServerConnector>(_=> new ServerConnector(Configuration.GetValue<string>("ServerConnection:ServerIp"), Configuration.GetValue<int>("ServerConnection:Port")));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IClientsService, ClientsService>();
+            services.AddScoped<ITaskTypesService, TaskTypesService>();
             services.AddScoped<IEmployeesService, EmployeesService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IUsersService, UsersService>();

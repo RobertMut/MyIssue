@@ -10,22 +10,17 @@ using MyIssue.Web.Services;
 namespace MyIssue.Web.Controllers
 {
     [Route("[controller]")]
-    public class TaskTypesController : ControllerBase
+    public class ClientsController : Controller
     {
-        private readonly ITaskTypesService _service;
-
-        public TaskTypesController(ITaskTypesService service)
+        private IClientsService _service;
+        public ClientsController(IClientsService service)
         {
             _service = service;
         }
-
-        [HttpGet]
-        public async Task<TaskTypeReturnRoot> Get()
+        public async Task<ClientNameRoot> Get()
         {
-            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            Console.WriteLine("TOKEN   " + token);
             var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
-            return await _service.GetTaskTypes(auth);
+            return await _service.GetClient(auth);
         }
     }
 }

@@ -15,7 +15,6 @@ namespace MyIssue.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    //[CustomAuthorize]
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _service;

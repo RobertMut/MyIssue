@@ -21,6 +21,12 @@ using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
 {
+    public interface ITaskService
+    {
+        Task<string> CreateTask(Task task, TokenAuth model);
+        Task<TaskRoot> GetTasks(bool isClosed, bool all, string whoseTasks, int howMany, int? id, TokenAuth model);
+        Task<bool> PutTask(Task task, TokenAuth model);
+    }
     public class TaskService : ITaskService
     {
         private readonly IServerConnector _server;
