@@ -1,6 +1,6 @@
 <h1>Hello, {{login}}</h1>
 <div class="control">
-  <button mat-raised-button type="button" [routerLink]="['./newTask']>Create new task</button>
+  <button mat-raised-button type="button" (click)="navigateNewTask()">Create new task</button>
 </div>
 <div class="task-div add-a-little-space-below">
   <p>Your active tasks:</p>

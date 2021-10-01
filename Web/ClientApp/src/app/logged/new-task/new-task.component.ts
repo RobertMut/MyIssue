@@ -1,48 +1,77 @@
 import { Component, OnInit } from '@angular/core';
-import { task, taskroot  } from "../../../models/task";
-import { employeeroot, employee } from "../../../models/employee";
-import { ActivatedRoute } from "@angular/router/router";
+import { ITask, ITaskroot } from "../../../models/task";
+import { IEmployeeRoot, IEmployee } from "../../../models/employee";
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
+import { IClientNameRoot, IClientName } from "../../../models/clientname";
+import { ClientService } from "../../../services/TaskTypeService";
+import { TaskTypeService } from "../../../services/ClientService";
 
+enum Selector {
+  taskType = "tasktypeSelect",
+  client = "clientSelect",
+  assignment = "assignmentSelect",
+  ownership = "ownershipSelect"
+}
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
-  styleUrls: ['./new-task.component.css']
+  styleUrls: ['./new-task.component.css'],
+  providers: [AuthService, ClientService, TaskTypeService, TaskService, EmployeeService]
 })
+
 export class NewTaskComponent implements OnInit {
-  public task: task;
+  public task: ITask = {} as ITask;
   public assignment: string;
   public ownership: string;
-  public employees: employeeroot;
+  public employees: IEmployeeRoot;
   public createdByMail: boolean;
+  public taskTypes: ITaskTypeRoot;
+  public clients: IClientNameRoot;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private activeroute: ActivatedRoute,
+    private router: Router,
     private taskService: TaskService,
     private auth: AuthService,
-    private employeeservice: EmployeeService) {
-  }
-
-  ngOnInit() {
-
+    private employeeservice: EmployeeService,
+    private clientservice: ClientService,
+    private tasktypeservice: TaskTypeService) {
     this.employeeservice.getallemployees(this.auth.headers()).subscribe(result => {
         this.employees = JSON.parse(result);
-
+        console.warn(this.employees.employees[0]);
+      },
+      error => {
+        console.error(error);
+        this.auth.CheckUnauthorized(error);
+      });
+    this.clientservice.getClients(this.auth.headers()).subscribe(result => {
+        this.clients = JSON.parse(result);
+      },
+      error => {
+        console.error(error);
+        this.auth.CheckUnauthorized(error);
+      });
+    this.tasktypeservice.getTaskTypes(this.auth.headers()).subscribe(result => {
+        this.taskTypes = JSON.parse(result);
+        console.warn(this.taskTypes.taskTypes[0]);
       },
       error => {
         console.error(error);
         this.auth.CheckUnauthorized(error);
       });
   }
+
+  ngOnInit() {
+    this.task.taskAssignment = localStorage.getItem("login");
+    this.task.taskOwner = localStorage.getItem("login");
+  }
   clearDate(name): void {
     if (name == 'removestart')
       this.task.taskStart = null;
     else this.task.taskEnd = null;
-  }
-  selectHandler(event: any): void {
-    if (event.srcElement.name == "assign") this.task.taskAssignment = this.login(event);
-    else this.task.taskOwner = this.login(event);
   }
   onStartButton(): void {
     this.task.taskStart = new Date().toISOString();
@@ -50,17 +79,9 @@ export class NewTaskComponent implements OnInit {
   onEndButton(): void {
     this.task.taskEnd = new Date().toISOString();
   }
-  sendtask(): void {
-    this.taskService.updateTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));
-      
-  }
-  private login(event): string {
-    if (event.target.value.toString() == "null") return null;
-    return this.employees.employees.find(k => k.login == event.target.value.toString()).login;
-  }
-  private checkMail() {
-    if (this.task.createdByMail.length == 0) this.createdByMail = false;
-    else this.createdByMail = true;
+  posttask(): void {
+    this.taskService.createTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));;
+    this.router.navigate(['./nav-menu-logged/home'], { relativeTo: this.activeroute });
   }
 
 }

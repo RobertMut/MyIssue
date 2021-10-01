@@ -1,7 +1,7 @@
-export interface taskroot {
-  tasks: task[];
+export interface ITaskroot {
+  tasks: ITask[];
 }
-export interface task {
+export interface ITask {
   taskId: string,
   taskTitle: string,
   taskDescription: string,

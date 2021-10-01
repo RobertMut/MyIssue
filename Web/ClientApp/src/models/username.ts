@@ -1,7 +1,7 @@
-export interface usernameroot {
-  users: username[];
+export interface IUsernameRoot {
+  users: IUsername[];
 }
 
-export interface username {
+export interface IUsername {
   username: string
 }

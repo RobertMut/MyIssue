@@ -1,14 +1,21 @@
 <div>
-  <form (ngSubmit)="updatetask()" class="form">
+  <form (ngSubmit)="posttask()" class="form">
     <div class="left-side">
-      <label>ID: {{task.taskId}}</label>
-      <label>Client: {{task.taskClient}}</label>
-      <label>Type: {{task.taskType}}</label>
+      <mat-label>Client:</mat-label>
+      <mat-select name="clientSelect" class="buttons" [(ngModel)]="task.taskClient">
+        <mat-option [value]="null"></mat-option>
+        <mat-option *ngFor="let client of clients.clients" [value]="client.companyName">{{client.companyName}}</mat-option>
+      </mat-select>
+      <mat-label>TaskType:</mat-label>
+      <mat-select name="tasktypeSelect" class="buttons" [(ngModel)]="task.taskType">
 
-      <label>Created: {{task.taskCreationDate}}</label>
-      <label>Mail?: {{createdByMail}}</label>
-      <label>Description:</label>
-      <label class="description">{{task.taskDescription}}</label>
+        <mat-option [value]="null"></mat-option>
+        <mat-option *ngFor="let type of taskTypes.taskTypes" [value]="type.taskType">{{type.taskType}}</mat-option>
+      </mat-select>
+      <mat-form-field appearance="fill" class="textarea">
+        <mat-label>Write task description..</mat-label>
+        <textarea matInput type="text" class="description" [(ngModel)]="task.taskDescription">{{task.taskDescription}}</textarea>
+      </mat-form-field>
     </div>
     <div class="right-side">
       <mat-form-field appearance="fill" class="datetime-picker">
@@ -16,45 +23,44 @@
         <input matInput [ngxMatDatetimePicker]="startpicker" placeholder="Task start date" [(ngModel)]="task.taskStart" />
         <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #startpicker></ngx-mat-datetime-picker>
+        <mat-datepicker-toggle matSuffix (click)="clearDate('removestart')">
+          <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #startpicker></mat-datepicker>
 
       </mat-form-field>
-      <div class="dateButtons">
-        <button mat-raised-button type="button" name="start" (click)="onStartButton()">Start task</button>
-        <button mat-raised-button type="button" name="removestart" (click)="clearDate('removestart')">Remove</button>
-      </div>
       <mat-form-field appearance="fill" class="datetime-picker">
         <mat-label>Task end date: {{task.taskEnd}}</mat-label>
         <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.taskEnd" />
         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #endpicker></ngx-mat-datetime-picker>
+        <ngx-mat-datetime-picker #endpicker>
+        </ngx-mat-datetime-picker>
+        <mat-datepicker-toggle matSuffix (click)="clearDate('removeend')">
+          <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #endpicker></mat-datepicker>
 
       </mat-form-field>
-      <div class="dateButtons">
-        <button mat-raised-button type="button" name="endbutton" (click)="onEndButton()">Set current time</button>
-        <button mat-raised-button type="button" name="removeend" (click)="clearDate('removeend')">Remove</button>
-      </div>
       <label>Assigned to:</label>
-      <mat-select name="assign" class="buttons" (change)="selectHandler($event)" [(ngModel)]="task.taskAssignment">
+      <mat-select name="assignmentSelect" class="buttons" [(ngModel)]="task.taskAssignment">
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let employee of employees.employees" [value]="employee.login">{{employee.login}}</mat-option>
       </mat-select>
       <label>Owned by:</label>
-      <mat-select name="ownership" class="buttons" (change)="selectHandler($event)" [(ngModel)]="task.taskOwner">
+      <mat-select name="ownershipSelect" class="buttons" [(ngModel)]="task.taskOwner">
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let employee of employees.employees" [value]="employee.login">{{employee.login}}</mat-option>
       </mat-select>
 
     </div>
     <div class="break"></div>
+
     <div class="center-element">
       <mat-form-field appearance="fill" class="textarea">
-        <mat-label>Write how do you resolved your task..</mat-label>
+        <mat-label>Write task resolution..</mat-label>
         <textarea matInput type="text" class="description" [(ngModel)]="task.employeeDescription">{{task.employeeDescription}}</textarea>
       </mat-form-field>
-
-      <button mat-raised-button type="submit" class="buttons">Update!</button>
+      <button mat-raised-button type="submit" class="buttons">Create task!</button>
     </div>
 
   </form>

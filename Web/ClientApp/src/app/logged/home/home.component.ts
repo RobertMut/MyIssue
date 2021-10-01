@@ -3,7 +3,7 @@ import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
 import { HttpErrorResponse } from '@angular/common/http';
-import { task, taskroot } from "../../../models/task";
+import { ITask, ITaskroot } from "../../../models/task";
 
 @Component({
   selector: 'app-home',
@@ -12,8 +12,8 @@ import { task, taskroot } from "../../../models/task";
   providers: [AuthService]
 })
 export class HomeComponent {
-  public freetasks: taskroot;
-  public activetasks: taskroot;
+  public freetasks: ITaskroot;
+  public activetasks: ITaskroot;
   public login: string;
   public selectionFree: number;
   public selectionActive: number;
@@ -61,8 +61,10 @@ export class HomeComponent {
     localStorage.setItem("selectionactive", event.target.value.toString());
     location.reload();
   }
-  public selectTask(task: task) {
-    console.warn("CLICKED!");
+  public navigateNewTask() {
+    this.router.navigate(['./new-task'], { relativeTo: this.activatedRoute });
+  }
+  public selectTask(task: ITask) {
     this.router.navigate(['./task-view', task.taskId], {relativeTo: this.activatedRoute});
   }
 }

@@ -1,8 +1,8 @@
-export interface employeeroot {
-  employees: employee[];
+export interface IEmployeeRoot {
+  employees: IEmployee[];
 }
 
-export interface employee {
+export interface IEmployee {
   login: string,
   name: string,
   position: string

@@ -34,6 +34,10 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from "@angular/material/card";
 import { SharedModule } from "../modules/SharedModule";
 import { NewTaskComponent } from './logged/new-task/new-task.component';
+import { AuthService } from "../services/AuthService";
+import { ClientService } from "../services/TaskTypeService";
+import { TaskTypeService } from "../services/ClientService";
+import { TaskService } from "../services/TaskService";
 
 @NgModule({
   declarations: [
