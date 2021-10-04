@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.Extensions.Options;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
@@ -53,6 +54,25 @@ namespace MyIssue.Web.Controllers
             return await _service.GetTasks(false, true, whoseTasks, 0, null, auth);
         }
 
+        #region Pagination
+
+        [HttpGet("pagedFirst")]
+        public async Task<IActionResult> GetPagedInitial([FromBody]Paged paged)
+        {
+            var token = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
+            var result = await _service.FirstPagedGet(paged.Page, paged.Size, token);
+            return Ok(result);
+        }
+
+        [HttpGet("pagedLink")]
+        public async Task<IActionResult> GetPagedLink([FromBody] Paged paged)
+        {
+            var token = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
+            var result = await _service.PagedLinkGet(paged.Link, token);
+            return Ok(result);
+        }
+        #endregion
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTask([FromBody] Task task)
         {
@@ -71,5 +91,6 @@ namespace MyIssue.Web.Controllers
             if (result.Contains("CreatedAtAction")) return CreatedAtAction("NewTask", result);
             return BadRequest(result);
         }
+
     }
 }
