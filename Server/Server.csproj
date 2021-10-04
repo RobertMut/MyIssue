@@ -96,6 +96,8 @@
     <Compile Include="Client\ProcessClient.cs" />
     <Compile Include="Commands\GetEmployee.cs" />
     <Compile Include="Commands\GetClients.cs" />
+    <Compile Include="Commands\GetPagedByLink.cs" />
+    <Compile Include="Commands\GetFirstPagedTask.cs" />
     <Compile Include="Commands\GetTaskType.cs" />
     <Compile Include="Commands\PutTask.cs" />
     <Compile Include="Commands\GetTask.cs" />
