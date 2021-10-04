@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Converters;
+using MyIssue.API.Filter;
+using MyIssue.API.Helpers;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
 using MyIssue.API.Model.Return;
+using MyIssue.API.Services;
+using MyIssue.API.Wrappers;
 using Newtonsoft.Json;
 using Task = MyIssue.API.Model.Task;
 
@@ -23,8 +28,10 @@ namespace MyIssue.API.Controllers
     {
         private readonly MyIssueContext _context;
         private readonly TaskConverter converter;
-        public TasksController(MyIssueContext context)
+        private readonly IUriService uriService;
+        public TasksController(MyIssueContext context, IUriService service)
         {
+            uriService = service;
             _context = context;
             converter = new TaskConverter(context);
         }
@@ -164,17 +171,32 @@ namespace MyIssue.API.Controllers
             return NoContent();
         }
 
-        private bool TaskExists(decimal id)
-        {
-            return _context.Tasks.Any(e => e.TaskId == id);
-        }
+
 
         #region Pagination
 
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] PaginationFilter filter)
+        {
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var response = await _context.Tasks
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+            var totalRecords = await _context.Tasks.CountAsync();
+            var pagedResponse =
+                PaginationHelper.CreatePageResponse<Model.Task>(response, filter, totalRecords, uriService, route);
+            return Ok(pagedResponse);
+        }
 
         #endregion
 
 
+        private bool TaskExists(decimal id)
+        {
+            return _context.Tasks.Any(e => e.TaskId == id);
+        }
 
     }
 }
