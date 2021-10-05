@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ITask, ITaskroot } from "../models/task";
+import { ITask, ITaskroot, IPagedTaskRequest } from "../models/task";
 
 
 @Injectable({
@@ -23,6 +23,22 @@ export class TaskService {
   public getTaskById(id: number, headers: HttpHeaders): Observable<string> {
     return this.httpclient
       .get(this.baseUrl + 'Tasks/' + id, { headers: headers, responseType: 'text' });
+  }
+  public getPagedFirst(pageNumber: number, pageSize: number, headers: HttpHeaders): Observable<string> {
+    let pagedRequest: IPagedTaskRequest = {
+      link: null,
+      page: pageNumber,
+      size: pageSize };
+    return this.httpclient
+      .post(this.baseUrl + 'Tasks/pagedFirst', JSON.stringify(pagedRequest), { headers: headers, responseType: 'text' });
+  }
+  public getPagedLink(pageLink: string, headers: HttpHeaders): Observable<string> {
+    let pagedRequest: IPagedTaskRequest = {
+      link: pageLink,
+      page: null,
+      size: null };
+    return this.httpclient
+      .post(this.baseUrl + 'Tasks/pagedLink', JSON.stringify(pagedRequest), { headers: headers, responseType: 'text' });
   }
   public createTask(task: ITask, headers: HttpHeaders) {
     return this.httpclient.post(this.baseUrl + 'Tasks', JSON.stringify(task), { headers: headers });

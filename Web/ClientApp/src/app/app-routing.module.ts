@@ -8,6 +8,7 @@ import { HomeComponent } from "./logged/home/home.component";
 import { LoginComponent } from "./notlogged/login/login.component";
 import { TaskViewComponent } from "./logged/task-view/task-view.component";
 import { NewTaskComponent } from "./logged/new-task/new-task.component";
+import { TaskPagedComponent } from "./logged/task-paged/task-paged.component";
 
 
 const routes: Routes = [
@@ -16,15 +17,17 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'logout', component: LogoutComponent },
       { path: 'task-view/:id', component: TaskViewComponent },
-      { path: 'new-task', component: NewTaskComponent}
-    ]},
+      { path: 'new-task', component: NewTaskComponent },
+      { path: 'task-paged', component: TaskPagedComponent }
+    ]
+  },
   {
     path: 'nav-menu', component: NavMenuComponent, children: [
       { path: 'login', component: LoginComponent }
-      ]
+    ]
   },
   { path: '', redirectTo: 'nav-menu', pathMatch: 'full' },
-  ];
+];
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(routes), RouterModule.forChild(routes)],

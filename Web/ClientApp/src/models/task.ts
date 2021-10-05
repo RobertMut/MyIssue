@@ -1,3 +1,19 @@
+export interface IPagedTaskRequest {
+  link: string,
+  page: number,
+  size: number,
+}
+export interface IPagedResponse {
+  pageNumber: number,
+  pageSize: number,
+  firstPage: string,
+  lastPage: string,
+  totalPages: number,
+  totalRecords: number
+  nextPage: string,
+  previousPage: string,
+  data: ITask[]
+}
 export interface ITaskroot {
   tasks: ITask[];
 }

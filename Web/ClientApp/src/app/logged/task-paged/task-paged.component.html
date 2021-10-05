@@ -1,0 +1,48 @@
+<div class="task-div add-a-little-space-below">
+  <div>
+    <button mat-raised-button (click)="firstPageButton()">First page</button>
+    <button mat-raised-button (click)="previousPageButton()">Previous page</button>
+    <mat-form-field>
+      <mat-label>Page</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Page size</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <button mat-raised-button (click)="nextPageButton()">Next page</button>
+    <button mat-raised-button (click)="lastPageButton()">Last page</button>
+  </div>
+  <div>
+    <table mat-table class="mat-elevation-z8 task-navigation-table" ng-table="taskTable">
+      <thead>
+        <tr mat-header-row>
+          <th mat-header-cell>Id</th>
+          <th mat-header-cell>Type</th>
+          <th mat-header-cell>Title</th>
+          <th mat-header-cell>Description</th>
+          <th mat-header-cell>Client</th>
+          <th mat-header-cell>Assignment</th>
+          <th mat-header-cell>Owner</th>
+          <th mat-header-cell>Start</th>
+          <th mat-header-cell>End</th>
+          <th mat-header-cell>Creation</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="paged !== undefined">
+      <tr mat-row *ngFor="let task of paged.data" (click)="selectTask(task)" class="task-row">
+            <td mat-cell>{{task.taskId}}</td>
+            <td mat-cell>{{task.taskType}}</td>
+            <td mat-cell>{{task.taskTitle}}</td>
+            <td mat-cell>{{task.taskDescription}}</td>
+            <td mat-cell>{{task.taskClient}}</td>
+            <td mat-cell>{{task.taskAssignment}}</td>
+            <td mat-cell>{{task.taskOwner}}</td>
+            <td mat-cell>{{task.taskStart}}</td>
+            <td mat-cell>{{task.taskEnd}}</td>
+            <td mat-cell>{{task.taskCreationDate}}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

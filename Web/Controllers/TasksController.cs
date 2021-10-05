@@ -56,20 +56,20 @@ namespace MyIssue.Web.Controllers
 
         #region Pagination
 
-        [HttpGet("pagedFirst")]
-        public async Task<IActionResult> GetPagedInitial([FromBody]Paged paged)
+        [HttpPost("pagedFirst")]
+        public async Task<ActionResult<PageResponse<Task>>> GetPagedInitial([FromBody]PageRequest request)
         {
             var token = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
-            var result = await _service.FirstPagedGet(paged.Page, paged.Size, token);
-            return Ok(result);
+            var result = await _service.FirstPagedGet(request.Page, request.Size, token);
+            return result;
         }
 
-        [HttpGet("pagedLink")]
-        public async Task<IActionResult> GetPagedLink([FromBody] Paged paged)
+        [HttpPost("pagedLink")]
+        public async Task<ActionResult<PageResponse<Task>>> GetPagedLink([FromBody] PageRequest request)
         {
             var token = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
-            var result = await _service.PagedLinkGet(paged.Link, token);
-            return Ok(result);
+            var result = await _service.PagedLinkGet(request.Link, token);
+            return result;
         }
         #endregion
         

@@ -64,6 +64,9 @@ export class HomeComponent {
   public navigateNewTask() {
     this.router.navigate(['./new-task'], { relativeTo: this.activatedRoute });
   }
+  public navigatePaged() {
+    this.router.navigate(['./task-paged'], { relativeTo: this.activatedRoute });
+  }
   public selectTask(task: ITask) {
     this.router.navigate(['./task-view', task.taskId], {relativeTo: this.activatedRoute});
   }

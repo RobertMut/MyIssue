@@ -27,8 +27,8 @@ namespace MyIssue.Web.Services
         Task<string> CreateTask(Task task, TokenAuth model);
         Task<TaskRoot> GetTasks(bool isClosed, bool all, string whoseTasks, int howMany, int? id, TokenAuth model);
         Task<bool> PutTask(Task task, TokenAuth model);
-        Task<Paged> FirstPagedGet(int? pageNumber, int? pageSize, TokenAuth model);
-        Task<Paged> PagedLinkGet(string link, TokenAuth model);
+        Task<PageResponse<Task>> FirstPagedGet(int? pageNumber, int? pageSize, TokenAuth model);
+        Task<PageResponse<Task>> PagedLinkGet(string link, TokenAuth model);
     }
     public class TaskService : ITaskService
     {
@@ -98,25 +98,19 @@ namespace MyIssue.Web.Services
             return "Something went wrong";
         }
 
-        public async Task<Paged> FirstPagedGet(int? pageNumber, int? pageSize, TokenAuth model)
+        public async Task<PageResponse<Task>> FirstPagedGet(int? pageNumber, int? pageSize, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
                 .Append(StringStatic.ByteMessage("GetFirstPagedTask\r\n<EOF>\r\n"))
                 .Append(StringStatic.ByteMessage($"{pageNumber.ToString() ?? "null"}\r\n<NEXT>\r\n{pageSize.ToString() ?? "null"}\r\n<EOF>\r\n"))
                 .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
-            
             string response = _server.SendData(cmds);
-            var root = JObject.Parse(response);
-            var data = root["data"].ToObject<Task[]>();
-            string firstPage = root["firstPage"].ToObject<string>();
-            string lastPage = root["lastPage"].ToObject<string>();
-            string? nextPage = root["nextPage"].ToObject<string?>();
-            string? previousPage = root["previousPage"].ToObject<string?>();
-            return new Paged(previousPage, nextPage, lastPage, firstPage, data);
+            var page = JsonConvert.DeserializeObject<PageResponse<Task>>(response);
+            return page;
         }
 
-        public async Task<Paged> PagedLinkGet(string link, TokenAuth model)
+        public async Task<PageResponse<Task>> PagedLinkGet(string link, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
@@ -124,13 +118,8 @@ namespace MyIssue.Web.Services
                 .Append(StringStatic.ByteMessage($"{link}\r\n<EOF>\r\n"))
                 .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
-            var root = JObject.Parse(response);
-            var data = root["data"].ToObject<Task[]>();
-            string firstPage = root["firstPage"].ToObject<string>();
-            string lastPage = root["lastPage"].ToObject<string>();
-            string? nextPage = root["nextPage"].ToObject<string?>();
-            string? previousPage = root["previousPage"].ToObject<string?>();
-            return new Paged(previousPage, nextPage, lastPage, firstPage, data);
+            var page = JsonConvert.DeserializeObject<PageResponse<Task>>(response);
+            return page;
         }
     }
 }

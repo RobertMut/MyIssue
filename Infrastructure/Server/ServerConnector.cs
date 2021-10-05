@@ -57,7 +57,7 @@ namespace MyIssue.Infrastructure.Server
         }
         private string ReadIncoming(NetworkStream ns)
         {
-            byte[] read = new byte[2048];
+            byte[] read = new byte[16384];
             int s = ns.Read(read, 0, read.Length);
             return StringStatic.StringMessage(read, s);
         }
