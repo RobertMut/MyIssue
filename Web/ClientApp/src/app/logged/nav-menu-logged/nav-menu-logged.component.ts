@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-menu-logged.component.css']
 })
 export class NavMenuLoggedComponent implements OnInit {
-
-  constructor() { }
+  public login: string;
+  constructor() {
+    this.login = localStorage.getItem("login");
+  }
 
   ngOnInit() {
   }

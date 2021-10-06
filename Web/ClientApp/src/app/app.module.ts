@@ -39,6 +39,7 @@ import { ClientService } from "../services/TaskTypeService";
 import { TaskTypeService } from "../services/ClientService";
 import { TaskService } from "../services/TaskService";
 import { TaskPagedComponent } from './logged/task-paged/task-paged.component';
+import { ProfileComponent } from './logged/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { TaskPagedComponent } from './logged/task-paged/task-paged.component';
     NavMenuLoggedComponent,
     TaskViewComponent,
     NewTaskComponent,
-    TaskPagedComponent
+    TaskPagedComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

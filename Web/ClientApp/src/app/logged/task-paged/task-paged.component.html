@@ -1,17 +1,32 @@
 <div class="task-div add-a-little-space-below">
-  <div>
+  <div class="pagination-control">
     <button mat-raised-button (click)="firstPageButton()">First page</button>
     <button mat-raised-button (click)="previousPageButton()">Previous page</button>
-    <mat-form-field>
-      <mat-label>Page</mat-label>
-      <input matInput />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Page size</mat-label>
-      <input matInput />
-    </mat-form-field>
+    <form #pageForm="ngForm" (ngSubmit)="goTo(pageForm.value.page, pageForm.value.pageSize)" class="page-jump">
+      <mat-form-field>
+        <mat-label>Page</mat-label>
+        <input matInput type="text" name="page" ngModel/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Page size</mat-label>
+        <input matInput type="text" name="pageSize" ngModel/>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Jump to</button>
+    </form>
     <button mat-raised-button (click)="nextPageButton()">Next page</button>
     <button mat-raised-button (click)="lastPageButton()">Last page</button>
+  </div>
+  <div class="additional">
+    <mat-select name="howManyTasksPerPage" class="selection" (selectionChange)="selectTaskPerPageHandler($event)" placeholder="Select tasks per page">
+      <mat-option [value]="5">5</mat-option>
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="15">15</mat-option>
+      <mat-option [value]="20">20</mat-option>
+      <mat-option [value]="30">30</mat-option>
+      <mat-option [value]="50">50</mat-option>
+    </mat-select>
+    <mat-label>Total pages: {{paged.totalPages}}</mat-label>
+    <mat-label>Page: {{paged.pageNumber}}</mat-label>
   </div>
   <div>
     <table mat-table class="mat-elevation-z8 task-navigation-table" ng-table="taskTable">

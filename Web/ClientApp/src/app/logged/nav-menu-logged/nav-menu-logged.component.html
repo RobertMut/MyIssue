@@ -16,7 +16,7 @@
            <!---[ngClass]="{ show: isExpanded }"-->
         <ul class="navbar-nav flex-grow">
           <li class="nav-item nav-link text-dark" [routerLinkActive]="['link-active']">
-            Admin
+            <a class="nav-link text-dark" [routerLink]="['./profile']">{{login}}</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['./logout']">Logout</a>

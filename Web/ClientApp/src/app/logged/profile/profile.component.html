@@ -1,0 +1,28 @@
+<div class="details">
+  <mat-card>
+    <h3>Profile</h3>
+    <mat-label>Login: {{user.login}}</mat-label>
+    <form>
+      <mat-form-field appearance="fill" class="textarea">
+        <mat-label>Old password</mat-label>
+        <input matInput type="password" class="password" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="textarea">
+        <mat-label>New password</mat-label>
+        <input matInput type="password" class="password" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="textarea">
+        <mat-label>Confirm new password</mat-label>
+        <input matInput type="password" class="password" />
+      </mat-form-field>
+    </form>
+  </mat-card>
+  <mat-card *ngIf="employee">
+    <h3>Employee</h3>
+    <mat-label>Name: {{employee.name}}</mat-label>
+    <mat-label>Surname: {{employee.surname}}</mat-label>
+    <mat-label>No: {{employee.no}}</mat-label>
+    <mat-label>Position: {{employee.position}}</mat-label>
+  </mat-card>
+
+</div>

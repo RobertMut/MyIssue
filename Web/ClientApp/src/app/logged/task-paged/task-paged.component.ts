@@ -3,6 +3,7 @@ import { ITask, ITaskroot, IPagedTaskRequest, IPagedResponse } from "../../../mo
 import { ActivatedRoute, Router } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
+import { MatSelectChange } from "@angular/material/select" 
 
 @Component({
   selector: 'app-task-paged',
@@ -15,7 +16,7 @@ export class TaskPagedComponent implements OnInit {
     private router: Router,
     private taskService: TaskService,
     private auth: AuthService) {
-    if (localStorage.getItem("pageSize") == null) localStorage.setItem("pageSize", "15");
+    if (localStorage.getItem("pageSize") == null) localStorage.setItem("pageSize", "10");
     let size: number = Number.parseInt(localStorage.getItem("pageSize"));
     this.taskService.getPagedFirst(1, size, this.auth.headers()).subscribe(result => {
       console.warn(result);
@@ -34,7 +35,7 @@ export class TaskPagedComponent implements OnInit {
   }
 
   public selectTask(task: ITask) {
-    this.router.navigate(['./task-view', task.taskId], { relativeTo: this.activeroute});
+    this.router.navigate(['nav-menu-logged/task-view', task.taskId]);
   }
   public firstPageButton() {
     this.taskService.getPagedLink(this.paged.firstPage, this.auth.headers()).subscribe(result => {
@@ -58,5 +59,13 @@ export class TaskPagedComponent implements OnInit {
       this.paged = JSON.parse(result);
     });
   }
-
+  public selectTaskPerPageHandler(event: MatSelectChange) {
+    localStorage.setItem("pageSize", event.value);
+  }
+  public goTo(pageNumber: any, pageSize: any) {
+    this.taskService.getPagedFirst(Number.parseInt(pageNumber.toString()),
+      Number.parseInt(pageSize.toString()), this.auth.headers()).subscribe(result => {
+      this.paged = JSON.parse(result);
+    });
+  }
 }
