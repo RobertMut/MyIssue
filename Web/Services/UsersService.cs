@@ -6,6 +6,7 @@ using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Model;
 using Newtonsoft.Json;
+using Task = MyIssue.Web.Model.Task;
 using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
@@ -13,6 +14,7 @@ namespace MyIssue.Web.Services
     public interface IUsersService
     {
         Task<UsersRoot> GetUsers(string? username, TokenAuth model);
+        Task<string> ChangePassword(Password password, TokenAuth model);
     }
     public class UsersService : IUsersService
     {
@@ -37,5 +39,16 @@ namespace MyIssue.Web.Services
             var task = JsonConvert.DeserializeObject<UsersRoot>(response);
             return task;
         }
+
+        public async Task<string> ChangePassword(Password password, TokenAuth model)
+        {
+            IEnumerable<byte[]> cmds = new List<byte[]>()
+                .Concat(User.TokenLogin(model.Login, model.Token))
+                .Append(StringStatic.ByteMessage("ChangePassword\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage(
+                    $"{password.OldPassword}\r\n<NEXT>\r\n{password.NewPassword}\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
+            return _server.SendData(cmds);
+        } 
     }
 }

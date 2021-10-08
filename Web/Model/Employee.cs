@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 
 namespace MyIssue.Web.Model
 {
-    public class EmployeeBasicRoot
+    public class EmployeeRoot
     {
-        public List<EmployeeBasic> Employees { get; set; }
+        public List<Employee> Employees { get; set; }
     }
-    public class EmployeeBasic
+    public class Employee
     {
         public string Login { get; set; }
         public string Name { get; set; }
+        public string Surname { get; set; }
+        public string No { get; set; }
         public string Position { get; set; }
     }
 }
