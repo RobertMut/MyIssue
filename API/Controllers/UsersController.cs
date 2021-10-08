@@ -51,17 +51,17 @@ namespace MyIssue.API.Controllers
             return Ok(user);
         }
         [HttpGet]
-        public async Task<ActionResult<UsernameReturnRoot>> GetUsers()
+        public async Task<ActionResult<UserReturnRoot>> GetUsers()
         {
-            List<UsernameReturn> usernames = new List<UsernameReturn>();
+            List<UserReturn> Users = new List<UserReturn>();
             var users = await _context.Users.ToListAsync();
-            users.ForEach(u => usernames.Add(new UsernameReturn
+            users.ForEach(u => Users.Add(new UserReturn
             {
                 Username = u.UserLogin
             }));
-            return Ok(JsonConvert.SerializeObject(new UsernameReturnRoot()
+            return Ok(JsonConvert.SerializeObject(new UserReturnRoot()
             {
-                Users = usernames
+                Users = Users
             }));
         }
 
@@ -69,15 +69,15 @@ namespace MyIssue.API.Controllers
         [HttpGet("{login}")]
         public async Task<ActionResult<User>> GetUser(string login)
         {
-            List<UsernameReturn> usernames = new List<UsernameReturn>();
+            List<UserReturn> Users = new List<UserReturn>();
             var users = await _context.Users.ToListAsync();
-            users.ForEach(u => usernames.Add(new UsernameReturn
+            users.ForEach(u => Users.Add(new UserReturn
             {
                 Username = u.UserLogin
             }));
-            var user = usernames.Where(u => u.Username == login);
+            var user = Users.Where(u => u.Username == login);
             if (user.Count().Equals(0)) return NotFound();
-            return Ok(JsonConvert.SerializeObject(new UsernameReturnRoot()
+            return Ok(JsonConvert.SerializeObject(new UserReturnRoot()
             {
                 Users = user.ToList()
             }));
@@ -89,15 +89,15 @@ namespace MyIssue.API.Controllers
             Console.WriteLine(nameof(this.Authenticate));
             var response = _userService.AuthenticateUser(model);
             if (response is null)
-                return BadRequest(new {message = "Username or password in incorrect"});
+                return BadRequest(new {message = "User or password in incorrect"});
             Console.WriteLine(response);
             return Ok(response);
         }
+
         [AllowAnonymous]
         [HttpPost("tokenauthenticate")]
-        public IActionResult AuthenticateToken([FromBody]AuthTokenRequest model)
+        public IActionResult AuthenticateToken([FromBody] AuthTokenRequest model)
         {
-            Console.WriteLine(nameof(this.AuthenticateToken));
             bool verified = _userService.VerifyToken(model.Token);
             string username = _userService.GetClaim(model.Token, "username");
             if (verified && username.Equals(model.Username))
@@ -106,7 +106,7 @@ namespace MyIssue.API.Controllers
                 return Ok(new Authenticate(user, model.Token));
             }
 
-            return BadRequest(new { message = "Token is invalid" });
+            return BadRequest(new {message = "Token is invalid"});
         }
 
         [AllowAnonymous]
@@ -128,15 +128,21 @@ namespace MyIssue.API.Controllers
         }
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("Put/{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
+        [HttpPut("Put/{login}")]
+        public async Task<IActionResult> PutUser(string login, [FromBody]Password user)
         {
-            if (id != user.UserLogin)
+            if (login != user.UserLogin)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            var foundUser = _context.Users.Single(u => u.UserLogin == user.UserLogin);
+            if (foundUser is not null && foundUser.Password == user.OldPassword)
+            {
+                foundUser.Password = user.NewPassword;
+                _context.Entry(foundUser).State = EntityState.Modified;
+            }
+
 
             try
             {
@@ -144,7 +150,7 @@ namespace MyIssue.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!UserExists(login))
                 {
                     return NotFound();
                 }

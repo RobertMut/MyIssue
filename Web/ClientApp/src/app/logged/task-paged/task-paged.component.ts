@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ITask, ITaskroot, IPagedTaskRequest, IPagedResponse } from "../../../models/task";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
-import { MatSelectChange } from "@angular/material/select" 
+import { MatSelectChange } from "@angular/material/select"
+import { ITask, IPagedResponse } from "../../../interfaces/Task";
 
 @Component({
   selector: 'app-task-paged',
@@ -12,7 +12,7 @@ import { MatSelectChange } from "@angular/material/select"
 })
 export class TaskPagedComponent implements OnInit {
   public paged: IPagedResponse = {} as IPagedResponse;
-  constructor(private activeroute: ActivatedRoute,
+  constructor(private activeRoute: ActivatedRoute,
     private router: Router,
     private taskService: TaskService,
     private auth: AuthService) {
@@ -40,23 +40,39 @@ export class TaskPagedComponent implements OnInit {
   public firstPageButton() {
     this.taskService.getPagedLink(this.paged.firstPage, this.auth.headers()).subscribe(result => {
       this.paged = JSON.parse(result);
+    },
+    error => {
+      console.error(error);
+      this.auth.CheckUnauthorized(error);
     });
   }
   public previousPageButton() {
     this.taskService.getPagedLink(this.paged.previousPage, this.auth.headers()).subscribe(result => {
       console.warn(result);
       this.paged = JSON.parse(result);
+    },
+    error => {
+      console.error(error);
+      this.auth.CheckUnauthorized(error);
     });
   }
   public nextPageButton() {
     this.taskService.getPagedLink(this.paged.nextPage, this.auth.headers()).subscribe(result => {
       console.warn(result);
       this.paged = JSON.parse(result);
+    },
+    error => {
+      console.error(error);
+      this.auth.CheckUnauthorized(error);
     });
   }
   public lastPageButton() {
     this.taskService.getPagedLink(this.paged.lastPage, this.auth.headers()).subscribe(result => {
       this.paged = JSON.parse(result);
+    },
+    error => {
+      console.error(error);
+      this.auth.CheckUnauthorized(error);
     });
   }
   public selectTaskPerPageHandler(event: MatSelectChange) {
@@ -66,6 +82,10 @@ export class TaskPagedComponent implements OnInit {
     this.taskService.getPagedFirst(Number.parseInt(pageNumber.toString()),
       Number.parseInt(pageSize.toString()), this.auth.headers()).subscribe(result => {
       this.paged = JSON.parse(result);
+    },
+    error => {
+      console.error(error);
+      this.auth.CheckUnauthorized(error);
     });
   }
 }

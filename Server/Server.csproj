@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Client\ClientCounter.cs" />
     <Compile Include="Client\ProcessClient.cs" />
+    <Compile Include="Commands\ChangePassword.cs" />
     <Compile Include="Commands\GetEmployee.cs" />
     <Compile Include="Commands\GetClients.cs" />
     <Compile Include="Commands\GetPagedByLink.cs" />

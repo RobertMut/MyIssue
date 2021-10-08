@@ -5,3 +5,7 @@ interface ITaskTypeRoot {
 interface ITaskType {
   taskType: string;
 }
+export {
+  ITaskTypeRoot,
+  ITaskType
+  }

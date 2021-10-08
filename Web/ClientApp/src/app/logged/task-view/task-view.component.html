@@ -21,7 +21,7 @@
   </mat-form-field>
       <div class="dateButtons">
         <button mat-raised-button type="button" name="start" (click)="onStartButton()">Start task</button>
-        <button mat-raised-button type="button" name="removestart" (click)="clearDate('removestart')">Remove</button>
+        <button mat-raised-button type="button" name="removeStart" (click)="clearDate('removeStart')">Remove</button>
       </div>
 
       <mat-form-field appearance="fill" class="datetime-picker">
@@ -33,8 +33,8 @@
 
       </mat-form-field>
       <div class="dateButtons">
-        <button mat-raised-button type="button" name="endbutton" (click)="onEndButton()">Set current time</button>
-        <button mat-raised-button type="button" name="removeend" (click)="clearDate('removeend')">Remove</button>
+        <button mat-raised-button type="button" name="endButton" (click)="onEndButton()">Set current time</button>
+        <button mat-raised-button type="button" name="removeEnd" (click)="clearDate('removeEnd')">Remove</button>
       </div>
       <label>Assigned to:</label>
       <mat-select name="assign" class="buttons" [(ngModel)]="task.taskAssignment">

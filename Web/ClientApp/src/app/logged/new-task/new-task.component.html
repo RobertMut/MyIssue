@@ -23,7 +23,7 @@
         <input matInput [ngxMatDatetimePicker]="startpicker" placeholder="Task start date" [(ngModel)]="task.taskStart" />
         <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #startpicker></ngx-mat-datetime-picker>
-        <mat-datepicker-toggle matSuffix (click)="clearDate('removestart')">
+        <mat-datepicker-toggle matSuffix (click)="clearDate('removeStart')">
           <mat-icon matDatepickerToggleIcon>clear</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #startpicker></mat-datepicker>
@@ -35,7 +35,7 @@
         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #endpicker>
         </ngx-mat-datetime-picker>
-        <mat-datepicker-toggle matSuffix (click)="clearDate('removeend')">
+        <mat-datepicker-toggle matSuffix (click)="clearDate('removeEnd')">
           <mat-icon matDatepickerToggleIcon>clear</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #endpicker></mat-datepicker>

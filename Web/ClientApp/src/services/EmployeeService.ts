@@ -12,12 +12,12 @@ export class EmployeeService {
     this.baseUrl = baseUrl;
   }
 
-  public getallemployees(headers: HttpHeaders): Observable<string> {
+  public getAllEmployees(headers: HttpHeaders): Observable<string> {
     return this.httpclient
       .get(this.baseUrl + 'employees', { headers: headers, responseType: 'text' });
   }
 
-  public getemployeebyname(login: string, headers: HttpHeaders): Observable<string> {
+  public getEmployeeByName(login: string, headers: HttpHeaders): Observable<string> {
     return this.httpclient
       .get(this.baseUrl + 'employees/' + login, { headers: headers, responseType: 'text' });
   }

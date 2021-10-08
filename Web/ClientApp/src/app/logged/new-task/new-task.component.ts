@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ITask, ITaskroot } from "../../../models/task";
-import { IEmployeeRoot, IEmployee } from "../../../models/employee";
+import { ITask, IPagedResponse } from "../../../interfaces/Task";
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { IClientNameRoot, IClientName } from "../../../models/clientname";
 import { ClientService } from "../../../services/TaskTypeService";
 import { TaskTypeService } from "../../../services/ClientService";
+import { IEmployeeRoot } from "../../../interfaces/Employee";
+import { ITaskTypeRoot } from "../../../interfaces/TaskType";
+import { IClientNameRoot } from "../../../interfaces/ClientName";
 
 enum Selector {
   taskType = "tasktypeSelect",
@@ -32,14 +33,14 @@ export class NewTaskComponent implements OnInit {
   public taskTypes: ITaskTypeRoot;
   public clients: IClientNameRoot;
 
-  constructor(private activeroute: ActivatedRoute,
+  constructor(private activeRoute: ActivatedRoute,
     private router: Router,
     private taskService: TaskService,
     private auth: AuthService,
-    private employeeservice: EmployeeService,
-    private clientservice: ClientService,
-    private tasktypeservice: TaskTypeService) {
-    this.employeeservice.getallemployees(this.auth.headers()).subscribe(result => {
+    private employeeService: EmployeeService,
+    private clientService: ClientService,
+    private tasktypeService: TaskTypeService) {
+    this.employeeService.getAllEmployees(this.auth.headers()).subscribe(result => {
         this.employees = JSON.parse(result);
         console.warn(this.employees.employees[0]);
       },
@@ -47,14 +48,14 @@ export class NewTaskComponent implements OnInit {
         console.error(error);
         this.auth.CheckUnauthorized(error);
       });
-    this.clientservice.getClients(this.auth.headers()).subscribe(result => {
+    this.clientService.getClients(this.auth.headers()).subscribe(result => {
         this.clients = JSON.parse(result);
       },
       error => {
         console.error(error);
         this.auth.CheckUnauthorized(error);
       });
-    this.tasktypeservice.getTaskTypes(this.auth.headers()).subscribe(result => {
+    this.tasktypeService.getTaskTypes(this.auth.headers()).subscribe(result => {
         this.taskTypes = JSON.parse(result);
         console.warn(this.taskTypes.taskTypes[0]);
       },
@@ -69,7 +70,7 @@ export class NewTaskComponent implements OnInit {
     this.task.taskOwner = localStorage.getItem("login");
   }
   clearDate(name): void {
-    if (name == 'removestart')
+    if (name == 'removeStart')
       this.task.taskStart = null;
     else this.task.taskEnd = null;
   }
@@ -80,8 +81,8 @@ export class NewTaskComponent implements OnInit {
     this.task.taskEnd = new Date().toISOString();
   }
   posttask(): void {
-    this.taskService.createTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));;
-    this.router.navigate(['./nav-menu-logged/home'], { relativeTo: this.activeroute });
+    this.taskService.createTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));
+    this.router.navigate(['./nav-menu-logged/home'], { relativeTo: this.activeRoute });
   }
 
 }

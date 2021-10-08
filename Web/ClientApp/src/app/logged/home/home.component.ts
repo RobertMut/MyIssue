@@ -3,7 +3,7 @@ import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
 import { HttpErrorResponse } from '@angular/common/http';
-import { ITask, ITaskroot } from "../../../models/task";
+import { ITask, IPagedResponse, ITaskRoot } from "../../../interfaces/Task";
 
 @Component({
   selector: 'app-home',
@@ -12,8 +12,8 @@ import { ITask, ITaskroot } from "../../../models/task";
   providers: [AuthService]
 })
 export class HomeComponent {
-  public freetasks: ITaskroot;
-  public activetasks: ITaskroot;
+  public freeTasks: ITaskRoot;
+  public activeTasks: ITaskRoot;
   public login: string;
   public selectionFree: number;
   public selectionActive: number;
@@ -23,18 +23,18 @@ export class HomeComponent {
     private activatedRoute: ActivatedRoute,
     private task: TaskService) {
     this.login = localStorage.getItem("login");
-    this.selectionFree = Number.parseInt(localStorage.getItem("selectionfree"));
-    this.selectionActive = Number.parseInt(localStorage.getItem("selectionactive"));
+    this.selectionFree = Number.parseInt(localStorage.getItem("selectionFree"));
+    this.selectionActive = Number.parseInt(localStorage.getItem("selectionActive"));
     if (isNaN(this.selectionFree)) {
       this.selectionFree = 5;
-      localStorage.setItem("selectionfree", this.selectionFree.toString());
+      localStorage.setItem("selectionFree", this.selectionFree.toString());
     }
     if (isNaN(this.selectionActive)) {
       this.selectionActive = 5;
-      localStorage.setItem("selectionactive", this.selectionActive.toString());
+      localStorage.setItem("selectionActive", this.selectionActive.toString());
     }
     task.getLastTasks(this.selectionFree, 'anybody', this.auth.headers()).subscribe(result => {
-        this.freetasks = JSON.parse(result);
+        this.freeTasks = JSON.parse(result);
       },
       error => {
         console.error(error);
@@ -42,7 +42,7 @@ export class HomeComponent {
       }
     );
     task.getLastTasks(this.selectionFree, localStorage.getItem("login").toString(), this.auth.headers()).subscribe(result => {
-        this.activetasks = JSON.parse(result);
+        this.activeTasks = JSON.parse(result);
       },
       error => {
         console.error(error);
@@ -53,12 +53,12 @@ export class HomeComponent {
   }
   selectFreeChangeHandler(event: any) {
     this.selectionFree = event.target.value;
-    localStorage.setItem("selectionfree", event.target.value.toString());
+    localStorage.setItem("selectionFree", event.target.value.toString());
     location.reload();
   }
   selectActiveChangeHandler(event: any) {
     this.selectionFree = event.target.value;
-    localStorage.setItem("selectionactive", event.target.value.toString());
+    localStorage.setItem("selectionActive", event.target.value.toString());
     location.reload();
   }
   public navigateNewTask() {

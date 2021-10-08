@@ -3,8 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { ITask, ITaskroot } from "../../../models/task";
-import { IEmployeeRoot } from "../../../models/employee";
+import { ITask, ITaskRoot } from "../../../interfaces/Task";
+import { IEmployeeRoot } from "../../../interfaces/Employee";
 
 
 @Component({
@@ -30,8 +30,8 @@ export class TaskViewComponent implements OnInit {
     let id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     this.taskService.getTaskById(id, this.auth.headers()).subscribe(result => {
-        let taskroot: ITaskroot = JSON.parse(result);
-        this.task = taskroot.tasks[0];
+        let taskRoot: ITaskRoot = JSON.parse(result);
+        this.task = taskRoot.tasks[0];
         this.checkMail();
       },
       error => {
@@ -39,7 +39,7 @@ export class TaskViewComponent implements OnInit {
         this.auth.CheckUnauthorized(error);
       });
 
-    this.employeeservice.getallemployees(this.auth.headers()).subscribe(result => {
+    this.employeeservice.getAllEmployees(this.auth.headers()).subscribe(result => {
       this.employees = JSON.parse(result);
 
     },
@@ -49,7 +49,7 @@ export class TaskViewComponent implements OnInit {
       });
   }
   clearDate(name): void {
-    if (name == 'removestart')
+    if (name == 'removeStart')
       this.task.taskStart = null;
     else this.task.taskEnd = null;
   }

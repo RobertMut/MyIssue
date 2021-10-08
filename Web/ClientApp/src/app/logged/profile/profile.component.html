@@ -1,24 +1,29 @@
 <div class="details">
   <mat-card>
-    <h3>Profile</h3>
-    <mat-label>Login: {{user.login}}</mat-label>
-    <form>
+    <mat-card-title>Details</mat-card-title>
+    <mat-label>Login: {{user.username}}</mat-label>
+    <mat-label>Type: {{user.type}}</mat-label>
+  </mat-card>
+  <mat-card>
+    <mat-card-title>Change Password</mat-card-title>
+    <form #passForm="ngForm" (ngSubmit)="changePassword(passForm.value.oldPass, passForm.value.newPass, passForm.value.newPassRepeated)">
       <mat-form-field appearance="fill" class="textarea">
         <mat-label>Old password</mat-label>
-        <input matInput type="password" class="password" />
+        <input matInput type="password" class="password" name="oldPass" ngModel/>
       </mat-form-field>
       <mat-form-field appearance="fill" class="textarea">
         <mat-label>New password</mat-label>
-        <input matInput type="password" class="password" />
+        <input matInput type="password" class="password" name="newPass" ngModel/>
       </mat-form-field>
       <mat-form-field appearance="fill" class="textarea">
         <mat-label>Confirm new password</mat-label>
-        <input matInput type="password" class="password" />
+        <input matInput type="password" class="password" name="newPassRepeated" ngModel/>
       </mat-form-field>
+      <button mat-raised-button type="submit">Change password!</button>
     </form>
   </mat-card>
   <mat-card *ngIf="employee">
-    <h3>Employee</h3>
+    <mat-card-title>Employee details</mat-card-title>
     <mat-label>Name: {{employee.name}}</mat-label>
     <mat-label>Surname: {{employee.surname}}</mat-label>
     <mat-label>No: {{employee.no}}</mat-label>

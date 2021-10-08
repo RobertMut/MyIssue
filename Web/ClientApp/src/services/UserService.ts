@@ -21,4 +21,12 @@ export class UserService {
     return this.httpclient
       .get(this.baseUrl + 'Users/' + name, { headers: headers, responseType: 'text' });
   }
+  public changePassword(oldPass: string, newPass: string, name: string, headers: HttpHeaders): Observable<string> {
+    let data: any = {
+      oldPassword: oldPass,
+      newPassword: newPass
+    }
+    return this.httpclient
+      .post(this.baseUrl + 'Users/' + name, JSON.stringify(data), { headers: headers, responseType: 'text' });
+  }
 }

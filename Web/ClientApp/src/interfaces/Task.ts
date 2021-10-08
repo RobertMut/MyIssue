@@ -1,9 +1,9 @@
-export interface IPagedTaskRequest {
+interface IPagedTaskRequest {
   link: string,
   page: number,
   size: number,
 }
-export interface IPagedResponse {
+interface IPagedResponse {
   pageNumber: number,
   pageSize: number,
   firstPage: string,
@@ -14,10 +14,10 @@ export interface IPagedResponse {
   previousPage: string,
   data: ITask[]
 }
-export interface ITaskroot {
+interface ITaskRoot {
   tasks: ITask[];
 }
-export interface ITask {
+interface ITask {
   taskId: string,
   taskTitle: string,
   taskDescription: string,
@@ -31,3 +31,9 @@ export interface ITask {
   createdByMail: string,
   employeeDescription: string,
 }
+export {
+  IPagedResponse,
+  IPagedTaskRequest,
+  ITaskRoot,
+  ITask
+  }

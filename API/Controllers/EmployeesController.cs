@@ -47,14 +47,16 @@ namespace MyIssue.API.Controllers
             return employee;
         }
         [HttpGet]
-        public async Task<ActionResult<UsernameReturnRoot>> GetEmployees()
+        public async Task<ActionResult<UserReturnRoot>> GetEmployees()
         {
-            List<EmployeeBasic> employeeList = new List<EmployeeBasic>();
+            List<EmployeeReturn> employeeList = new List<EmployeeReturn>();
             var employees = await _context.Employees.ToListAsync();
-            employees.ForEach(e => employeeList.Add(new EmployeeBasic
+            employees.ForEach(e => employeeList.Add(new EmployeeReturn
             {
                 Login = e.EmployeeLogin,
                 Name = e.EmployeeName,
+                Surname = e.EmployeeSurname,
+                No = e.EmployeeNo,
                 Position = _context.Positions.FirstOrDefault(p => p.PositionId==e.EmployeePosition).PositionName
             }));
             return Ok(JsonConvert.SerializeObject(new EmployeeBasicRoot()
@@ -67,18 +69,20 @@ namespace MyIssue.API.Controllers
         [HttpGet("{login}")]
         public async Task<ActionResult<User>> GetEmployee(string login)
         {
-            List<EmployeeBasic> employeeList = new List<EmployeeBasic>();
+            List<EmployeeReturn> employeeList = new List<EmployeeReturn>();
             var employees = await _context.Employees.FirstOrDefaultAsync(l => l.EmployeeLogin == login);
             if (employees == null) return NotFound();
-            var employee = new EmployeeBasic
+            var employee = new EmployeeReturn
             {
                 Login = employees.EmployeeLogin,
                 Name = employees.EmployeeName,
+                Surname = employees.EmployeeSurname,
+                No = employees.EmployeeNo,
                 Position = _context.Positions.FirstOrDefault(p => p.PositionId == employees.EmployeePosition).PositionName
             };
             return Ok(JsonConvert.SerializeObject(new EmployeeBasicRoot()
             {
-                Employees = new List<EmployeeBasic>(){employee}
+                Employees = new List<EmployeeReturn>(){employee}
             }));
         }
 
