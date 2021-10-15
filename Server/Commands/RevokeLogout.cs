@@ -6,6 +6,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MyIssue.Core.Model.Request;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Server.Model;
 using MyIssue.Server.Net;
@@ -35,7 +36,7 @@ namespace MyIssue.Server.Commands
                     }), Encoding.UTF8, "application/json"
                     );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync("api/Users/logout", content).GetAwaiter().GetResult();
+                    httpclient.PostAsync("api/Auth/logout", content).GetAwaiter().GetResult();
                 string response = httpresponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 if(response.Contains("Bad Request")) NetWrite.Write(client.ConnectedSock, "Bad request", ct);
                 else

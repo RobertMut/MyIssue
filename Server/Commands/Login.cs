@@ -5,8 +5,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Text;
+using MyIssue.Core.Model.Request;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Server.Model;
+using MyIssue.Core.Model.Return;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -27,14 +28,14 @@ namespace MyIssue.Server.Commands
                 Console.WriteLine(input[0]);
                 Console.WriteLine(input[1]);
                 StringContent content = new StringContent(
-                    JsonConvert.SerializeObject(new Auth
+                    JsonConvert.SerializeObject(new AuthRequest
                     {
                         Username = input[0],
                         Password = input[1]
                     }), Encoding.UTF8, "application/json"
                     );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync("api/Users/authenticate", content).Result;
+                    httpclient.PostAsync("api/Auth/authenticate", content).Result;
                 string response = httpresponse.Content.ReadAsStringAsync().Result;
                 var data = (JObject) JsonConvert.DeserializeObject(response);
                 if (!(data["message"] is null)) throw new InvalidCredentialException("INCORRECT\r\n");

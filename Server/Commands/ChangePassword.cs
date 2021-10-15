@@ -1,17 +1,10 @@
-﻿using MyIssue.Infrastructure.Files;
-using MyIssue.Server.Net;
-using System;
-using System.Linq;
+﻿using MyIssue.Server.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using MyIssue.Core.Exceptions;
-using MyIssue.Server.Model;
-using System.Threading.Tasks;
-using MyIssue.Core.String;
 using Newtonsoft.Json;
-using Task = MyIssue.Server.Model.Task;
 
 namespace MyIssue.Server.Commands
 {
@@ -26,7 +19,7 @@ namespace MyIssue.Server.Commands
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             string[] input = SplitToCommand.Get(client.CommandHistory);
             using (var request = new HttpRequestMessage(HttpMethod.Put,
-                httpclient.BaseAddress + $"api/Users/put/"+client.Login))
+                httpclient.BaseAddress + $"api/Auth/put/"+client.Login))
             {
                 var json = JsonConvert.SerializeObject(new
                 {

@@ -5,8 +5,9 @@ using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading;
+using MyIssue.Core.Model.Request;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Server.Model;
+using MyIssue.Core.Model.Return;
 using MyIssue.Server.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -30,14 +31,14 @@ namespace MyIssue.Server.Commands
                 Console.WriteLine(input[0]);
                 Console.WriteLine(input[1]);
                 StringContent content = new StringContent(
-                    JsonConvert.SerializeObject(new AuthToken
+                    JsonConvert.SerializeObject(new AuthTokenRequest
                     {
                         Username = input[0],
                         Token = input[1]
                     }), Encoding.UTF8, "application/json"
                 );
                 HttpResponseMessage httpresponse =
-                    httpclient.PostAsync("api/Users/tokenauthenticate", content).Result;
+                    httpclient.PostAsync("api/Auth/tokenauthenticate", content).Result;
                 string response = httpresponse.Content.ReadAsStringAsync().Result;
                 Console.WriteLine("CHECK IF CONTAIN INVALID");
                 if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
