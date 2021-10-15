@@ -8,9 +8,9 @@ using MyIssue.Infrastructure.Files;
 using System.Reflection;
 using System.Data.SqlClient;
 using MyIssue.Core.Service;
-using MyIssue.Infrastructure.Database;
 using MyIssue.Infrastructure.Imap;
 using MyIssue.Infrastructure.Model;
+using MyIssue.Server.Model;
 
 namespace MyIssue.Server
 {
@@ -35,7 +35,7 @@ namespace MyIssue.Server
                 Console.WriteLine("API - {0} - Connecting to API..", DateTime.Now);
                 //IDatabaseBootstrapper _dbBootstrapper = new DatabaseBootstrapper(ApiParameters.Parameters.ApiAddress);
                 //_dbBootstrapper.Configure();
-                service = new HttpService(ApiParameters.Parameters.ApiAddress);
+                service = new HttpService(Parameters.Api);
                 service.Get("api/Tasks/1");
                 Console.WriteLine("API - {0} - OK", DateTime.Now);
 
@@ -44,7 +44,7 @@ namespace MyIssue.Server
                 _net = new NetListener(listen, port);
 
                 if (ConfigValue.GetValue<string>("enabled", config).Equals("true")) Task.Run(async () => _net.Listen());
-                if (ConfigValue.GetValue<string>("i_enabled", config).Equals("true")) Task.Run(async () => _imap.RunImap(ct));
+                if (ConfigValue.GetValue<string>("i_enabled", config).Equals("true")) Task.Run(async () => _imap.RunImap(Parameters.Api, Parameters.Login, Parameters.Password, ct));
                 Console.ReadKey();
 
             }

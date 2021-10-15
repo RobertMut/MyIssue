@@ -19,6 +19,9 @@ namespace MyIssue.Server
             if (!File.Exists("configuration.xml")) throw new ConfigurationNotFoundException("Configuration file does not exist");
             Parameters.BufferSize = ConfigValue.GetValue<int>("bufferSize", config);
             Parameters.Timeout = ConfigValue.GetValue<int>("timeout", config);
+            Parameters.Api = ConfigValue.GetValue<string>("api_address", config);
+            Parameters.Login = ConfigValue.GetValue<string>("api_login", config);
+            Parameters.Password = ConfigValue.GetValue<string>("api_password", config);
             ImapParameters.Parameters = ImapParametersBuilder
                 .Create()
                     .SetAddress(ConfigValue.GetValue<string>("i_address", config))
@@ -27,22 +30,7 @@ namespace MyIssue.Server
                     .SetLogin(ConfigValue.GetValue<string>("i_login", config))
                     .SetPassword(ConfigValue.GetValue<string>("i_password", config))
                 .Build();
-            ApiParameters.Parameters = ApiParametersBuilder
-                .Create()
-                    .SetApiAddress(ConfigValue.GetValue<string>("api_address", config))
-                    //.SetDatabase(ConfigValue.GetValue<string>("d_database", config))
-                    //.SetUsername(ConfigValue.GetValue<string>("d_username", config))
-                    //.SetPassword(ConfigValue.GetValue<string>("d_password", config))
-                .Build();
 
-            // ApiParameters.ConnectionString = new SqlConnectionStringBuilder()
-            // {
-            //     DataSource = ApiParameters.Parameters.ApiAddress,
-            //     UserID = ApiParameters.Parameters.Username,
-            //     Password = ApiParameters.Parameters.Password,
-            //     InitialCatalog = ApiParameters.Parameters.Database
-            // };
-            
             ClientCounter.Clients = 0;
         }
 

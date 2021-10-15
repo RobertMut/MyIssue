@@ -11,7 +11,8 @@ using MyIssue.Core.String;
 using MyIssue.Server.Model;
 using MyIssue.Server.Net;
 using Newtonsoft.Json;
-using Task = MyIssue.Server.Model.Task;
+using MyIssue.Core.Model.Return;
+
 
 namespace MyIssue.Server.Commands
 {
@@ -29,7 +30,7 @@ namespace MyIssue.Server.Commands
             using (var request = new HttpRequestMessage(HttpMethod.Put,
                 httpclient.BaseAddress + $"api/Tasks/{input[0]}"))
             {
-                var json = JsonConvert.SerializeObject(new Task
+                var json = JsonConvert.SerializeObject(new TaskReturn()
                 {
                     TaskId = Convert.ToDecimal(input[0]),
                     TaskTitle = input[1],

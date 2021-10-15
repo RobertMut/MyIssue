@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading;
-using MyIssue.Core.Interfaces;
-using MyIssue.Infrastructure.Database;
-using MyIssue.Infrastructure.Database.Models;
 using MyIssue.Infrastructure.Model;
+using MyIssue.Server.Model;
 
 namespace MyIssue.Server.Commands
 {
@@ -14,7 +12,7 @@ namespace MyIssue.Server.Commands
         public Command()
         {
             httpclient = new HttpClient();
-            httpclient.BaseAddress = new Uri("https://localhost:5003");
+            httpclient.BaseAddress = new Uri(Parameters.Api);
         }
 
         public abstract void Invoke(Model.Client client, CancellationToken ct);
