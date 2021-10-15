@@ -1,11 +1,10 @@
 ﻿using System.IO;
 using System.Xml.Linq;
-using MyIssue.Core.Entities.Builders;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Core.Entities;
 using MyIssue.Core.Exceptions;
-using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc.Utility;
+using MyIssue.DesktopApp.Model;
+using MyIssue.DesktopApp.Model.Builders;
 
 namespace MyIssue.DesktopApp.Misc
 {

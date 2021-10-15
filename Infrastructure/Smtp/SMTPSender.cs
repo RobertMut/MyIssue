@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Net.Mail;
 using System.Net;
-using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
+using System.Net.Mail;
+using MyIssue.Infrastructure.Model;
 
-namespace MyIssue.Infrastructure.SMTP
+namespace MyIssue.Infrastructure.Smtp
 {
     public class SMTPSender : ISMTPSender
     {
@@ -13,7 +12,7 @@ namespace MyIssue.Infrastructure.SMTP
         private readonly string login;
         private readonly bool sslTsl;
 
-        public SMTPSender(SettingTextBoxes config)
+        public SMTPSender(SettingTextBoxesForSmtp config)
         {
 
             client = new SmtpClient(config.ServerAddress, 

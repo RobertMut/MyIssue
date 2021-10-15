@@ -1,12 +1,11 @@
-﻿using MyIssue.Core.Entities;
-using System.Threading;
+﻿using System.Threading;
 
 namespace MyIssue.Server.Commands
 {
     class Logout : Command
     {
         public static string Name = "Logout";
-        public override void Invoke(Client client, CancellationToken ct)
+        public override void Invoke(Model.Client client, CancellationToken ct)
         {
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
             {
@@ -14,6 +13,7 @@ namespace MyIssue.Server.Commands
                 client.Terminated = true;
                 client.ConnectedSock.Close();
                 client.ConnectedSock.Dispose();
+                httpclient.Dispose();
                 cts.Cancel();
             }
 

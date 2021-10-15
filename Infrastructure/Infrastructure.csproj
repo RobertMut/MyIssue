@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -50,18 +49,14 @@
     <EmbeddedResource Include="Resources\configurationServer.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DatabaseBootstrapper.cs" />
-    <Compile Include="Database\Models\Client.cs" />
-    <Compile Include="Database\Models\ClientEmployee.cs" />
-    <Compile Include="Database\Models\Employee.cs" />
-    <Compile Include="Database\Models\MyIssueContext.cs" />
-    <Compile Include="Database\Models\Position.cs" />
-    <Compile Include="Database\Models\Task.cs" />
-    <Compile Include="Database\Models\TaskType.cs" />
-    <Compile Include="Database\Models\User.cs" />
-    <Compile Include="Database\Models\UserType.cs" />
-    <Compile Include="Database\Repository.cs" />
-    <Compile Include="Database\UnitOfWork.cs" />
+    <Compile Include="Model\Builders\DBParametersBuilder.cs" />
+    <Compile Include="Model\Builders\IDBParametersBuilder.cs" />
+    <Compile Include="Model\Builders\IImapParametersBuilder.cs" />
+    <Compile Include="Model\Builders\ImapParametersBuilder.cs" />
+    <Compile Include="Model\DBParameters.cs" />
+    <Compile Include="Model\DBParametersTemplate.cs" />
+    <Compile Include="Model\ImapParameters.cs" />
+    <Compile Include="Model\ImapParametersTemplate.cs" />
     <Compile Include="Files\ArchiveFile.cs" />
     <Compile Include="Files\ConfigValue.cs" />
     <Compile Include="Files\DeleteMultiple.cs" />
@@ -73,22 +68,20 @@
     <Compile Include="Files\WriteConfiguration.cs" />
     <Compile Include="Imap\ImapConnect.cs" />
     <Compile Include="Imap\ImapMessages.cs" />
+    <Compile Include="Model\SettingTextBoxes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Server\IServerConnector.cs" />
+    <Compile Include="Server\ServerConnector.cs" />
+    <Compile Include="Smtp\ISMTPSender.cs" />
     <Compile Include="Smtp\SMTPSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="MailKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.2.13.0\lib\net47\MailKit.dll</HintPath>
@@ -97,11 +90,11 @@
     <Reference Include="MimeKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKit.2.13.0\lib\net47\MimeKit.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.10.0\lib\net46\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Exceptions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=fc5550082a9c642c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Exceptions.5.0.0\lib\net46\Serilog.Exceptions.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=5.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.5.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
@@ -142,13 +135,6 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

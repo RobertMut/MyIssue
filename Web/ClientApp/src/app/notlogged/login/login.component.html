@@ -1,0 +1,35 @@
+<div class="container">
+  <form (ngSubmit)="onButton()" [formGroup]="loginForm">
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">
+            <h1>MyIssue</h1>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th colspan="2">
+            <p>Please log in to continue</p>
+          </th>
+        </tr>
+        <tr>
+          <td class="text">Login</td>
+          <td class="input"><input type="text" id="loginbox" formControlName="login"/>
+        </tr>
+        <tr>
+          <td class="text">Password</td>
+          <td class="input"><input type="password" id="passbox" formControlName="pass"/>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="submit">Log me in!</button>
+          </td>
+        </tr>
+      </tbody>
+
+
+    </table>
+  </form>
+</div>

@@ -10,7 +10,7 @@ namespace MyIssue.Infrastructure.Files
         {
             try
             {
-                return (T)Convert.ChangeType( d?.Descendants(node).FirstOrDefault().Value , typeof(T));
+                return (T)Convert.ChangeType( d?.Descendants(node)?.FirstOrDefault()?.Value, typeof(T));
 
             } 
             catch (NullReferenceException)

@@ -1,0 +1,71 @@
+<div class="client-creation">
+  <mat-accordion>
+    <form #clientForm="ngForm" (ngSubmit)="createClient(clientForm.value)">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Add new client</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="formBody">
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Client name</mat-label>
+            <input matInput type="text" name="name" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Country</mat-label>
+            <input matInput type="text" name="country" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>No. (identification number)</mat-label>
+            <input matInput type="text" name="no" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Street</mat-label>
+            <input matInput type="text" name="street" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Street no.</mat-label>
+            <input matInput type="text" name="streetNo" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Flat no.</mat-label>
+            <input matInput type="text" name="flatNo" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" name="description" ngModel />
+          </mat-form-field>
+          <button mat-raised-button type="submit">Create client</button>
+          <p>{{result}}</p>
+        </div>
+      </mat-expansion-panel>
+    </form>
+  </mat-accordion>
+      <mat-card *ngIf="clients.clients">
+        <table mat-table class="mat-elevation-z8 task-navigation-table">
+          <thead>
+            <tr mat-header-row>
+              <th mat-header-cell>Id</th>
+              <th mat-header-cell>Name</th>
+              <th mat-header-cell>Country</th>
+              <th mat-header-cell>No</th>
+              <th mat-header-cell>Street</th>
+              <th mat-header-cell>Street number</th>
+              <th mat-header-cell>Flat number</th>
+              <th mat-header-cell>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr mat-row *ngFor="let client of clients.clients" class="task-row">
+              <td mat-cell>{{client.id}}</td>
+              <td mat-cell>{{client.name}}</td>
+              <td mat-cell>{{client.country}}</td>
+              <td mat-cell>{{client.no}}</td>
+              <td mat-cell>{{client.street}}</td>
+              <td mat-cell>{{client.streetNo}}</td>
+              <td mat-cell>{{client.flatNo}}</td>
+              <td mat-cell>{{client.Description}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card>
+</div>

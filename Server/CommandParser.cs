@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using MyIssue.Core.Entities;
 using MyIssue.Server.Commands;
 using MyIssue.Core.Aggregates;
 using MyIssue.Core.Exceptions;
@@ -20,7 +19,7 @@ namespace MyIssue.Server
                                               where t.IsClass && t.Namespace == "MyIssue.Server.Commands"
                                               select t).ToList());
         }
-        public void Parser(string input, Client client, CancellationToken ct)
+        public void Parser(string input, Model.Client client, CancellationToken ct)
         {
             try
             {

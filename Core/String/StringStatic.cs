@@ -53,5 +53,10 @@ namespace MyIssue.Core.String
             }
 
         }
+        public static DateTime? CheckDate(string dateString)
+        {
+            if (string.IsNullOrEmpty(dateString)) return null;
+            return Convert.ToDateTime(dateString);
+        }
     }
 }

@@ -1,9 +1,9 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Interfaces;
+﻿using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc.Utility;
 using MyIssue.Infrastructure.Files;
 using System.IO;
 using System.Reflection;
+using MyIssue.DesktopApp.Model;
 
 namespace MyIssue.DesktopApp.Misc
 {

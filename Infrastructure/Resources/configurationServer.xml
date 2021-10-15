@@ -8,12 +8,11 @@
     <i_login>login</i_login>
     <i_password>pass</i_password>
   </imapSettings>
-  <databaseSettings>
-    <d_address>DESTKOP</d_address>
-    <d_database>DATABASE</d_database>
-    <d_username>username</d_username>
-    <d_password>password</d_password>
-  </databaseSettings>
+  <apiSettings>
+    <api_address>DESKTOP</api_address>
+    <api_login>Login</api_login>
+    <api_password>Pass</api_password>
+  </apiSettings>
   <serverSettings>
     <enabled>true</enabled>
     <listenAddress>127.0.0.1</listenAddress>

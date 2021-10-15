@@ -98,14 +98,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Builders\ConfigValuesBuilder.cs" />
+    <Compile Include="Model\Builders\IConfigurationBuilder.cs" />
+    <Compile Include="Model\Builders\IDetailsBuilder.cs" />
+    <Compile Include="Model\Builders\PersonalDetailsBuilder.cs" />
+    <Compile Include="Model\PersonalDetails.cs" />
+    <Compile Include="Model\SettingTextBoxes.cs" />
     <Compile Include="Misc\Converters\ImageConverter.cs" />
     <Compile Include="Misc\Converters\BooleanStringConverter.cs" />
     <Compile Include="Misc\Converters\InverseBooleanConverter.cs" />
     <Compile Include="Misc\DesktopData.cs" />
+    <Compile Include="Misc\IDesktopData.cs" />
+    <Compile Include="Misc\ISaveConfiguration.cs" />
+    <Compile Include="Misc\IUserData.cs" />
     <Compile Include="Misc\SaveConfiguration.cs" />
     <Compile Include="Misc\SavePersonal.cs" />
+    <Compile Include="Misc\Sender\ISelector.cs" />
     <Compile Include="Misc\Sender\Selector.cs" />
     <Compile Include="Misc\UserData.cs" />
+    <Compile Include="Misc\Utility\IMessageConstructor.cs" />
     <Compile Include="ViewModel\LogoViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PromptViewModel.cs" />

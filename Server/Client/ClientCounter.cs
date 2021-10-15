@@ -1,4 +1,4 @@
-﻿namespace MyIssue.Server
+﻿namespace MyIssue.Server.Client
 {
     public static class ClientCounter
     {

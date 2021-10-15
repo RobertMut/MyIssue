@@ -6,22 +6,29 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
+using MyIssue.Core.Model.Return;
 using MyIssue.Core.String;
-using MyIssue.Infrastructure.Smtp;
-using MyIssue.Infrastructure.Database;
 using MyIssue.Infrastructure.Files;
+using MyIssue.Infrastructure.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Infrastructure.Imap
 {
     public class ImapMessages : IImapParse 
     {
         private IImapConnect _iconn;
-        private UnitOfWork unit;
-
+        //private UnitOfWork unit;
+        private IHttpService _httpService;
         private ImapClient idleClient;
+        private readonly string _apiAddress;
+        private readonly string _login;
+        private readonly string _pass;
         private ImapClient getClient;
         private CancellationToken token;
         private CancellationTokenSource cancelToken;
@@ -29,13 +36,15 @@ namespace MyIssue.Infrastructure.Imap
         private bool freshRun = true;
 
 
-        public ImapMessages(ImapClient idleClient)
+        public ImapMessages(ImapClient idleClient, string apiAddress, string login, string pass)
         {
             _iconn = new ImapConnect();
             this.idleClient = idleClient;
+            _apiAddress = apiAddress;
+            _login = login;
+            _pass = pass;
             cancelToken = new CancellationTokenSource();
-            unit = new UnitOfWork(new Database.Models.MyIssueContext(DBParameters.ConnectionString.ToString()));
-           }
+        }
 
         public async Task ImapListenNewMessagesAsync(CancellationToken ct)
         {
@@ -160,23 +169,39 @@ namespace MyIssue.Infrastructure.Imap
         {
 
             string[] email = StringStatic.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            string title = email[4];
-            string desc = string.Format("{0} {1}\n{2}", email[2], email[3], string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody);
-            string client = email[1];
-            decimal clientId = unit.ClientRepository.Get(c => c.ClientName == client).FirstOrDefault().ClientId;
-
-
-             unit.TaskRepository.Add(new Database.Models.Task
+            string desc =
+                $"{email[2]} {email[3]}\n{(string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody)}";
+            string encoded = Convert.ToBase64String(
+                Encoding.UTF8.GetBytes($"{_login}:{_pass}")
+            );
+            using (var client = new HttpClient())
             {
-                TaskTitle = title,
-                TaskDesc = desc,
-                TaskCreation = m.Date.DateTime,
-                TaskClient = clientId,
-                TaskType = 1,
-                MailId = m.GetHashCode().ToString()
-            });
-            unit.Complete();
-            Console.WriteLine("IMAP - {0} - Data was written to database", DateTime.Now);
+                client.BaseAddress = new Uri(_apiAddress);
+                using (var request = new HttpRequestMessage(HttpMethod.Post,
+                    client.BaseAddress + $"api/Tasks/"))
+                {
+                    var json = JsonConvert.SerializeObject(new TaskReturn
+                    {
+                        TaskTitle = email[4],
+                        TaskDescription = desc,
+                        TaskClient = email[1],
+                        TaskAssignment = null,
+                        TaskOwner = null,
+                        TaskType = "Normal",
+                        CreatedByMail = m.GetHashCode().ToString()
+                    });
+                    request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                    request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                    request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                    request.Headers.Connection.Add("keep-alive");
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"Basic {encoded}");
+                    var response = client.SendAsync(request).Result;
+
+                    Console.WriteLine($"IMAP - {DateTime.Now} - {response.StatusCode}");
+                }
+            }
+
         }
 
     }

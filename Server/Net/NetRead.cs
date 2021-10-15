@@ -1,9 +1,9 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.String;
+﻿using MyIssue.Core.String;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Infrastructure.Files;
+using Parameters = MyIssue.Server.Model.Parameters;
 
 namespace MyIssue.Server.Net
 {

@@ -1,0 +1,41 @@
+h1 {
+  text-align: center;
+  font-size: 30px;
+}
+.task-div {
+  width: 100%;
+}
+.task-navigation-table {
+  margin: 0 auto;
+  width: 85%;
+  clear: both;
+}
+.task-navigation-table tbody {
+  border: 1px solid darkgrey;
+}
+.task-navigation-table tbody tr {
+  border-bottom: 1px solid lightgray;
+}
+.task-navigation-table thead {
+  margin-bottom: 5%;
+}
+.add-a-little-space-below {
+  padding-bottom: 3%;
+}
+.selection {
+  float: right;
+  margin-right: 7.5%;
+  width: 5%;
+}
+p {
+  margin-left: 7.5%;
+  font-size: 16px;
+}
+.task-row:hover {
+  background-color: cornflowerblue;
+  cursor: pointer;
+}
+.control {
+  width: 100%;
+  padding: 0 7.5% 0;
+}

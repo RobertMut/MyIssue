@@ -1,0 +1,34 @@
+.task-div {
+  width: 75%;
+  margin: 0 auto;
+}
+.pagination-control {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-around;
+}
+.additional {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-around;
+}
+.additional mat-select {
+  width: 15%
+}
+.page-jump {
+  padding: 0 2% 0;
+  display: inline;
+}
+table {
+  width: 100%;
+}
+.task-row:hover {
+
+  background-color: cornflowerblue;
+  cursor: pointer;
+}
+

@@ -1,0 +1,16 @@
+.details {
+  width: 75%;
+  margin: 0 auto;
+}
+mat-card {
+  margin: 0 0 1.5%;
+  display: flex;
+  flex-flow: column;
+}
+form {
+  display: flex;
+  flex-flow: column;
+}
+form mat-form-field, form button {
+  width: 33%;
+}

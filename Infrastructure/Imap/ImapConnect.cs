@@ -1,17 +1,22 @@
 ﻿using System;
+using System.IO;
+using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using MailKit.Net.Imap;
-using System.Threading;
-using System.Net.Sockets;
-using System.IO;
 using MailKit.Security;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Entities;
-using MyIssue.Infrastructure.Imap;
 using MyIssue.Infrastructure.Files;
+using MyIssue.Infrastructure.Model;
 
-namespace MyIssue.Infrastructure.Smtp
+namespace MyIssue.Infrastructure.Imap
 {
+    public interface IImapConnect
+    {
+        Task RunImap(string apiAddress, string apiLogin, string ApiPassword, CancellationToken ct);
+        Task ConnectToImap(ImapClient c, CancellationToken ct);
+        Task ReconnectAsync(ImapClient c);
+    }
     public class ImapConnect : IImapConnect
     {
         CancellationToken token;
@@ -19,12 +24,12 @@ namespace MyIssue.Infrastructure.Smtp
         IImapParse _parse;
         int tries = 0;
 
-        public async Task RunImap(CancellationToken ct)
+        public async Task RunImap(string apiAddress, string apiLogin, string ApiPassword, CancellationToken ct)
         {
             token = ct;
             using (idleClient = new ImapClient())
             {
-                _parse = new ImapMessages(idleClient);
+                _parse = new ImapMessages(idleClient,apiAddress, apiLogin, ApiPassword );
                 Console.WriteLine("IMAP - {0} - Connecting to server...", DateTime.Now);
                 ConnectToImap(idleClient, token);
                 var task = _parse.ImapListenNewMessagesAsync(token);

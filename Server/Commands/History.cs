@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Server.Net;
+﻿using MyIssue.Server.Net;
 using System.Threading;
 
 namespace MyIssue.Server.Commands
@@ -7,7 +6,7 @@ namespace MyIssue.Server.Commands
     class History : Command
     {
         public static string Name = "History";
-        public override void Invoke(Client client, CancellationToken ct)
+        public override void Invoke(Model.Client client, CancellationToken ct)
         {
             LogUser.TypedCommand("History", "Executed", client);
             string commandHistory = string.Join("\r\n", client.CommandHistory.ToArray()) + "\r\n";

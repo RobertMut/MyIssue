@@ -1,5 +1,4 @@
-﻿using MyIssue.Core.Entities;
-using MyIssue.Core.Interfaces;
+﻿using MyIssue.Core.Interfaces;
 using MyIssue.DesktopApp.Misc;
 using MyIssue.DesktopApp.Misc.Sender;
 using MyIssue.Infrastructure.Files;
@@ -9,6 +8,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyIssue.DesktopApp.Model;
 
 namespace MyIssue.DesktopApp.ViewModel
 {

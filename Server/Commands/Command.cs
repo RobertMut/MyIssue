@@ -1,20 +1,21 @@
-﻿using System.Threading;
-using MyIssue.Core.Entities;
-using MyIssue.Infrastructure.Database;
-using MyIssue.Infrastructure.Database.Models;
-using Client = MyIssue.Core.Entities.Client;
+﻿using System;
+using System.Net.Http;
+using System.Threading;
+using MyIssue.Infrastructure.Model;
+using MyIssue.Server.Model;
 
 namespace MyIssue.Server.Commands
 {
     public abstract class Command
     {
-        protected UnitOfWork unit;
+        protected HttpClient httpclient;
         public Command()
         {
-            unit = new UnitOfWork(new MyIssueContext(DBParameters.ConnectionString.ToString()));
+            httpclient = new HttpClient();
+            httpclient.BaseAddress = new Uri(Parameters.Api);
         }
 
-        public abstract void Invoke(Client client, CancellationToken ct);
+        public abstract void Invoke(Model.Client client, CancellationToken ct);
     }
 
 }

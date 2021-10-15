@@ -1,0 +1,71 @@
+.form {
+  display: flex;
+  width: 100%;
+  align-content: space-between;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.center-element {
+  display: flex;
+  flex-flow: column;
+  margin: 0 10% 0 10%;
+  width: 100%;
+  align-items: center;
+}
+
+.left-side, .right-side {
+  width: 40%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.left-side {
+  margin-left: 5%;
+  padding-left: 15%;
+}
+
+.right-side {
+  margin-right: 5%;
+}
+
+.right-side input {
+  width: 50%;
+}
+
+.break {
+  padding-top: 2.5%;
+  width: 100%;
+}
+
+.buttons {
+  width: 50%;
+  margin-bottom: 1%
+}
+
+.description {
+  margin-top: 0.5%;
+  width: 100%;
+  height: 70px;
+}
+
+.right-side .dateButtons {
+  display: flex;
+}
+
+.right-side .dateButtons button {
+  margin: 0.6%
+}
+
+.datetime-picker {
+  width: 50%;
+}
+
+.center-element .buttons {
+  margin-top: 0.5%
+}
+
+.center-element .textarea {
+  width: 100%;
+}
