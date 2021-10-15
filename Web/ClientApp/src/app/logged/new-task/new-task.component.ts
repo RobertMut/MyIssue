@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ITask, IPagedResponse } from "../../../interfaces/Task";
+import { Task, PagedResponse } from "../../../interfaces/Task";
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { ClientService } from "../../../services/TaskTypeService";
-import { TaskTypeService } from "../../../services/ClientService";
 import { IEmployeeRoot } from "../../../interfaces/Employee";
 import { ITaskTypeRoot } from "../../../interfaces/TaskType";
-import { IClientNameRoot } from "../../../interfaces/ClientName";
+import { ClientService } from "../../../services/ClientService";
+import { TaskTypeService } from "../../../services/TaskTypeService";
+import { IClientRoot } from "../../../interfaces/Client";
 
 enum Selector {
   taskType = "tasktypeSelect",
@@ -25,13 +25,13 @@ enum Selector {
 })
 
 export class NewTaskComponent implements OnInit {
-  public task: ITask = {} as ITask;
+  public task: Task = {} as Task;
   public assignment: string;
   public ownership: string;
   public employees: IEmployeeRoot;
   public createdByMail: boolean;
   public taskTypes: ITaskTypeRoot;
-  public clients: IClientNameRoot;
+  public clients: IClientRoot;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,

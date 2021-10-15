@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { ITask, ITaskRoot } from "../../../interfaces/Task";
+import { Task, TaskRoot } from "../../../interfaces/Task";
 import { IEmployeeRoot } from "../../../interfaces/Employee";
 
 
@@ -14,7 +14,7 @@ import { IEmployeeRoot } from "../../../interfaces/Employee";
   providers: [AuthService, EmployeeService]
 })
 export class TaskViewComponent implements OnInit {
-  public task: ITask;
+  public task: Task;
   public assignment: string;
   public ownership: string;
   public employees: IEmployeeRoot;
@@ -30,7 +30,7 @@ export class TaskViewComponent implements OnInit {
     let id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     this.taskService.getTaskById(id, this.auth.headers()).subscribe(result => {
-        let taskRoot: ITaskRoot = JSON.parse(result);
+        let taskRoot: TaskRoot = JSON.parse(result);
         this.task = taskRoot.tasks[0];
         this.checkMail();
       },

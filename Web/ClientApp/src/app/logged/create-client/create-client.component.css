@@ -1,0 +1,20 @@
+.client-creation {
+  width: 75%;
+  margin: 0 auto;
+}
+table {
+  width: 100%;
+}
+form {
+  margin: 0 0 1%;
+}
+.formBody {
+  display: flex;
+  flex-flow: column;
+  width: 50%;
+  margin: 0 auto;
+}
+.formBody p{
+  margin: 0 auto;
+  font-size: 20px;
+}

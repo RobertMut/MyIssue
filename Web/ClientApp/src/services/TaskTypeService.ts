@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class ClientService {
+export class TaskTypeService {
   private baseUrl: string;
 
   constructor(private httpclient: HttpClient,
@@ -11,8 +11,8 @@ export class ClientService {
     this.baseUrl = baseUrl;
   }
 
-  public getClients(headers: HttpHeaders): Observable<string> {
+  public getTaskTypes(headers: HttpHeaders): Observable<string> {
     return this.httpclient
-      .get(this.baseUrl + 'Clients', { headers: headers, responseType: 'text' });
+      .get(this.baseUrl + 'TaskTypes', { headers: headers, responseType: 'text' });
   }
 }

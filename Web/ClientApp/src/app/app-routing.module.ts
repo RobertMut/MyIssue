@@ -10,6 +10,7 @@ import { TaskViewComponent } from "./logged/task-view/task-view.component";
 import { NewTaskComponent } from "./logged/new-task/new-task.component";
 import { TaskPagedComponent } from "./logged/task-paged/task-paged.component";
 import { ProfileComponent } from "./logged/profile/profile.component";
+import { CreateClientComponent } from "./logged/create-client/create-client.component";
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
       { path: 'task-view/:id', component: TaskViewComponent },
       { path: 'new-task', component: NewTaskComponent },
       { path: 'task-paged', component: TaskPagedComponent },
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      { path: 'create-client', component: CreateClientComponent}
     ]
   },
   {

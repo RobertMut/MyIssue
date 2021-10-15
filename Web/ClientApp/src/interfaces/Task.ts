@@ -1,39 +1,39 @@
-interface IPagedTaskRequest {
-  link: string,
-  page: number,
-  size: number,
+class PagedTaskRequest {
+  link: string;
+  page: number;
+  size: number;
 }
-interface IPagedResponse {
-  pageNumber: number,
-  pageSize: number,
-  firstPage: string,
-  lastPage: string,
-  totalPages: number,
-  totalRecords: number
-  nextPage: string,
-  previousPage: string,
-  data: ITask[]
+class PagedResponse {
+  pageNumber: number;
+  pageSize: number;
+  firstPage: string;
+  lastPage: string;
+  totalPages: number;
+  otalRecords: number;
+  nextPage: string;
+  previousPage: string;
+  data:Task[];
 }
-interface ITaskRoot {
-  tasks: ITask[];
+class TaskRoot {
+  tasks: Task[];
 }
-interface ITask {
-  taskId: string,
-  taskTitle: string,
-  taskDescription: string,
-  taskClient: string,
-  taskAssignment: string,
-  taskOwner: string,
-  taskType: string,
-  taskStart: string,
-  taskEnd: string,
-  taskCreationDate: string,
-  createdByMail: string,
-  employeeDescription: string,
+class Task {
+  taskId: string;
+  taskTitle: string;
+  taskDescription: string;
+  taskClient: string;
+  taskAssignment: string;
+  taskOwner: string;
+  taskType: string;
+  taskStart: string;
+  taskEnd: string;
+  taskCreationDate: string;
+  createdByMail: string;
+  employeeDescription: string;
 }
 export {
-  IPagedResponse,
-  IPagedTaskRequest,
-  ITaskRoot,
-  ITask
+  PagedResponse,
+  PagedTaskRequest,
+  TaskRoot,
+  Task
   }

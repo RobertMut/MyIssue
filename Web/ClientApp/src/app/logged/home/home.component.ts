@@ -3,7 +3,7 @@ import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
 import { HttpErrorResponse } from '@angular/common/http';
-import { ITask, IPagedResponse, ITaskRoot } from "../../../interfaces/Task";
+import { Task, PagedResponse, TaskRoot } from "../../../interfaces/Task";
 
 @Component({
   selector: 'app-home',
@@ -12,8 +12,8 @@ import { ITask, IPagedResponse, ITaskRoot } from "../../../interfaces/Task";
   providers: [AuthService]
 })
 export class HomeComponent {
-  public freeTasks: ITaskRoot;
-  public activeTasks: ITaskRoot;
+  public freeTasks: Task[];
+  public activeTasks: Task[];
   public login: string;
   public selectionFree: number;
   public selectionActive: number;
@@ -34,15 +34,17 @@ export class HomeComponent {
       localStorage.setItem("selectionActive", this.selectionActive.toString());
     }
     task.getLastTasks(this.selectionFree, 'anybody', this.auth.headers()).subscribe(result => {
-        this.freeTasks = JSON.parse(result);
-      },
+        let data: TaskRoot = JSON.parse(result);
+        this.freeTasks = data.tasks;
+    },
       error => {
         console.error(error);
         this.auth.CheckUnauthorized(error);
       }
     );
     task.getLastTasks(this.selectionFree, localStorage.getItem("login").toString(), this.auth.headers()).subscribe(result => {
-        this.activeTasks = JSON.parse(result);
+      let data: TaskRoot = JSON.parse(result);
+      this.activeTasks = data.tasks;
       },
       error => {
         console.error(error);
@@ -67,7 +69,10 @@ export class HomeComponent {
   public navigatePaged() {
     this.router.navigate(['./task-paged'], { relativeTo: this.activatedRoute });
   }
-  public selectTask(task: ITask) {
-    this.router.navigate(['./task-view', task.taskId], {relativeTo: this.activatedRoute});
+  public navigateCreateClient() {
+    this.router.navigate(['./create-client'], { relativeTo: this.activatedRoute });
+  }
+  public selectTask(task: Task) {
+    this.router.navigate(['./nav-menu-logged/task-view', task.taskId], {relativeTo: this.activatedRoute});
   }
 }

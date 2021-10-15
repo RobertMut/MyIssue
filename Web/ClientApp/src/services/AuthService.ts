@@ -71,7 +71,7 @@ export class AuthService {
 
   public login(login: string, pass: string): Observable<boolean> {
     let data = {
-      "Login": login,
+      "UserName": login,
       "Password": pass
     }
     console.warn(data);
@@ -103,7 +103,6 @@ export class AuthService {
     const httpEx = exception as HttpErrorResponse;
     if (httpEx.status == 401 || httpEx.status == 403) {
       this.logout();
-      //this.router.navigate(['nav-menu']);
     }
   }
 }

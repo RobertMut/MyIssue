@@ -1,9 +1,10 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { IClient } from "../interfaces/Client";
 
 @Injectable()
-export class TaskTypeService {
+export class ClientService {
   private baseUrl: string;
 
   constructor(private httpclient: HttpClient,
@@ -11,8 +12,13 @@ export class TaskTypeService {
     this.baseUrl = baseUrl;
   }
 
-  public getTaskTypes(headers: HttpHeaders): Observable<string> {
+  public getClients(headers: HttpHeaders): Observable<string> {
     return this.httpclient
-      .get(this.baseUrl + 'TaskTypes', { headers: headers, responseType: 'text' });
+      .get(this.baseUrl + 'Clients', { headers: headers, responseType: 'text' });
+  }
+  public postClient(client: IClient, headers: HttpHeaders) {
+    console.warn(client.name + ' ' + this.baseUrl+'Clients/new');
+    return this.httpclient
+      .post(this.baseUrl + 'Clients/new', JSON.stringify(client), { headers: headers });
   }
 }

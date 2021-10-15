@@ -30,16 +30,14 @@ import {
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from "@angular/material/card";
 import { SharedModule } from "../modules/SharedModule";
 import { NewTaskComponent } from './logged/new-task/new-task.component';
-import { AuthService } from "../services/AuthService";
-import { ClientService } from "../services/TaskTypeService";
-import { TaskTypeService } from "../services/ClientService";
-import { TaskService } from "../services/TaskService";
 import { TaskPagedComponent } from './logged/task-paged/task-paged.component';
 import { ProfileComponent } from './logged/profile/profile.component';
+import { CreateClientComponent } from './logged/create-client/create-client.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +50,8 @@ import { ProfileComponent } from './logged/profile/profile.component';
     TaskViewComponent,
     NewTaskComponent,
     TaskPagedComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreateClientComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -67,6 +66,7 @@ import { ProfileComponent } from './logged/profile/profile.component';
     MatButtonModule,
     NgxMatDatetimePickerModule,
     MatFormFieldModule,
+    MatExpansionModule,
     MatNativeDateModule,
     NgxMatNativeDateModule,
     MatSelectModule,

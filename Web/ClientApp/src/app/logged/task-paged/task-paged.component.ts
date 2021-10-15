@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { MatSelectChange } from "@angular/material/select"
-import { ITask, IPagedResponse } from "../../../interfaces/Task";
+import { Task, PagedResponse } from "../../../interfaces/Task";
 
 @Component({
   selector: 'app-task-paged',
@@ -11,7 +11,7 @@ import { ITask, IPagedResponse } from "../../../interfaces/Task";
   styleUrls: ['./task-paged.component.css']
 })
 export class TaskPagedComponent implements OnInit {
-  public paged: IPagedResponse = {} as IPagedResponse;
+  public paged: PagedResponse = {} as PagedResponse;
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
     private taskService: TaskService,
@@ -34,7 +34,7 @@ export class TaskPagedComponent implements OnInit {
 
   }
 
-  public selectTask(task: ITask) {
+  public selectTask(task: Task) {
     this.router.navigate(['nav-menu-logged/task-view', task.taskId]);
   }
   public firstPageButton() {

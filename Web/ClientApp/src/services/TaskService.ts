@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPagedTaskRequest, ITask } from "../interfaces/Task";
+import { PagedTaskRequest, Task } from "../interfaces/Task";
 
 
 @Injectable({
@@ -25,7 +25,7 @@ export class TaskService {
       .get(this.baseUrl + 'Tasks/' + id, { headers: headers, responseType: 'text' });
   }
   public getPagedFirst(pageNumber: number, pageSize: number, headers: HttpHeaders): Observable<string> {
-    let pagedRequest: IPagedTaskRequest = {
+    let pagedRequest: PagedTaskRequest = {
       link: null,
       page: pageNumber,
       size: pageSize };
@@ -33,17 +33,17 @@ export class TaskService {
       .post(this.baseUrl + 'Tasks/pagedFirst', JSON.stringify(pagedRequest), { headers: headers, responseType: 'text' });
   }
   public getPagedLink(pageLink: string, headers: HttpHeaders): Observable<string> {
-    let pagedRequest: IPagedTaskRequest = {
+    let pagedRequest: PagedTaskRequest = {
       link: pageLink,
       page: null,
       size: null };
     return this.httpclient
       .post(this.baseUrl + 'Tasks/pagedLink', JSON.stringify(pagedRequest), { headers: headers, responseType: 'text' });
   }
-  public createTask(task: ITask, headers: HttpHeaders) {
+  public createTask(task: Task, headers: HttpHeaders) {
     return this.httpclient.post(this.baseUrl + 'Tasks', JSON.stringify(task), { headers: headers });
   }
-  public updateTask(inputTask: ITask, headers: HttpHeaders) {
+  public updateTask(inputTask: Task, headers: HttpHeaders) {
     return this.httpclient.put(this.baseUrl + 'Tasks/' + inputTask.taskId, JSON.stringify(inputTask), { headers: headers });
   }
 }
