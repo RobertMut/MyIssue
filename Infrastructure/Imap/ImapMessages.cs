@@ -6,14 +6,16 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.IO;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Model;
+using MyIssue.Core.Model.Return;
 using MyIssue.Core.String;
-using MyIssue.Infrastructure.Database;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Infrastructure.Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Infrastructure.Imap
@@ -24,6 +26,9 @@ namespace MyIssue.Infrastructure.Imap
         //private UnitOfWork unit;
         private IHttpService _httpService;
         private ImapClient idleClient;
+        private readonly string _apiAddress;
+        private readonly string _login;
+        private readonly string _pass;
         private ImapClient getClient;
         private CancellationToken token;
         private CancellationTokenSource cancelToken;
@@ -31,13 +36,15 @@ namespace MyIssue.Infrastructure.Imap
         private bool freshRun = true;
 
 
-        public ImapMessages(ImapClient idleClient)
+        public ImapMessages(ImapClient idleClient, string apiAddress, string login, string pass)
         {
             _iconn = new ImapConnect();
             this.idleClient = idleClient;
+            _apiAddress = apiAddress;
+            _login = login;
+            _pass = pass;
             cancelToken = new CancellationTokenSource();
-            //unit = new UnitOfWork(new Database.Models.MyIssueContext(ApiParameters.ConnectionString.ToString()));
-           }
+        }
 
         public async Task ImapListenNewMessagesAsync(CancellationToken ct)
         {
@@ -164,33 +171,37 @@ namespace MyIssue.Infrastructure.Imap
             string[] email = StringStatic.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
             string desc =
                 $"{email[2]} {email[3]}\n{(string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody)}";
-            string client = _httpService.Get("api/Clients/" + email[1]).GetAwaiter().GetResult();
-            JObject obj = JObject.Parse(client);
-
-            _httpService.Post("api/Tasks", new TaskReturn
+            string encoded = Convert.ToBase64String(
+                Encoding.UTF8.GetBytes($"{_login}:{_pass}")
+            );
+            using (var client = new HttpClient())
             {
-                TaskTitle = email[4],
-                TaskDescription = desc,
-                TaskClient = obj["ClientName"].ToString(),
-                TaskAssignment = null,
-                TaskOwner = null,
-                TaskType = "Normal",
-                TaskStart = null,
-                TaskEnd = null,
-                TaskCreationDate = default,
-                CreatedByMail = m.GetHashCode().ToString()
-            });
-            // unit.TaskRepository.Add(new Database.Models.Task
-            // {
-            //     TaskTitle = email[4],
-            //     TaskDesc = desc,
-            //     TaskCreation = m.Date.DateTime,
-            //     TaskClient = Decimal.Parse(obj["ClientId"].ToString()),
-            //     TaskType = 1,
-            //     MailId = m.GetHashCode().ToString()
-            // });
-            // unit.Complete();
-            Console.WriteLine("IMAP - {0} - Data was written to database", DateTime.Now);
+                client.BaseAddress = new Uri(_apiAddress);
+                using (var request = new HttpRequestMessage(HttpMethod.Post,
+                    client.BaseAddress + $"api/Tasks/"))
+                {
+                    var json = JsonConvert.SerializeObject(new TaskReturn
+                    {
+                        TaskTitle = email[4],
+                        TaskDescription = desc,
+                        TaskClient = email[1],
+                        TaskAssignment = null,
+                        TaskOwner = null,
+                        TaskType = "Normal",
+                        CreatedByMail = m.GetHashCode().ToString()
+                    });
+                    request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                    request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                    request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                    request.Headers.Connection.Add("keep-alive");
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"Basic {encoded}");
+                    var response = client.SendAsync(request).Result;
+
+                    Console.WriteLine($"IMAP - {DateTime.Now} - {response.StatusCode}");
+                }
+            }
+
         }
 
     }

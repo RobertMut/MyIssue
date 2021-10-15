@@ -15,8 +15,8 @@ namespace MyIssue.DesktopApp.Misc.Sender
         private Socket client;
         private readonly IPEndPoint endPoint;
 
-        private readonly List<string> consoleCommands;
-        public ConsoleClient(SettingTextBoxes setting, IEnumerable<string> commands)
+        private readonly List<byte[]> consoleCommands;
+        public ConsoleClient(SettingTextBoxes setting, IEnumerable<byte[]> commands)
         {
             endPoint = new IPEndPoint(IPAddress.Parse(setting.ServerAddress), Int32.Parse(setting.Port));
 
@@ -47,8 +47,7 @@ namespace MyIssue.DesktopApp.Misc.Sender
                     Console.WriteLine(ReadIncoming(ns));
                     consoleCommands.ForEach(c =>
                     {
-                        var b = StringStatic.ByteMessage(c);
-                        ns.Write(b, 0, b.Length);
+                        ns.Write(c, 0, c.Length);
                         Console.WriteLine(ReadIncoming(ns));
                     });
                     ns.Flush();

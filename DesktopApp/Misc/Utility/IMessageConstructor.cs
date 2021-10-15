@@ -7,6 +7,6 @@ namespace MyIssue.DesktopApp.Misc.Utility
     public interface IMessageConstructor
     {
         MailMessage BuildMessage(string subject, string recipient, string sender, PersonalDetails details, string description);
-        IEnumerable<string> BuildTaskCommands(SettingTextBoxes settings, string description);
+        IEnumerable<byte[]> BuildTaskCommands(SettingTextBoxes settings, string description);
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace MyIssue.Web.Model
+namespace MyIssue.Core.Model.Return
 {
-    public class TaskRoot
+    public class TaskReturnRoot
     {
-        public List<Task> Tasks { get; set; }
+        public List<TaskReturn> Tasks { get; set; }
     }
-    public class Task
+    public class TaskReturn
     {
         [JsonProperty("TaskId")]
         public decimal TaskId { get; set; }
@@ -34,7 +34,7 @@ namespace MyIssue.Web.Model
 
         [JsonProperty("TaskStart")]
         [DefaultValue(true)]
-        public DateTime? TaskStart { get; set; } 
+        public DateTime? TaskStart { get; set; }
 
         [JsonProperty("TaskEnd")]
         [DefaultValue(true)]

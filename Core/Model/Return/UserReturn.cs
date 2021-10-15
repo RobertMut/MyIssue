@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MyIssue.API.Model.Return
+namespace MyIssue.Core.Model.Return
 {
     public class UserReturnRoot
     {

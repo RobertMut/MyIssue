@@ -1,9 +1,8 @@
-﻿namespace MyIssue.Web.Model
+﻿namespace MyIssue.Core.Model.Request
 {
-    public class User
+    public class AuthTokenRequest
     {
         public string Username { get; set; }
-        public string UserType { get; set; }
         public string Token { get; set; }
     }
 }

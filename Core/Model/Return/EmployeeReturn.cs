@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MyIssue.API.Model.Return
+namespace MyIssue.Core.Model.Return
 {
-    public class EmployeeBasicRoot
+    public class EmployeeReturnRoot
     {
         public List<EmployeeReturn> Employees { get; set; }
     }

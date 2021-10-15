@@ -2,6 +2,8 @@
 using System;
 using MyIssue.Core.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
+using MyIssue.Core.Commands;
 using MyIssue.Core.String;
 using MyIssue.Core.Constants;
 using MyIssue.DesktopApp.Model;
@@ -17,16 +19,19 @@ namespace MyIssue.DesktopApp.Misc.Utility
                 $"{details.Name}\r\n{details.Surname}\r\n{details.Company}\r\n{details.Phone}\r\n{details.Email}\r\n{description}";
             return new MailMessage(sender, recipient, newsubj, formatted);
         }
-        public IEnumerable<string> BuildTaskCommands(SettingTextBoxes settings, string description)
+        public IEnumerable<byte[]> BuildTaskCommands(SettingTextBoxes settings, string description)
         {
-            return new List<string>()
-            {
-                ConsoleCommands.login,
-                string.Format(ConsoleCommands.loginParameters, settings.Login, settings.Pass),
-                ConsoleCommands.newTask,
-                string.Format(ConsoleCommands.newTaskParameters, StringStatic.CutString(description), description, DateTime.Now, settings.CompanyName, 1),
-                ConsoleCommands.logout
-            };
+            string commandString =
+                $"{StringStatic.CutString(description)}\r\n<NEXT>\r\n{description}\r\n<NEXT>\r\n{settings.CompanyName}\r\n<NEXT>\r\n" +
+                $"{"null"}\r\n<NEXT>\r\n{"null"}\r\n<NEXT>\r\n{"Normal"}\r\n<NEXT>\r\n" +
+                $"{null}\r\n<NEXT>\r\n{null}\r\n<NEXT>\r\n" +
+                $"{"null"}\r\n<EOF>\r\n";
+            var login = User.Login(settings.Login, settings.Pass);
+            return new List<byte[]>().Concat(login)
+                .Append(StringStatic.ByteMessage("CreateTask\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage(commandString))
+                .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
+
         }
     }
 }
