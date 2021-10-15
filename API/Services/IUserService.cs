@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MyIssue.API.Model;
-using MyIssue.API.Model.Request;
-using MyIssue.API.Model.Return;
+using MyIssue.Core.Model.Request;
+using MyIssue.Core.Model.Return;
 
 namespace MyIssue.API.Services
 {

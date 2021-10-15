@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
-using MyIssue.API.Model.Return;
+using MyIssue.Core.Model.Return;
 using Newtonsoft.Json;
 
 namespace MyIssue.API.Controllers

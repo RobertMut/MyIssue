@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyIssue.Core.Model.Request;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;
@@ -27,7 +28,7 @@ namespace MyIssue.Web.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]AuthRequest model)
         {
-            string response = _userService.GenerateToken(model.Login, model.Password).Result;
+            string response = _userService.GenerateToken(model.Username, model.Password).Result;
             if (response is null)
             {
                 return BadRequest();

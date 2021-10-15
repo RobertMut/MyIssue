@@ -57,12 +57,19 @@
     <Compile Include="Interfaces\IConsoleClient.cs" />
     <Compile Include="Interfaces\IDatabaseBootstrapper.cs" />
     <Compile Include="Interfaces\IHttpService.cs" />
-    <Compile Include="Interfaces\IImapConnect.cs" />
     <Compile Include="Interfaces\IImapParse.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IProcessClient.cs" />
-    <Compile Include="Model\Employee.cs" />
-    <Compile Include="Model\TaskReturn.cs" />
+    <Compile Include="Model\Request\AuthRequest.cs" />
+    <Compile Include="Model\Request\AuthTokenRequest.cs" />
+    <Compile Include="Model\Request\Password.cs" />
+    <Compile Include="Model\Request\Token.cs" />
+    <Compile Include="Model\Return\Authenticate.cs" />
+    <Compile Include="Model\Return\ClientReturn.cs" />
+    <Compile Include="Model\Return\EmployeeReturn.cs" />
+    <Compile Include="Model\Return\TaskReturn.cs" />
+    <Compile Include="Model\Return\TaskTypeReturn.cs" />
+    <Compile Include="Model\Return\UserReturn.cs" />
     <Compile Include="Service\HttpService.cs" />
     <Compile Include="String\StringStatic.cs" />
   </ItemGroup>
@@ -88,8 +95,8 @@
     <Reference Include="MimeKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKit.2.13.0\lib\net47\MimeKit.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
-using MyIssue.API.Model.Return;
+using MyIssue.Core.Model.Return;
 using Newtonsoft.Json;
 
 namespace MyIssue.API.Controllers
@@ -32,23 +31,30 @@ namespace MyIssue.API.Controllers
             return await _context.Clients.ToListAsync();
         }
         [HttpGet]
-        public async Task<ActionResult<ClientNameRoot>> GetClients()
+        public async Task<ActionResult<ClientReturnRoot>> GetClients()
         {
-            List<ClientNameReturn> clientList = new List<ClientNameReturn>();
+            List<ClientReturn> clientList = new List<ClientReturn>();
             var clients = await _context.Clients.ToListAsync();
-            clients.ForEach(e => clientList.Add(new ClientNameReturn
+            clients.ForEach(e => clientList.Add(new ClientReturn
             {
-                CompanyName = e.ClientName
+                Id = Convert.ToInt32(e.ClientId),
+                Name = e.ClientName,
+                Country = e.ClientCountry,
+                No = e.ClientFlatNo,
+                Street = e.ClientStreet,
+                StreetNo = e.ClientStreetNo,
+                FlatNo = e.ClientFlatNo,
+                Description = e.ClientDesc
             }));
-            return Ok(JsonConvert.SerializeObject(new ClientNameRoot()
+            return Content(JsonConvert.SerializeObject(new ClientReturnRoot()
             {
                 Clients = clientList
-            }));
+            }),"application/json");
         }
 
         // GET: api/Clients/5
         [HttpGet("Full/{id}")]
-        public async Task<ActionResult<Client>> GetClient(decimal id)
+        public async Task<ActionResult<string>> GetClient(decimal id)
         {
             var client = await _context.Clients.FindAsync(id);
 
@@ -57,7 +63,8 @@ namespace MyIssue.API.Controllers
                 return NotFound();
             }
 
-            return client;
+            var serialized = JsonConvert.SerializeObject(client);
+            return Content(serialized, "application/json");
         }
         //GET: api/Clients/{Name}
         [HttpGet("Full/{name}")]
@@ -69,7 +76,8 @@ namespace MyIssue.API.Controllers
                 return NotFound();
             }
 
-            return client;
+            var serialized = JsonConvert.SerializeObject(client);
+            return Content(serialized, "application/json");
         }
 
         // PUT: api/Clients/5
@@ -106,12 +114,36 @@ namespace MyIssue.API.Controllers
         // POST: api/Clients
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Client>> PostClient(Client client)
+        public async Task<ActionResult<Client>> PostClient([FromBody]ClientReturn client)
         {
-            _context.Clients.Add(client);
+            _context.Clients.Add(new Client
+            {
+                ClientName = client.Name,
+                ClientCountry = client.Country,
+                ClientNo = client.No,
+                ClientStreet = client.Street,
+                ClientStreetNo = client.StreetNo,
+                ClientFlatNo = client.FlatNo,
+                ClientDesc = client.Description
+            });
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (_context.Clients.First(c => c.ClientNo == client.No) != null)
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClient", new { id = client.ClientId }, client);
+            return CreatedAtAction("GetClient", new { name = client.Name }, client.Name);
         }
 
         // DELETE: api/Clients/5

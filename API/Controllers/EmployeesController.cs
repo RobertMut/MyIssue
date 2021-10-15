@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
-using MyIssue.API.Model.Return;
+using MyIssue.Core.Model.Return;
 using Newtonsoft.Json;
 
 namespace MyIssue.API.Controllers
@@ -59,7 +59,7 @@ namespace MyIssue.API.Controllers
                 No = e.EmployeeNo,
                 Position = _context.Positions.FirstOrDefault(p => p.PositionId==e.EmployeePosition).PositionName
             }));
-            return Ok(JsonConvert.SerializeObject(new EmployeeBasicRoot()
+            return Ok(JsonConvert.SerializeObject(new EmployeeReturnRoot()
             {
                 Employees = employeeList
             }));
@@ -80,7 +80,7 @@ namespace MyIssue.API.Controllers
                 No = employees.EmployeeNo,
                 Position = _context.Positions.FirstOrDefault(p => p.PositionId == employees.EmployeePosition).PositionName
             };
-            return Ok(JsonConvert.SerializeObject(new EmployeeBasicRoot()
+            return Ok(JsonConvert.SerializeObject(new EmployeeReturnRoot()
             {
                 Employees = new List<EmployeeReturn>(){employee}
             }));

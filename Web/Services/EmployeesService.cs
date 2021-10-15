@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyIssue.Core.Model.Return;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Model;
@@ -12,7 +13,7 @@ namespace MyIssue.Web.Services
 {
         public interface IEmployeesService
     {
-        Task<EmployeeRoot> GetEmployees(string? username, TokenAuth model);
+        Task<EmployeeReturnRoot> GetEmployees(string? username, TokenAuth model);
     }
     public class EmployeesService : IEmployeesService
     {
@@ -22,7 +23,7 @@ namespace MyIssue.Web.Services
         {
             _server = server;
         }
-        public async Task<EmployeeRoot> GetEmployees(string? username, TokenAuth model)
+        public async Task<EmployeeReturnRoot> GetEmployees(string? username, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
@@ -33,7 +34,7 @@ namespace MyIssue.Web.Services
 
             cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
-            var employee = JsonConvert.DeserializeObject<EmployeeRoot>(response);
+            var employee = JsonConvert.DeserializeObject<EmployeeReturnRoot>(response);
             return employee;
         }
     }

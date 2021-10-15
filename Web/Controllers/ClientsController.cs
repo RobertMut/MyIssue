@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MyIssue.Core.Model.Return;
 using MyIssue.Web.Helpers;
-using MyIssue.Web.Model;
 using MyIssue.Web.Services;
 
 namespace MyIssue.Web.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
     public class ClientsController : Controller
     {
@@ -17,10 +15,18 @@ namespace MyIssue.Web.Controllers
         {
             _service = service;
         }
-        public async Task<ClientNameRoot> Get()
+        [HttpGet]
+        public async Task<ClientReturnRoot> Get()
         {
             var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             return await _service.GetClient(auth);
+        }
+
+        [HttpPost("new")]
+        public async Task<IActionResult> Post([FromBody] ClientReturn client)
+        {
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
+            return Ok(await _service.PostClient(client, auth));
         }
     }
 }

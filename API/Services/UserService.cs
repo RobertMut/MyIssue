@@ -9,8 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
-using MyIssue.API.Model.Request;
-using MyIssue.API.Model.Return;
+using MyIssue.Core.Model.Request;
+using MyIssue.Core.Model.Return;
 
 namespace MyIssue.API.Services
 {
@@ -30,7 +30,7 @@ namespace MyIssue.API.Services
                 x => x.UserLogin == model.Username && x.Password == model.Password);
             if (user is null) return null;
             string token = GenerateJwtToken(user, DateTime.Now.AddDays(1));
-            return new Authenticate(user, token);
+            return new Authenticate(user.UserLogin, user.UserType, token);
         }
 
         public bool VerifyToken(string token)

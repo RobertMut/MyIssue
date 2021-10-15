@@ -1,8 +1,3 @@
-using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,11 +5,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyIssue.Core.Commands;
-using MyIssue.Infrastructure.Database.Models;
 using MyIssue.Infrastructure.Server;
-using MyIssue.Web.Helpers;
 using MyIssue.Web.Services;
+using Newtonsoft.Json;
 
 namespace MyIssue.Web
 {
@@ -32,7 +25,7 @@ namespace MyIssue.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddSession(opt =>
             {
                 opt.Cookie.Name = "MyIssue.Session";

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
-using MyIssue.API.Model.Return;
+using MyIssue.Core.Model.Return;
 using Task = MyIssue.API.Model.Task;
 
 namespace MyIssue.API.Converters

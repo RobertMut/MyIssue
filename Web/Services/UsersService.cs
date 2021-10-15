@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyIssue.Core.Model.Request;
+using MyIssue.Core.Model.Return;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Model;
 using Newtonsoft.Json;
-using Task = MyIssue.Web.Model.Task;
 using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services
 {
     public interface IUsersService
     {
-        Task<UsersRoot> GetUsers(string? username, TokenAuth model);
+        Task<UserReturnRoot> GetUsers(string? username, TokenAuth model);
         Task<string> ChangePassword(Password password, TokenAuth model);
     }
     public class UsersService : IUsersService
@@ -24,7 +25,7 @@ namespace MyIssue.Web.Services
         {
             _server = server;
         }
-        public async Task<UsersRoot> GetUsers(string? username, TokenAuth model)
+        public async Task<UserReturnRoot> GetUsers(string? username, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
@@ -36,7 +37,7 @@ namespace MyIssue.Web.Services
 
             cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
-            var task = JsonConvert.DeserializeObject<UsersRoot>(response);
+            var task = JsonConvert.DeserializeObject<UserReturnRoot>(response);
             return task;
         }
 

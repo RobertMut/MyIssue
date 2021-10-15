@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.Extensions.Options;
+using MyIssue.Core.Model.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;
-using Task = MyIssue.Web.Model.Task;
 
 namespace MyIssue.Web.Controllers
 {
@@ -25,21 +25,21 @@ namespace MyIssue.Web.Controllers
         }
 
         [HttpGet("someClosed/{whoseTasks}/{howMany}")]
-        public async Task<TaskRoot> GetSomeClosed(int howMany, string whoseTasks)
+        public async Task<TaskReturnRoot> GetSomeClosed(int howMany, string whoseTasks)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
             return await _service.GetTasks(true, false, whoseTasks, howMany, null, auth);
         }
         [HttpGet("{id}")]
-        public async Task<TaskRoot> GetById(int id)
+        public async Task<TaskReturnRoot> GetById(int id)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
             return await _service.GetTasks(false, true, "anybody", 0, id, auth);
         }
         [HttpGet("someOpen/{whoseTasks}/{howMany}")]
-        public async Task<TaskRoot> GetSomeOpen(int howMany, string whoseTasks)
+        public async Task<TaskReturnRoot> GetSomeOpen(int howMany, string whoseTasks)
         {
 
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
@@ -47,7 +47,7 @@ namespace MyIssue.Web.Controllers
             return await _service.GetTasks(false, false, whoseTasks, howMany, null, auth);
         }
         [HttpGet("user/{whoseTasks}")]
-        public async Task<TaskRoot> GetByUser(string whoseTasks)
+        public async Task<TaskReturnRoot> GetByUser(string whoseTasks)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
@@ -57,7 +57,7 @@ namespace MyIssue.Web.Controllers
         #region Pagination
 
         [HttpPost("pagedFirst")]
-        public async Task<ActionResult<PageResponse<Task>>> GetPagedInitial([FromBody]PageRequest request)
+        public async Task<ActionResult<PageResponse<TaskReturn>>> GetPagedInitial([FromBody]PageRequest request)
         {
             var token = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             var result = await _service.FirstPagedGet(request.Page, request.Size, token);
@@ -65,7 +65,7 @@ namespace MyIssue.Web.Controllers
         }
 
         [HttpPost("pagedLink")]
-        public async Task<ActionResult<PageResponse<Task>>> GetPagedLink([FromBody] PageRequest request)
+        public async Task<ActionResult<PageResponse<TaskReturn>>> GetPagedLink([FromBody] PageRequest request)
         {
             var token = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             var result = await _service.PagedLinkGet(request.Link, token);
@@ -74,7 +74,7 @@ namespace MyIssue.Web.Controllers
         #endregion
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask([FromBody] Task task)
+        public async Task<IActionResult> PutTask([FromBody] TaskReturn task)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
@@ -84,7 +84,7 @@ namespace MyIssue.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewTask([FromBody] Task task)
+        public async Task<IActionResult> NewTask([FromBody] TaskReturn task)
         {
             var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             string result = await _service.CreateTask(task, auth);

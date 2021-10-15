@@ -12,10 +12,9 @@ using MyIssue.API.Converters;
 using MyIssue.API.Filter;
 using MyIssue.API.Helpers;
 using MyIssue.API.Infrastructure;
-using MyIssue.API.Model;
-using MyIssue.API.Model.Return;
 using MyIssue.API.Services;
 using MyIssue.API.Wrappers;
+using MyIssue.Core.Model.Return;
 using Newtonsoft.Json;
 using Task = MyIssue.API.Model.Task;
 
@@ -38,7 +37,7 @@ namespace MyIssue.API.Controllers
 
         // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskReturn>>> GetTasks()
+        public async Task<ActionResult<string>> GetTasks()
         {
             var tasks = await _context.Tasks.ToListAsync();
             List<TaskReturn> tr = new List<TaskReturn>();
@@ -46,8 +45,8 @@ namespace MyIssue.API.Controllers
             {
                 tr.Add(converter.Convert(task));
             }
-
-            return tr;
+            var serialized = JsonConvert.SerializeObject(tr);
+            return Content(serialized, "application/json");
         }
 
         // GET: api/Tasks/5
@@ -103,10 +102,10 @@ namespace MyIssue.API.Controllers
             {
                 returnTasks.Add(converter.Convert(t));
             });
-            return Ok(JsonConvert.SerializeObject(new TaskReturnRoot()
+            return Content(JsonConvert.SerializeObject(new TaskReturnRoot()
             {
                 Tasks = returnTasks
-            }));
+            }),"application/json");
         }
 
         // PUT: api/Tasks/5
@@ -145,6 +144,8 @@ namespace MyIssue.API.Controllers
 
         // POST: api/Tasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
+        [BasicAuth]
         [HttpPost]
         public async Task<ActionResult<Task>> PostTask(TaskReturn task)
         {
@@ -176,7 +177,7 @@ namespace MyIssue.API.Controllers
         #region Pagination
 
         [HttpGet("paged")]
-        public async Task<IActionResult> GetPaged([FromQuery] PaginationFilter filter)
+        public async Task<ContentResult> GetPaged([FromQuery] PaginationFilter filter)
         {
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
@@ -187,7 +188,7 @@ namespace MyIssue.API.Controllers
             var totalRecords = await _context.Tasks.CountAsync();
             var pagedResponse =
                 PaginationHelper.CreatePageResponse<Model.Task>(response, filter, totalRecords, uriService, route);
-            return Ok(pagedResponse);
+            return Content(JsonConvert.SerializeObject(pagedResponse), "application/json");
         }
 
         #endregion
