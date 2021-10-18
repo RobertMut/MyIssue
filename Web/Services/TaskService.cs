@@ -14,7 +14,7 @@ namespace MyIssue.Web.Services
     public interface ITaskService
     {
         Task<string> CreateTask(TaskReturn task, TokenAuth model);
-        Task<TaskReturnRoot> GetTasks(bool isClosed, bool all, string whoseTasks, int howMany, int? id, TokenAuth model);
+        Task<TaskReturnRoot> GetTasks(bool isClosed, string whoseTasks, int howMany, int? id, TokenAuth model);
         Task<bool> PutTask(TaskReturn task, TokenAuth model);
         Task<PageResponse<TaskReturn>> FirstPagedGet(int? pageNumber, int? pageSize, TokenAuth model);
         Task<PageResponse<TaskReturn>> PagedLinkGet(string link, TokenAuth model);
@@ -29,7 +29,7 @@ namespace MyIssue.Web.Services
         }
 
 
-        public async Task<TaskReturnRoot> GetTasks(bool isClosed, bool all, string whoseTasks, int howMany, int? id, TokenAuth model)
+        public async Task<TaskReturnRoot> GetTasks(bool isClosed, string whoseTasks, int howMany, int? id, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
@@ -38,12 +38,12 @@ namespace MyIssue.Web.Services
             if (id is not null)
             {
                 cmds = cmds.Append(
-                    StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n{whoseTasks}\r\n<NEXT>\r\n{howMany}\r\n<NEXT>\r\n{id}\r\n<EOF>\r\n"));
+                    StringStatic.ByteMessage($"{isClosed}\r\n<NEXT>\r\n{whoseTasks}\r\n<NEXT>\r\n{howMany}\r\n<NEXT>\r\n{id}\r\n<EOF>\r\n"));
             }
             else
             {
                 cmds = cmds.Append(
-                    StringStatic.ByteMessage($"{all}\r\n<NEXT>\r\n{isClosed}\r\n<NEXT>\r\n{whoseTasks}\r\n<NEXT>\r\n{howMany}\r\n<EOF>\r\n"));
+                    StringStatic.ByteMessage($"{isClosed}\r\n<NEXT>\r\n{whoseTasks}\r\n<NEXT>\r\n{howMany}\r\n<EOF>\r\n"));
             }
             cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
@@ -82,7 +82,7 @@ namespace MyIssue.Web.Services
                 .Append(StringStatic.ByteMessage(commandString))
                 .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             string response = _server.SendData(cmds);
-            Console.WriteLine(response);
+            //Console.WriteLine(response);
             if (response.Contains("CreatedAtAction")) return response;
             return "Something went wrong";
         }

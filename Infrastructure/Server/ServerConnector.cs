@@ -28,13 +28,13 @@ namespace MyIssue.Infrastructure.Server
                     cli.Connect(endPoint);
                     using (NetworkStream ns = new NetworkStream(cli))
                     {
-                        Console.WriteLine(ReadIncoming(ns));
+                        ReadIncoming(ns);
                         foreach (var bytes in commandsToSend)
                         {
-                            Console.WriteLine(StringStatic.StringMessage(bytes, bytes.Length));
+                            //Console.WriteLine(StringStatic.StringMessage(bytes, bytes.Length));
                             ns.Write(bytes, 0, bytes.Length);
                             string workstring = ReadIncoming(ns);
-                            Console.WriteLine(workstring);
+                            //Console.WriteLine(workstring);
                             if (!string.IsNullOrEmpty(workstring)) response = workstring;
                         }
                         ns.Close();

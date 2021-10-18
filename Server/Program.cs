@@ -26,25 +26,27 @@ namespace MyIssue.Server
             
 
 
-            CancellationToken ct = new CancellationToken();
+           
             try
             {
                 Console.WriteLine("START - {0} - Opening configuration file..", DateTime.Now);
                 var config = OpenConfiguration.OpenConfig("configuration.xml");
                 Bootstrapper.InitializeParameters(config);
-                Console.WriteLine("API - {0} - Connecting to API..", DateTime.Now);
-                //IDatabaseBootstrapper _dbBootstrapper = new DatabaseBootstrapper(ApiParameters.Parameters.ApiAddress);
-                //_dbBootstrapper.Configure();
-                service = new HttpService(Parameters.Api);
-                service.Get("api/Tasks/1");
-                Console.WriteLine("API - {0} - OK", DateTime.Now);
+                //Console.WriteLine("API - {0} - Connecting to API..", DateTime.Now);
+                //service = new HttpService(Parameters.Api);
+                //service.Get("api/Tasks/1");
+                //Console.WriteLine("API - {0} - OK", DateTime.Now);
 
                 string listen = ConfigValue.GetValue<string>("listenAddress", config);
                 int port = ConfigValue.GetValue<int>("port", config);
                 _net = new NetListener(listen, port);
 
                 if (ConfigValue.GetValue<string>("enabled", config).Equals("true")) Task.Run(async () => _net.Listen());
-                if (ConfigValue.GetValue<string>("i_enabled", config).Equals("true")) Task.Run(async () => _imap.RunImap(Parameters.Api, Parameters.Login, Parameters.Password, ct));
+                if (ConfigValue.GetValue<string>("i_enabled", config).Equals("true")) Task.Run(async () =>
+                {
+                    CancellationToken ct = new CancellationToken();
+                    _imap.RunImap(Parameters.Api, Parameters.Login, Parameters.Password, ct);
+                });
                 Console.ReadKey();
 
             }

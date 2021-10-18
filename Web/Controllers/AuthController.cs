@@ -40,7 +40,7 @@ namespace MyIssue.Web.Controllers
         public async Task<IActionResult> TokenLogin([FromBody]TokenAuth model)
         {
             bool isValid = _userService.ValidateToken(model.Login, model.Token).Result;
-            Console.WriteLine(isValid);
+            //Console.WriteLine(isValid);
             if (isValid) return Ok(new
             {
                 result = true

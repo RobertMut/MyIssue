@@ -28,8 +28,8 @@ namespace MyIssue.Server.Commands
             try
             {
                 string[] input = SplitToCommand.Get(client.CommandHistory);
-                Console.WriteLine(input[0]);
-                Console.WriteLine(input[1]);
+                //Console.WriteLine(input[0]);
+                //Console.WriteLine(input[1]);
                 StringContent content = new StringContent(
                     JsonConvert.SerializeObject(new AuthTokenRequest
                     {
@@ -40,7 +40,6 @@ namespace MyIssue.Server.Commands
                 HttpResponseMessage httpresponse =
                     httpclient.PostAsync("api/Auth/tokenauthenticate", content).Result;
                 string response = httpresponse.Content.ReadAsStringAsync().Result;
-                Console.WriteLine("CHECK IF CONTAIN INVALID");
                 if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
                 var data = (JObject) JsonConvert.DeserializeObject(response);
                 LogUser.TypedCommand("TokenLogin", "", client);

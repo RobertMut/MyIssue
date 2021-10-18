@@ -23,11 +23,11 @@ namespace MyIssue.Server.Commands
             NetWrite.Write(client.ConnectedSock, "GET\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             string[] input = SplitToCommand.Get(client.CommandHistory);
-            if (input.Length.Equals(4)) input = input.Append("").ToArray();
+            if (input.Length.Equals(3)) input = input.Append("").ToArray();
             using (var request = new HttpRequestMessage(HttpMethod.Get,
-                httpclient.BaseAddress + $"api/Tasks/filter/all={input[0]}&closed={input[1]}&whose={input[2]}&howmany={input[3]}/{input[4]}")) {
-                Console.WriteLine(request.RequestUri.AbsoluteUri);
-                Console.WriteLine(request.RequestUri.AbsolutePath);
+                httpclient.BaseAddress + $"api/Tasks/filter/closed={input[0]}&whose={input[1]}&howmany={input[2]}/{input[3]}")) {
+                //Console.WriteLine(request.RequestUri.AbsoluteUri);
+                //Console.WriteLine(request.RequestUri.AbsolutePath);
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
                 request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
                 request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));

@@ -28,7 +28,7 @@ namespace MyIssue.Web.Services
                 .Concat(Core.Commands.User.Logout());
             string response = _server.SendData(cmds);
             if (response is null || response.Contains("INCORRECT")) return null;
-            Console.WriteLine(response);
+            //Console.WriteLine(response);
             return response;
         }
 
@@ -45,7 +45,7 @@ namespace MyIssue.Web.Services
         }
         public async Task<string> RevokeToken(string token)
         {
-            Console.WriteLine(nameof(this.RevokeToken));
+            //Console.WriteLine(nameof(this.RevokeToken));
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(Core.Commands.User.RevokeLogout(token));
             string response = _server.SendData(cmds);

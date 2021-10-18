@@ -27,8 +27,8 @@ namespace MyIssue.Server.Commands
             try
             {
                 string input = SplitToCommand.Get(client.CommandHistory)[0];
-                Console.WriteLine(input[0]);
-                Console.WriteLine(input[1]);
+                //Console.WriteLine(input[0]);
+                //Console.WriteLine(input[1]);
                 StringContent content = new StringContent(
                     JsonConvert.SerializeObject(new Token
                     {

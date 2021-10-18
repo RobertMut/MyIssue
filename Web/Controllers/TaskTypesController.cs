@@ -24,7 +24,7 @@ namespace MyIssue.Web.Controllers
         public async Task<TaskTypeReturnRoot> Get()
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            Console.WriteLine("TOKEN   " + token);
+            //Console.WriteLine("TOKEN   " + token);
             var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             return await _service.GetTaskTypes(auth);
         }
