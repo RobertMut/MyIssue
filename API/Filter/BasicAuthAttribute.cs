@@ -13,7 +13,8 @@ using MyIssue.API.Infrastructure;
 
 namespace MyIssue.API.Filter
 {
-    public class BasicAuthAttribute : AuthorizationFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+    public class BasicAuthAttribute : AuthorizationFilterAttribute, IAuthorizationFilter
     {
 
         public override void OnAuthorization(HttpActionContext actionContext)

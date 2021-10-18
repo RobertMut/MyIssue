@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using System.Web.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -20,9 +20,9 @@ using Task = MyIssue.API.Model.Task;
 
 namespace MyIssue.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class TasksController : ControllerBase
     {
         private readonly MyIssueContext _context;
@@ -36,7 +36,8 @@ namespace MyIssue.API.Controllers
         }
 
         // GET: api/Tasks
-        [HttpGet]
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
         public async Task<ActionResult<string>> GetTasks()
         {
             var tasks = await _context.Tasks.ToListAsync();
@@ -50,7 +51,8 @@ namespace MyIssue.API.Controllers
         }
 
         // GET: api/Tasks/5
-        [HttpGet("{id}")]
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
         public async Task<ActionResult<TaskReturn>> GetTask(decimal id)
         {
             var task = await _context.Tasks.FindAsync(id);
@@ -62,20 +64,20 @@ namespace MyIssue.API.Controllers
 
             return converter.Convert(task);
         }
-        
-        [HttpGet("filter/all={all}&closed={isClosed}&whose={whose}&howmany={howMany}/{id?}")]
-        public async Task<IActionResult> GetLastTask(bool all, bool isClosed,string whose, int howMany, decimal? id)
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpGet("filter/closed={isClosed}&whose={whose}&howmany={howMany}/{id?}")]
+        public async Task<IActionResult> GetLastTask(bool isClosed,string whose, int howMany, decimal? id)
         {
 
             List<Task> tasks;
-            if (all)
+            if(!isClosed)
             {
-                tasks = await _context.Tasks.ToListAsync();
+                tasks = await _context.Tasks.Where(u => u.TaskEnd == null || u.TaskEnd > DateTime.Now).ToListAsync();
+
             }
             else
             {
-                tasks = await _context.Tasks.Where(d => (d.TaskEnd == null || d.TaskEnd > DateTime.Now).Equals(!isClosed)).ToListAsync();
-
+                tasks = await _context.Tasks.Where(u => u.TaskEnd != null || u.TaskEnd <= DateTime.Now).ToListAsync();
             }
             if (!whose.ToLower().Equals("anybody"))
             {
@@ -89,7 +91,7 @@ namespace MyIssue.API.Controllers
 
             if (id is not null)
             {
-                tasks = new List<Task>() {tasks.FirstOrDefault(i => i.TaskId == id.GetValueOrDefault(0))};
+                tasks = new List<Task>() {_context.Tasks.FirstOrDefault(i => i.TaskId == id.GetValueOrDefault(0))};
             }
 
             if (tasks.Count().Equals(0))
@@ -110,8 +112,9 @@ namespace MyIssue.API.Controllers
 
         // PUT: api/Tasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(decimal id, [FromBody]TaskReturn task)
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpPut("{id}")]
+        public async Task<IActionResult> PutTask(decimal id, [Microsoft.AspNetCore.Mvc.FromBody]TaskReturn task)
         {
             var converted = converter.ConvertBack(task);
             if (Convert.ToInt32(id) != Convert.ToInt32(converted.TaskId))
@@ -144,9 +147,8 @@ namespace MyIssue.API.Controllers
 
         // POST: api/Tasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
-        [BasicAuth]
-        [HttpPost]
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<ActionResult<Task>> PostTask(TaskReturn task)
         {
             var converted = converter.ConvertBack(task);
@@ -155,9 +157,15 @@ namespace MyIssue.API.Controllers
 
             return CreatedAtAction("GetTask", new { id = converted.TaskId }, converted);
         }
-
+        [BasicAuth]
+        [Microsoft.AspNetCore.Mvc.HttpPost("imap")]
+        public async Task<ActionResult<Task>> PostTaskFromImap(TaskReturn task)
+        {
+            return await PostTask(task);
+        }
         // DELETE: api/Tasks/5
-        [HttpDelete("{id}")]
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(decimal id)
         {
             var task = await _context.Tasks.FindAsync(id);
@@ -175,8 +183,8 @@ namespace MyIssue.API.Controllers
 
 
         #region Pagination
-
-        [HttpGet("paged")]
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        [Microsoft.AspNetCore.Mvc.HttpGet("paged")]
         public async Task<ContentResult> GetPaged([FromQuery] PaginationFilter filter)
         {
             var route = Request.Path.Value;

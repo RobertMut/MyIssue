@@ -32,16 +32,17 @@ namespace MyIssue.API.Infrastructure
                 .HasOne<Position>(e => e.Positions)
                 .WithMany(e => e.Employees)
                 .HasForeignKey(fk => fk.EmployeePosition);
-            // modelBuilder.Entity<Employee>()
-            //     .HasMany(t => t.Tasks)
-            //     .WithOne(t => t.EmployeesAssignment)
-            //     .HasForeignKey(fk => fk.TaskAssignment)
-            //     .IsRequired(false);
-            // modelBuilder.Entity<Employee>()
-            //     .HasMany(t => t.Tasks)
-            //     .WithOne(t => t.EmployeesOwnership)
-            //     .HasForeignKey(fk => fk.TaskOwner)
-            //     .IsRequired(false);
+            modelBuilder.Entity<Client>().HasData(new Client
+            {
+                ClientId = 1,
+                ClientName = "MyIssue",
+                ClientCountry = "00",
+                ClientNo = "00",
+                ClientStreet = "NoStreet",
+                ClientStreetNo = "00",
+                ClientFlatNo = "00",
+                ClientDesc = "No desc",
+            });
 
             modelBuilder.Entity<Position>().Property(p => p.PositionId).HasPrecision(3, 0);
             modelBuilder.Entity<UserType>().Property(ut => ut.Id).HasPrecision(3, 0);

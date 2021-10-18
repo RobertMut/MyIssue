@@ -23,8 +23,6 @@ namespace MyIssue.Infrastructure.Imap
     public class ImapMessages : IImapParse 
     {
         private IImapConnect _iconn;
-        //private UnitOfWork unit;
-        private IHttpService _httpService;
         private ImapClient idleClient;
         private readonly string _apiAddress;
         private readonly string _login;
@@ -178,7 +176,7 @@ namespace MyIssue.Infrastructure.Imap
             {
                 client.BaseAddress = new Uri(_apiAddress);
                 using (var request = new HttpRequestMessage(HttpMethod.Post,
-                    client.BaseAddress + $"api/Tasks/"))
+                    client.BaseAddress + $"api/Tasks/imap"))
                 {
                     var json = JsonConvert.SerializeObject(new TaskReturn
                     {
@@ -195,7 +193,7 @@ namespace MyIssue.Infrastructure.Imap
                     request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
                     request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
                     request.Headers.Connection.Add("keep-alive");
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"Basic {encoded}");
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Authorization", $"Basic {encoded}");
                     var response = client.SendAsync(request).Result;
 
                     Console.WriteLine($"IMAP - {DateTime.Now} - {response.StatusCode}");
