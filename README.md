@@ -70,7 +70,7 @@ Contains appsettings.json like API, but few values are different
 ```
 ### DesktopApp
 Setting up application is easier in contrary to API or Server. When you open application you will be welcomed by configuration screen \
-![Configuration Screen](readme/applicationimage.PNG) \
+![Configuration Screen](https://i.imgur.com/yEaPMmj.png) \
 Configuration and log files should appear in %appdata%\MyIssue\
 
 ### Notes
