@@ -74,9 +74,9 @@ export class AuthService {
       "UserName": login,
       "Password": pass
     }
-    console.warn(data);
-    console.warn(JSON.stringify(data));
-    console.warn(this.baseUrl + "Auth/login");
+    //console.warn(data);
+    //console.warn(JSON.stringify(data));
+    //console.warn(this.baseUrl + "Auth/login");
     localStorage.clear();
     return this.http.post(this.baseUrl + "Auth/login",
       JSON.stringify(data),

@@ -36,6 +36,7 @@ export class HomeComponent {
     task.getLastTasks(this.selectionFree, 'anybody', this.auth.headers()).subscribe(result => {
         let data: TaskRoot = JSON.parse(result);
         this.freeTasks = data.tasks;
+
     },
       error => {
         console.error(error);
@@ -45,7 +46,7 @@ export class HomeComponent {
     task.getLastTasks(this.selectionFree, localStorage.getItem("login").toString(), this.auth.headers()).subscribe(result => {
       let data: TaskRoot = JSON.parse(result);
       this.activeTasks = data.tasks;
-      },
+    },
       error => {
         console.error(error);
         this.auth.CheckUnauthorized(error);
@@ -54,13 +55,13 @@ export class HomeComponent {
 
   }
   selectFreeChangeHandler(event: any) {
-    this.selectionFree = event.target.value;
-    localStorage.setItem("selectionFree", event.target.value.toString());
+    this.selectionFree = event.value;
+    localStorage.setItem("selectionFree", event.value.toString());
     location.reload();
   }
   selectActiveChangeHandler(event: any) {
-    this.selectionFree = event.target.value;
-    localStorage.setItem("selectionActive", event.target.value.toString());
+    this.selectionFree = event.value;
+    localStorage.setItem("selectionActive", event.value.toString());
     location.reload();
   }
   public navigateNewTask() {
@@ -72,7 +73,7 @@ export class HomeComponent {
   public navigateCreateClient() {
     this.router.navigate(['./create-client'], { relativeTo: this.activatedRoute });
   }
-  public selectTask(task: Task) {
-    this.router.navigate(['./nav-menu-logged/task-view', task.taskId], {relativeTo: this.activatedRoute});
+  public selectTask(taskId: number) {
+    this.router.navigate(['./task-view', taskId.toString()], {relativeTo: this.activatedRoute});
   }
 }

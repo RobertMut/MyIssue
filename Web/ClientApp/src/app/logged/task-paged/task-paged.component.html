@@ -46,16 +46,16 @@
       </thead>
       <tbody *ngIf="paged !== undefined">
       <tr mat-row *ngFor="let task of paged.data" (click)="selectTask(task)" class="task-row">
-            <td mat-cell>{{task.taskId}}</td>
-            <td mat-cell>{{task.taskType}}</td>
-            <td mat-cell>{{task.taskTitle}}</td>
-            <td mat-cell>{{task.taskDescription}}</td>
-            <td mat-cell>{{task.taskClient}}</td>
-            <td mat-cell>{{task.taskAssignment}}</td>
-            <td mat-cell>{{task.taskOwner}}</td>
-            <td mat-cell>{{task.taskStart}}</td>
-            <td mat-cell>{{task.taskEnd}}</td>
-            <td mat-cell>{{task.taskCreationDate}}</td>
+            <td mat-cell>{{task.TaskId}}</td>
+            <td mat-cell>{{task.TaskType}}</td>
+            <td mat-cell>{{task.TaskTitle}}</td>
+            <td mat-cell>{{task.TaskDescription}}</td>
+            <td mat-cell>{{task.TaskClient}}</td>
+            <td mat-cell>{{task.TaskAssignment}}</td>
+            <td mat-cell>{{task.TaskOwner}}</td>
+            <td mat-cell>{{task.TaskStart}}</td>
+            <td mat-cell>{{task.TaskEnd}}</td>
+            <td mat-cell>{{task.TaskCreationDate}}</td>
           </tr>
       </tbody>
     </table>

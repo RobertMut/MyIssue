@@ -17,7 +17,7 @@ export class NavMenuComponent {
   ngOnInit() {
     this.auth.tokenlogin().subscribe((value: boolean) => {
       if (value) {
-        console.warn("VALUE "+value);
+        //console.warn("VALUE "+value);
         this.router.navigate(['./../nav-menu-logged']);
       }
     });

@@ -1,4 +1,7 @@
+using System;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace MyIssue.Web
@@ -14,6 +17,12 @@ namespace MyIssue.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    var urls =
+                        webBuilder.UseConfiguration(new ConfigurationBuilder()
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", optional: true)
+                            .Build()).GetSetting("Web:applicationUrl").ToString();
+                    webBuilder.UseUrls(urls.Split(';'));
                     webBuilder.UseStartup<Startup>();
                 });
     }

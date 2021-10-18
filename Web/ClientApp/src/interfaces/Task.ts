@@ -18,18 +18,18 @@ class TaskRoot {
   tasks: Task[];
 }
 class Task {
-  taskId: string;
-  taskTitle: string;
-  taskDescription: string;
-  taskClient: string;
-  taskAssignment: string;
-  taskOwner: string;
-  taskType: string;
-  taskStart: string;
-  taskEnd: string;
-  taskCreationDate: string;
-  createdByMail: string;
-  employeeDescription: string;
+  TaskId: string;
+  TaskTitle: string;
+  TaskDescription: string;
+  TaskClient: string;
+  TaskAssignment: string;
+  TaskOwner: string;
+  TaskType: string;
+  TaskStart: string;
+  TaskEnd: string;
+  TaskCreationDate: string;
+  CreatedByMail: string;
+  EmployeeDescription: string;
 }
 export {
   PagedResponse,

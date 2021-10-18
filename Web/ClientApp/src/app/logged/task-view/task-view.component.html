@@ -1,19 +1,19 @@
 <div>
-  <form (ngSubmit)="updatetask()" class="form">
+  <form (ngSubmit)="updateTask()" class="form">
     <div class="left-side">
-      <label>ID: {{task.taskId}}</label>
-      <label>Client: {{task.taskClient}}</label>
-      <label>Type: {{task.taskType}}</label>
+      <label>ID: {{task.TaskId}}</label>
+      <label>Client: {{task.TaskClient}}</label>
+      <label>Type: {{task.TaskType}}</label>
 
-      <label>Created: {{task.taskCreationDate}}</label>
+      <label>Created: {{task.TaskCreationDate}}</label>
       <label>Mail?: {{createdByMail}}</label>
       <label>Description:</label>
-      <label class="description">{{task.taskDescription}}</label>
+      <label class="description">{{task.TaskDescription}}</label>
     </div>
     <div class="right-side">
       <mat-form-field appearance="fill" class="datetime-picker">
-    <mat-label>Task start date: {{task.taskStart}}</mat-label>
-    <input matInput [ngxMatDatetimePicker]="startpicker" placeholder="Task start date" [(ngModel)]="task.taskStart"/>
+    <mat-label>Task start date: {{task.TaskStart}}</mat-label>
+    <input matInput [ngxMatDatetimePicker]="startpicker" placeholder="Task start date" [(ngModel)]="task.TaskStart"/>
     <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #startpicker></ngx-mat-datetime-picker>
     <mat-datepicker #startpicker></mat-datepicker>
@@ -25,8 +25,8 @@
       </div>
 
       <mat-form-field appearance="fill" class="datetime-picker">
-        <mat-label>Task end date: {{task.taskEnd}}</mat-label>
-        <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.taskEnd" />
+        <mat-label>Task end date: {{task.TaskEnd}}</mat-label>
+        <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.TaskEnd" />
         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #endpicker></ngx-mat-datetime-picker>
         <mat-datepicker #endpicker></mat-datepicker>
@@ -37,12 +37,12 @@
         <button mat-raised-button type="button" name="removeEnd" (click)="clearDate('removeEnd')">Remove</button>
       </div>
       <label>Assigned to:</label>
-      <mat-select name="assign" class="buttons" [(ngModel)]="task.taskAssignment">
+      <mat-select name="assign" class="buttons" [(ngModel)]="task.TaskAssignment">
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let employee of employees.employees" [value]="employee.login">{{employee.login}}</mat-option>
       </mat-select>
       <label>Owned by:</label>
-      <mat-select name="ownership" class="buttons" [(ngModel)]="task.taskOwner">
+      <mat-select name="ownership" class="buttons" [(ngModel)]="task.TaskOwner">
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let employee of employees.employees" [value]="employee.login">{{employee.login}}</mat-option>
       </mat-select>
@@ -52,7 +52,7 @@
       <div class="center-element">
         <mat-form-field appearance="fill" class="textarea">
           <mat-label>Write how do you resolved your task..</mat-label>
-          <textarea matInput type="text" class="description" [(ngModel)]="task.employeeDescription">{{task.employeeDescription}}</textarea>
+          <textarea matInput type="text" class="description" [(ngModel)]="task.EmployeeDescription">{{task.EmployeeDescription}}</textarea>
         </mat-form-field>
 
         <button mat-raised-button type="submit" class="buttons">Update!</button>

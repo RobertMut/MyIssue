@@ -44,7 +44,7 @@ export class TaskService {
     return this.httpclient.post(this.baseUrl + 'Tasks', JSON.stringify(task), { headers: headers });
   }
   public updateTask(inputTask: Task, headers: HttpHeaders) {
-    return this.httpclient.put(this.baseUrl + 'Tasks/' + inputTask.taskId, JSON.stringify(inputTask), { headers: headers });
+    return this.httpclient.put(this.baseUrl + 'Tasks/' + inputTask.TaskId, JSON.stringify(inputTask), { headers: headers });
   }
 }
 

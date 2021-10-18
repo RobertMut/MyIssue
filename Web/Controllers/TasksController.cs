@@ -29,14 +29,14 @@ namespace MyIssue.Web.Controllers
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(true, false, whoseTasks, howMany, null, auth);
+            return await _service.GetTasks(true,  whoseTasks, howMany, null, auth);
         }
         [HttpGet("{id}")]
         public async Task<TaskReturnRoot> GetById(int id)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(false, true, "anybody", 0, id, auth);
+            return await _service.GetTasks(false, "anybody", 0, id, auth);
         }
         [HttpGet("someOpen/{whoseTasks}/{howMany}")]
         public async Task<TaskReturnRoot> GetSomeOpen(int howMany, string whoseTasks)
@@ -44,14 +44,14 @@ namespace MyIssue.Web.Controllers
 
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(false, false, whoseTasks, howMany, null, auth);
+            return await _service.GetTasks(false,  whoseTasks, howMany, null, auth);
         }
         [HttpGet("user/{whoseTasks}")]
         public async Task<TaskReturnRoot> GetByUser(string whoseTasks)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetTasks(false, true, whoseTasks, 0, null, auth);
+            return await _service.GetTasks(false, whoseTasks, 0, null, auth);
         }
 
         #region Pagination

@@ -19,7 +19,7 @@ export class TaskPagedComponent implements OnInit {
     if (localStorage.getItem("pageSize") == null) localStorage.setItem("pageSize", "10");
     let size: number = Number.parseInt(localStorage.getItem("pageSize"));
     this.taskService.getPagedFirst(1, size, this.auth.headers()).subscribe(result => {
-      console.warn(result);
+      //console.warn(result);
       this.paged = JSON.parse(result);
     },
     error => {
@@ -35,7 +35,7 @@ export class TaskPagedComponent implements OnInit {
   }
 
   public selectTask(task: Task) {
-    this.router.navigate(['nav-menu-logged/task-view', task.taskId]);
+    this.router.navigate(['nav-menu-logged/task-view', task.TaskId]);
   }
   public firstPageButton() {
     this.taskService.getPagedLink(this.paged.firstPage, this.auth.headers()).subscribe(result => {
@@ -48,7 +48,7 @@ export class TaskPagedComponent implements OnInit {
   }
   public previousPageButton() {
     this.taskService.getPagedLink(this.paged.previousPage, this.auth.headers()).subscribe(result => {
-      console.warn(result);
+      //console.warn(result);
       this.paged = JSON.parse(result);
     },
     error => {

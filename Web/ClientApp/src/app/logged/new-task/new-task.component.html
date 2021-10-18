@@ -2,25 +2,25 @@
   <form (ngSubmit)="posttask()" class="form">
     <div class="left-side">
       <mat-label>Client:</mat-label>
-      <mat-select name="clientSelect" class="buttons" [(ngModel)]="task.taskClient">
+      <mat-select name="clientSelect" class="buttons" [(ngModel)]="task.TaskClient">
         <mat-option [value]="null"></mat-option>
-        <mat-option *ngFor="let client of clients.clients" [value]="client.companyName">{{client.companyName}}</mat-option>
+        <mat-option *ngFor="let client of clients.clients" [value]="client.name">{{client.name}}</mat-option>
       </mat-select>
       <mat-label>TaskType:</mat-label>
-      <mat-select name="tasktypeSelect" class="buttons" [(ngModel)]="task.taskType">
+      <mat-select name="tasktypeSelect" class="buttons" [(ngModel)]="task.TaskType">
 
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let type of taskTypes.taskTypes" [value]="type.taskType">{{type.taskType}}</mat-option>
       </mat-select>
       <mat-form-field appearance="fill" class="textarea">
         <mat-label>Write task description..</mat-label>
-        <textarea matInput type="text" class="description" [(ngModel)]="task.taskDescription">{{task.taskDescription}}</textarea>
+        <textarea matInput type="text" class="description" [(ngModel)]="task.TaskDescription">{{task.TaskDescription}}</textarea>
       </mat-form-field>
     </div>
     <div class="right-side">
       <mat-form-field appearance="fill" class="datetime-picker">
-        <mat-label>Task start date: {{task.taskStart}}</mat-label>
-        <input matInput [ngxMatDatetimePicker]="startpicker" placeholder="Task start date" [(ngModel)]="task.taskStart" />
+        <mat-label>Task start date: {{task.TaskStart}}</mat-label>
+        <input matInput [ngxMatDatetimePicker]="startpicker" placeholder="Task start date" [(ngModel)]="task.TaskStart" />
         <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #startpicker></ngx-mat-datetime-picker>
         <mat-datepicker-toggle matSuffix (click)="clearDate('removeStart')">
@@ -30,8 +30,8 @@
 
       </mat-form-field>
       <mat-form-field appearance="fill" class="datetime-picker">
-        <mat-label>Task end date: {{task.taskEnd}}</mat-label>
-        <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.taskEnd" />
+        <mat-label>Task end date: {{task.TaskEnd}}</mat-label>
+        <input matInput [ngxMatDatetimePicker]="endpicker" placeholder="Task end date" [(ngModel)]="task.TaskEnd" />
         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #endpicker>
         </ngx-mat-datetime-picker>
@@ -42,12 +42,12 @@
 
       </mat-form-field>
       <label>Assigned to:</label>
-      <mat-select name="assignmentSelect" class="buttons" [(ngModel)]="task.taskAssignment">
+      <mat-select name="assignmentSelect" class="buttons" [(ngModel)]="task.TaskAssignment">
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let employee of employees.employees" [value]="employee.login">{{employee.login}}</mat-option>
       </mat-select>
       <label>Owned by:</label>
-      <mat-select name="ownershipSelect" class="buttons" [(ngModel)]="task.taskOwner">
+      <mat-select name="ownershipSelect" class="buttons" [(ngModel)]="task.TaskOwner">
         <mat-option [value]="null"></mat-option>
         <mat-option *ngFor="let employee of employees.employees" [value]="employee.login">{{employee.login}}</mat-option>
       </mat-select>
@@ -58,7 +58,7 @@
     <div class="center-element">
       <mat-form-field appearance="fill" class="textarea">
         <mat-label>Write task resolution..</mat-label>
-        <textarea matInput type="text" class="description" [(ngModel)]="task.employeeDescription">{{task.employeeDescription}}</textarea>
+        <textarea matInput type="text" class="description" [(ngModel)]="task.EmployeeDescription">{{task.EmployeeDescription}}</textarea>
       </mat-form-field>
       <button mat-raised-button type="submit" class="buttons">Create task!</button>
     </div>

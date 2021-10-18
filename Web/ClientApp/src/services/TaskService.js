@@ -24,10 +24,29 @@ var TaskService = /** @class */ (function () {
         return this.httpclient
             .get(this.baseUrl + 'Tasks/' + id, { headers: headers, responseType: 'text' });
     };
-    TaskService.prototype.updateTask = function (inputtask, headers) {
-        console.warn("updating task");
-        console.warn(JSON.stringify(inputtask).toString());
-        return this.httpclient.put(this.baseUrl + 'Tasks/' + inputtask.taskId, JSON.stringify(inputtask), { headers: headers });
+    TaskService.prototype.getPagedFirst = function (pageNumber, pageSize, headers) {
+        var pagedRequest = {
+            link: null,
+            page: pageNumber,
+            size: pageSize
+        };
+        return this.httpclient
+            .post(this.baseUrl + 'Tasks/pagedFirst', JSON.stringify(pagedRequest), { headers: headers, responseType: 'text' });
+    };
+    TaskService.prototype.getPagedLink = function (pageLink, headers) {
+        var pagedRequest = {
+            link: pageLink,
+            page: null,
+            size: null
+        };
+        return this.httpclient
+            .post(this.baseUrl + 'Tasks/pagedLink', JSON.stringify(pagedRequest), { headers: headers, responseType: 'text' });
+    };
+    TaskService.prototype.createTask = function (task, headers) {
+        return this.httpclient.post(this.baseUrl + 'Tasks', JSON.stringify(task), { headers: headers });
+    };
+    TaskService.prototype.updateTask = function (inputTask, headers) {
+        return this.httpclient.put(this.baseUrl + 'Tasks/' + inputTask.TaskId, JSON.stringify(inputTask), { headers: headers });
     };
     TaskService = __decorate([
         core_1.Injectable({

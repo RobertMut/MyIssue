@@ -66,19 +66,19 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.task.taskAssignment = localStorage.getItem("login");
-    this.task.taskOwner = localStorage.getItem("login");
+    this.task.TaskAssignment = localStorage.getItem("login");
+    this.task.TaskOwner = localStorage.getItem("login");
   }
   clearDate(name): void {
     if (name == 'removeStart')
-      this.task.taskStart = null;
-    else this.task.taskEnd = null;
+      this.task.TaskStart = null;
+    else this.task.TaskEnd = null;
   }
   onStartButton(): void {
-    this.task.taskStart = new Date().toISOString();
+    this.task.TaskStart = new Date().toISOString();
   }
   onEndButton(): void {
-    this.task.taskEnd = new Date().toISOString();
+    this.task.TaskEnd = new Date().toISOString();
   }
   posttask(): void {
     this.taskService.createTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));

@@ -6,7 +6,7 @@
 </div>
 <div class="task-div add-a-little-space-below">
   <p>Your active tasks:</p>
-  <mat-select name="howManyAssigned" class="selection" (change)="selectActiveChangeHandler($event)" [(ngModel)]='selectionActive'>
+  <mat-select name="howManyAssigned" class="selection" (selectionChange)="selectActiveChangeHandler($event)" [(ngModel)]='selectionActive'>
     <mat-option [value]="5">5</mat-option>
     <mat-option [value]="10">10</mat-option>
     <mat-option [value]="15">15</mat-option>
@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr mat-row *ngFor="let task of activeTasks" (click)="selectTask(task)" class="task-row">
+      <tr mat-row *ngFor="let task of activeTasks" (click)="selectTask(task.TaskId)" class="task-row">
         <td mat-cell>{{task.TaskId}}</td>
         <td mat-cell>{{task.TaskType}}</td>
         <td mat-cell>{{task.TaskTitle}}</td>
@@ -45,7 +45,7 @@
     </tbody>
   </table>
 </div>
-<mat-select name="howManyActive" class="selection" (change)="selectFreeChangeHandler($event)" [(ngModel)]='selectionFree'>
+<mat-select name="howManyActive" class="selection" (selectionChange)="selectFreeChangeHandler($event)" [(ngModel)]='selectionFree'>
   <mat-option [value]="5">5</mat-option>
   <mat-option [value]="10">10</mat-option>
   <mat-option [value]="15">15</mat-option>
@@ -71,7 +71,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr mat-row *ngFor="let task of freeTasks" (click)="selectTask(task)" class="task-row">
+      <tr mat-row *ngFor="let task of freeTasks" (click)="selectTask(task.TaskId)" class="task-row">
         <td mat-cell>{{task.TaskId}}</td>
         <td mat-cell>{{task.TaskType}}</td>
         <td mat-cell>{{task.TaskTitle}}</td>

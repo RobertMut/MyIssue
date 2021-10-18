@@ -17,7 +17,7 @@ export class ClientService {
       .get(this.baseUrl + 'Clients', { headers: headers, responseType: 'text' });
   }
   public postClient(client: IClient, headers: HttpHeaders) {
-    console.warn(client.name + ' ' + this.baseUrl+'Clients/new');
+    //console.warn(client.name + ' ' + this.baseUrl+'Clients/new');
     return this.httpclient
       .post(this.baseUrl + 'Clients/new', JSON.stringify(client), { headers: headers });
   }
