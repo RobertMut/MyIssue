@@ -48,6 +48,7 @@
     <Compile Include="Constants\EmployeeConstants.cs" />
     <Compile Include="Constants\TaskConstants.cs" />
     <Compile Include="Constants\UserLogin.cs" />
+    <Compile Include="Exceptions\BadCommandListException.cs" />
     <Compile Include="Interfaces\IAggregateClasses.cs" />
     <Compile Include="Constants\ConsoleCommands.cs" />
     <Compile Include="Exceptions\CommandNotFoundException.cs" />
@@ -66,10 +67,12 @@
     <Compile Include="Model\Request\Token.cs" />
     <Compile Include="Model\Return\Authenticate.cs" />
     <Compile Include="Model\Return\ClientReturn.cs" />
+    <Compile Include="Model\Return\EmployeePosition.cs" />
     <Compile Include="Model\Return\EmployeeReturn.cs" />
     <Compile Include="Model\Return\TaskReturn.cs" />
     <Compile Include="Model\Return\TaskTypeReturn.cs" />
     <Compile Include="Model\Return\UserReturn.cs" />
+    <Compile Include="Model\Return\UserType.cs" />
     <Compile Include="Service\HttpService.cs" />
     <Compile Include="String\StringStatic.cs" />
   </ItemGroup>

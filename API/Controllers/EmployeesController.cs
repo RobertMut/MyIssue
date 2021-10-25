@@ -120,16 +120,30 @@ namespace MyIssue.API.Controllers
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<Employee>> PostEmployee(EmployeeReturn employee)
         {
-            _context.Employees.Add(employee);
+            _context.Employees.Add(new Employee
+            {
+                EmployeeLogin = employee.Login,
+                EmployeeName = employee.Name,
+                EmployeeSurname = employee.Surname,
+                EmployeeNo = employee.No,
+                EmployeePosition = _context.Positions.Where(e => e.PositionName == employee.Position).First().PositionId,
+            });
+            var user = _context.Users.FirstOrDefault(u => u.UserLogin == employee.Login);
             try
             {
+                if (user is not null)
+                    _context.EmployeeUser.Add(new EmployeeUser
+                    {
+                        UserLogin = employee.Login,
+                        EmployeeLogin = employee.Login,
+                    });
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (EmployeeExists(employee.EmployeeLogin))
+                if (EmployeeExists(employee.Login))
                 {
                     return Conflict();
                 }
@@ -139,7 +153,7 @@ namespace MyIssue.API.Controllers
                 }
             }
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeLogin }, employee);
+            return CreatedAtAction("GetEmployee", new { EmployeeLogin = employee.Login }, employee);
         }
 
         // DELETE: api/Employees/5

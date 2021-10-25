@@ -9,5 +9,7 @@ namespace MyIssue.Core.Model.Return
     public class UserReturn
     {
         public string Username { get; set; }
+        public string Password { get; set; }
+        public string Type { get; set; }
     }
 }

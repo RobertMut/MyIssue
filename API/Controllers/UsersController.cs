@@ -46,6 +46,7 @@ namespace MyIssue.API.Controllers
                 return NotFound();
             }
 
+            user.Password = null;
             return Ok(user);
         }
         [HttpGet]
@@ -55,7 +56,10 @@ namespace MyIssue.API.Controllers
             var users = await _context.Users.ToListAsync();
             users.ForEach(u => Users.Add(new UserReturn
             {
-                Username = u.UserLogin
+                Username = u.UserLogin,
+                Password = null,
+                Type = _context.UserTypes.First(t => t.Id == u.UserType).Name,
+
             }));
             return Ok(JsonConvert.SerializeObject(new UserReturnRoot()
             {
@@ -83,17 +87,30 @@ namespace MyIssue.API.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("Post")]
-        public async Task<ActionResult<User>> PostUser(User user)
+        [HttpPost()]
+        public async Task<ActionResult<User>> PostUser(UserReturn user)
         {
-            _context.Users.Add(user);
+            _context.Users.Add(new User
+            {
+                UserLogin = user.Username,
+                Password = user.Password,
+                UserType = _context.UserTypes.First(u => u.Name == user.Type).Id,
+            });
+            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeName == user.Username);
             try
             {
+
+                if (employee is not null)
+                    _context.EmployeeUser.Add(new EmployeeUser
+                    {
+                        UserLogin = user.Username,
+                        EmployeeLogin = user.Username,
+                    });
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (UserExists(user.UserLogin))
+                if (UserExists(user.Username))
                 {
                     return Conflict();
                 }
@@ -103,7 +120,7 @@ namespace MyIssue.API.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUser", new { id = user.UserLogin }, user);
+            return CreatedAtAction("GetUser", new { UserLogin = user.Username }, user);
         }
 
         // DELETE: api/Users/5
