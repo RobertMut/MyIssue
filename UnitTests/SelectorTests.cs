@@ -1,11 +1,9 @@
-﻿using MyIssue.Core.Interfaces;
+﻿using System.IO;
 using MyIssue.DesktopApp.Misc.Sender;
-using NUnit.Framework;
-using System.IO;
 using MyIssue.DesktopApp.Model;
 using MyIssue.DesktopApp.Model.Builders;
-
-namespace Tests
+using NUnit.Framework;
+namespace MyIssue.UnitTests
 {
     class SelectorTests
     {

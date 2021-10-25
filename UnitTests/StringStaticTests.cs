@@ -1,7 +1,7 @@
 using MyIssue.Core.String;
 using NUnit.Framework;
 
-namespace Tests
+namespace MyIssue.UnitTests
 {
     public class StringStaticTests
     {

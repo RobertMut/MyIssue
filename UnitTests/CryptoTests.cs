@@ -1,7 +1,7 @@
 ﻿using MyIssue.DesktopApp.Misc.Utility;
 using NUnit.Framework;
 
-namespace Tests
+namespace MyIssue.UnitTests
 {
     class CryptoTests
     {

@@ -1,9 +1,9 @@
-﻿using MyIssue.DesktopApp.Misc.Converters;
-using NUnit.Framework;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
+using MyIssue.DesktopApp.Misc.Converters;
+using NUnit.Framework;
 
-namespace Tests
+namespace MyIssue.UnitTests
 {
     class BooleanStringConverterTests
     {

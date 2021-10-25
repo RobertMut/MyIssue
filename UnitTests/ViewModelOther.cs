@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows.Controls;
-using Tests.Mocks;
+using MyIssue.UnitTests.Mocks;
+using NUnit.Framework;
 
-namespace Tests
+namespace MyIssue.UnitTests
 {
 
     class ViewModelOther

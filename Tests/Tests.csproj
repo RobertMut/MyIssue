@@ -18,10 +18,17 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\DesktopApp\DesktopApp.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Server\Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="PresentationFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="API\" />
+    <Folder Include="Mocks\" />
   </ItemGroup>
 
 </Project>

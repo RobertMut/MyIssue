@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using Tests.Mocks;
+﻿using MyIssue.UnitTests.Mocks;
+using NUnit.Framework;
 
-namespace Tests
+namespace MyIssue.UnitTests
 {
-    class ViewModelNavigationTests
+    public class ViewModelNavigationTests
     {
         ViewModels mock;
         [SetUp]

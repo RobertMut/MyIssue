@@ -1,4 +1,4 @@
-﻿namespace Tests
+﻿namespace MyIssue.UnitTests
 {
     class DesktopDataTests
     {

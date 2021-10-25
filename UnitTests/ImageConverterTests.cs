@@ -1,12 +1,12 @@
-﻿using MyIssue.DesktopApp.Misc.Converters;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MyIssue.DesktopApp.Misc.Converters;
+using NUnit.Framework;
 
-namespace Tests
+namespace MyIssue.UnitTests
 {
     public class ImageConverterTests
     {
