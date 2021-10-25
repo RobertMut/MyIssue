@@ -38,6 +38,8 @@ namespace MyIssue.Web
             services.AddScoped<IEmployeesService, EmployeesService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IPositionsService, PositionsService>();
+            services.AddScoped<IUserTypesService, UserTypesService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -3,7 +3,7 @@ import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
 import { HttpErrorResponse } from '@angular/common/http';
-import { Task, PagedResponse, TaskRoot } from "../../../interfaces/Task";
+import { Task, TaskRoot } from "../../../models/Task";
 
 @Component({
   selector: 'app-home',
@@ -64,14 +64,8 @@ export class HomeComponent {
     localStorage.setItem("selectionActive", event.value.toString());
     location.reload();
   }
-  public navigateNewTask() {
-    this.router.navigate(['./new-task'], { relativeTo: this.activatedRoute });
-  }
-  public navigatePaged() {
-    this.router.navigate(['./task-paged'], { relativeTo: this.activatedRoute });
-  }
-  public navigateCreateClient() {
-    this.router.navigate(['./create-client'], { relativeTo: this.activatedRoute });
+  public navigate(link: string) {
+    this.router.navigate([link], { relativeTo: this.activatedRoute });
   }
   public selectTask(taskId: number) {
     this.router.navigate(['./task-view', taskId.toString()], {relativeTo: this.activatedRoute});

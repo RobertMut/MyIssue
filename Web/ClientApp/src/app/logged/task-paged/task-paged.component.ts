@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { MatSelectChange } from "@angular/material/select"
-import { Task, PagedResponse } from "../../../interfaces/Task";
+import { PagedResponse, Task } from "../../../models/Task";
 
 @Component({
   selector: 'app-task-paged',

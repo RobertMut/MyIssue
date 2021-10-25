@@ -1,8 +1,9 @@
 <h1>Hello, {{login}}</h1>
 <div class="control">
-  <button mat-raised-button type="button" (click)="navigateNewTask()">Create new task</button>
-  <button mat-raised-button type="button" (click)="navigatePaged()">All tasks</button>
-  <button mat-raised-button type="button" (click)="navigateCreateClient()">Create client</button>
+  <button mat-raised-button type="button" (click)="navigate('./new-task')">Create new task</button>
+  <button mat-raised-button type="button" (click)="navigate('./task-paged')">All tasks</button>
+  <button mat-raised-button type="button" (click)="navigate('./create-client')">Create client</button>
+  <button mat-raised-button type="button" (click)="navigate('./create-user')">Create user/employee</button>
 </div>
 <div class="task-div add-a-little-space-below">
   <p>Your active tasks:</p>

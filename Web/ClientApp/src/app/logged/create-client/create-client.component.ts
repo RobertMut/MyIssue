@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from "../../../services/ClientService";
-import { IClient, IClientRoot } from "../../../interfaces/Client";
 import { AuthService } from "../../../services/AuthService";
 import { HttpErrorResponse } from '@angular/common/http';
+import { ClientRoot, Client } from "../../../models/Client";
 
 @Component({
   selector: 'app-create-client',
@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CreateClientComponent implements OnInit {
   public show: false;
-  public clients: IClientRoot = {} as IClientRoot;
+  public clients: ClientRoot = {} as ClientRoot;
   public result: string;
   constructor(private clientService: ClientService,
     private auth: AuthService) {
@@ -28,7 +28,7 @@ export class CreateClientComponent implements OnInit {
   ngOnInit(): void {
   }
   public createClient(clientFormValues: any) {
-    let client: IClient = {
+    let client: Client = {
       id: null,
       name: clientFormValues.name,
       country: clientFormValues.country,

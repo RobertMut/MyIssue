@@ -3,8 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { Task, TaskRoot } from "../../../interfaces/Task";
-import { IEmployeeRoot } from "../../../interfaces/Employee";
+import { Task, TaskRoot } from "../../../models/Task";
+import { EmployeeRoot } from "../../../models/Employee";
 
 
 @Component({
@@ -17,7 +17,7 @@ export class TaskViewComponent implements OnInit {
   public task: Task;
   public assignment: string;
   public ownership: string;
-  public employees: IEmployeeRoot;
+  public employees: EmployeeRoot;
   public createdByMail: boolean;
 
   constructor(private route: ActivatedRoute,

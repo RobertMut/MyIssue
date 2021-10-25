@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from "@angular/router";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { IEmployeeRoot, IEmployee } from "../../../interfaces/Employee";
 import { UserService } from "../../../services/UserService";
-import { IUser, IUserRoot } from "../../../interfaces/User";
+import { User, UserRoot } from "../../../models/User";
+import { Employee, EmployeeRoot } from "../../../models/Employee";
 
 @Component({
   selector: 'app-profile',
@@ -13,8 +13,8 @@ import { IUser, IUserRoot } from "../../../interfaces/User";
   providers: [UserService, EmployeeService]
 })
 export class ProfileComponent implements OnInit {
-  public user: IUser;
-  public employee: IEmployee;
+  public user: User;
+  public employee: Employee;
   public changed: string;
   constructor(private auth: AuthService,
     private router: Router,
@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
     private employeeService: EmployeeService) {
 
     this.employeeService.getEmployeeByName(localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
-      let root: IEmployeeRoot = JSON.parse(result);
+      let root: EmployeeRoot = JSON.parse(result);
       this.employee = root.employees[0];
     },
     error => {
@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
       this.auth.CheckUnauthorized(error);
     });
     this.userService.getuserbyname(localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
-      let root: IUserRoot = JSON.parse(result);
+      let root: UserRoot = JSON.parse(result);
       this.user = root.users[0];
     },
     error => {

@@ -14,8 +14,9 @@ namespace MyIssue.Web.Services
 {
     public interface IUsersService
     {
-        Task<UserReturnRoot> GetUsers(string? username, TokenAuth model);
+        Task<string> GetUsers(string? username, TokenAuth model);
         Task<string> ChangePassword(Password password, TokenAuth model);
+        Task<string> CreateUser(UserReturn user, TokenAuth model);
     }
     public class UsersService : IUsersService
     {
@@ -25,7 +26,7 @@ namespace MyIssue.Web.Services
         {
             _server = server;
         }
-        public async Task<UserReturnRoot> GetUsers(string? username, TokenAuth model)
+        public async Task<string> GetUsers(string? username, TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
@@ -36,9 +37,7 @@ namespace MyIssue.Web.Services
                 StringStatic.ByteMessage($"{username}\r\n<EOF>\r\n"));
 
             cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
-            string response = _server.SendData(cmds);
-            var task = JsonConvert.DeserializeObject<UserReturnRoot>(response);
-            return task;
+            return _server.SendData(cmds);
         }
 
         public async Task<string> ChangePassword(Password password, TokenAuth model)
@@ -50,6 +49,18 @@ namespace MyIssue.Web.Services
                     $"{password.OldPassword}\r\n<NEXT>\r\n{password.NewPassword}\r\n<EOF>\r\n"))
                 .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             return _server.SendData(cmds);
-        } 
+        }
+        public async Task<string> CreateUser(UserReturn user, TokenAuth model)
+        {
+            string commandString =
+                $"{user.Username}\r\n<NEXT>\r\n{user.Password}\r\n<NEXT>\r\n{user.Type}\r\n<EOF>\r\n";
+            IEnumerable<byte[]> cmds = new List<byte[]>()
+                .Concat(User.TokenLogin(model.Login, model.Token))
+                .Append(StringStatic.ByteMessage("AddUser\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage(commandString))
+                .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
+            string response = _server.SendData(cmds);
+            return response;
+        }
     }
 }

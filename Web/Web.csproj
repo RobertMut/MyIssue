@@ -31,9 +31,6 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\classes\User.ts" />
-    <None Remove="ClientApp\src\models\employee.ts" />
-    <None Remove="ClientApp\src\models\task.model.ts" />
-    <None Remove="ClientApp\src\models\task.ts" />
     <None Remove="ClientApp\src\models\username.ts" />
     <None Remove="ClientApp\src\services\EmployeeService.ts" />
     <None Remove="ClientApp\src\services\TaskService.ts" />
@@ -48,10 +45,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\classes\User.ts" />
-    <TypeScriptCompile Include="ClientApp\src\interfaces\Employee.ts" />
-    <TypeScriptCompile Include="ClientApp\src\models\task.model.ts" />
-    <TypeScriptCompile Include="ClientApp\src\interfaces\User.ts" />
-    <TypeScriptCompile Include="ClientApp\src\interfaces\Task.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\Employee.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\User.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\Task.ts" />
     <TypeScriptCompile Include="ClientApp\src\services\EmployeeService.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Task, PagedResponse } from "../../../interfaces/Task";
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
-import { IEmployeeRoot } from "../../../interfaces/Employee";
-import { ITaskTypeRoot } from "../../../interfaces/TaskType";
 import { ClientService } from "../../../services/ClientService";
 import { TaskTypeService } from "../../../services/TaskTypeService";
-import { IClientRoot } from "../../../interfaces/Client";
+import { Task } from "../../../models/Task";
+import { EmployeeRoot } from "../../../models/Employee";
+import { TaskTypeRoot } from "../../../models/TaskType";
+import { ClientRoot } from "../../../models/Client";
 
 enum Selector {
   taskType = "tasktypeSelect",
@@ -28,10 +28,10 @@ export class NewTaskComponent implements OnInit {
   public task: Task = {} as Task;
   public assignment: string;
   public ownership: string;
-  public employees: IEmployeeRoot;
+  public employees: EmployeeRoot;
   public createdByMail: boolean;
-  public taskTypes: ITaskTypeRoot;
-  public clients: IClientRoot;
+  public taskTypes: TaskTypeRoot;
+  public clients: ClientRoot;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
@@ -42,7 +42,6 @@ export class NewTaskComponent implements OnInit {
     private tasktypeService: TaskTypeService) {
     this.employeeService.getAllEmployees(this.auth.headers()).subscribe(result => {
         this.employees = JSON.parse(result);
-        console.warn(this.employees.employees[0]);
       },
       error => {
         console.error(error);
@@ -57,7 +56,6 @@ export class NewTaskComponent implements OnInit {
       });
     this.tasktypeService.getTaskTypes(this.auth.headers()).subscribe(result => {
         this.taskTypes = JSON.parse(result);
-        console.warn(this.taskTypes.taskTypes[0]);
       },
       error => {
         console.error(error);

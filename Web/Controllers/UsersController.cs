@@ -8,6 +8,7 @@ using MyIssue.Core.Model.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;
+using Newtonsoft.Json;
 
 namespace MyIssue.Web.Controllers
 {
@@ -25,14 +26,16 @@ namespace MyIssue.Web.Controllers
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetUsers(null, auth);
+            string result = await _service.GetUsers(null, auth);
+            return JsonConvert.DeserializeObject<UserReturnRoot>(result);
         }
         [HttpGet("{name}")]
         public async Task<UserReturnRoot> GetUserByName(string name)
         {
             var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var auth = new TokenAuth(token);
-            return await _service.GetUsers(name, auth);
+            string result = await _service.GetUsers(null, auth);
+            return JsonConvert.DeserializeObject<UserReturnRoot>(result);
         }
         [HttpPost("{name}")]
         public async Task<IActionResult> SetNewPassword([FromBody] Password password)
@@ -40,6 +43,14 @@ namespace MyIssue.Web.Controllers
             var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             var response = await _service.ChangePassword(password, auth);
             return Ok(response);
+        }
+        [HttpPost("new")]
+        public async Task<IActionResult> NewUser([FromBody] UserReturn user)
+        {
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
+            string result = await _service.CreateUser(user, auth);
+            if (result.Contains("CreatedAtAction")) return CreatedAtAction("NewUser", result);
+            return BadRequest(result);
         }
     }
 }

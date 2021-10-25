@@ -38,6 +38,7 @@ import { NewTaskComponent } from './logged/new-task/new-task.component';
 import { TaskPagedComponent } from './logged/task-paged/task-paged.component';
 import { ProfileComponent } from './logged/profile/profile.component';
 import { CreateClientComponent } from './logged/create-client/create-client.component';
+import { CreateUserComponent } from './logged/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CreateClientComponent } from './logged/create-client/create-client.comp
     NewTaskComponent,
     TaskPagedComponent,
     ProfileComponent,
-    CreateClientComponent
+    CreateClientComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
