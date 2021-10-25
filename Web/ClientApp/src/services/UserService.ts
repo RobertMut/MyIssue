@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from "../models/User";
 
 
 @Injectable()
@@ -28,5 +29,9 @@ export class UserService {
     }
     return this.httpclient
       .post(this.baseUrl + 'Users/' + name, JSON.stringify(data), { headers: headers, responseType: 'text' });
+  }
+  public createUser(user: User, headers: HttpHeaders): Observable<string> {
+    return this.httpclient
+      .post(this.baseUrl + 'Users/new', JSON.stringify(user), { headers: headers, responseType: 'text' });
   }
 }

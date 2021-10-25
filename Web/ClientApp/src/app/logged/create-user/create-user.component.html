@@ -1,0 +1,103 @@
+<div class="creation">
+  <mat-accordion>
+    <form #clientForm="ngForm" (ngSubmit)="createUser(clientForm.value)">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Add new user</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="formBody">
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Login</mat-label>
+            <input matInput type="text" name="username" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" ngModel />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Type:</mat-label>
+            <mat-select name="type" class="buttons" ngModel>
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let type of userTypes" [value]="type.Name">{{type.Name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button type="submit">Create user</button>
+        </div>
+      </mat-expansion-panel>
+    </form>
+  </mat-accordion>
+  <mat-accordion>
+    <form #employeeForm="ngForm" (ngSubmit)="createEmployee(employeeForm.value)">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Add new employee</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="formBody">
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Employee login (must match user login)</mat-label>
+            <input matInput type="text" name="login" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" name="name" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>Surname</mat-label>
+            <input matInput type="text" name="surname" ngModel />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="textarea">
+            <mat-label>No</mat-label>
+            <input matInput type="text" name="no" ngModel />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Position:</mat-label>
+            <mat-select name="position" class="buttons" ngModel>
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let position of positions" [value]="position.PositionName">{{position.PositionName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-raised-button type="submit">Create Employee</button>
+        </div>
+      </mat-expansion-panel>
+    </form>
+  </mat-accordion>
+  <mat-card *ngIf="users">
+    <table mat-table class="mat-elevation-z8 task-navigation-table">
+      <thead>
+        <tr mat-header-row>
+          <th mat-header-cell>Login</th>
+          <th mat-header-cell>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mat-row *ngFor="let user of users" class="task-row">
+          <td mat-cell>{{user.username}}</td>
+          <td mat-cell>{{user.type}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card>
+  <mat-card *ngIf="employees">
+    <table mat-table class="mat-elevation-z8 task-navigation-table">
+      <thead>
+        <tr mat-header-row>
+          <th mat-header-cell>Login</th>
+          <th mat-header-cell>Name</th>
+          <th mat-header-cell>Surname</th>
+          <th mat-header-cell>No</th>
+          <th mat-header-cell>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mat-row *ngFor="let employee of employees" class="task-row">
+          <td mat-cell>{{employee.login}}</td>
+          <td mat-cell>{{employee.name}}</td>
+          <td mat-cell>{{employee.surname}}</td>
+          <td mat-cell>{{employee.no}}</td>
+          <td mat-cell>{{employee.position}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card>
+</div>

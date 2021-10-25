@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import { IClient } from "../interfaces/Client";
+import { Client } from "../models/Client";
 
 @Injectable()
 export class ClientService {
@@ -16,7 +16,7 @@ export class ClientService {
     return this.httpclient
       .get(this.baseUrl + 'Clients', { headers: headers, responseType: 'text' });
   }
-  public postClient(client: IClient, headers: HttpHeaders) {
+  public postClient(client: Client, headers: HttpHeaders) {
     //console.warn(client.name + ' ' + this.baseUrl+'Clients/new');
     return this.httpclient
       .post(this.baseUrl + 'Clients/new', JSON.stringify(client), { headers: headers });

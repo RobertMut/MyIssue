@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PagedTaskRequest, Task } from "../interfaces/Task";
+import { PagedTaskRequest, Task } from "../models/Task";
 
 
 @Injectable({
