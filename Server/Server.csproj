@@ -95,6 +95,8 @@
     <Compile Include="Client\ClientCounter.cs" />
     <Compile Include="Client\ProcessClient.cs" />
     <Compile Include="Commands\ChangePassword.cs" />
+    <Compile Include="Commands\GetPositions.cs" />
+    <Compile Include="Commands\GetUserTypes.cs" />
     <Compile Include="Commands\PostClient.cs" />
     <Compile Include="Commands\GetEmployee.cs" />
     <Compile Include="Commands\GetClients.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Commands\RevokeLogout.cs" />
     <Compile Include="Commands\TokenLogin.cs" />
     <Compile Include="Commands\WhoAmI.cs" />
+    <Compile Include="Http\RequestMessage.cs" />
     <Compile Include="Model\Builders\ClientBuilder.cs" />
     <Compile Include="Model\Builders\DBParametersBuilder.cs" />
     <Compile Include="Model\Builders\IClientBuilder.cs" />
