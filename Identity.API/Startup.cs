@@ -78,28 +78,28 @@ namespace MyIssue.Identity.API
             }
                 
             builder.AddDeveloperSigningCredential();
-            services.AddAuthentication()
-                .AddOpenIdConnect("oidc", "IdentityAPI", opt =>
-                {
-                    opt.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    opt.SignOutScheme = IdentityServerConstants.SignoutScheme;
-                    opt.SaveTokens = true;
-                    opt.Authority = Configuration.GetValue<string>("IdentityServer:Authority");
-                    opt.ClaimsIssuer = Configuration.GetValue<string>("IdentityServer:Issuer");
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidIssuer = Configuration.GetValue<string>("IdentityServer:Issuer"),
-                        ValidAudience = Configuration.GetValue<string>("IdentityServer:Authority"),
-                        ValidateLifetime = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.ASCII.GetBytes(
-                                Configuration.GetValue<string>("IdentityServer:Secret")
-                            ))
-                    };
-                });
+            services.AddAuthentication().AddLocalApi();
+                //.AddOpenIdConnect("oidc", "IdentityAPI", opt =>
+                //{
+                //    opt.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                //    opt.SignOutScheme = IdentityServerConstants.SignoutScheme;
+                //    opt.SaveTokens = true;
+                //    opt.Authority = Configuration.GetValue<string>("IdentityServer:Authority");
+                //    opt.ClaimsIssuer = Configuration.GetValue<string>("IdentityServer:Issuer");
+                //    opt.TokenValidationParameters = new TokenValidationParameters
+                //    {
+                //        ValidateIssuerSigningKey = true,
+                //        ValidateIssuer = true,
+                //        ValidateAudience = true,
+                //        ValidIssuer = Configuration.GetValue<string>("IdentityServer:Issuer"),
+                //        ValidAudience = Configuration.GetValue<string>("IdentityServer:Authority"),
+                //        ValidateLifetime = true,
+                //        IssuerSigningKey = new SymmetricSecurityKey(
+                //            Encoding.ASCII.GetBytes(
+                //                Configuration.GetValue<string>("IdentityServer:Secret")
+                //            ))
+                //    };
+                //});
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -116,11 +116,16 @@ namespace MyIssue.Identity.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Identity.API v1"));
             }
-
+            app.UseCors(b =>
+            {
+                b.AllowAnyOrigin();
+                b.AllowAnyMethod();
+                b.AllowAnyHeader();
+            });
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
-
+            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MyIssue.API.Filter
+﻿namespace MyIssue.API.Filter
 {
     public class PaginationFilter
     {

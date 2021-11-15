@@ -1,7 +1,5 @@
 using System;
 using System.Reflection;
-using System.Text;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyIssue.API.Extensions;
 using MyIssue.API.Infrastructure;
@@ -45,34 +42,39 @@ namespace MyIssue.API
 
             //Console.WriteLine(Configuration.GetValue<string>("Token:Audience"));
             //Console.WriteLine(Configuration.GetValue<string>("Token:Issuer"));
-            services.AddAuthentication().AddIdentityServerAuthentication("Bearer", opt =>
+            // services.AddAuthentication().AddIdentityServerAuthentication("Bearer", opt =>
+            // {
+            //     opt.ApiName = "API";
+            //     opt.Authority = Configuration.GetValue<string>("API:Identity");
+            //     opt.RequireHttpsMetadata = Configuration.GetValue<bool>("API:RequireHttps");
+            //     
+            // });
+            services.AddAuthentication(options =>
             {
-                opt.ApiName = "API";
-                opt.Authority = Configuration.GetValue<string>("API:Identity");
-                opt.RequireHttpsMetadata = Configuration.GetValue<bool>("API:RequireHttps");
-                
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(bearer =>
+            {
+                bearer.Authority = "https://localhost.com:6001";
+                bearer.RequireHttpsMetadata = false;
+                bearer.Audience = "server_api";
+                //bearer.ClaimsIssuer = Configuration["Token:Issuer"];
+                //bearer.TokenValidationParameters = new TokenValidationParameters
+                //{
+                //    ValidateIssuerSigningKey = true,
+                //    ValidateIssuer = true,
+                //    ValidateAudience = true,
+                //    ValidIssuer = Configuration.GetValue<string>("Token:Issuer"),
+                //    ValidAudience = Configuration.GetValue<string>("Token:Audience"),
+                //    IssuerSigningKey = new SymmetricSecurityKey(
+                //        Encoding.ASCII.GetBytes(
+                //            Configuration.GetValue<string>("Token:Secret")
+                //        ))
+                //};
+                //bearer.SaveToken = true;
             });
-            /*services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            /*}).AddJwtBearer(bearer =>
-            {
-                bearer.ClaimsIssuer = Configuration["Token:Issuer"];
-                bearer.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = Configuration.GetValue<string>("Token:Issuer"),
-                    ValidAudience = Configuration.GetValue<string>("Token:Audience"),
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.ASCII.GetBytes(
-                            Configuration.GetValue<string>("Token:Secret")
-                        ))
-                };
-                bearer.SaveToken = true;
-            });*/
+
+
             services.AddScoped<IUserService, UserService>();
             services.AddHttpContextAccessor();
             services.AddSingleton<IUriService, UriService>(o =>

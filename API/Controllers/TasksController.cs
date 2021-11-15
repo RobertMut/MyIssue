@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Converters;
 using MyIssue.API.Filter;
 using MyIssue.API.Helpers;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Services;
-using MyIssue.API.Wrappers;
 using MyIssue.Core.DataTransferObjects.Return;
 using Newtonsoft.Json;
 using Task = MyIssue.API.Model.Task;
@@ -157,12 +152,7 @@ namespace MyIssue.API.Controllers
 
             return CreatedAtAction("GetTask", new { id = converted.TaskId }, converted);
         }
-        [BasicAuth]
-        [Microsoft.AspNetCore.Mvc.HttpPost("imap")]
-        public async Task<ActionResult<Task>> PostTaskFromImap(TaskReturn task)
-        {
-            return await PostTask(task);
-        }
+       
         // DELETE: api/Tasks/5
         [Microsoft.AspNetCore.Authorization.Authorize]
         [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]

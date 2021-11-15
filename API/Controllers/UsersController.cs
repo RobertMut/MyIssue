@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
-using MyIssue.API.Services;
 using MyIssue.Core.DataTransferObjects.Return;
 using Newtonsoft.Json;
-using Task = System.Threading.Tasks.Task;
 
 namespace MyIssue.API.Controllers
 {

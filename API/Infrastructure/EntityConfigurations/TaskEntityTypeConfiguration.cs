@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyIssue.API.Model;
 
 namespace MyIssue.API.Infrastructure.EntityConfigurations
 {
