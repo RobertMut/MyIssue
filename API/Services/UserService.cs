@@ -9,8 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
-using MyIssue.Core.Model.Request;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Request;
+using MyIssue.Core.DataTransferObjects.Return;
 
 namespace MyIssue.API.Services
 {

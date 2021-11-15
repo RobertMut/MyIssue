@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using Newtonsoft.Json;
 
 namespace MyIssue.API.Controllers

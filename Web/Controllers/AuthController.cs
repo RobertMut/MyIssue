@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MyIssue.Core.Model.Request;
+using MyIssue.Core.DataTransferObjects.Request;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;

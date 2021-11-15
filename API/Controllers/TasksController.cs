@@ -14,7 +14,7 @@ using MyIssue.API.Helpers;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Services;
 using MyIssue.API.Wrappers;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using Newtonsoft.Json;
 using Task = MyIssue.API.Model.Task;
 

@@ -9,9 +9,9 @@ using System.Threading;
 using MyIssue.Core.Exceptions;
 using MyIssue.Server.Model;
 using System.Threading.Tasks;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Core.String;
 using Newtonsoft.Json;
-using MyIssue.Core.Model.Return;
 
 namespace MyIssue.Server.Commands
 {

@@ -18,12 +18,12 @@ namespace MyIssue.UnitTests.API
 {
     public class PositionControllerTests
     {
-        private DBContext _context;
+        private DBContext<MyIssueContext> _context;
         private PositionsController _positionsController;
         [SetUp]
         public void SetUp()
         {
-            _context = new DBContext();
+            _context = new DBContext<MyIssueContext>();
             _context.Context.Positions.Add(new Position
             {
                 PositionId = 1,

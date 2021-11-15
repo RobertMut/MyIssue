@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MyIssue.Core.Model.Return
+namespace MyIssue.Core.DataTransferObjects.Return
 {
     public class EmployeeReturnRoot
     {

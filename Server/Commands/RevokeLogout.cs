@@ -6,7 +6,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MyIssue.Core.Model.Request;
+using MyIssue.Core.DataTransferObjects.Request;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Server.Model;
 using MyIssue.Server.Net;

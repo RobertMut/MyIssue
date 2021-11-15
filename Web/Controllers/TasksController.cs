@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.Extensions.Options;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;

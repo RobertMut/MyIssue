@@ -21,7 +21,7 @@ namespace MyIssue.API
                     webBuilder.UseConfiguration(new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", optional: true)
-                        .Build()).GetSetting("API:applicationUrl").ToString();
+                        .Build()).GetSetting("API:ApplicationUrl").ToString();
                     webBuilder.UseUrls(urls.Split(';'));
                     webBuilder.UseStartup<Startup>();
                 });

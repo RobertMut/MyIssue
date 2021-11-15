@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace MyIssue.API.Infrastructure
+namespace MyIssue.Identity.API.Infrastructure
 {
-    public class MyIssueContextFactory : IDesignTimeDbContextFactory<MyIssueContext>
+    public class IdentityContextFactory : IDesignTimeDbContextFactory<IdentityContext>
     {
-        public MyIssueContext CreateDbContext(string[] args)
+        public IdentityContext CreateDbContext(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
-            var optionsBuilder = new DbContextOptionsBuilder<MyIssueContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<IdentityContext>();
             optionsBuilder.UseSqlServer(config["ConnectionString"],
-                sqlServerOptionsAction: o => o.MigrationsAssembly(typeof(MyIssueContext).Assembly.FullName));
-            return new MyIssueContext(optionsBuilder.Options);
+                sqlServerOptionsAction: o => o.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
+            return new IdentityContext(optionsBuilder.Options);
         }
     }
 }

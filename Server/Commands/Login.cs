@@ -5,9 +5,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Text;
-using MyIssue.Core.Model.Request;
+using MyIssue.Core.DataTransferObjects.Request;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Core.Model.Return;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

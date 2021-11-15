@@ -7,8 +7,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using MyIssue.Core.Exceptions;
-using MyIssue.Core.Model.Return;
 using System.Threading.Tasks;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Core.String;
 using Newtonsoft.Json;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using MyIssue.API.Controllers;
+using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
 using MyIssue.UnitTests.Mocks;
 using NUnit.Framework;
@@ -13,12 +14,12 @@ namespace MyIssue.UnitTests.API
 {
     class UserTypesControllerTests
     {
-        private DBContext _context;
+        private DBContext<MyIssueContext> _context;
         private UserTypesController _userTypes;
         [SetUp]
         public void SetUp()
         {
-            _context = new DBContext();
+            _context = new DBContext<MyIssueContext>();
             _context.Context.UserTypes.Add(new UserType
             {
                 Id = 1,

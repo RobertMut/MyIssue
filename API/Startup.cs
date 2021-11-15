@@ -43,13 +43,20 @@ namespace MyIssue.API
                 });
             services.AddDbMigration<MyIssueContext>();
 
-            Console.WriteLine(Configuration.GetValue<string>("Token:Audience"));
-            Console.WriteLine(Configuration.GetValue<string>("Token:Issuer"));
-            services.AddAuthentication(options =>
+            //Console.WriteLine(Configuration.GetValue<string>("Token:Audience"));
+            //Console.WriteLine(Configuration.GetValue<string>("Token:Issuer"));
+            services.AddAuthentication().AddIdentityServerAuthentication("Bearer", opt =>
+            {
+                opt.ApiName = "API";
+                opt.Authority = Configuration.GetValue<string>("API:Identity");
+                opt.RequireHttpsMetadata = Configuration.GetValue<bool>("API:RequireHttps");
+                
+            });
+            /*services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(bearer =>
+            /*}).AddJwtBearer(bearer =>
             {
                 bearer.ClaimsIssuer = Configuration["Token:Issuer"];
                 bearer.TokenValidationParameters = new TokenValidationParameters
@@ -65,7 +72,7 @@ namespace MyIssue.API
                         ))
                 };
                 bearer.SaveToken = true;
-            });
+            });*/
             services.AddScoped<IUserService, UserService>();
             services.AddHttpContextAccessor();
             services.AddSingleton<IUriService, UriService>(o =>

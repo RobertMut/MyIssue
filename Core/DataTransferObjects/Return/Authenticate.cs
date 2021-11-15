@@ -1,6 +1,4 @@
-﻿using MyIssue.Core.Commands;
-
-namespace MyIssue.Core.Model.Return
+﻿namespace MyIssue.Core.DataTransferObjects.Return
 {
     public class Authenticate
     {

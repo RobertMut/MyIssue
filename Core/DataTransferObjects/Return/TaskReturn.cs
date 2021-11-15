@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace MyIssue.Core.Model.Return
+namespace MyIssue.Core.DataTransferObjects.Return
 {
     public class TaskReturnRoot
     {

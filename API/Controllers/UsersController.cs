@@ -9,8 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using MyIssue.API.Infrastructure;
 using MyIssue.API.Model;
 using MyIssue.API.Services;
-using MyIssue.Core.Model.Request;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using Newtonsoft.Json;
 using Task = System.Threading.Tasks.Task;
 

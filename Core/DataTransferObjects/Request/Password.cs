@@ -1,4 +1,4 @@
-﻿namespace MyIssue.Core.Model.Request
+﻿namespace MyIssue.Core.DataTransferObjects.Request
 {
     public class Password
     {
