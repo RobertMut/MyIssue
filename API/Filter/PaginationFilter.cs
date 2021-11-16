@@ -1,4 +1,4 @@
-﻿namespace MyIssue.API.Filter
+﻿namespace MyIssue.Main.API.Filter
 {
     public class PaginationFilter
     {

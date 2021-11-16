@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MyIssue.API.Infrastructure.EntityConfigurations
+namespace MyIssue.Main.API.Infrastructure.EntityConfigurations
 {
     public class TaskEntityTypeConfiguration : IEntityTypeConfiguration<Model.Task>
     {

@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -8,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using MyIssue.API.Extensions;
-using MyIssue.API.Infrastructure;
-using MyIssue.API.Services;
+using MyIssue.Main.API.Extensions;
+using MyIssue.Main.API.Infrastructure;
+using MyIssue.Main.API.Infrastructure.Swagger;
+using MyIssue.Main.API.Services;
 
-namespace MyIssue.API
+namespace MyIssue.Main.API
 {
     public class Startup
     {
@@ -55,9 +56,13 @@ namespace MyIssue.API
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(bearer =>
             {
-                bearer.Authority = "https://localhost.com:6001";
+                bearer.Authority = "https://127.0.0.1:6001";
                 bearer.RequireHttpsMetadata = false;
                 bearer.Audience = "server_api";
+                bearer.BackchannelHttpHandler = new HttpClientHandler()
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
                 //bearer.ClaimsIssuer = Configuration["Token:Issuer"];
                 //bearer.TokenValidationParameters = new TokenValidationParameters
                 //{
@@ -85,10 +90,11 @@ namespace MyIssue.API
                 return new UriService(uri);
             });
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
+            services.AddSwagger(Configuration);
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            //});
 
         }
 
@@ -98,15 +104,17 @@ namespace MyIssue.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+                
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
-
-            app.UseAuthentication();
-
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+            app.UseSwaggerWithAuthorization(); 
+            app.UseAuthentication();
+            
+           // app.UseHttpsRedirection();
+
+
 
             //app.UseMiddleware<JwtMiddleware>();
             app.UseAuthorization();

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace MyIssue.API
+namespace MyIssue.Main.API
 {
     public class Program
     {

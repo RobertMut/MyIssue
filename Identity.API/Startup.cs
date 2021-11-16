@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MyIssue.Identity.API.Auth.Configuration;
 using MyIssue.Identity.API.Extensions;
 using MyIssue.Identity.API.Infrastructure;
 using MyIssue.Identity.API.Model;
@@ -44,32 +45,24 @@ namespace MyIssue.Identity.API
                             errorNumbersToAdd: null);
                     });
             });
-            services.AddScoped<IAuthService, AuthService>(); ;
+            services.AddScoped<IAuthService, AuthService>(); 
             services.AddDbMigration<IdentityContext>();
             //services.AddIdentity<User, UserType>()
             //    .AddDefaultTokenProviders();
             var builder = services.AddIdentityServer(opt =>
                 {
-                    opt.Events.RaiseErrorEvents = true;
-                    opt.Events.RaiseInformationEvents = true;
-                    opt.Events.RaiseFailureEvents = true;
-                    opt.Events.RaiseFailureEvents = true;
-                    opt.Events.RaiseSuccessEvents = true;
-                    opt.EmitStaticAudienceClaim = true;
+                    //opt.Events.RaiseErrorEvents = true;
+                    //opt.Events.RaiseInformationEvents = true;
+                    //opt.Events.RaiseFailureEvents = true;
+                    //opt.Events.RaiseFailureEvents = true;
+                    //opt.Events.RaiseSuccessEvents = true;
+                  
+                    opt.UserInteraction.LoginUrl = "/Account/Login";
+                    opt.UserInteraction.LogoutUrl = "/Account/Logout";
+                    opt.UserInteraction.ErrorUrl = "/Home/error";
                 }).AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddInMemoryApiScopes(Configuration.GetSection("IdentityServer:ApiScopes"))
-                .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
-                .AddJwtBearerClientAuthentication()
-                .AddConfigurationStore(opt =>
-                {
-                    opt.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetValue<string>("ConnectionString"),
-                        sql => sql.MigrationsAssembly(migrationAssembly));
-                })
-                .AddOperationalStore(opt =>
-                {
-                    opt.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetValue<string>("ConnectionString"),
-                        sql => sql.MigrationsAssembly(migrationAssembly));
-                });
+                .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"));
                 //.AddAspNetIdentity<User>();
             if (Configuration.GetValue<bool>("LDAPEnabled") == true)
             {
@@ -100,7 +93,8 @@ namespace MyIssue.Identity.API
                 //            ))
                 //    };
                 //});
-            services.AddControllers();
+            services.AddControllersWithViews();
+            services.Configure<AuthenticationOptions>(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Identity.API", Version = "v1" });
@@ -116,6 +110,8 @@ namespace MyIssue.Identity.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Identity.API v1"));
             }
+
+            app.UseStaticFiles();
             app.UseCors(b =>
             {
                 b.AllowAnyOrigin();
@@ -130,7 +126,7 @@ namespace MyIssue.Identity.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

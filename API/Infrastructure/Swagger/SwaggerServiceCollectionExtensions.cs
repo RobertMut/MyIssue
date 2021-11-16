@@ -17,7 +17,7 @@ namespace MyIssue.Main.API.Infrastructure.Swagger
             var swaggerOptions = SwaggerOptions.ReadFromIConfiguration(configuration);
             services.AddTransient<IOptions<SwaggerOptions>>(provider => new OptionsWrapper<SwaggerOptions>(swaggerOptions));
 
-            var authority = configuration["AuthServiceHttpExternalUrl"];
+            var authority = configuration["API:Identity"];
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", swaggerOptions.ApiInfo);

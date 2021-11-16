@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace MyIssue.API.Model
+namespace MyIssue.Main.API.Model
 {
     [Table("Users")]
     public class User

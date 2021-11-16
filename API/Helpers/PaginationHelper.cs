@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyIssue.API.Filter;
-using MyIssue.API.Services;
-using MyIssue.API.Wrappers;
+using MyIssue.Main.API.Filter;
+using MyIssue.Main.API.Services;
+using MyIssue.Main.API.Wrappers;
 
-namespace MyIssue.API.Helpers
+namespace MyIssue.Main.API.Helpers
 {
     public class PaginationHelper
     {

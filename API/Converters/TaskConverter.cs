@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using MyIssue.API.Infrastructure;
 using MyIssue.Core.DataTransferObjects.Return;
-using Task = MyIssue.API.Model.Task;
+using MyIssue.Main.API.Infrastructure;
+using Task = MyIssue.Main.API.Model.Task;
 
-namespace MyIssue.API.Converters
+namespace MyIssue.Main.API.Converters
 {
     public class TaskConverter
     {

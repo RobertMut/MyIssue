@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyIssue.API.Wrappers
+namespace MyIssue.Main.API.Wrappers
 {
     public class PageResponse<T>
     {

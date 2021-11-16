@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MyIssue.API.Extensions
+namespace MyIssue.Main.API.Extensions
 {
     public static class CustomIServiceCollectionServices
     {

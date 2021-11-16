@@ -1,6 +1,6 @@
-﻿using MyIssue.API.Model;
+﻿using MyIssue.Main.API.Model;
 
-namespace MyIssue.API.Infrastructure
+namespace MyIssue.Main.API.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {

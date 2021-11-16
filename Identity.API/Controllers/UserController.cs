@@ -94,77 +94,7 @@ namespace MyIssue.Identity.API.Controllers
         }
 
 
-        #region Authentication
-
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] AuthRequest model)
-        {
-            Console.WriteLine(nameof(this.Authenticate));
-            var response = _service.AuthenticateUser(model);
-            if (response is null)
-                return BadRequest(new { message = "User or password in incorrect" });
-            Console.WriteLine(response);
-            return Ok(response);
-        }
-        [AllowAnonymous]
-        [HttpPost("tokenauthenticate")]
-        public IActionResult AuthenticateToken([FromBody] AuthTokenRequest model)
-        {
-            bool verified = _service.VerifyToken(model.Token);
-            string username = _service.GetClaim(model.Token, "username");
-            if (verified && username.Equals(model.Username))
-            {
-                var user = _context.Users.First(u => u.UserLogin.Equals(username));
-                return Ok(new Authenticate(user.UserLogin, user.UserType, model.Token));
-            }
-
-            return BadRequest(new { message = "Token is invalid" });
-        }
-
-        [AllowAnonymous]
-        [HttpPost("logout")]
-        public IActionResult Logout([FromBody] Token token)
-        {
-            string response = _service.RevokeToken(token.TokenString);
-            if (response is not null) return Ok(response);
-            return BadRequest();
-        }
-        [HttpPut("ChangePass/{login}")]
-        public async Task<IActionResult> ChangePass(string login, [FromBody] Password user)
-        {
-            if (login != user.UserLogin)
-            {
-                return BadRequest();
-            }
-
-            var foundUser = _context.Users.Single(u => u.UserLogin == user.UserLogin);
-            if (foundUser is not null && foundUser.Password == user.OldPassword)
-            {
-                foundUser.Password = user.NewPassword;
-                _context.Entry(foundUser).State = EntityState.Modified;
-            }
-
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (_context.Users.First(u => u.UserLogin == user.UserLogin) is null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        #endregion
+     
         private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.UserLogin == id);

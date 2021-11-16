@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace MyIssue.API.Infrastructure
+namespace MyIssue.Main.API.Infrastructure
 {
     public class Repository<T> : IRepository<T> where T : class
     {

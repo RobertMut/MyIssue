@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyIssue.API.Infrastructure;
-using MyIssue.API.Model;
 using MyIssue.Core.DataTransferObjects.Return;
+using MyIssue.Main.API.Infrastructure;
+using MyIssue.Main.API.Model;
 using Newtonsoft.Json;
 
-namespace MyIssue.API.Controllers
+namespace MyIssue.Main.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using MyIssue.API.Model;
 using MyIssue.Core.DataTransferObjects.Request;
 using MyIssue.Core.DataTransferObjects.Return;
+using MyIssue.Main.API.Model;
 
-namespace MyIssue.API.Services
+namespace MyIssue.Main.API.Services
 {
     public interface IUserService
     {

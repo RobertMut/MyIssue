@@ -1,10 +1,9 @@
 ﻿using System.IO;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using MyIssue.API.Infrastructure;
 
-namespace MyIssue.Identity.API.Infrastructure
+namespace MyIssue.Main.API.Infrastructure
 {
     public class MyIssueContextFactory : IDesignTimeDbContextFactory<MyIssueContext>
     {

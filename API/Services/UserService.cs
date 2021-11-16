@@ -6,12 +6,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MyIssue.API.Infrastructure;
-using MyIssue.API.Model;
 using MyIssue.Core.DataTransferObjects.Request;
 using MyIssue.Core.DataTransferObjects.Return;
+using MyIssue.Main.API.Infrastructure;
+using MyIssue.Main.API.Model;
 
-namespace MyIssue.API.Services
+namespace MyIssue.Main.API.Services
 {
     public class UserService : IUserService
     {

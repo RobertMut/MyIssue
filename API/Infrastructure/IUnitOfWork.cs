@@ -1,4 +1,4 @@
-﻿namespace MyIssue.API.Infrastructure
+﻿namespace MyIssue.Main.API.Infrastructure
 {
     public interface IUnitOfWork
     {

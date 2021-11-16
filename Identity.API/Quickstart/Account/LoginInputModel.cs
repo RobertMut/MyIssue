@@ -14,5 +14,10 @@ namespace MyIssue.Identity.API.Quickstart.Account
         public string Password { get; set; }
         public bool RememberLogin { get; set; }
         public string ReturnUrl { get; set; }
+        public LoginInputModel NullifyPassword()
+        {
+            Password = null;
+            return this;
+        }
     }
 }

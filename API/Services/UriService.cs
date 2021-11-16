@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.WebUtilities;
-using MyIssue.API.Filter;
+using MyIssue.Main.API.Filter;
 
-namespace MyIssue.API.Services
+namespace MyIssue.Main.API.Services
 {
     public interface IUriService
     {

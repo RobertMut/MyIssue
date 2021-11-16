@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyIssue.API.Infrastructure;
-using MyIssue.API.Services;
 using MyIssue.Core.DataTransferObjects.Request;
 using MyIssue.Core.DataTransferObjects.Return;
+using MyIssue.Main.API.Infrastructure;
+using MyIssue.Main.API.Services;
 
-namespace MyIssue.API.Controllers
+namespace MyIssue.Main.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

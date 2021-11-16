@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyIssue.API.Model;
+using MyIssue.Main.API.Model;
 
-namespace MyIssue.API.Infrastructure.EntityConfigurations
+namespace MyIssue.Main.API.Infrastructure.EntityConfigurations
 {
     public class EmployeeUserEntityTypeConfiguration : IEntityTypeConfiguration<Model.EmployeeUser>
     {

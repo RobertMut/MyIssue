@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyIssue.API.Infrastructure;
+using MyIssue.Main.API.Infrastructure;
 
 namespace MyIssue.API.Infrastructure.Migrations
 {

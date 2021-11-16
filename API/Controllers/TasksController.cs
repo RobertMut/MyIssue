@@ -4,16 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyIssue.API.Converters;
-using MyIssue.API.Filter;
-using MyIssue.API.Helpers;
-using MyIssue.API.Infrastructure;
-using MyIssue.API.Services;
 using MyIssue.Core.DataTransferObjects.Return;
+using MyIssue.Main.API.Converters;
+using MyIssue.Main.API.Filter;
+using MyIssue.Main.API.Helpers;
+using MyIssue.Main.API.Infrastructure;
+using MyIssue.Main.API.Services;
 using Newtonsoft.Json;
-using Task = MyIssue.API.Model.Task;
+using Task = MyIssue.Main.API.Model.Task;
 
-namespace MyIssue.API.Controllers
+namespace MyIssue.Main.API.Controllers
 {
     [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
