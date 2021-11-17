@@ -15,12 +15,10 @@ export class NavMenuComponent {
   }
 
   ngOnInit() {
-    this.auth.tokenlogin().subscribe((value: boolean) => {
-      if (value) {
-        //console.warn("VALUE "+value);
-        this.router.navigate(['./../nav-menu-logged']);
-      }
-    });
+    this.auth.refreshSessionCheckSession();
+    if (this.auth.isAuthenticated == true) {
+      this.router.navigate(['./../nav-menu-logged']);
+    }
   }
   isExpanded = false;
 

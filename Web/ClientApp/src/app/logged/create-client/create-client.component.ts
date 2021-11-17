@@ -16,12 +16,12 @@ export class CreateClientComponent implements OnInit {
   public result: string;
   constructor(private clientService: ClientService,
     private auth: AuthService) {
-    this.clientService.getClients(this.auth.headers()).subscribe(result => {
-      this.clients = JSON.parse(result);
+    this.clientService.getClients(new Object as any).subscribe(result => {
+      //this.clients = JSON.parse(result);
     },
       error => {
         console.error(error);
-        this.auth.CheckUnauthorized(error);
+        //this.auth.CheckUnauthorized(error);
       });
   }
 
@@ -38,8 +38,8 @@ export class CreateClientComponent implements OnInit {
       flatNo: clientFormValues.flatNo,
       description: clientFormValues.description
     }
-    this.clientService.postClient(client, this.auth.headers()).subscribe(error => {
-        this.auth.CheckUnauthorized(error);
+    this.clientService.postClient(client, new Object as any).subscribe(error => {
+        //this.auth.CheckUnauthorized(error);
         if ((error as HttpErrorResponse).statusText == 'OK') {
           this.result = 'New client posted. Refresh page to see results!';
         }

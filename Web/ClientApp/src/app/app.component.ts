@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from "../services/AuthService";
 import { Router, NavigationEnd } from '@angular/router';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +10,12 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   title = 'MyIssue Web';
-  constructor(public router: Router, public auth: AuthService) {
+  constructor(public router: Router, public oidcSecurityService: OidcSecurityService) {
 
   }
   ngOnInit() {
-    this.router.events
-      .subscribe((e) => {
-          if ((e instanceof NavigationEnd && !this.auth.tokenlogin())) {
-            this.router.navigate(['login']);
-          } 
-        }
-      );
+    this.oidcSecurityService.checkAuthIncludingServer()
+      .subscribe((isAuthenticated) => console.log('app authenticated', isAuthenticated));
   }
 
 }
