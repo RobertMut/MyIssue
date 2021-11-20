@@ -45,14 +45,14 @@ namespace MyIssue.Server.Commands
                     CreatedByMail = input[10],
                     EmployeeDescription = input[11]
                 });
-                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-                request.Headers.Connection.Add("keep-alive");
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
-                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-                NetWrite.Write(client.ConnectedSock, httpResponse.StatusCode.ToString(), ct);
+                //request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                //request.Headers.Connection.Add("keep-alive");
+                //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+                //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+                //NetWrite.Write(client.ConnectedSock, httpResponse.StatusCode.ToString(), ct);
             }
         }
 

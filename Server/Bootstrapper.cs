@@ -22,6 +22,7 @@ namespace MyIssue.Server
             Parameters.Api = ConfigValue.GetValue<string>("api_address", config);
             Parameters.Login = ConfigValue.GetValue<string>("api_login", config);
             Parameters.Password = ConfigValue.GetValue<string>("api_password", config);
+            Parameters.AuthAddress = ConfigValue.GetValue<string>("auth_address", config);
             ImapParameters.Parameters = ImapParametersBuilder
                 .Create()
                     .SetAddress(ConfigValue.GetValue<string>("i_address", config))

@@ -28,14 +28,14 @@ namespace MyIssue.Server.Commands
                 httpclient.BaseAddress + $"api/Tasks/filter/closed={input[0]}&whose={input[1]}&howmany={input[2]}/{input[3]}")) {
                 //Console.WriteLine(request.RequestUri.AbsoluteUri);
                 //Console.WriteLine(request.RequestUri.AbsolutePath);
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-                request.Headers.Connection.Add("keep-alive");
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
-                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-                string response = httpResponse.Content.ReadAsStringAsync().Result;
-                NetWrite.Write(client.ConnectedSock, response, ct);
+                //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                //request.Headers.Connection.Add("keep-alive");
+                //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+                //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+                //string response = httpResponse.Content.ReadAsStringAsync().Result;
+                //NetWrite.Write(client.ConnectedSock, response, ct);
             }
         }
     }

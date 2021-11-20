@@ -39,7 +39,6 @@ import { TaskPagedComponent } from './logged/task-paged/task-paged.component';
 import { ProfileComponent } from './logged/profile/profile.component';
 import { CreateClientComponent } from './logged/create-client/create-client.component';
 import { CreateUserComponent } from './logged/create-user/create-user.component';
-import { AuthConfigModule } from './auth/auth-config.module';
 
 @NgModule({
   declarations: [
@@ -77,8 +76,7 @@ import { AuthConfigModule } from './auth/auth-config.module';
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
-    SharedModule,
-    AuthConfigModule
+    SharedModule
 
   ],
   bootstrap: [AppComponent]

@@ -27,12 +27,12 @@ namespace MyIssue.Server.Commands
                 Password = splitted[1],
                 Type = splitted[2]
             });
-            var request =
-                RequestMessage.NewRequest(httpclient.BaseAddress + "api/Users", HttpMethod.Post, client.Token);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-            string response = httpResponse.Content.ReadAsStringAsync().Result;
-            NetWrite.Write(client.ConnectedSock, response, ct);
+            //var request =
+            //    RequestMessage.NewRequest(httpclient.BaseAddress + "api/Users", HttpMethod.Post, client.Token);
+            //request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+            //string response = httpResponse.Content.ReadAsStringAsync().Result;
+            //NetWrite.Write(client.ConnectedSock, response, ct);
 
         }
     }

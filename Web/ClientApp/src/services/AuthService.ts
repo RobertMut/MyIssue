@@ -1,57 +1,108 @@
-import { OnInit, Injectable, Inject } from '@angular/core';
-import { OidcClientNotification, OidcSecurityService, OpenIdConfiguration, UserDataResult } from 'angular-auth-oidc-client';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { map } from "rxjs/operators";
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
+const headers: HttpHeaders = new HttpHeaders
+  ({
+    'Content-Type': 'application/json',
+    'Accept': '*/*'
+  });
 
 @Injectable()
-export class AuthService implements OnInit {
+export class AuthService {
   baseUrl: string;
-  authUrl: string;
-
-  configuration: OpenIdConfiguration;
-  userDataChanged$: OidcClientNotification<any>;
-  userData$: UserDataResult;
-  isAuthenticated = false;
-  checkSessionChanged$: Observable<boolean>;
-  checkSessionChanged: any;
-
-  constructor(public oidcSecurityService: OidcSecurityService,
-    @Inject('BASE_URL') baseUrl: string,
-    @Inject('AUTH_URL') authUrl: string) {
+  constructor(private http: HttpClient,
+    @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
-    this.authUrl = authUrl;
   }
 
-  ngOnInit() {
-    this.configuration = this.oidcSecurityService.getConfiguration();
-    this.oidcSecurityService.userData$.subscribe(({ userData }) => {
-      this.userData$ = userData;
+  public logout(): void{
+    let token = localStorage.getItem("token");
+    let data = {
+      "TokenString": token
+    };
+    console.warn("logout..");
+    this.http.post(this.baseUrl + "Auth/logout",
+      JSON.stringify(data),
+      {
+        headers: headers,
+        responseType: 'text' as 'text'
+      }).subscribe(response => {
+      localStorage.setItem("type", "");
+      localStorage.setItem("token", response);
     });
-    this.checkSessionChanged$ = this.oidcSecurityService.checkSessionChanged$;
-
-    this.oidcSecurityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
-      this.isAuthenticated = isAuthenticated;
-      console.warn('isAuthenticated: ', isAuthenticated);
-    });
+    
 
   }
-  public login() {
-    console.log('login start');
-    this.oidcSecurityService.authorize();
-  }
-  public refreshSessionCheckSession() {
-    console.log('refreshSession');
-    this.oidcSecurityService.authorize();
-  }
-  public forceRefreshSession() {
-    console.log('forced refreshSession');
-    this.oidcSecurityService.forceRefreshSession().subscribe((result) => {
-      console.log(result);
+  public headers(): HttpHeaders {
+    return new HttpHeaders({
+      'Accept': '*/*',
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('login') + ' ' + localStorage.getItem("token")
     });
   }
-  public logout() {
-    console.log('logout');
-    this.oidcSecurityService.logoff();
+
+  public tokenlogin(): Observable<boolean> {
+
+    let data = {
+      "Login": localStorage.getItem("login"),
+      "Token": localStorage.getItem("token")
+    }
+    let object = JSON.stringify(data);
+    return this.http.post(this.baseUrl + "Auth/tokenlogin",
+      object,
+      {
+        headers: headers,
+        responseType: 'text' as 'text'
+      }).pipe(
+        map(response => {
+          try {
+            let json = JSON.parse(response.toString()).result
+            return (/true/i).test(json);
+          } catch (e) {
+            return false;
+          }
+
+        })
+      );
   }
 
+  public login(login: string, pass: string): Observable<boolean> {
+    let data = {
+      "UserName": login,
+      "Password": pass
+    }
+    //console.warn(data);
+    //console.warn(JSON.stringify(data));
+    //console.warn(this.baseUrl + "Auth/login");
+    localStorage.clear();
+    return this.http.post(this.baseUrl + "Auth/login",
+      JSON.stringify(data),
+      {
+        headers: headers,
+        responseType: 'text' as 'text'
+      }).pipe(
+        map(response => {
+          try {
+            let obj = JSON.parse(response.toString());
+            localStorage.setItem("login", obj.login);
+            localStorage.setItem("token", obj.token);
+            localStorage.setItem("type", obj.type.toString());
+            return true;
+          } catch (e) {
+            return false;
+          }
+
+        })
+      );
+  }
+
+  public CheckUnauthorized(exception: any) {
+    const httpEx = exception as HttpErrorResponse;
+    if (httpEx.status == 401 || httpEx.status == 403) {
+      this.logout();
+    }
+  }
 }

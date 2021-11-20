@@ -29,23 +29,23 @@ export class TaskViewComponent implements OnInit {
   ngOnInit() {
     let id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
-    this.taskService.getTaskById(id, new Object as any).subscribe(result => {
-        //let taskRoot: TaskRoot = JSON.parse(result);
-        //this.task = taskRoot.tasks[0];
-        //this.checkMail();
+    this.taskService.getTaskById(id, this.auth.headers()).subscribe(result => {
+        let taskRoot: TaskRoot = JSON.parse(result);
+        this.task = taskRoot.tasks[0];
+        this.checkMail();
       },
       error => {
         console.error(error);
-        ////this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       });
 
-    this.employeeservice.getAllEmployees(new Object as any).subscribe(result => {
-      //this.employees = JSON.parse(result);
+    this.employeeservice.getAllEmployees(this.auth.headers()).subscribe(result => {
+      this.employees = JSON.parse(result);
 
     },
       error => {
         console.error(error);
-        ////this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       });
   }
   clearDate(name): void {
@@ -61,7 +61,7 @@ export class TaskViewComponent implements OnInit {
     this.task.TaskEnd = new Date().toISOString();
   }
   updateTask(): void {
-    this.taskService.updateTask(this.task, new Object as any);
+    this.taskService.updateTask(this.task, this.auth.headers());
   }
   private checkMail() {
     if (this.task.CreatedByMail.length == 0) this.createdByMail = false;

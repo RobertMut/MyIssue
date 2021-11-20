@@ -36,16 +36,16 @@ namespace MyIssue.Server.Commands
                         Token = input[1]
                     }), Encoding.UTF8, "application/json"
                 );
-                HttpResponseMessage httpresponse =
-                    httpclient.PostAsync("api/Auth/tokenauthenticate", content).Result;
-                string response = httpresponse.Content.ReadAsStringAsync().Result;
-                if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
-                var data = (JObject) JsonConvert.DeserializeObject(response);
-                LogUser.TypedCommand("TokenLogin", "", client);
-                client.Status = Convert.ToInt32(data.SelectToken("type"));
-                client.Login = data.SelectToken("login").ToString();
-                client.Token = data.SelectToken("token").ToString();
-                NetWrite.Write(client.ConnectedSock, "CORRECT", ct);
+                //HttpResponseMessage httpresponse =
+                //    httpclient.PostAsync("api/Auth/tokenauthenticate", content).Result;
+                //string response = httpresponse.Content.ReadAsStringAsync().Result;
+                //if (response.Contains("invalid")) throw new InvalidCredentialException("INCORRECT\r\n");
+                //var data = (JObject) JsonConvert.DeserializeObject(response);
+                //LogUser.TypedCommand("TokenLogin", "", client);
+                //client.Status = Convert.ToInt32(data.SelectToken("type"));
+                //client.Login = data.SelectToken("login").ToString();
+                //client.Token = data.SelectToken("token").ToString();
+                //NetWrite.Write(client.ConnectedSock, "CORRECT", ct);
 
 
             }

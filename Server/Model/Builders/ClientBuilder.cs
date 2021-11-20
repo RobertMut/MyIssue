@@ -38,9 +38,10 @@ namespace MyIssue.Server.Model.Builders
             return this;
         }
 
-        public IClientBuilder SetToken(string token)
+
+        public IClientBuilder SetPassword(string password)
         {
-            client.Token = token;
+            client.Password = password;
             return this;
         }
         public Client Build() => client;

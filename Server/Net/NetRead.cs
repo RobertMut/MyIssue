@@ -18,7 +18,6 @@ namespace MyIssue.Server.Net
                 netStream.ReadTimeout = Parameters.Timeout;
                 bool terminator = false;
                 string input = string.Empty;
-                int x = 0;
 
                 try
                 {
@@ -26,7 +25,7 @@ namespace MyIssue.Server.Net
                     while (!terminator)
                     {
                         ct.ThrowIfCancellationRequested();
-                        x = await netStream.ReadAsync(receiveBuffer, 0, receiveBuffer.Length, cts.Token);
+                        int x = await netStream.ReadAsync(receiveBuffer, 0, receiveBuffer.Length, cts.Token);
                         input += StringStatic.StringMessage(receiveBuffer, x);
                         if (x > 0 && !input.IndexOf("\r\n<EOF>\r\n").Equals(-1)) terminator = true;
                     }
@@ -35,7 +34,7 @@ namespace MyIssue.Server.Net
                 {
                     cts.Cancel();
                     netStream.Close();
-                    terminator = true;
+                    //terminator = true;
                     sock.Close();
                     SerilogLogger.ServerLogException(tce);
 

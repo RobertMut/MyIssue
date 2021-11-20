@@ -40,26 +40,26 @@ export class NewTaskComponent implements OnInit {
     private employeeService: EmployeeService,
     private clientService: ClientService,
     private tasktypeService: TaskTypeService) {
-    this.employeeService.getAllEmployees(new Object as any).subscribe(result => {
+    this.employeeService.getAllEmployees(this.auth.headers()).subscribe(result => {
         this.employees = JSON.parse(result);
       },
       error => {
         console.error(error);
-        //this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       });
-    this.clientService.getClients(new Object as any).subscribe(result => {
+    this.clientService.getClients(this.auth.headers()).subscribe(result => {
         this.clients = JSON.parse(result);
       },
       error => {
         console.error(error);
-        //this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       });
-    this.tasktypeService.getTaskTypes(new Object as any).subscribe(result => {
+    this.tasktypeService.getTaskTypes(this.auth.headers()).subscribe(result => {
         this.taskTypes = JSON.parse(result);
       },
       error => {
         console.error(error);
-        //this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       });
   }
 
@@ -79,7 +79,7 @@ export class NewTaskComponent implements OnInit {
     this.task.TaskEnd = new Date().toISOString();
   }
   posttask(): void {
-    this.taskService.createTask(this.task, new Object as any).subscribe(result => console.log(result.toString()));
+    this.taskService.createTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));
     this.router.navigate(['./nav-menu-logged/home'], { relativeTo: this.activeRoute });
   }
 

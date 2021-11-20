@@ -30,11 +30,11 @@ namespace MyIssue.Server.Commands
                 No = splitted[3],
                 Position = splitted[4]
             });
-            var request = RequestMessage.NewRequest(httpclient.BaseAddress + "api/Employees", HttpMethod.Post, client.Token);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-            string response = httpResponse.Content.ReadAsStringAsync().Result;
-            NetWrite.Write(client.ConnectedSock, response, ct);
+            //var request = RequestMessage.NewRequest(httpclient.BaseAddress + "api/Employees", HttpMethod.Post, client.Token);
+            //request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+            //string response = httpResponse.Content.ReadAsStringAsync().Result;
+            //NetWrite.Write(client.ConnectedSock, response, ct);
 
         }
     }

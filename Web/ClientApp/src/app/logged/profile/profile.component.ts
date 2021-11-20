@@ -22,21 +22,21 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private employeeService: EmployeeService) {
 
-    this.employeeService.getEmployeeByName(localStorage.getItem("login"), new Object as any).subscribe(result => {
+    this.employeeService.getEmployeeByName(localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
       let root: EmployeeRoot = JSON.parse(result);
       this.employee = root.employees[0];
     },
     error => {
       console.error(error);
-      //this.auth.CheckUnauthorized(error);
+      this.auth.CheckUnauthorized(error);
     });
-    this.userService.getuserbyname(localStorage.getItem("login"), new Object as any).subscribe(result => {
+    this.userService.getuserbyname(localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
       let root: UserRoot = JSON.parse(result);
       this.user = root.users[0];
     },
     error => {
       console.error(error);
-      //this.auth.CheckUnauthorized(error);
+      this.auth.CheckUnauthorized(error);
     });
   }
 
@@ -46,12 +46,12 @@ export class ProfileComponent implements OnInit {
     console.warn(newPass == newPassRepeated);
     if (newPass.toString() == newPassRepeated.toString()) {
       this.userService.changePassword(oldPass.toString(), newPass.toString(), this.user.username,
-        new Object as any).subscribe(result => {
+        this.auth.headers()).subscribe(result => {
           this.changed = result.toString();
         },
         error => {
           console.error(error);
-          //this.auth.CheckUnauthorized(error);
+          this.auth.CheckUnauthorized(error);
         });
     } else this.changed = 'New password does not match';
 

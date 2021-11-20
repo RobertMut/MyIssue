@@ -2,6 +2,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace MyIssue.Identity.API
 {
@@ -22,6 +23,10 @@ namespace MyIssue.Identity.API
                             .AddJsonFile("appsettings.json", optional: true)
                             .Build()).GetSetting("Urls").ToString();
                     webBuilder.UseUrls(urls.Split(';'));
+                    webBuilder.UseSerilog((hostingContext, loggerConfiguration) =>
+                    {
+                        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

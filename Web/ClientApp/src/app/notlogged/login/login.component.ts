@@ -22,6 +22,13 @@ export class LoginComponent {
     pass: ''
   })
   onButton(): void {
-    this.auth.login();
+    this.auth.login(this.loginForm.get(['login']).value, this.loginForm.get(['pass']).value)
+      .subscribe((value: boolean) => {
+        if (value == true) {
+          this.router.navigate(['./../../nav-menu-logged']);
+        } else {
+         console.error("INCORRECT"); 
+        }
+      })
   }
 }

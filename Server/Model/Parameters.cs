@@ -12,6 +12,7 @@ namespace MyIssue.Server.Model
         public static IPEndPoint EndPoint { get; set; }
         public static Socket ListenSocket { get; set; }
         public static string Api { get; set; }
+        public static string AuthAddress { get; set; }
         public static string Login { get; set; }
         public static string Password { get; set; }
     }

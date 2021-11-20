@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using MyIssue.Core.DataTransferObjects.Return;
+using MyIssue.Core.Model.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Services;
 

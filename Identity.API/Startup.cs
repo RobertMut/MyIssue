@@ -5,6 +5,7 @@ using IdentityServer.LdapExtension.Extensions;
 using IdentityServer.LdapExtension.UserModel;
 using IdentityServer.LdapExtension.UserStore;
 using IdentityServer4;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyIssue.Identity.API.Auth.Configuration;
+using MyIssue.Identity.API.Auth.GrantValidators;
 using MyIssue.Identity.API.Extensions;
 using MyIssue.Identity.API.Infrastructure;
 using MyIssue.Identity.API.Model;
@@ -62,7 +64,9 @@ namespace MyIssue.Identity.API
                     opt.UserInteraction.ErrorUrl = "/Home/error";
                 }).AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddInMemoryApiScopes(Configuration.GetSection("IdentityServer:ApiScopes"))
-                .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"));
+                .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
+                .AddExtensionGrantValidator<MyIssueGrantValidator>()
+                .AddDeveloperSigningCredential();
                 //.AddAspNetIdentity<User>();
             if (Configuration.GetValue<bool>("LDAPEnabled") == true)
             {

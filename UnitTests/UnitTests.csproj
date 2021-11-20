@@ -30,7 +30,6 @@
     <ProjectReference Include="..\Identity.API\Identity.API.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Server\Server.csproj" />
-    <ProjectReference Include="..\Web\Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

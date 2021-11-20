@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from "../../../services/AuthService";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/TaskService";
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Task, TaskRoot } from "../../../models/Task";
 
 @Component({
@@ -33,23 +33,23 @@ export class HomeComponent {
       this.selectionActive = 5;
       localStorage.setItem("selectionActive", this.selectionActive.toString());
     }
-    task.getLastTasks(this.selectionFree, 'anybody', new Object as HttpHeaders).subscribe(result => {
-        //let data: TaskRoot = JSON.parse(result);
-        //this.freeTasks = data.tasks;
+    task.getLastTasks(this.selectionFree, 'anybody', this.auth.headers()).subscribe(result => {
+        let data: TaskRoot = JSON.parse(result);
+        this.freeTasks = data.tasks;
 
     },
       error => {
         console.error(error);
-        ////this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       }
     );
-    task.getLastTasks(this.selectionFree, localStorage.getItem("login").toString(), new Object as HttpHeaders ).subscribe(result => {
+    task.getLastTasks(this.selectionFree, localStorage.getItem("login").toString(), this.auth.headers()).subscribe(result => {
       let data: TaskRoot = JSON.parse(result);
       this.activeTasks = data.tasks;
     },
       error => {
         console.error(error);
-        ////this.auth.CheckUnauthorized(error);
+        this.auth.CheckUnauthorized(error);
       }
     );
 

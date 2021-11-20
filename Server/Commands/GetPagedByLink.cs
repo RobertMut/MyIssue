@@ -25,14 +25,14 @@ namespace MyIssue.Server.Commands
             string url = SplitToCommand.Get(client.CommandHistory)[0];
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-                request.Headers.Connection.Add("keep-alive");
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
-                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-                string response = httpResponse.Content.ReadAsStringAsync().Result;
-                NetWrite.Write(client.ConnectedSock, response, ct);
+                //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                //request.Headers.Connection.Add("keep-alive");
+                //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+                //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+                //string response = httpResponse.Content.ReadAsStringAsync().Result;
+                //NetWrite.Write(client.ConnectedSock, response, ct);
             }
         }
     }
