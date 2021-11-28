@@ -20,14 +20,15 @@ namespace MyIssue.Server.Commands
         {
 
             //if (client.Status.Equals(1)) throw new NotSufficientPermissionsException();
-            //LogUser.TypedCommand(Name, "Executed", client);
-            //NetWrite.Write(client.ConnectedSock, $"GET {Name}\r\n", ct);
-            //client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
+            LogUser.TypedCommand(Name, "Executed", client);
+            NetWrite.Write(client.ConnectedSock, $"GET {Name}\r\n", ct);
+            client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             //var request =
             //    RequestMessage.NewRequest(httpclient.BaseAddress + "api/UserTypes", HttpMethod.Get, client.Token);
-            //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-            //string response = httpResponse.Content.ReadAsStringAsync().Result;
-            //NetWrite.Write(client.ConnectedSock, response, ct);
+            httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+            HttpResponseMessage httpResponse = httpclient.GetAsync("api/UserTypes").Result;
+                string response = httpResponse.Content.ReadAsStringAsync().Result;
+                NetWrite.Write(client.ConnectedSock, response, ct);
+            }
         }
     }
-}

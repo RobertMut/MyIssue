@@ -29,10 +29,10 @@ namespace MyIssue.Server.Commands
 
         }
 
-        protected void SetBearerToken(string login, string password)
+        protected string SetBearerToken(string login, string password)
         {
             bool wait = true;
-            var token = string.Empty;
+            string token = string.Empty;
             new Task(async () =>
             {
                 token = await GetBearerTokenAsync(login, password);
@@ -41,6 +41,7 @@ namespace MyIssue.Server.Commands
             while (wait)
                 Task.Delay(200);
             httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            return token;
         }
 
         public abstract void Invoke(Model.Client client, CancellationToken ct);

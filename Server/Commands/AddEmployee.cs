@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using MyIssue.Server.Net;
 using System.Threading;
@@ -30,11 +31,15 @@ namespace MyIssue.Server.Commands
                 No = splitted[3],
                 Position = splitted[4]
             });
-            //var request = RequestMessage.NewRequest(httpclient.BaseAddress + "api/Employees", HttpMethod.Post, client.Token);
-            //request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            //HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-            //string response = httpResponse.Content.ReadAsStringAsync().Result;
-            //NetWrite.Write(client.ConnectedSock, response, ct);
+            using (var request = new HttpRequestMessage(HttpMethod.Post,
+                httpclient.BaseAddress + "api/Employees"))
+            {
+                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+                string response = httpResponse.Content.ReadAsStringAsync().Result;
+                NetWrite.Write(client.ConnectedSock, response, ct);
+            }
 
         }
     }

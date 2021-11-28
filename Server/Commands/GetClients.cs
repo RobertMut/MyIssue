@@ -22,14 +22,10 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand("GetClients", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "GET CLIENTS\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            using (var request = new HttpRequestMessage(HttpMethod.Get,
-                httpclient.BaseAddress + "api/Clients/"))
-            {
-                SetBearerToken(client.Login, client.Password);
-                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-                string response = httpResponse.Content.ReadAsStringAsync().Result;
-                NetWrite.Write(client.ConnectedSock, response, ct);
-            }
+            httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+            HttpResponseMessage httpResponse = httpclient.GetAsync("api/Clients/").Result;
+            string response = httpResponse.Content.ReadAsStringAsync().Result;
+            NetWrite.Write(client.ConnectedSock, response, ct);
         }
     }
 }
