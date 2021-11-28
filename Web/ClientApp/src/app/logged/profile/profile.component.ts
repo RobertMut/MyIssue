@@ -5,6 +5,7 @@ import { EmployeeService } from "../../../services/EmployeeService";
 import { UserService } from "../../../services/UserService";
 import { User, UserRoot } from "../../../models/User";
 import { Employee, EmployeeRoot } from "../../../models/Employee";
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -22,14 +23,14 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private employeeService: EmployeeService) {
 
-    this.employeeService.getEmployeeByName(localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
-      let root: EmployeeRoot = JSON.parse(result);
-      this.employee = root.employees[0];
-    },
-    error => {
-      console.error(error);
-      this.auth.CheckUnauthorized(error);
-    });
+    this.employeeService.getEmployeeByName(localStorage.getItem("login"), this.auth.headers()).subscribe(
+      {
+        next: (v) => this.employee = (v as EmployeeRoot).employees[0],
+        error: (e) => {
+          this.auth.CheckUnauthorized(e);
+        }
+      }
+    );
     this.userService.getuserbyname(localStorage.getItem("login"), this.auth.headers()).subscribe(result => {
       let root: UserRoot = JSON.parse(result);
       this.user = root.users[0];

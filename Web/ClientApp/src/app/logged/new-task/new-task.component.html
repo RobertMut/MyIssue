@@ -1,10 +1,10 @@
-<div>
+<div *ngIf="clients">
   <form (ngSubmit)="posttask()" class="form">
     <div class="left-side">
       <mat-label>Client:</mat-label>
       <mat-select name="clientSelect" class="buttons" [(ngModel)]="task.TaskClient">
         <mat-option [value]="null"></mat-option>
-        <mat-option *ngFor="let client of clients.clients" [value]="client.name">{{client.name}}</mat-option>
+        <mat-option *ngFor="let client of clients.Clients" [value]="client.Name">{{client.Name}}</mat-option>
       </mat-select>
       <mat-label>TaskType:</mat-label>
       <mat-select name="tasktypeSelect" class="buttons" [(ngModel)]="task.TaskType">

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyIssue.Core.Model.Request;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Request;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Model;
-using Newtonsoft.Json;
 using User = MyIssue.Core.Commands.User;
 
 namespace MyIssue.Web.Services

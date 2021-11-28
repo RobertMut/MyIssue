@@ -1,8 +1,8 @@
-using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace MyIssue.Web
 {
@@ -22,6 +22,10 @@ namespace MyIssue.Web
                             .SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile("appsettings.json", optional: true)
                             .Build()).GetSetting("Web:applicationUrl").ToString();
+                    webBuilder.UseSerilog((hostingContext, loggerConfiguration) =>
+                    {
+                        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+                    });
                     webBuilder.UseUrls(urls.Split(';'));
                     webBuilder.UseStartup<Startup>();
                 });

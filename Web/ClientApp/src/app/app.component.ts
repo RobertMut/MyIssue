@@ -15,9 +15,13 @@ export class AppComponent {
   ngOnInit() {
     this.router.events
       .subscribe((e) => {
-          if ((e instanceof NavigationEnd && !this.auth.tokenlogin())) {
-            this.router.navigate(['login']);
-          } 
+        this.auth.tokenlogin().subscribe({
+          next: (result) =>{
+            if ((e instanceof NavigationEnd && !result)) {
+              this.router.navigate(['login']);
+            } 
+          }
+        })
         }
       );
   }

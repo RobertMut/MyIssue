@@ -8,6 +8,7 @@ import { EmployeeService } from "../../../services/EmployeeService";
 import { Employee, EmployeeRoot } from "../../../models/Employee";
 import { UserType } from "../../../models/UserType";
 import { EmployeePosition } from "../../../models/EmployeePosition";
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-create-user',
@@ -32,11 +33,15 @@ export class CreateUserComponent implements OnInit {
       this.users = usersRoot.users;
     },
       error => this.auth.CheckUnauthorized(error));
-    this.employeeService.getAllEmployees(this.auth.headers()).subscribe(result => {
-        let employeesRoot: EmployeeRoot = JSON.parse(result);
-        this.employees = employeesRoot.employees;
-    },
-      error => this.auth.CheckUnauthorized(error));
+    this.employeeService.getAllEmployees(this.auth.headers()).subscribe(
+      {
+        next: (v) => this.employees = (v as EmployeeRoot).employees,
+        error: (e) => {
+          console.error(e);
+          this.auth.CheckUnauthorized(e);
+        }
+      }
+    );
     this.positionService.getEmployeePositions(this.auth.headers()).subscribe(result => {
         this.positions = JSON.parse(result);
     },

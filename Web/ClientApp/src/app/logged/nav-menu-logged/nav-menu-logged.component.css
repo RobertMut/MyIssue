@@ -1,4 +1,84 @@
-li.nav-item {
-  display: grid;
-  align-content: center;
+.container {
+  display: flex;
+  height: 100%;
+}
+.navbar {
+  flex-direction: column;
+}
+.navbar a {
+  color: white;
+  flex-direction: column;
+}
+.below{
+  align-self: normal;
+  display:flex;
+  flex-flow:column;
+}
+.links {
+  display: flex;
+  flex-direction: column;
+  background: #eeeeee;
+  height: 100%;
+  width:0%;
+}
+.links a, .links h4 {
+  color: #616e87;
+  text-decoration: none;
+  margin-bottom: 15%;
+}
+.links h4{
+  text-align: center;
+}
+.links a{
+  text-align: left;
+}
+.links a:hover {
+  color: #18499f;
+  transition: 0.4s;
+}
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+header{
+  text-align: center;
+}
+.navbar button{
+  background: none;
+  color:white;
+  border:none
+}
+.navbar button span:hover{
+  transform:rotate(45deg);
+  transition: transform 0.4s;
+}
+.showNavigation{
+  animation: show;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+.hideNavigation{
+  animation: hide;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+@-webkit-keyframes show {
+  from{
+    width: 0%;
+  }
+  to {
+    width: 11.5%;
+  }
+}
+@-webkit-keyframes hide {
+  from {
+    width: 11.5%;
+  }
+  to {
+    width: 0%;
+  }
 }

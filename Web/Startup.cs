@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Services;
-using Newtonsoft.Json;
 
 namespace MyIssue.Web
 {

@@ -1,22 +1,28 @@
 .container {
-  width: 500px;
-  margin: 0 auto;
-}
-.text {
-  white-space: nowrap;
-  width: 1%;
-}
-.input {
-  width: 99%;
-}
-table {
-  table-layout: fixed;
-}
-thead, th, td {
-  text-align: center;
-  margin-top: 5%;
-}
-input {
   width: 100%;
-  margin-left: 4%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.container form{
+  width: 75%;
+  display: flex;
+  flex-flow: column;
+  text-align: center;
+  border-color: #eeeeee;
+  border-style: solid;
+  border-width: 30px;
+  border-radius: 45px;
+  padding-bottom: 2%;
+}
+.container form h1 {
+  padding-bottom: 2%;
+  padding-top: 2%;
+}
+.container form mat-form-field {
+  width: 80%;
+}
+.container form button{
+  width: 80%;
+  margin: 0 auto;
 }

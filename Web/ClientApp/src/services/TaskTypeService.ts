@@ -1,6 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { TaskTypeRoot } from "src/models/TaskType";
 
 @Injectable()
 export class TaskTypeService {
@@ -11,8 +12,8 @@ export class TaskTypeService {
     this.baseUrl = baseUrl;
   }
 
-  public getTaskTypes(headers: HttpHeaders): Observable<string> {
+  public getTaskTypes(headers: HttpHeaders) {
     return this.httpclient
-      .get(this.baseUrl + 'TaskTypes', { headers: headers, responseType: 'text' });
+      .get<TaskTypeRoot>(this.baseUrl + 'TaskTypes', { headers: headers, responseType: 'json' });
   }
 }

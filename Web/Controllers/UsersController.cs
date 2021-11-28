@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyIssue.Core.Model.Request;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Request;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;
@@ -24,16 +22,14 @@ namespace MyIssue.Web.Controllers
         [HttpGet]
         public async Task<UserReturnRoot> Get()
         {
-            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var auth = new TokenAuth(token);
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             string result = await _service.GetUsers(null, auth);
             return JsonConvert.DeserializeObject<UserReturnRoot>(result);
         }
         [HttpGet("{name}")]
         public async Task<UserReturnRoot> GetUserByName(string name)
         {
-            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var auth = new TokenAuth(token);
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             string result = await _service.GetUsers(null, auth);
             return JsonConvert.DeserializeObject<UserReturnRoot>(result);
         }

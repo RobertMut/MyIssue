@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Model;
 using MyIssue.Web.Services;
@@ -23,16 +21,14 @@ namespace MyIssue.Web.Controllers
         [HttpGet]
         public async Task<EmployeeReturnRoot> Get()
         {
-            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var auth = new TokenAuth(token);
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             string result = await _service.GetEmployees(null, auth);;
             return JsonConvert.DeserializeObject<EmployeeReturnRoot>(result);
         }
         [HttpGet("{username}")]
         public async Task<EmployeeReturnRoot> GetUserByName(string username)
         {
-            var token = this.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var auth = new TokenAuth(token);
+            var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
             string result = await _service.GetEmployees(username, auth);
             return JsonConvert.DeserializeObject<EmployeeReturnRoot>(result);
         }

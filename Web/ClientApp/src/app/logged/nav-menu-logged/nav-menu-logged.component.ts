@@ -13,5 +13,18 @@ export class NavMenuLoggedComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  getLinks(){
+    
+    var navigation = document.getElementsByClassName("links")[0];
+    if (navigation.classList.contains("showNavigation")){
+      navigation.classList.remove("showNavigation");
+      navigation.classList.add("hideNavigation");
+    } else if (navigation.classList.contains("hideNavigation")) {
+      navigation.classList.remove("hideNavigation");
+      navigation.classList.add("showNavigation");
+    } else {
+      document.getElementsByClassName("links")[0].classList.add("showNavigation");
+    }
+    //const navigation = 
+  }
 }

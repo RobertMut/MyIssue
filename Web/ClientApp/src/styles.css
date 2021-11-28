@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -8,12 +9,76 @@ a {
 code {
   color: #e01a76;
 }
-
+.main {
+  background: #eeeeee;
+  height: 95%;
+}
+.smallmarginaround{
+  margin: 1.5%;
+}
+.gray{
+  background: #eeeeee;
+}
+.blue{
+  background: #0049b0;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.navbar {
+  color: white;
+  display: flex;
+  height: 100%;
+}
+.separate {
+  display: flex;
+  height: 100%;
+}
+.centered {
+  margin: 0 auto;
+}
+table {
+  border-collapse: unset;
+  table-layout: fixed;
+  padding-bottom: 2%;
+}
+table tr td {
+  overflow: hidden;
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+}
+.task-div{
+  /*border: 15px solid #eeeeee;
+  border-radius:30px;*/
+  display:flex;
+  flex-flow: column;
+  width:100%;
+  margin-bottom: 2%;
+}
+.task-headers {
+  display: flex;
+  justify-content: space-between;
+}
+.task-row:hover {
+  background-color: #616e87;
+  transition: 0.2s;
+  color: #eeeeee;
+  cursor: pointer;
+}
+header {
+  width: 5%;
+}
+html{
+  height: 100%;
+}
+body { 
+  width:100%;
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+mat-card {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}

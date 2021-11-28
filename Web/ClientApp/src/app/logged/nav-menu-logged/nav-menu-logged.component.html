@@ -1,32 +1,44 @@
-<header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Web</a>
-      <button mat-button class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target=".navbar-collapse"
-              aria-label="Toggle navigation">
-              <!---[attr.aria-expanded]="isExpanded"
-              (click)="toggle()"--->
+<div class="separate smallmarginaround">
+  <header>
+      <nav class="navbar blue">
         
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-           <!---[ngClass]="{ show: isExpanded }"-->
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item nav-link text-dark" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['./profile']">{{login}}</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['./logout']">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-<body>
-<router-outlet></router-outlet>
-</body>
+          <a [routerLink]="['/']">Web</a>
+          <button (click)="getLinks()">
+            <span class="material-icons">add</span>
+          </button>
+          
+          <div class="below">
+               <!---[ngClass]="{ show: isExpanded }"-->
+                <a [routerLink]="['./profile']">{{login}}</a>
+                <a  [routerLink]="['./logout']">
+                  <span class="material-icons">logout</span>
+                </a>
+  
+          </div>
+      </nav>
+  </header>
+  <div class="links">
+    <h4>Navigation</h4>
+    <a [routerLink]="['/nav-menu-logged/']"><span class="material-icons">
+      home</span> 
+      Home</a>
+    <a [routerLink]="['./new-task']"><span class="material-icons">
+      add_task</span> 
+      Create new task</a> <!--(click)="navigate('./new-task')"-->
+    <a [routerLink]="['./task-paged']"><span class="material-icons">
+      fact_check</span>
+      All tasks</a> <!--(click)="navigate('./task-paged')"-->
+    <a [routerLink]="['./create-client']">
+      <span class="material-icons">
+        business</span>
+        Create client</a> <!--(click)="navigate('./create-client')"-->
+    <a [routerLink]="['./create-user']"><span class="material-icons">
+      person_add</span>
+      Create user/employee</a> <!--(click)="navigate('./create-user')"-->
+  </div>
+  <body>
+  <router-outlet></router-outlet>
+  </body>
+</div>
+
 

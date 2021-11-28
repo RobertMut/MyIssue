@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyIssue.Infrastructure.Server;
@@ -27,7 +26,7 @@ namespace MyIssue.Web.Services
                 .Concat(Core.Commands.User.Login(login, password))
                 .Concat(Core.Commands.User.Logout());
             string response = _server.SendData(cmds);
-            if (response is null || response.Contains("INCORRECT")) return null;
+            if (response is null || response.Contains("Unauthorized")) return null;
             //Console.WriteLine(response);
             return response;
         }
@@ -40,7 +39,7 @@ namespace MyIssue.Web.Services
                 .Concat(Core.Commands.User.TokenLogin(login, token))
                 .Concat(Core.Commands.User.Logout());
             string response = _server.SendData(cmds);
-            if (response.Contains("CORRECT")) return true;
+            if (!response.Contains("Unauthorized")) return true;
             return false;
         }
         public async Task<string> RevokeToken(string token)

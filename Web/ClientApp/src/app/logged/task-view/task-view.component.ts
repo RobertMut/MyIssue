@@ -5,6 +5,7 @@ import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
 import { Task, TaskRoot } from "../../../models/Task";
 import { EmployeeRoot } from "../../../models/Employee";
+import { map } from 'rxjs';
 
 
 @Component({
@@ -39,14 +40,15 @@ export class TaskViewComponent implements OnInit {
         this.auth.CheckUnauthorized(error);
       });
 
-    this.employeeservice.getAllEmployees(this.auth.headers()).subscribe(result => {
-      this.employees = JSON.parse(result);
-
-    },
-      error => {
-        console.error(error);
-        this.auth.CheckUnauthorized(error);
-      });
+    this.employeeservice.getAllEmployees(this.auth.headers()).subscribe(
+      {
+        next: (v) => this.employees= (v as EmployeeRoot),
+        error: (e) => {
+          console.error(e);
+          this.auth.CheckUnauthorized(e);
+        }
+      }
+    );
   }
   clearDate(name): void {
     if (name == 'removeStart')

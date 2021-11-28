@@ -17,12 +17,8 @@ export class LoginComponent {
     private form: FormBuilder,
     private active: ActivatedRoute) {
   }
-  public loginForm = this.form.group({
-    login: '',
-    pass: ''
-  })
-  onButton(): void {
-    this.auth.login(this.loginForm.get(['login']).value, this.loginForm.get(['pass']).value)
+  onButton(loginFormValue: any): void {
+    this.auth.login(loginFormValue.login, loginFormValue.pass)
       .subscribe((value: boolean) => {
         if (value == true) {
           this.router.navigate(['./../../nav-menu-logged']);

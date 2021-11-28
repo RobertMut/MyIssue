@@ -3,6 +3,7 @@ import { ClientService } from "../../../services/ClientService";
 import { AuthService } from "../../../services/AuthService";
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClientRoot, Client } from "../../../models/Client";
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-create-client',
@@ -12,19 +13,20 @@ import { ClientRoot, Client } from "../../../models/Client";
 })
 export class CreateClientComponent implements OnInit {
   public show: false;
-  public clients: ClientRoot = {} as ClientRoot;
+  public clients;
   public result: string;
   constructor(private clientService: ClientService,
     private auth: AuthService) {
-    this.clientService.getClients(this.auth.headers()).subscribe(result => {
-      this.clients = JSON.parse(result);
-    },
-      error => {
-        console.error(error);
-        this.auth.CheckUnauthorized(error);
-      });
+    this.clientService.getClients(this.auth.headers()).subscribe(
+      {
+        next: (v) => this.clients = (v as ClientRoot),
+        error: (e) => {
+          console.error(e);
+          this.auth.CheckUnauthorized(e);
+        }
+      }
+    );
   }
-
   ngOnInit(): void {
   }
   public createClient(clientFormValues: any) {
