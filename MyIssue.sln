@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{8443CEDB-B69E-44EE-8952-C9724E99489E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Main.API", "API\Main.API.csproj", "{E48E9E13-7273-4B78-ABA3-DE1D9797479E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Main.API", "API\Main.API\Main.API.csproj", "{E48E9E13-7273-4B78-ABA3-DE1D9797479E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F4CE5092-ACCD-4B9B-A9E8-4545EFF04041}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,9 +25,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "readme", "readme", "{EF4A4F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43AC4D30-D918-4ECE-90E6-0D9BF8B605EB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{970D0AA4-05DC-42CD-AB33-F2F962011925}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{970D0AA4-05DC-42CD-AB33-F2F962011925}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Identity.API\Identity.API.csproj", "{15C1473C-D50E-4676-A809-ACBC65A884DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "API\Identity.API\Identity.API.csproj", "{15C1473C-D50E-4676-A809-ACBC65A884DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{4C6DBBAC-748F-4127-B5EC-124EDC04EE37}"
 EndProject

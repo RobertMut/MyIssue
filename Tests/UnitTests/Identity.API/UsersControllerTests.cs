@@ -89,33 +89,5 @@ namespace MyIssue.UnitTests.Identity.API
             Assert.NotNull(_context.Context.Users.First(x => x.UserLogin == "test2"));
             Assert.IsInstanceOf(typeof(ActionResult<User>), res);
         }
-        [Test]
-        public async Task ChangePassTest()
-        {
-            var res = await _controller.ChangePass("test", new Password
-            {
-                UserLogin = "test",
-                OldPassword = "1273",
-                NewPassword = "1234"
-            });
-            Assert.NotNull(_context.Context.Users.First(x => x.Password == "1234"));
-            Assert.IsInstanceOf(typeof(NoContentResult), res);
-        }
-        [Test]
-        public async Task AuthenticateTest()
-        {
-            var auth = _controller.Authenticate(new AuthRequest
-            {
-                Username = "test",
-                Password = "1273"
-            });
-            Assert.IsInstanceOf(typeof(OkObjectResult), auth);
-            var auth2 = _controller.Authenticate(new AuthRequest
-            {
-                Username = "test",
-                Password = "1111"
-            });
-            Assert.IsInstanceOf(typeof(BadRequestObjectResult), auth2);
-        }
     }
 }

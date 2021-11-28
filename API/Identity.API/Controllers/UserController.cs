@@ -66,16 +66,9 @@ namespace MyIssue.Identity.API.Controllers
                 Password = user.Password,
                 UserType = _context.UserTypes.First(u => u.Name == user.Type).Id,
             });
-            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeName == user.Username);
             try
             {
 
-                if (employee is not null)
-                    _context.EmployeeUser.Add(new EmployeeUser
-                    {
-                        UserLogin = user.Username,
-                        EmployeeLogin = user.Username,
-                    });
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)

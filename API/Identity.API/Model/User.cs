@@ -17,9 +17,9 @@ namespace MyIssue.Identity.API.Model
         [Display(Name = "Password")]
         public string Password { get; set; }
         [Required]
-        public decimal UserType { get; set; }
-        [JsonIgnore]
-        public EmployeeUser EmployeeUser { get; set; }
+        public decimal UserType { get; set; } 
+        //[JsonIgnore]
+       //public EmployeeUser EmployeeUser { get; set; }
         [JsonIgnore]
         public virtual UserType UserTypes { get; set; }
     }

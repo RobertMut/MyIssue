@@ -58,7 +58,6 @@ namespace MyIssue.Identity.API
                     //opt.Events.RaiseFailureEvents = true;
                     //opt.Events.RaiseFailureEvents = true;
                     //opt.Events.RaiseSuccessEvents = true;
-                  
                     opt.UserInteraction.LoginUrl = "/Account/Login";
                     opt.UserInteraction.LogoutUrl = "/Account/Logout";
                     opt.UserInteraction.ErrorUrl = "/Home/error";
@@ -67,7 +66,6 @@ namespace MyIssue.Identity.API
                 .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
                 .AddExtensionGrantValidator<MyIssueGrantValidator>()
                 .AddDeveloperSigningCredential();
-                //.AddAspNetIdentity<User>();
             if (Configuration.GetValue<bool>("LDAPEnabled") == true)
             {
                 builder = builder.AddLdapUsers<OpenLdapAppUser>(Configuration.GetSection("LDAP"), UserStore.InMemory)
@@ -76,27 +74,6 @@ namespace MyIssue.Identity.API
                 
             builder.AddDeveloperSigningCredential();
             services.AddAuthentication().AddLocalApi();
-                //.AddOpenIdConnect("oidc", "IdentityAPI", opt =>
-                //{
-                //    opt.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                //    opt.SignOutScheme = IdentityServerConstants.SignoutScheme;
-                //    opt.SaveTokens = true;
-                //    opt.Authority = Configuration.GetValue<string>("IdentityServer:Authority");
-                //    opt.ClaimsIssuer = Configuration.GetValue<string>("IdentityServer:Issuer");
-                //    opt.TokenValidationParameters = new TokenValidationParameters
-                //    {
-                //        ValidateIssuerSigningKey = true,
-                //        ValidateIssuer = true,
-                //        ValidateAudience = true,
-                //        ValidIssuer = Configuration.GetValue<string>("IdentityServer:Issuer"),
-                //        ValidAudience = Configuration.GetValue<string>("IdentityServer:Authority"),
-                //        ValidateLifetime = true,
-                //        IssuerSigningKey = new SymmetricSecurityKey(
-                //            Encoding.ASCII.GetBytes(
-                //                Configuration.GetValue<string>("IdentityServer:Secret")
-                //            ))
-                //    };
-                //});
             services.AddControllersWithViews();
             services.Configure<AuthenticationOptions>(Configuration);
             services.AddSwaggerGen(c =>

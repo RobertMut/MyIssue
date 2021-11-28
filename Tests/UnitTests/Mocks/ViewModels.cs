@@ -15,7 +15,7 @@ namespace MyIssue.UnitTests.Mocks
         public ViewModels()
         {
             RegionManagerMock = new Mock<IRegionManager>();
-            RegionManagerMock.Setup(x => x.RegisterViewWithRegion("ContentRegion", typeof(Main)));
+            RegionManagerMock.Setup(x => x.RegisterViewWithRegion("ContentRegion", typeof(DesktopApp.Views.Main)));
             RegionManagerMock.Setup(x => x.RegisterViewWithRegion("ContentRegion", typeof(Prompt)));
             RegionManagerMock.Setup(x => x.RegisterViewWithRegion("ContentRegion", typeof(Settings)));
             MainWindowViewModel = new MainWindowViewModel(RegionManagerMock.Object);

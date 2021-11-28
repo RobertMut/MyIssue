@@ -24,12 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API\Main.API.csproj" />
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\DesktopApp\DesktopApp.csproj" />
-    <ProjectReference Include="..\Identity.API\Identity.API.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Server\Server.csproj" />
+    <ProjectReference Include="..\..\API\Main.API\Main.API.csproj" />
+    <ProjectReference Include="..\..\Core\Core.csproj" />
+    <ProjectReference Include="..\..\DesktopApp\DesktopApp.csproj" />
+    <ProjectReference Include="..\..\API\Identity.API\Identity.API.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Server\Server.csproj" />
+    <ProjectReference Include="..\..\Web\Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
