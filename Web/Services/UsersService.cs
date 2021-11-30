@@ -28,13 +28,9 @@ namespace MyIssue.Web.Services
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(User.TokenLogin(model.Login, model.Token))
-                .Append(StringStatic.ByteMessage("GetUser\r\n<EOF>\r\n"));
-            //Console.WriteLine("TOKEN   " + model.Token);
-            if (username is null) username = string.Empty;
-            cmds = cmds.Append(
-                StringStatic.ByteMessage($"{username}\r\n<EOF>\r\n"));
-
-            cmds = cmds.Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
+                .Append(StringStatic.ByteMessage("GetUser\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage($"{username ?? ""}\r\n<EOF>\r\n"))
+                .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
             return _server.SendData(cmds);
         }
 

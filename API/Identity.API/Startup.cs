@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using IdentityServer.LdapExtension.Extensions;
@@ -6,6 +7,9 @@ using IdentityServer.LdapExtension.UserModel;
 using IdentityServer.LdapExtension.UserStore;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -49,15 +53,8 @@ namespace MyIssue.Identity.API
             });
             services.AddScoped<IAuthService, AuthService>(); 
             services.AddDbMigration<IdentityContext>();
-            //services.AddIdentity<User, UserType>()
-            //    .AddDefaultTokenProviders();
             var builder = services.AddIdentityServer(opt =>
                 {
-                    //opt.Events.RaiseErrorEvents = true;
-                    //opt.Events.RaiseInformationEvents = true;
-                    //opt.Events.RaiseFailureEvents = true;
-                    //opt.Events.RaiseFailureEvents = true;
-                    //opt.Events.RaiseSuccessEvents = true;
                     opt.UserInteraction.LoginUrl = "/Account/Login";
                     opt.UserInteraction.LogoutUrl = "/Account/Logout";
                     opt.UserInteraction.ErrorUrl = "/Home/error";
@@ -73,7 +70,18 @@ namespace MyIssue.Identity.API
             }
                 
             builder.AddDeveloperSigningCredential();
-            services.AddAuthentication().AddLocalApi();
+            services.AddAuthentication().AddLocalApi().AddJwtBearer(bearer =>
+            {
+                bearer.Authority = Configuration.GetValue<string>("Authority");
+                bearer.RequireHttpsMetadata = false;
+                bearer.Audience = "server_api";
+                bearer.BackchannelHttpHandler = new HttpClientHandler()
+                {
+                    ServerCertificateCustomValidationCallback =
+                        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            });
+            services.AddAuthorization();
             services.AddControllersWithViews();
             services.Configure<AuthenticationOptions>(Configuration);
             services.AddSwaggerGen(c =>

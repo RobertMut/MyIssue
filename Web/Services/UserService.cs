@@ -9,7 +9,6 @@ namespace MyIssue.Web.Services
     {
         Task<string> GenerateToken(string login, string password);
         Task<bool> ValidateToken(string login, string token);
-        Task<string> RevokeToken(string token);
     }
     public class UserService : IUserService
     {
@@ -41,14 +40,6 @@ namespace MyIssue.Web.Services
             string response = _server.SendData(cmds);
             if (!response.Contains("Unauthorized")) return true;
             return false;
-        }
-        public async Task<string> RevokeToken(string token)
-        {
-            //Console.WriteLine(nameof(this.RevokeToken));
-            IEnumerable<byte[]> cmds = new List<byte[]>()
-                .Concat(Core.Commands.User.RevokeLogout(token));
-            string response = _server.SendData(cmds);
-            return response;
         }
     }
 }

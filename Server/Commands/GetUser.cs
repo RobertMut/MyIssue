@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MyIssue.Core.Exceptions;
 using MyIssue.Server.Http;
+using MyIssue.Server.Model;
 using MyIssue.Server.Net;
 
 namespace MyIssue.Server.Commands
@@ -20,17 +21,16 @@ namespace MyIssue.Server.Commands
 
             //if (client.Status.Equals(1)) throw new NotSufficientPermissionsException();
             LogUser.TypedCommand("GetUser", "Executed", client);
-            NetWrite.Write(client.ConnectedSock, "GET\r\n", ct);
+            NetWrite.Write(client.ConnectedSock, "GET USER\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
             string[] input = SplitToCommand.Get(client.CommandHistory);
-            string baseAddress = httpclient.BaseAddress + "api/Users/";
-            if (!input.Length.Equals(0)) baseAddress += input[0];
-            var request = RequestMessage.NewRequest(
-                    baseAddress,
-                    HttpMethod.Get, client.Token);
+            var request = RequestMessage.NewRequest(httpclient.BaseAddress+ $"api/Users/{input[0] ?? string.Empty}",
+                HttpMethod.Get, client.Token);//$"https://127.0.0.1:6001/User/{ input[0] ?? string.Empty }"
             HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
             string response = httpResponse.Content.ReadAsStringAsync().Result;
             NetWrite.Write(client.ConnectedSock, response, ct);
+
+
         }
     }
 }

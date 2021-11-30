@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text;
 using MyIssue.Server.Net;
 using System.Threading;
@@ -27,14 +28,13 @@ namespace MyIssue.Server.Commands
                 Password = splitted[1],
                 Type = splitted[2]
             });
-            using (var request = new HttpRequestMessage(HttpMethod.Post,
-                httpclient.BaseAddress + "api/Users"))
-            {
-                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-                string response = httpResponse.Content.ReadAsStringAsync().Result;
-                NetWrite.Write(client.ConnectedSock, response, ct);
-            }
+            var request = RequestMessage.NewRequest(
+                httpclient.BaseAddress + "api/Users/",
+                HttpMethod.Post, client.Token);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+            string response = httpResponse.Content.ReadAsStringAsync().Result;
+            NetWrite.Write(client.ConnectedSock, response, ct);
 
         }
     }

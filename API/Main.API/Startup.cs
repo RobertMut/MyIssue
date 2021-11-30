@@ -63,20 +63,6 @@ namespace MyIssue.Main.API
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-                //bearer.ClaimsIssuer = Configuration["Token:Issuer"];
-                //bearer.TokenValidationParameters = new TokenValidationParameters
-                //{
-                //    ValidateIssuerSigningKey = true,
-                //    ValidateIssuer = true,
-                //    ValidateAudience = true,
-                //    ValidIssuer = Configuration.GetValue<string>("Token:Issuer"),
-                //    ValidAudience = Configuration.GetValue<string>("Token:Audience"),
-                //    IssuerSigningKey = new SymmetricSecurityKey(
-                //        Encoding.ASCII.GetBytes(
-                //            Configuration.GetValue<string>("Token:Secret")
-                //        ))
-                //};
-                //bearer.SaveToken = true;
             });
 
 

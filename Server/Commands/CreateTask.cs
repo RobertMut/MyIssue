@@ -41,6 +41,7 @@ namespace MyIssue.Server.Commands
                 });
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
+                httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
                 HttpResponseMessage httpResponse = httpclient.PostAsync($"api/Tasks/", content).Result;
                 NetWrite.Write(client.ConnectedSock, httpResponse.StatusCode.ToString(), ct);
             }

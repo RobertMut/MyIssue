@@ -39,7 +39,7 @@ namespace MyIssue.Server
                 if (ConfigValue.GetValue<bool>("i_enabled", config)) Task.Run(async () =>
                 {
                     CancellationToken ct = new CancellationToken();
-                    _imap.RunImap(Parameters.Api, Parameters.Login, Parameters.Password, ct);
+                    _imap.RunImap(listen, port, Parameters.Login, Parameters.Password, ct);
                 });
                 Console.ReadKey();
 

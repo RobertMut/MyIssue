@@ -26,6 +26,7 @@ namespace MyIssue.Server.Commands
                     httpclient.BaseAddress + "api/Clients/"))
                 {
                     var token = SetBearerToken(client.Login, client.Password);
+                    if (string.IsNullOrEmpty(token)) throw new InvalidCredentialException();
                     HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
                     if (httpResponse.IsSuccessStatusCode)
                     {
@@ -39,7 +40,7 @@ namespace MyIssue.Server.Commands
             {
                 SerilogLogger.ServerLogException(e);
                 LogUser.TypedCommand("Login", "User failed to login", client);
-                NetWrite.Write(client.ConnectedSock, e.Message, ct);
+                NetWrite.Write(client.ConnectedSock, "Unauthorized", ct);
             }
             catch (NullReferenceException nullReference)
             {

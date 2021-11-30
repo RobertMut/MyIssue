@@ -137,7 +137,6 @@
     <Compile Include="Commands\Logout.cs" />
     <Compile Include="Commands\NotFound.cs" />
     <Compile Include="Commands\NotSufficient.cs" />
-    <Compile Include="Commands\RevokeLogout.cs" />
     <Compile Include="Commands\TokenLogin.cs" />
     <Compile Include="Commands\WhoAmI.cs" />
     <Compile Include="Http\RequestMessage.cs" />

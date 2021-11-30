@@ -50,7 +50,6 @@ namespace MyIssue.Server.Commands
         {
             var client = new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator });
             client.BaseAddress = new Uri(Parameters.AuthAddress);
-            Console.WriteLine("clientsecret".ToSha256());
             var response = await client.RequestTokenAsync(new TokenRequest
             {
                 Address = Model.Parameters.AuthAddress + "/connect/token",

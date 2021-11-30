@@ -42,13 +42,5 @@ namespace MyIssue.Web.Controllers
                 result = false
             });
         }
-        [AllowAnonymous]
-        [HttpPost("logout")]
-        public async Task<IActionResult> LogOut([FromBody]Token model)
-        {
-            string token = _userService.RevokeToken(model.TokenString).Result;
-            if (token.Equals("Bad request")) return BadRequest();
-            return Ok(token);
-        }
     }
 }

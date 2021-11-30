@@ -23,8 +23,6 @@ namespace MyIssue.Server.Commands
             LogUser.TypedCommand(Name, "Executed", client);
             NetWrite.Write(client.ConnectedSock, $"GET {Name}\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            //var request =
-            //    RequestMessage.NewRequest(httpclient.BaseAddress + "api/UserTypes", HttpMethod.Get, client.Token);
             httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
             HttpResponseMessage httpResponse = httpclient.GetAsync("api/UserTypes").Result;
                 string response = httpResponse.Content.ReadAsStringAsync().Result;
