@@ -2,10 +2,11 @@
 This repository contains API, Web, Server and WPF application to create and track issues made by client.
 ## Description
 This repository consist of four parts:
- - API - provides authentication and access to database,
- - Server - "bridge" between API and Web/DesktopApp, also connects to imap and search for new mails,
- - Web - contains panel to create task, create new client and manage tasks,
- - DesktopApp - just WPF app to send and crate new task.
+ - [Main.API](./docs/Main.API.md). - provides required data from database,
+ - [Identity.API](./docs/Identity.API.md) - used to authenticate user,
+ - [Server](./docs/Server.md) - "bridge" between API and Web/DesktopApp, also connects to imap and search for new mails,
+ - [Web](./docs/Web.md) - contains panel to create task, create new client and manage tasks,
+ - [DesktopAPP](./docs/DesktopAPP.md) - just WPF app to send and crate new task.
  
 ## Usage
 
