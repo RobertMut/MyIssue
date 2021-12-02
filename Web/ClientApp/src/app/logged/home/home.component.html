@@ -1,89 +1,92 @@
-<h1>Hello, {{login}}</h1>
-<div class="control">
-  <button mat-raised-button type="button" (click)="navigate('./new-task')">Create new task</button>
-  <button mat-raised-button type="button" (click)="navigate('./task-paged')">All tasks</button>
-  <button mat-raised-button type="button" (click)="navigate('./create-client')">Create client</button>
-  <button mat-raised-button type="button" (click)="navigate('./create-user')">Create user/employee</button>
-</div>
-<div class="task-div add-a-little-space-below">
-  <p>Your active tasks:</p>
-  <mat-select name="howManyAssigned" class="selection" (selectionChange)="selectActiveChangeHandler($event)" [(ngModel)]='selectionActive'>
-    <mat-option [value]="5">5</mat-option>
-    <mat-option [value]="10">10</mat-option>
-    <mat-option [value]="15">15</mat-option>
-    <mat-option [value]="20">20</mat-option>
-    <mat-option [value]="30">30</mat-option>
-    <mat-option [value]="50">50</mat-option>
-  </mat-select>
-  <table mat-table class="mat-elevation-z8 task-navigation-table">
-    <thead>
-      <tr mat-header-row>
-        <th mat-header-cell>Id</th>
-        <th mat-header-cell>Type</th>
-        <th mat-header-cell>Title<th>
-        <th mat-header-cell>Description</th>
-        <th mat-header-cell>Client</th>
-        <th mat-header-cell>Assignment</th>
-        <th mat-header-cell>Owner</th>
-        <th mat-header-cell>Start</th>
-        <th mat-header-cell>End</th>
-        <th mat-header-cell>Creation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr mat-row *ngFor="let task of activeTasks" (click)="selectTask(task.TaskId)" class="task-row">
-        <td mat-cell>{{task.TaskId}}</td>
-        <td mat-cell>{{task.TaskType}}</td>
-        <td mat-cell>{{task.TaskTitle}}</td>
-        <td mat-cell>{{task.TaskDescription}}</td>
-        <td mat-cell>{{task.TaskClient}}</td>
-        <td mat-cell>{{task.TaskAssignment}}</td>
-        <td mat-cell>{{task.TaskOwner}}</td>
-        <td mat-cell>{{task.TaskStart}}</td>
-        <td mat-cell>{{task.TaskEnd}}</td>
-        <td mat-cell>{{task.TaskCreationDate}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<mat-select name="howManyActive" class="selection" (selectionChange)="selectFreeChangeHandler($event)" [(ngModel)]='selectionFree'>
-  <mat-option [value]="5">5</mat-option>
-  <mat-option [value]="10">10</mat-option>
-  <mat-option [value]="15">15</mat-option>
-  <mat-option [value]="20">20</mat-option>
-  <mat-option [value]="30">30</mat-option>
-  <mat-option [value]="50">50</mat-option>
-</mat-select>
-<div class="task-div">
-  <p>Free to take tasks:</p>
-  <table mat-table class="mat-elevation-z8 task-navigation-table">
-    <thead>
-      <tr mat-header-row>
-        <th mat-header-cell>Id</th>
-        <th mat-header-cell>Type</th>
-        <th mat-header-cell>Title<th>
-        <th mat-header-cell>Description</th>
-        <th mat-header-cell>Client</th>
-        <th mat-header-cell>Assignment</th>
-        <th mat-header-cell>Owner</th>
-        <th mat-header-cell>Start</th>
-        <th mat-header-cell>End</th>
-        <th mat-header-cell>Creation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr mat-row *ngFor="let task of freeTasks" (click)="selectTask(task.TaskId)" class="task-row">
-        <td mat-cell>{{task.TaskId}}</td>
-        <td mat-cell>{{task.TaskType}}</td>
-        <td mat-cell>{{task.TaskTitle}}</td>
-        <td mat-cell>{{task.TaskDescription}}</td>
-        <td mat-cell>{{task.TaskClient}}</td>
-        <td mat-cell>{{task.TaskAssignment}}</td>
-        <td mat-cell>{{task.TaskOwner}}</td>
-        <td mat-cell>{{task.TaskStart}}</td>
-        <td mat-cell>{{task.TaskEnd}}</td>
-        <td mat-cell>{{task.TaskCreationDate}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container">
+  <h1>Hello, {{login}}</h1>
+  <mat-card>
+  <div class="task-div add-a-little-space-below">
+    <div class="task-headers">    
+      <p>Your active tasks:</p>
+      <mat-select name="howManyAssigned" class="selection" (selectionChange)="selectActiveChangeHandler($event)" [(ngModel)]='selectionActive'>
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="15">15</mat-option>
+        <mat-option [value]="20">20</mat-option>
+        <mat-option [value]="30">30</mat-option>
+        <mat-option [value]="50">50</mat-option>
+      </mat-select></div>
+
+    <table mat-table class="task-navigation-table">
+      <thead>
+        <tr mat-header-row>
+          <th>Id</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Client</th>
+          <th>Assignment</th>
+          <th>Owner</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mat-row *ngFor="let task of activeTasks" (click)="selectTask(task.TaskId)" class="task-row">
+          <td mat-cell>{{task.TaskId}}</td>
+          <td mat-cell>{{task.TaskType}}</td>
+          <td mat-cell>{{task.TaskTitle}}</td>
+          <td mat-cell>{{task.TaskDescription}}</td>
+          <td mat-cell>{{task.TaskClient}}</td>
+          <td mat-cell>{{task.TaskAssignment}}</td>
+          <td mat-cell>{{task.TaskOwner}}</td>
+          <td mat-cell>{{task.TaskStart}}</td>
+          <td mat-cell>{{task.TaskEnd}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-card>
+<mat-card>
+
+
+  <div class="task-div">
+    <div class="task-headers">
+      <p>Free to take tasks:</p>
+      <mat-select name="howManyActive" class="selection" (selectionChange)="selectFreeChangeHandler($event)" [(ngModel)]='selectionFree'>
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="15">15</mat-option>
+        <mat-option [value]="20">20</mat-option>
+        <mat-option [value]="30">30</mat-option>
+        <mat-option [value]="50">50</mat-option>
+      </mat-select>
+    </div>
+
+    <table mat-table class="task-navigation-table">
+      <thead>
+        <tr mat-header-row>
+          <th>Id</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Client</th>
+          <th>Assignment</th>
+          <th>Owner</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mat-row *ngFor="let task of freeTasks" (click)="selectTask(task.TaskId)" class="task-row">
+          <td mat-cell>{{task.TaskId}}</td>
+          <td mat-cell>{{task.TaskType}}</td>
+          <td mat-cell>{{task.TaskTitle}}</td>
+          <td mat-cell>{{task.TaskDescription}}</td>
+          <td mat-cell>{{task.TaskClient}}</td>
+          <td mat-cell>{{task.TaskAssignment}}</td>
+          <td mat-cell>{{task.TaskOwner}}</td>
+          <td mat-cell>{{task.TaskStart}}</td>
+          <td mat-cell>{{task.TaskEnd}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-card>
 </div>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Web.Helpers;
 using MyIssue.Web.Services;
 
@@ -16,10 +16,10 @@ namespace MyIssue.Web.Controllers
             _service = service;
         }
         [HttpGet]
-        public async Task<ClientReturnRoot> Get()
+        public async Task<IActionResult> Get()
         {
             var auth = await TokenHelper.GetTokenFromHeader(this.HttpContext.Request.Headers);
-            return await _service.GetClient(auth);
+            return Ok(await _service.GetClient(auth));
         }
 
         [HttpPost("new")]

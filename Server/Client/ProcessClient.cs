@@ -17,7 +17,7 @@ namespace MyIssue.Server.Client
                     .SetSocket(sock)
                     .SetId(ClientCounter.Clients)
                     .SetCommandHistory(new List<string>())
-                    .SetStatus(1)
+                    //.SetStatus(1)
                     .SetTerminated(false)
                 .Build();
             LogUser.TypedCommand("connected", "New client", client);

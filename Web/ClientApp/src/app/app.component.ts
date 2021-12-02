@@ -9,17 +9,26 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   title = 'MyIssue Web';
+
   constructor(public router: Router, public auth: AuthService) {
 
   }
+
   ngOnInit() {
     this.router.events
       .subscribe((e) => {
-          if ((e instanceof NavigationEnd && !this.auth.tokenlogin())) {
-            this.router.navigate(['login']);
-          } 
-        }
-      );
-  }
+        if ((e instanceof NavigationEnd)) {
+          this.auth.tokenlogin().subscribe({
+            next: (result) => {
+              if (!result) {
+                this.router.navigate(['/nav-menu/login']);
+              }
 
+            }
+
+          });
+        }
+      });
+
+  }
 }

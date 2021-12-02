@@ -10,7 +10,7 @@ namespace MyIssue.Server.Model
         public List<string> CommandHistory { get; set; }
         public int Status { get; set; }
         public bool Terminated { get; set; }
+        public string Password { get; set; }
         public string Token { get; set; }
-
     }
 }

@@ -3,6 +3,7 @@ using MailKit.Net.Imap;
 using MailKit.Search;
 using MimeKit;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.IO;
@@ -10,21 +11,22 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using MyIssue.Core.Commands;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Core.Interfaces;
-using MyIssue.Core.Model.Return;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Files;
 using MyIssue.Infrastructure.Model;
+using MyIssue.Infrastructure.Server;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Infrastructure.Imap
 {
-    public class ImapMessages : IImapParse 
+    public class ImapMessages : IImapParse
     {
         private IImapConnect _iconn;
         private ImapClient idleClient;
-        private readonly string _apiAddress;
         private readonly string _login;
         private readonly string _pass;
         private ImapClient getClient;
@@ -32,13 +34,13 @@ namespace MyIssue.Infrastructure.Imap
         private CancellationTokenSource cancelToken;
         private CancellationTokenSource doneSrc;
         private bool freshRun = true;
+        private IServerConnector _connector;
 
-
-        public ImapMessages(ImapClient idleClient, string apiAddress, string login, string pass)
+        public ImapMessages(ImapClient idleClient, string apiAddress, int port, string login, string pass)
         {
             _iconn = new ImapConnect();
             this.idleClient = idleClient;
-            _apiAddress = apiAddress;
+            _connector = new ServerConnector(apiAddress, port);
             _login = login;
             _pass = pass;
             cancelToken = new CancellationTokenSource();
@@ -169,39 +171,21 @@ namespace MyIssue.Infrastructure.Imap
             string[] email = StringStatic.SplitBrackets(m.Subject, '[', ']').Where(x => !string.IsNullOrEmpty(x)).ToArray();
             string desc =
                 $"{email[2]} {email[3]}\n{(string.IsNullOrWhiteSpace(m.TextBody) ? "No description.." : m.TextBody)}";
-            string encoded = Convert.ToBase64String(
-                Encoding.UTF8.GetBytes($"{_login}:{_pass}")
-            );
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(_apiAddress);
-                using (var request = new HttpRequestMessage(HttpMethod.Post,
-                    client.BaseAddress + $"api/Tasks/imap"))
-                {
-                    var json = JsonConvert.SerializeObject(new TaskReturn
-                    {
-                        TaskTitle = email[4],
-                        TaskDescription = desc,
-                        TaskClient = email[1],
-                        TaskAssignment = null,
-                        TaskOwner = null,
-                        TaskType = "Normal",
-                        CreatedByMail = m.GetHashCode().ToString()
-                    });
-                    request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                    request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                    request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-                    request.Headers.Connection.Add("keep-alive");
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Authorization", $"Basic {encoded}");
-                    var response = client.SendAsync(request).Result;
+            IEnumerable<byte[]> cmds = new List<byte[]>()
+                        .Concat(User.Login(_login, _pass))
+                        .Append(StringStatic.ByteMessage("CreateTask\r\n<EOF>\r\n"))
+                        .Append(StringStatic.ByteMessage($"{email[4]}\r\n<NEXT>\r\n{desc}\r\n<NEXT>\r\n{email[1]}\r\n<NEXT>\r\n" +
+                                                         $"{"null"}\r\n<NEXT>\r\n{"null"}\r\n<NEXT>\r\nNormal\r\n<NEXT>\r\n" +
+                                                         $"\r\n<NEXT>\r\n\r\n<NEXT>\r\n" +
+                                                         $"{"null"}\r\n<EOF>\r\n"))
+                        .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
 
-                    Console.WriteLine($"IMAP - {DateTime.Now} - {response.StatusCode}");
-                }
-            }
+            string response = _connector.SendData(cmds);
 
+            Console.WriteLine($"IMAP - {DateTime.Now} - {response}");
         }
-
     }
+
 }
+
 //0:[Issue]1:[Client]2:[Name]3:[Surname]4:[Title]

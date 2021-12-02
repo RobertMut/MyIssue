@@ -1,35 +1,14 @@
-<div class="container">
-  <form (ngSubmit)="onButton()" [formGroup]="loginForm">
-    <table>
-      <thead>
-        <tr>
-          <th colspan="2">
-            <h1>MyIssue</h1>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <p>Please log in to continue</p>
-          </th>
-        </tr>
-        <tr>
-          <td class="text">Login</td>
-          <td class="input"><input type="text" id="loginbox" formControlName="login"/>
-        </tr>
-        <tr>
-          <td class="text">Password</td>
-          <td class="input"><input type="password" id="passbox" formControlName="pass"/>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <button type="submit">Log me in!</button>
-          </td>
-        </tr>
-      </tbody>
-
-
-    </table>
+<div class="container centered">
+  <form (ngSubmit)="onButton(loginForm.value)" #loginForm="ngForm" class="centered">
+    <h1>Login</h1>
+    <mat-form-field class="centered">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" name="login" ngModel/>
+    </mat-form-field>
+    <mat-form-field class="centered">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="pass" ngModel/>
+    </mat-form-field>
+    <button mat-raised-button type="submit">Sign in!</button>
   </form>
 </div>

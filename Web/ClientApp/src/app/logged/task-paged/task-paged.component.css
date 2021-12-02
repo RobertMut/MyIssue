@@ -23,6 +23,9 @@
   padding: 0 2% 0;
   display: inline;
 }
+.task-div {
+  margin-top: 3%;
+}
 table {
   width: 100%;
 }

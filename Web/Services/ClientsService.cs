@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyIssue.Core.Model.Return;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Core.String;
 using MyIssue.Infrastructure.Server;
 using MyIssue.Web.Model;
@@ -12,7 +11,7 @@ namespace MyIssue.Web.Services
 {
     public interface IClientsService
     {
-        Task<ClientReturnRoot> GetClient(TokenAuth model);
+        Task<string> GetClient(TokenAuth model);
         Task<string> PostClient(ClientReturn client, TokenAuth model);
     }
 
@@ -25,16 +24,14 @@ namespace MyIssue.Web.Services
             _server = server;
         }
 
-        public async Task<ClientReturnRoot> GetClient(TokenAuth model)
+        public async Task<string> GetClient(TokenAuth model)
         {
             IEnumerable<byte[]> cmds = new List<byte[]>()
                 .Concat(Core.Commands.User.TokenLogin(model.Login, model.Token))
                 .Append(StringStatic.ByteMessage("GetClients\r\n<EOF>\r\n"))
                 .Append(StringStatic.ByteMessage("Logout\r\n<EOF>\r\n"));
 
-            string response = _server.SendData(cmds);
-            var clients = JsonConvert.DeserializeObject<ClientReturnRoot>(response);
-            return clients;
+            return _server.SendData(cmds);
         }
 
         public async Task<string> PostClient(ClientReturn client, TokenAuth model)

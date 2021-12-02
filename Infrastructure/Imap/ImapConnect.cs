@@ -13,7 +13,7 @@ namespace MyIssue.Infrastructure.Imap
 {
     public interface IImapConnect
     {
-        Task RunImap(string apiAddress, string apiLogin, string ApiPassword, CancellationToken ct);
+        Task RunImap(string serverAddress, int port, string apiLogin, string ApiPassword, CancellationToken ct);
         Task ConnectToImap(ImapClient c, CancellationToken ct);
         Task ReconnectAsync(ImapClient c);
     }
@@ -22,14 +22,14 @@ namespace MyIssue.Infrastructure.Imap
         CancellationToken token;
         ImapClient idleClient;
         IImapParse _parse;
-        int tries = 0;
+        int _tries = 0;
 
-        public async Task RunImap(string apiAddress, string apiLogin, string ApiPassword, CancellationToken ct)
+        public async Task RunImap(string serverAddress,int port, string apiLogin, string ApiPassword, CancellationToken ct)
         {
             token = ct;
             using (idleClient = new ImapClient())
             {
-                _parse = new ImapMessages(idleClient,apiAddress, apiLogin, ApiPassword );
+                _parse = new ImapMessages(idleClient,serverAddress, port, apiLogin, ApiPassword );
                 Console.WriteLine("IMAP - {0} - Connecting to server...", DateTime.Now);
                 ConnectToImap(idleClient, token);
                 var task = _parse.ImapListenNewMessagesAsync(token);
@@ -88,9 +88,9 @@ namespace MyIssue.Infrastructure.Imap
             catch (SocketException e)
             {
                 SerilogLogger.ServerLogException(e);
-                tries++;
-                Console.WriteLine("IMAP - {0} - Trying to reconnect. Try {1} of {2}", DateTime.Now, tries, 11);
-                if (tries < 11) await ReconnectAsync(c);
+                _tries++;
+                Console.WriteLine("IMAP - {0} - Trying to reconnect. Try {1} of {2}", DateTime.Now, _tries, 11);
+                if (_tries < 11) await ReconnectAsync(c);
                 else CancellationTokenSource.CreateLinkedTokenSource(token).Cancel();
             }
             catch (AuthenticationException ax)

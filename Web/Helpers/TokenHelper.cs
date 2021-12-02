@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -12,8 +10,8 @@ namespace MyIssue.Web.Helpers
     {
         public static async Task<TokenAuth> GetTokenFromHeader(IHeaderDictionary headers)
         {
-            var token = headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            return new TokenAuth(token);
+            var token = headers["Authorization"].FirstOrDefault()?.Split(" ");
+            return new TokenAuth(token[0], token[1]);
         }
         public static async Task<string> GetClaim(string token, string claimType)
         {

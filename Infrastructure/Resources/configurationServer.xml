@@ -10,6 +10,7 @@
   </imapSettings>
   <apiSettings>
     <api_address>DESKTOP</api_address>
+    <authaddress>IdentityAuthAddress</authaddress>
     <api_login>Login</api_login>
     <api_password>Pass</api_password>
   </apiSettings>

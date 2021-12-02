@@ -18,22 +18,14 @@ namespace MyIssue.Server.Commands
         public override void Invoke(Model.Client client, CancellationToken ct)
         {
 
-            if (client.Status.Equals(1)) throw new NotSufficientPermissionsException();
+            //if (client.Status.Equals(1)) throw new NotSufficientPermissionsException();
             LogUser.TypedCommand("GetClients", "Executed", client);
             NetWrite.Write(client.ConnectedSock, "GET CLIENTS\r\n", ct);
             client.CommandHistory.Add(NetRead.Receive(client.ConnectedSock, ct).Result);
-            using (var request = new HttpRequestMessage(HttpMethod.Get,
-                httpclient.BaseAddress + "api/Clients/"))
-            {
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-                request.Headers.Connection.Add("keep-alive");
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
-                HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
-                string response = httpResponse.Content.ReadAsStringAsync().Result;
-                NetWrite.Write(client.ConnectedSock, response, ct);
-            }
+            httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", client.Token);
+            HttpResponseMessage httpResponse = httpclient.GetAsync("api/Clients/").Result;
+            string response = httpResponse.Content.ReadAsStringAsync().Result;
+            NetWrite.Write(client.ConnectedSock, response, ct);
         }
     }
 }

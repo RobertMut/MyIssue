@@ -6,6 +6,8 @@ using MyIssue.Core.Exceptions;
 using MyIssue.Core.Interfaces;
 using System.Reflection;
 using System.Linq;
+using System.Reflection.Emit;
+using MyIssue.Server.Services;
 
 namespace MyIssue.Server
 {
@@ -16,7 +18,7 @@ namespace MyIssue.Server
         public CommandParser()
         {
             _aggregate = new AggregateClasses((from t in Assembly.GetExecutingAssembly().GetTypes()
-                                              where t.IsClass && t.Namespace == "MyIssue.Server.Commands"
+                                              where t.IsSubclassOf(typeof(Command)) && t.Namespace == "MyIssue.Server.Commands"
                                               select t).ToList());
         }
         public void Parser(string input, Model.Client client, CancellationToken ct)
@@ -28,22 +30,23 @@ namespace MyIssue.Server
                             where (string)c?.GetField("Name")?.GetValue(null) == input
                             select c)?.FirstOrDefault();
                 if (type is null) throw new CommandNotFoundException();
-                cmd = (Command)Activator.CreateInstance(type);
+                var objserv = new ObjectService(type);
+                cmd = (Command)objserv.CreateInstance();
                 cmd.Invoke(client, ct);
+
             } 
             catch (CommandNotFoundException)
             {
-                
-                cmd = new NotFound();
-                cmd.Invoke(client, ct);
+                Console.WriteLine("NOT FOUND");
+                //commandDelegate =Delegate.CreateDelegate(typeof(NotFound), typeof(NotFound).GetMethod("Invoke"));
+                //commandDelegate.DynamicInvoke(client, ct);
             } 
             catch (NotSufficientPermissionsException)
             {
-                cmd = new NotSufficient();
-                cmd.Invoke(client, ct);
+                //commandDelegate = Delegate.CreateDelegate(typeof(NotSufficient), typeof(NotSufficient).GetMethod("Invoke"));
+                //commandDelegate.DynamicInvoke(client, ct);
             }
         }
-
     }
 }
 

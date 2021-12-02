@@ -1,20 +1,15 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading;
 using MyIssue.Server.Net;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Authentication;
-using System.Text;
-using MyIssue.Core.Model.Request;
 using MyIssue.Infrastructure.Files;
-using MyIssue.Core.Model.Return;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace MyIssue.Server.Commands
 {
     public class Login : Command
     {
+        public Login() : base() { }
         public static string Name = "Login";
         public override void Invoke(Model.Client client, CancellationToken ct)
         {
@@ -25,33 +20,27 @@ namespace MyIssue.Server.Commands
             try
             {
                 string[] input = SplitToCommand.Get(client.CommandHistory);
-                //Console.WriteLine(input[0]);
-                //Console.WriteLine(input[1]);
-                StringContent content = new StringContent(
-                    JsonConvert.SerializeObject(new AuthRequest
+                client.Login = input[0];
+                client.Password = input[1];
+                using (var request = new HttpRequestMessage(HttpMethod.Get,
+                    httpclient.BaseAddress + "api/Clients/"))
+                {
+                    var token = SetBearerToken(client.Login, client.Password);
+                    if (string.IsNullOrEmpty(token)) throw new InvalidCredentialException();
+                    HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
+                    if (httpResponse.IsSuccessStatusCode)
                     {
-                        Username = input[0],
-                        Password = input[1]
-                    }), Encoding.UTF8, "application/json"
-                    );
-                HttpResponseMessage httpresponse =
-                    httpclient.PostAsync("api/Auth/authenticate", content).Result;
-                string response = httpresponse.Content.ReadAsStringAsync().Result;
-                var data = (JObject) JsonConvert.DeserializeObject(response);
-                if (!(data["message"] is null)) throw new InvalidCredentialException("INCORRECT\r\n");
-
-                LogUser.TypedCommand("login", "", client);
-                client.Status = Convert.ToInt32(data.SelectToken("type"));
-                client.Login = data.SelectToken("login").ToString();
-                client.Token = data.SelectToken("token").ToString();
-                NetWrite.Write(client.ConnectedSock, response, ct);
-
+                        client.Token = token;
+                        NetWrite.Write(client.ConnectedSock, token, ct);
+                    }
+                    else NetWrite.Write(client.ConnectedSock, "Unauthorized", ct);
+                }
             }
             catch (InvalidCredentialException e)
             {
                 SerilogLogger.ServerLogException(e);
                 LogUser.TypedCommand("Login", "User failed to login", client);
-                NetWrite.Write(client.ConnectedSock, e.Message, ct);
+                NetWrite.Write(client.ConnectedSock, "Unauthorized", ct);
             }
             catch (NullReferenceException nullReference)
             {

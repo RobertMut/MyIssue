@@ -1,9 +1,10 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text;
 using MyIssue.Server.Net;
 using System.Threading;
+using MyIssue.Core.DataTransferObjects.Return;
 using MyIssue.Core.Exceptions;
-using MyIssue.Core.Model.Return;
 using MyIssue.Server.Http;
 using MyIssue.Server.Model;
 using Newtonsoft.Json;
@@ -27,8 +28,9 @@ namespace MyIssue.Server.Commands
                 Password = splitted[1],
                 Type = splitted[2]
             });
-            var request =
-                RequestMessage.NewRequest(httpclient.BaseAddress + "api/Users", HttpMethod.Post, client.Token);
+            var request = RequestMessage.NewRequest(
+                httpclient.BaseAddress + "api/Users/",
+                HttpMethod.Post, client.Token);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponse = httpclient.SendAsync(request).Result;
             string response = httpResponse.Content.ReadAsStringAsync().Result;

@@ -2,8 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { map } from "rxjs/operators";
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from "@angular/router";
 const headers: HttpHeaders = new HttpHeaders
   ({
     'Content-Type': 'application/json',
@@ -14,26 +13,18 @@ const headers: HttpHeaders = new HttpHeaders
 export class AuthService {
   baseUrl: string;
   constructor(private http: HttpClient,
+  private router: Router,
+  private activeRoute: ActivatedRoute,
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
   public logout(): void{
-    let token = localStorage.getItem("token");
-    let data = {
-      "TokenString": token
-    };
+    localStorage.setItem("type", "");
+    localStorage.setItem("token", "");
+    localStorage.setItem("login", "")
     console.warn("logout..");
-    this.http.post(this.baseUrl + "Auth/logout",
-      JSON.stringify(data),
-      {
-        headers: headers,
-        responseType: 'text' as 'text'
-      }).subscribe(response => {
-      localStorage.setItem("type", "");
-      localStorage.setItem("token", response);
-    });
-    
+    this.router.navigate(['/nav-menu/login'], { relativeTo: this.activeRoute })
 
   }
   public headers(): HttpHeaders {
@@ -56,19 +47,11 @@ export class AuthService {
       {
         headers: headers,
         responseType: 'text' as 'text'
-      }).pipe(
-        map(response => {
-          try {
-            let json = JSON.parse(response.toString()).result
-            return (/true/i).test(json);
-          } catch (e) {
-            return false;
-          }
-
-        })
-      );
+      }).pipe(map(result => {
+        if(result == 'Unauthorized') return false;
+        else return true;
+      }))
   }
-
   public login(login: string, pass: string): Observable<boolean> {
     let data = {
       "UserName": login,
@@ -84,19 +67,18 @@ export class AuthService {
         headers: headers,
         responseType: 'text' as 'text'
       }).pipe(
-        map(response => {
-          try {
-            let obj = JSON.parse(response.toString());
-            localStorage.setItem("login", obj.login);
-            localStorage.setItem("token", obj.token);
-            localStorage.setItem("type", obj.type.toString());
-            return true;
-          } catch (e) {
-            return false;
-          }
+      map(response => {
+        try {
+          localStorage.setItem("login", login);
+          localStorage.setItem("token", response.toString());
+          //localStorage.setItem("type", obj.type.toString());
+          return true;
+        } catch (e) {
+          return false;
+        }
 
-        })
-      );
+      })
+    );
   }
 
   public CheckUnauthorized(exception: any) {

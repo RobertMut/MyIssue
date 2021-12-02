@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { first, pipe, map } from 'rxjs';
 import { TaskService } from "../../../services/TaskService";
 import { AuthService } from "../../../services/AuthService";
 import { EmployeeService } from "../../../services/EmployeeService";
@@ -28,10 +28,10 @@ export class NewTaskComponent implements OnInit {
   public task: Task = {} as Task;
   public assignment: string;
   public ownership: string;
-  public employees: EmployeeRoot;
+  public employees;
   public createdByMail: boolean;
-  public taskTypes: TaskTypeRoot;
-  public clients: ClientRoot;
+  public taskTypes;
+  public clients;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
@@ -40,32 +40,9 @@ export class NewTaskComponent implements OnInit {
     private employeeService: EmployeeService,
     private clientService: ClientService,
     private tasktypeService: TaskTypeService) {
-    this.employeeService.getAllEmployees(this.auth.headers()).subscribe(result => {
-        this.employees = JSON.parse(result);
-      },
-      error => {
-        console.error(error);
-        this.auth.CheckUnauthorized(error);
-      });
-    this.clientService.getClients(this.auth.headers()).subscribe(result => {
-        this.clients = JSON.parse(result);
-      },
-      error => {
-        console.error(error);
-        this.auth.CheckUnauthorized(error);
-      });
-    this.tasktypeService.getTaskTypes(this.auth.headers()).subscribe(result => {
-        this.taskTypes = JSON.parse(result);
-      },
-      error => {
-        console.error(error);
-        this.auth.CheckUnauthorized(error);
-      });
+    this.initialize();
   }
-
   ngOnInit() {
-    this.task.TaskAssignment = localStorage.getItem("login");
-    this.task.TaskOwner = localStorage.getItem("login");
   }
   clearDate(name): void {
     if (name == 'removeStart')
@@ -82,5 +59,35 @@ export class NewTaskComponent implements OnInit {
     this.taskService.createTask(this.task, this.auth.headers()).subscribe(result => console.log(result.toString()));
     this.router.navigate(['./nav-menu-logged/home'], { relativeTo: this.activeRoute });
   }
-
+  private async initialize(){
+    await this.employeeService.getAllEmployees(this.auth.headers()).subscribe(
+      {
+        next: (v) => this.employees = v as EmployeeRoot,
+        error: (e) => {
+          console.error(e);
+          this.auth.CheckUnauthorized(e);
+        }
+      }
+    );
+  await this.clientService.getClients(this.auth.headers()).subscribe(
+    {
+      next: (v) => this.clients = v as ClientRoot,
+      error: (e) => {
+        console.error(e);
+        this.auth.CheckUnauthorized(e);
+      }
+    }
+  );
+  await this.tasktypeService.getTaskTypes(this.auth.headers()).subscribe(
+    {
+      next: (v) => this.taskTypes = v as TaskTypeRoot,
+      error: (e) => {
+        console.error(e);
+        this.auth.CheckUnauthorized(e);
+      }
+    }
+  );
+    this.task.TaskAssignment = localStorage.getItem("login");
+    this.task.TaskOwner = localStorage.getItem("login");
+  }
 }
