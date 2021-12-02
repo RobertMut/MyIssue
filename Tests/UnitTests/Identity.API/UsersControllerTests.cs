@@ -59,7 +59,7 @@ namespace MyIssue.UnitTests.Identity.API
 
             _configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemory).Build();
             _auth = new AuthService(_context.Context, _configuration);
-            _controller = new UserController(_context.Context, _auth);
+            _controller = new UserController(_context.Context);
         }
 
         [Test]

@@ -36,7 +36,7 @@ namespace MyIssue.UnitTests
         public void PromptViewNavigate()
         {
             Assert.IsNotNull(mock.PromptViewModel.OpenSettings);
-            Assert.IsFalse(mock.PromptViewModel.OpenSettings.CanExecute());
+            Assert.IsTrue(mock.PromptViewModel.OpenSettings.CanExecute());
             Assert.DoesNotThrow(() =>
             {
                 mock.PromptViewModel.OpenSettings.Execute();
