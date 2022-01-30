@@ -5,7 +5,9 @@ The idea of Server comes from [RFC5321](https://datatracker.ietf.org/doc/html/rf
 Whole is based on ITIL methodology, which assumes:
  - Task owner - person who received ticket and became owner of incident
  - Task asignee - person who takes its part resolving incident.
- - Task importance
+ - Task importance 
+
+\
 This repository consist of four parts:
  - [Main.API](./docs/Main.API.md) - provides required data from database,
  - [Identity.API](./docs/Identity.API.md) - used to authenticate user,
